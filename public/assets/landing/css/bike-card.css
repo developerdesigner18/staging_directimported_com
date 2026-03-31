@@ -1,0 +1,167 @@
+/* Bike Card Design from bikes.blade.php */
+
+/* ===== Card ===== */
+.bike-card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
+    transition: all .3s ease;
+    height: 100%;
+    /* Ensure full height in flex container */
+    display: flex;
+    flex-direction: column;
+}
+
+.bike-card:hover {
+    box-shadow: 0 24px 40px rgba(0, 0, 0, .15);
+    transform: translateY(-6px);
+}
+
+/* ===== Image ===== */
+.bike-card-img-wrapper {
+    position: relative;
+    height: 260px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.bike-card-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.bike-card:hover img {
+    transform: scale(1.06);
+}
+
+/* ===== Tag ===== */
+.bike-tag {
+    display: inline-block;
+    margin-top: 6px;
+    color: black;
+    font-size: 11px;
+    font-weight: 800;
+    /*background: #f1f3f5;*/
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+/* ===== Body ===== */
+.bike-card-body {
+    padding: 26px 22px 28px;
+    text-align: center;
+    flex: 1;
+    /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* REMOVE side-by-side layout from original styles if present */
+.bike-info-row {
+    display: block;
+}
+
+/* ===== Title ===== */
+.bike-title {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1f2937;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+
+.bike-title a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ===== Subtitle ===== */
+.bike-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 22px;
+    font-weight: 500;
+}
+
+/* ===== Emblem Row (Icons) ===== */
+.bike-emblem-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.emblem-item {
+    flex: 1;
+    text-align: center;
+    font-size: 12px;
+    color: #374151;
+}
+
+.emblem-item i {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 6px;
+    color: #111827;
+}
+
+/* ===== Price ===== */
+.bike-price-block {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 16px;
+    gap: 4px;
+}
+
+.bike-price-block .price-from {
+    font-size: 13px;
+    font-weight: 700;
+    color: #dc2626;
+    margin-bottom: 2px;
+}
+
+.bike-price-block .price-amount {
+    color: #dc2626;
+    font-size: 30px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.bike-price-block .price-per {
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+
+/* ===== Button ===== */
+.btn-adventure {
+    width: 100%;
+    background: #b91c1c;
+    color: #fff;
+    border: none;
+    padding: 15px 18px;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    box-shadow: 0 6px 14px rgba(185, 28, 28, .35);
+    cursor: pointer;
+    transition: all .3s ease;
+    border-radius: 6px;
+}
+
+.btn-adventure:hover {
+    background: #991b1b;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(185, 28, 28, .45);
+}
