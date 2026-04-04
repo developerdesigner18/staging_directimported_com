@@ -35,6 +35,7 @@
         }
 
         .search-filter-section {
+            margin-top: 25px;
             background: white;
             box-sizing: border-box;
         }
@@ -298,6 +299,7 @@
 
         /* IMAGE-ONLY HERO */
         .hero-section {
+            display: none;
             position: relative;
             width: 100%;
             left: 0px;
@@ -573,7 +575,7 @@
 
 @section('main')
     <div class="bikes-page-wrapper">
-        {{-- <div class="hero-section"></div> --}}
+        <div class="hero-section"></div>
         <div class="container">
 
             <div class="search-filter-placeholder"></div>
@@ -725,6 +727,15 @@
 
 @section('script')
     <script !src="">
+        window.addEventListener("scroll", function () {
+            const filter = document.querySelector(".search-filter-section");
+
+            if (window.scrollY > 200) {
+                filter.classList.add("is-sticky");
+            } else {
+                filter.classList.remove("is-sticky");
+            }
+        });
         $(document).on('click', '.btncheckout', function () {
             let slug = $(this).data('slug');
             window.location.href = "/motorcycle/" + slug;
