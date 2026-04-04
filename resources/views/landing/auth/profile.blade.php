@@ -322,7 +322,7 @@
         }
 
         .profile-container {
-            background: linear-gradient(135deg, #f3364f 0%, #b1283b 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             min-height: 200px;
             position: relative;
         }
@@ -344,14 +344,14 @@
         }
 
         .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, #f3364f 0%, #b1283b 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             border: none;
         }
 
         .nav-tabs .nav-link:hover {
             border: none;
-            color: #f3364f;
+            color: #053C7C;
         }
 
         .profile-avatar {
@@ -371,7 +371,7 @@
             position: absolute;
             bottom: 5px;
             right: 5px;
-            background: #f3364f;
+            background: #053C7C;
             color: white;
             border-radius: 50%;
             width: 35px;
@@ -399,7 +399,7 @@
         }
 
         .document-upload:hover {
-            border-color: #f3364f;
+            border-color: #053C7C;
             background: #f0f4ff;
         }
 
@@ -451,12 +451,12 @@
         }
 
         .form-control:focus {
-            border-color: #f3364f;
+            border-color: #053C7C;
             box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #f3364f 0%, #b1283b 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             border: none;
             border-radius: 8px;
             padding: 10px 25px;
@@ -482,7 +482,7 @@
         }
 
         .upload-text strong {
-            color: #f3364f;
+            color: #053C7C;
         }
 
         .hidden-input {
@@ -528,7 +528,7 @@
         .page-item.active .page-link {
             z-index: 3;
             color: #fff;
-            background: linear-gradient(135deg, #f3364f 0%, #b1283b 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             border: none;
         }
         .swal2-actions{
@@ -1064,8 +1064,8 @@
                     showCancelButton: true,
                     confirmButtonText: 'Exit Without Saving',
                     cancelButtonText: 'Update Profile & Leave',
-                    confirmButtonColor: '#f3364f',
-                    cancelButtonColor: '#f3364f',
+                    confirmButtonColor: '#053C7C',
+                    cancelButtonColor: '#053C7C',
                     showCloseButton: true,
                     reverseButtons: true,
                     customClass: {

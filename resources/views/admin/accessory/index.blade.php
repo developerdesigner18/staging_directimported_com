@@ -31,11 +31,11 @@
     }
 
     .icon-option:hover {
-        border-color: #0d6efd;
+        border-color: #053C7C;
     }
 
     .icon-option.active {
-        border-color: #0d6efd;
+        border-color: #053C7C;
         background: #eef5ff;
     }
 </style>

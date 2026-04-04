@@ -124,19 +124,19 @@
 .bike-price-block .price-from {
     font-size: 13px;
     font-weight: 700;
-    color: #dc2626;
+    color: #050B20;
     margin-bottom: 2px;
 }
 
 .bike-price-block .price-amount {
-    color: #dc2626;
+    color: #050B20;
     font-size: 30px;
     font-weight: 900;
     line-height: 1;
 }
 
 .bike-price-block .price-per {
-    color: #dc2626;
+    color: #050B20;
     font-size: 14px;
     font-weight: 700;
     white-space: nowrap;
@@ -146,7 +146,7 @@
 /* ===== Button ===== */
 .btn-adventure {
     width: 100%;
-    background: #b91c1c;
+    background-image: linear-gradient(180deg, #053C7C 0%, #042B59 100%);
     color: #fff;
     border: none;
     padding: 15px 18px;
@@ -154,7 +154,7 @@
     font-size: 13px;
     letter-spacing: 1.4px;
     text-transform: uppercase;
-    box-shadow: 0 6px 14px rgba(185, 28, 28, .35);
+    box-shadow: 0 6px 14px rgba(5, 60, 124, .35);
     cursor: pointer;
     transition: all .3s ease;
     border-radius: 6px;

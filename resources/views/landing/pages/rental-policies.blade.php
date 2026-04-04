@@ -30,7 +30,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #F3364F, #d12a3f);
+            background: linear-gradient(90deg, #053C7C, #8A1821);
             border-radius: 2px;
         }
 
@@ -50,7 +50,7 @@
         }
 
         .card-header-custom {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             padding: 1rem 1.5rem;
             border-bottom: none;
@@ -98,7 +98,7 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .refund-table ul {
@@ -119,7 +119,7 @@
         }
 
         .refund-table h5 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
         }
 
@@ -128,11 +128,11 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .contact-info {
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 10px;
             padding: 1.5rem;
@@ -150,11 +150,11 @@
             border-radius: 10px;
             padding: 2rem;
             margin: 2rem 0;
-            border: 2px solid #F3364F;
+            border: 2px solid #053C7C;
         }
 
         .insurance-title {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             margin-bottom: 1rem;
             font-size: 1.1rem;
@@ -165,16 +165,16 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .prohibited-list ul {
             margin: 0;
-            color: #d12a3f;
+            color: #8A1821;
         }
 
         .prohibited-list h6 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
         }
 
@@ -183,27 +183,27 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .charges-list h6 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
         }
 
         .important-note {
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1.5rem 0;
             text-align: center;
             font-weight: 600;
-            border: 2px solid #d12a3f;
+            border: 2px solid #8A1821;
         }
 
         .company-footer {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             border-radius: 10px;
             padding: 2rem;
@@ -235,25 +235,25 @@
         }
 
         .badge.bg-danger {
-            background-color: #F3364F !important;
+            background-color: #053C7C !important;
         }
 
         .text-primary {
-            color: #F3364F !important;
+            color: #053C7C !important;
         }
 
         .border-primary {
-            border-color: #F3364F !important;
+            border-color: #053C7C !important;
         }
 
         .btn-primary {
-            background-color: #F3364F;
-            border-color: #F3364F;
+            background-color: #053C7C;
+            border-color: #053C7C;
         }
 
         .btn-primary:hover {
-            background-color: #d12a3f;
-            border-color: #d12a3f;
+            background-color: #8A1821;
+            border-color: #8A1821;
         }
 
         @media (max-width: 768px) {

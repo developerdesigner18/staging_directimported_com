@@ -29,7 +29,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #F3364F, #d12a3f);
+            background: linear-gradient(90deg, #053C7C, #8A1821);
             border-radius: 2px;
         }
 
@@ -49,7 +49,7 @@
         }
 
         .card-header-custom {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             padding: 1.5rem;
             border-bottom: none;
@@ -85,7 +85,7 @@
             flex-shrink: 0;
             width: 50px;
             height: 50px;
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -108,13 +108,13 @@
         }
 
         .link-content h4 a {
-            color: #F3364F;
+            color: #053C7C;
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .link-content h4 a:hover {
-            color: #d12a3f;
+            color: #8A1821;
             text-decoration: underline;
         }
 

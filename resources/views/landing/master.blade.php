@@ -19,18 +19,30 @@
     <style>
         :root {
             /* Color */
-            --body-color: #e9e9e9;
-            --title-color: #343434;
-            --primary-color: #f4364f;
+            --body-color: #F5F5F5;
+            /* Light BG */
+            --title-color: #1A1A1A;
+            /* Tarmac Black */
+            --primary-color: #050B20;
+            /* Consistent Dark Blue/Black */
             --primary-hover-color: #de2b43;
-            --primary-light-color: #d5d5d6;
-            --secondary-color: #343434;
-            --white-color: #ffffff;
-            --dark-color: #141414;
+            /* Red Hover as requested */
+            --primary-light-color: #E0E0E0;
+            /* Border Light */
+            --secondary-color: #4A4A4A;
+            /* Brake Dust Grey */
+            --white-color: #FFFFFF;
+            /* Pure White */
+            --dark-color: #121212;
+            /* Dark BG */
+
+            /* Theme Gradients */
+            --header-footer-gradient: linear-gradient(180deg, #0E488C 0%, #000000 100%);
+            --primary-gradient: linear-gradient(180deg, #053C7C 0%, #042B59 100%);
 
             /* Typography */
-            --body-font: 'Rajdhani', sans-serif;
-            --title-font: 'Rajdhani', sans-serif;
+            --body-font: 'Poppins', sans-serif;
+            --title-font: 'Poppins', sans-serif;
             --font-weight-normal: 400;
             --font-weight-medium: 500;
             --font-weight-semi-bold: 600;
@@ -40,6 +52,7 @@
             --transition: 0.3s;
             --footer-text-color: #8c8d8f;
         }
+
         /*#loader-overlay {*/
         /*    display: none; !* hidden by default *!*/
         /*    position: fixed;*/
@@ -92,116 +105,144 @@
             margin-right: 15px;
         }
 
-        .rid-menu .dropdown-menu li a {
+        .rid-menubar .dropdown-menu li a {
             font-size: 16px !important;
-            color: black;
+            color: #050B20 !important;
+            font-weight: 500 !important;
         }
 
-    .loader-container {
-        display: flex; /* visible by default */
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: #fff;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-/*     .progress-container { */
-/*         display: none; */
-/*     } */
-.sticky_header {
-    position: fixed;
-    width: 100%;
-    z-index: 9999;
-    top: 0;
-        background-color: white;
+        .loader-container {
+            display: flex;
+            /* visible by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        /*     .progress-container { */
+        /*         display: none; */
+        /*     } */
+        .sticky_header {
+            position: fixed;
+            width: 100%;
+            z-index: 9999;
+            top: 0;
+            background-color: white;
             box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
         }
-}
-/* Full Page Loader */
-.loader-container {
-    display: flex; /* visible by default */
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #fff;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
 
-/* Sticky header */
-.sticky_header {
-    position: fixed;
-    width: 100%;
-    z-index: 9999;
-    top: 0;
-    background-color: white;
-    box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-}
 
-/* AJAX Loader */
-.progress-container {
-    display: flex; /* keep flex always */
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
-    z-index: 10000; /* higher than header */
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-.progress-container.active {
-    visibility: visible;
-    opacity: 1;
-}
-.font-10{
-    font-size:10px !important;
-}
-/* Loader animation */
-.loader {
-    width: 150px;
-    aspect-ratio: 1;
-    color: #f03355;
-    --_c:no-repeat radial-gradient(farthest-side,currentColor 92%,#0000);
-    /*background:*/
-    /*    var(--_c) 50% 0   /12px 12px,*/
-    /*    var(--_c) 50% 100%/12px 12px,*/
-    /*    var(--_c) 100% 50%/12px 12px,*/
-    /*    var(--_c) 0    50%/12px 12px,*/
-    /*    var(--_c) 50%  50%/12px 12px,*/
-    /*    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)*/
-    /*    -4px -4px/calc(50% + 2px) calc(50% + 2px);*/
-    animation: l8 3s infinite linear;
-    border:none !important;
-}
-@keyframes l8 {
-    100% {
-        transform: rotate(360deg);
-    }
-}
+        /* Full Page Loader */
+        .loader-container {
+            display: flex;
+            /* visible by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-/* Progress dots */
-.progress {
-    width: 60px;
-    aspect-ratio: 4;
-    --_g: no-repeat radial-gradient(circle closest-side, var(--primary-color) 90%, #0000);
-    background:
-        var(--_g) 0%   50%,
-        var(--_g) 50%  50%,
-        var(--_g) 100% 50%;
-    background-size: calc(100%/3) 100%;
-    animation: l7 1s infinite linear;
-}
-@keyframes l7 {
-    33% { background-size:calc(100%/3) 0%,calc(100%/3) 100%,calc(100%/3) 100% }
-    50% { background-size:calc(100%/3) 100%,calc(100%/3) 0%,calc(100%/3) 100% }
-    66% { background-size:calc(100%/3) 100%,calc(100%/3) 100%,calc(100%/3) 0% }
-}
+        /* Sticky header */
+        .sticky_header {
+            position: fixed;
+            width: 100%;
+            z-index: 9999;
+            top: 0;
+            background-color: white;
+            box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* AJAX Loader */
+        .progress-container {
+            display: flex;
+            /* keep flex always */
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            /* higher than header */
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .progress-container.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .font-10 {
+            font-size: 10px !important;
+        }
+
+        /* Loader animation */
+        .loader {
+            width: 150px;
+            aspect-ratio: 1;
+            color: #053C7C;
+            /* New Theme Color */
+            --_c: no-repeat radial-gradient(farthest-side, currentColor 92%, #0000);
+            /*background:*/
+            /*    var(--_c) 50% 0   /12px 12px,*/
+            /*    var(--_c) 50% 100%/12px 12px,*/
+            /*    var(--_c) 100% 50%/12px 12px,*/
+            /*    var(--_c) 0    50%/12px 12px,*/
+            /*    var(--_c) 50%  50%/12px 12px,*/
+            /*    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)*/
+            /*    -4px -4px/calc(50% + 2px) calc(50% + 2px);*/
+            animation: l8 3s infinite linear;
+            border: none !important;
+        }
+
+        @keyframes l8 {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Progress dots */
+        .progress {
+            width: 60px;
+            aspect-ratio: 4;
+            --_g: no-repeat radial-gradient(circle closest-side, var(--primary-color) 90%, #0000);
+            background:
+                var(--_g) 0% 50%,
+                var(--_g) 50% 50%,
+                var(--_g) 100% 50%;
+            background-size: calc(100%/3) 100%;
+            animation: l7 1s infinite linear;
+        }
+
+        @keyframes l7 {
+            33% {
+                background-size: calc(100%/3) 0%, calc(100%/3) 100%, calc(100%/3) 100%
+            }
+
+            50% {
+                background-size: calc(100%/3) 100%, calc(100%/3) 0%, calc(100%/3) 100%
+            }
+
+            66% {
+                background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
+            }
+        }
+
         .quick-links-style {
             list-style: none;
             padding-left: 0;
@@ -234,168 +275,162 @@
         .quick-links-style li a:hover {
             opacity: 0.85;
         }
-
     </style>
 </head>
 
 <body>
-<!-- Full Page Loader -->
-<div class="loader-container">
-    <div class="loader">
-        <img src="{{asset('assets/logo/bikeRentalLogo.png')}}" alt="Logo">
+    <!-- Full Page Loader -->
+    <div class="loader-container">
+        <div class="loader">
+            <img src="{{asset('assets/logo/image (1).png')}}" alt="Logo">
+        </div>
     </div>
-</div>
 
-<!-- AJAX Loader -->
-<div class="progress-container">
-    <div class="progress"></div>
-</div>
-<!-- Header Start: rid is prefix -->
-@include('landing.layouts.header')
-<!--  header End  -->
-
-@stack('modals')
-
-@yield('main')
-
-<!-- Footer Section Start -->
-@include('landing.layouts.footer')
-<!-- Footer Section End -->
-
-<div class="rid-offcanvas-sidebar">
-
-    <button class="rid-offcanvas-btn" aria-label="Main Menu Icon">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-    <!--        -->
-    <a href="{{route('landing')}}">
-        <img src="{{asset('assets/logo/main.png')}}" alt="ridexo footer logo">
-    </a>
-
-    <!--   Rid Menu     -->
-    <div class="rid-menu d-flex justify-content-center text-center">
-        <ul>
-            <li><a class="active" href="{{route('landing')}}">Home</a></li>
-            <li><a href="#">Tours</a></li>
-            <li><a href="{{ route('motorcycle') }}">Motorcycles</a></li>
-            <li class="dropdown">
-                <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('my.bookings') }}">Request a Quote</a></li>
-                </ul>
-            </li>
-            <li><a href="{{route('contact')}}">Contact</a></li>
-            @if(!Auth::guard('web')->check())
-            <li><a href="{{ route('register') }}">Register</a></li>
-            <li><a href="{{ route('login') }}">Log in</a></li>
-            <li><a href="{{route('faqs')}}">FAQs</a></li>
-            @endif
-
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">More</a>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ route('rental.policies') }}">Rental Policies</a></li>
-                    <li><a href="{{ route('licence.requirement') }}">Licence Requirement</a></li>
-                    <li><a href="{{ route('about.our.bikes') }}">About Our Bikes</a></li>
-                    <li><a href="{{ route('useful.links') }}">Useful Links</a></li>
-                    <li><a href="{{ route('japan.law') }}">Motorcycle Laws in Japan</a></li>
-                    <li><a href="{{ route('ride.japan.law') }}">How to Ride Safe in Japan</a></li>
-                </ul>
-            </li>
-            @if (Auth::check())
-
-            <li><a href="{{route('logout')}}">Logout</a></li>
-            @endif
-        </ul>
+    <!-- AJAX Loader -->
+    <div class="progress-container">
+        <div class="progress"></div>
     </div>
-</div>
-{{--<div id="loader-overlay">--}}
-{{--    <lottie-player--}}
-{{--            src="{{ asset('js/loaded.json') }}"--}}
-{{--            background="transparent"--}}
-{{--            speed="1"--}}
-{{--            style="width:150px; height:150px;"--}}
-{{--            loop--}}
-{{--            autoplay>--}}
-{{--    </lottie-player>--}}
-{{--</div>--}}
-<div id="toTop">
-    <i class="icofont-simple-up"></i>
-</div>
+    <!-- Header Start: rid is prefix -->
+    @include('landing.layouts.header')
+    <!--  header End  -->
 
-<!-- Js files -->
-@include('landing.layouts.footer-links')
-@stack('script-src')
-@include('admin.layouts.common-js')
-@yield('script')
-@stack('script')
-<script !src="">
-$(window).on("scroll", function () {
-    if ($(this).scrollTop() > 50) {
-        $(".rid-header-bottom").addClass("sticky_header");
-    } else {
-        $(".rid-header-bottom").removeClass("sticky_header");
-    }
-});
-$(window).on("load", function () {
-    setTimeout(function () {
-        $(".loader-container").fadeOut("slow");
-    }, 1000); // Optional delay
-});
-    document.addEventListener('DOMContentLoaded', function () {
+    @stack('modals')
 
-        function updateTokyoTime() {
-            // Options for date display
-            const dateOptions = {
-                timeZone: 'Asia/Tokyo',
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            };
+    @yield('main')
 
-            // Options for time display (12-hour format with AM/PM)
-            const timeOptions = {
-                timeZone: 'Asia/Tokyo',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: true
-            };
+    <!-- Footer Section Start -->
+    @include('landing.layouts.footer')
+    <!-- Footer Section End -->
 
-            const now = new Date();
+    <div class="rid-offcanvas-sidebar">
 
-            // Get formatted date and time
-            const tokyoDate = now.toLocaleDateString('en-US', dateOptions);
-            const tokyoTime = now.toLocaleTimeString('en-US', timeOptions);
+        <button class="rid-offcanvas-btn" aria-label="Main Menu Icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <!--        -->
+        <a href="{{route('landing')}}">
+            <img src="{{asset('assets/logo/main.png')}}" alt="ridexo footer logo">
+        </a>
 
-            // Combine date and time for display
-            const fullDateTime = `${tokyoDate}, ${tokyoTime}`;
+        <!--   Rid Menu     -->
+        <div class="rid-menu d-flex justify-content-center text-center">
+            <ul>
+                <li><a class="active" href="{{route('landing')}}">Home</a></li>
+                <li><a href="#">Tours</a></li>
+                <li><a href="{{ route('motorcycle') }}">Motorcycles</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('my.bookings') }}">Request a Quote</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{route('contact')}}">Contact</a></li>
+                @if(!Auth::guard('web')->check())
+                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a href="{{ route('login') }}">Log in</a></li>
+                    <li><a href="{{route('faqs')}}">FAQs</a></li>
+                @endif
 
-            // Update both mobile and desktop elements
-            document.getElementById('tokyo-time-mobile').textContent = fullDateTime;
-            document.getElementById('tokyo-time-desktop').textContent = fullDateTime;
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">More</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('rental.policies') }}">Rental Policies</a></li>
+                        <li><a href="{{ route('licence.requirement') }}">Licence Requirement</a></li>
+                        <li><a href="{{ route('about.our.bikes') }}">About Our Bikes</a></li>
+                        <li><a href="{{ route('useful.links') }}">Useful Links</a></li>
+                        <li><a href="{{ route('japan.law') }}">Motorcycle Laws in Japan</a></li>
+                        <li><a href="{{ route('ride.japan.law') }}">How to Ride Safe in Japan</a></li>
+                    </ul>
+                </li>
+                @if (Auth::check())
 
-            // Update tooltip with just the time
-            const clockIcons = document.querySelectorAll('.flaticon-clock');
-            clockIcons.forEach(icon => {
-                icon.setAttribute('title', `Tokyo Time: ${tokyoTime}`);
-            });
-        }
+                    <li><a href="{{route('logout')}}">Logout</a></li>
+                @endif
+            </ul>
+        </div>
+    </div>
+    {{--<div id="loader-overlay">--}}
+        {{-- <lottie-player--}} {{-- src="{{ asset('js/loaded.json') }}" --}} {{-- background="transparent" --}} {{--
+            speed="1" --}} {{-- style="width:150px; height:150px;" --}} {{-- loop--}} {{-- autoplay>--}}
+            {{-- </lottie-player>--}}
+            {{--</div>--}}
+    <div id="toTop">
+        <i class="icofont-simple-up"></i>
+    </div>
 
-        // Update immediately and then every second
-        updateTokyoTime();
-        setInterval(updateTokyoTime, 1000);
-
-        // Initialize Bootstrap tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
+    <!-- Js files -->
+    @include('landing.layouts.footer-links')
+    @stack('script-src')
+    @include('admin.layouts.common-js')
+    @yield('script')
+    @stack('script')
+    <script !src="">
+        $(window).on("scroll", function () {
+            if ($(this).scrollTop() > 50) {
+                $(".rid-header-bottom").addClass("sticky_header");
+            } else {
+                $(".rid-header-bottom").removeClass("sticky_header");
+            }
         });
-    });
-</script>
+        $(window).on("load", function () {
+            setTimeout(function () {
+                $(".loader-container").fadeOut("slow");
+            }, 1000); // Optional delay
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+
+            function updateTokyoTime() {
+                // Options for date display
+                const dateOptions = {
+                    timeZone: 'Asia/Tokyo',
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+
+                // Options for time display (12-hour format with AM/PM)
+                const timeOptions = {
+                    timeZone: 'Asia/Tokyo',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                };
+
+                const now = new Date();
+
+                // Get formatted date and time
+                const tokyoDate = now.toLocaleDateString('en-US', dateOptions);
+                const tokyoTime = now.toLocaleTimeString('en-US', timeOptions);
+
+                // Combine date and time for display
+                const fullDateTime = `${tokyoDate}, ${tokyoTime}`;
+
+                // Update both mobile and desktop elements
+                document.getElementById('tokyo-time-mobile').textContent = fullDateTime;
+                document.getElementById('tokyo-time-desktop').textContent = fullDateTime;
+
+                // Update tooltip with just the time
+                const clockIcons = document.querySelectorAll('.flaticon-clock');
+                clockIcons.forEach(icon => {
+                    icon.setAttribute('title', `Tokyo Time: ${tokyoTime}`);
+                });
+            }
+
+            // Update immediately and then every second
+            updateTokyoTime();
+            setInterval(updateTokyoTime, 1000);
+
+            // Initialize Bootstrap tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+    </script>
 </body>
 
 </html>

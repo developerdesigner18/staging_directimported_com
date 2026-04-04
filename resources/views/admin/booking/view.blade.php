@@ -62,7 +62,7 @@
         .document-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 24px rgba(23, 162, 184, 0.2);
-            border-color: #F3364F;
+            border-color: #053C7C;
         }
 
         .document-card-inner {
@@ -539,7 +539,7 @@
 
     @if($rowData->user)
         <div class="card border-0 shadow-sm mb-3">
-            <div class="card-header bg-gradient-primary text-white border-0" style="background: #F3364F; padding: 1.25rem 1.5rem;">
+            <div class="card-header bg-gradient-primary text-white border-0" style="background: #053C7C; padding: 1.25rem 1.5rem;">
                 <div class="d-flex align-items-center justify-content-between">
                     <h5 class="mb-0 fw-semibold text-white">
                         <i class="bx bx-shield-quarter me-2"></i>User Account Information
@@ -583,7 +583,7 @@
     @endif
     <!-- Card 2: Documents & Verification -->
     <div class="card border-0 shadow-sm">
-        <div class="card-header bg-gradient-primary text-white border-0" style="background: #F3364F; padding: 1.25rem 1.5rem;">
+        <div class="card-header bg-gradient-primary text-white border-0" style="background: #053C7C; padding: 1.25rem 1.5rem;">
             <div class="d-flex align-items-center justify-content-between">
                 <h5 class="mb-0 fw-semibold text-white">
                     <i class="bx bx-file me-2"></i>Documents & Verification

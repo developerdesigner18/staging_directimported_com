@@ -3,7 +3,7 @@
 @push('style')
     <style>
         :root {
-            --primary-color: #F3364F;
+            --primary-color: #053C7C;
             --primary-color-light: rgba(243, 54, 79, 0.1);
             --primary-color-hover: rgba(243, 54, 79, 0.8);
         }

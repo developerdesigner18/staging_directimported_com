@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/bike-card.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/responsive.css')}}">
 
-<link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- jQuery UI CSS -->

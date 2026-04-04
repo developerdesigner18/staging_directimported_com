@@ -489,7 +489,7 @@
                 offset: {x: e.offset ? 50 : 0, y: e.offset ? 10 : 0},
                 duration: e.duration,
                 close: "close" == e.close,
-                style: "style" == e.style ? {background: "linear-gradient(to right, #0AB39C, #F3364F)"} : ""
+                style: "style" == e.style ? {background: "linear-gradient(to right, #0AB39C, #053C7C)"} : ""
             }).showToast()
         })
     }), z = document.querySelectorAll("[data-choices]"), Array.from(z).forEach(function (e) {

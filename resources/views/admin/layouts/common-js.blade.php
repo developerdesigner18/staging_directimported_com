@@ -222,7 +222,7 @@
             offset: {x: 0, y: 0},
             duration: duration,
             close: "close" == close,
-            style: "style" == style ? {background: "linear-gradient(to right, #0AB39C, #F3364F)"} : ""
+            style: "style" == style ? {background: "linear-gradient(to right, #0AB39C, #053C7C)"} : ""
         }).showToast()
     }
 </script>

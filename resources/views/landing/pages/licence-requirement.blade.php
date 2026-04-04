@@ -29,7 +29,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #F3364F, #d12a3f);
+            background: linear-gradient(90deg, #053C7C, #8A1821);
             border-radius: 2px;
         }
 
@@ -49,7 +49,7 @@
         }
 
         .card-header-custom {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             padding: 1rem 1.5rem;
             border-bottom: none;
@@ -86,13 +86,13 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
             font-weight: 600;
             color: #2c3e50;
         }
 
         .documentation-note {
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 10px;
             padding: 1rem 1.5rem;
@@ -136,7 +136,7 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1.5rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
             text-align: center;
             font-weight: 600;
             color: #2c3e50;
@@ -155,11 +155,11 @@
             border-radius: 10px;
             padding: 2rem;
             margin: 2rem 0;
-            border: 2px solid #F3364F;
+            border: 2px solid #053C7C;
         }
 
         .special-notes {
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 10px;
             padding: 2rem;
@@ -184,11 +184,11 @@
             border-radius: 10px;
             padding: 2rem;
             margin: 2rem 0;
-            border: 2px solid #F3364F;
+            border: 2px solid #053C7C;
         }
 
         .translation-service h5 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             margin-bottom: 1rem;
         }
@@ -211,7 +211,7 @@
             border-radius: 10px;
             padding: 1.5rem;
             margin: 1rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .note-list ol {
@@ -379,7 +379,7 @@
                             </div>
 
                             <div class="important-notes">
-                                <p>If your license is issued in Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia you will need to obtain an official Japanese translation of your home country driving license. This can be obtained at the <a href="http://www.jaf.or.jp/inter/translation/specific_e.htm" target="_blank" style="color: #F3364F; font-weight: 600;">Japanese Automobile Federation</a> or official authorities like Embassies and consulates.</p>
+                                <p>If your license is issued in Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia you will need to obtain an official Japanese translation of your home country driving license. This can be obtained at the <a href="http://www.jaf.or.jp/inter/translation/specific_e.htm" target="_blank" style="color: #053C7C; font-weight: 600;">Japanese Automobile Federation</a> or official authorities like Embassies and consulates.</p>
                             </div>
                         </div>
                     </div>
@@ -404,7 +404,7 @@
                             <div class="important-notes">
                                 <p>If you have a Japanese driving license, you will not need any additional document.</p>
 
-                                <h6 style="color: #F3364F; font-weight: 600; margin-top: 2rem;">Notes regarding foreign driving licenses:</h6>
+                                <h6 style="color: #053C7C; font-weight: 600; margin-top: 2rem;">Notes regarding foreign driving licenses:</h6>
                                 <div class="note-list">
                                     <ol>
                                         <li>Please check the expiration date, make sure it is still valid.</li>
@@ -457,12 +457,12 @@
                     <div class="translation-service">
                         <h5>License Translation Service</h5>
 
-                        <p>Some countries require a translation by JAF (Japanese Automobile Federation) of the home license. Group 2 of our license requirement page: <a href="https://bikerentaljapan.com/license" style="color: #F3364F;">https://bikerentaljapan.com/license</a> (Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia) and any license that is not in ALPHABET including but not limited to licenses written in Arabic or Russian, or licenses issued in the Republic of Korea, Kingdom of Thailand, Lao People's Democratic Republic, and the Republic of the Union of Myanmar.</p>
+                        <p>Some countries require a translation by JAF (Japanese Automobile Federation) of the home license. Group 2 of our license requirement page: <a href="https://bikerentaljapan.com/license" style="color: #053C7C;">https://bikerentaljapan.com/license</a> (Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia) and any license that is not in ALPHABET including but not limited to licenses written in Arabic or Russian, or licenses issued in the Republic of Korea, Kingdom of Thailand, Lao People's Democratic Republic, and the Republic of the Union of Myanmar.</p>
 
-                        <p>More information can be seen here: <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license" style="color: #F3364F;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license</a></p>
+                        <p>More information can be seen here: <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license" style="color: #053C7C;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license</a></p>
 
                         <p>JAF offers this service in person at one of their offices, the nearest to Bike Rental Japan located here:<br>
-                            <a href="https://goo.gl/maps/5c9vHjHN5tkSTqUZ7" style="color: #F3364F;">https://goo.gl/maps/5c9vHjHN5tkSTqUZ7</a></p>
+                            <a href="https://goo.gl/maps/5c9vHjHN5tkSTqUZ7" style="color: #053C7C;">https://goo.gl/maps/5c9vHjHN5tkSTqUZ7</a></p>
 
                         <div class="requirements-box">
                             <strong>Service Details:</strong><br>
@@ -489,7 +489,7 @@
                         <p>In this case you will be required to obtain a new license to be able to proceed with the translation service so please do allow enough time including the 2 week processing time for the JAF translation.</p>
 
                         <p>Full information for JAF conditions can be seen here, please be sure to read and understand all parts:<br>
-                            <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas" style="color: #F3364F;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas</a></p>
+                            <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas" style="color: #053C7C;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas</a></p>
 
                         <p><strong>Please note, Bike Rental Japan's cancellation policy will be applied in the case of any delayed license translation processing regardless of fault.</strong></p>
                     </div>

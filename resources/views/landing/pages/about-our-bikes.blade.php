@@ -29,7 +29,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #F3364F, #d12a3f);
+            background: linear-gradient(90deg, #053C7C, #8A1821);
             border-radius: 2px;
         }
 
@@ -49,7 +49,7 @@
         }
 
         .card-header-custom {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             padding: 1.5rem;
             border-bottom: none;
@@ -81,11 +81,11 @@
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
         }
 
         .features-title {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
@@ -109,13 +109,13 @@
         }
 
         .category-card:hover {
-            border-color: #F3364F;
+            border-color: #053C7C;
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(243, 54, 79, 0.15);
         }
 
         .category-title {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             font-size: 1.1rem;
             margin-bottom: 0.8rem;
@@ -130,7 +130,7 @@
         }
 
         .included-features {
-            background: #F3364F;
+            background: #053C7C;
             color: white;
             border-radius: 15px;
             padding: 2rem;
@@ -175,12 +175,12 @@
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
-            border: 2px solid #F3364F;
+            border: 2px solid #053C7C;
             text-align: center;
         }
 
         .maintenance-highlight h5 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             margin-bottom: 1rem;
             font-size: 1.2rem;
@@ -201,8 +201,8 @@
             align-items: center;
             justify-content: center;
             margin: 2rem 0;
-            border: 2px dashed #F3364F;
-            color: #F3364F;
+            border: 2px dashed #053C7C;
+            color: #053C7C;
             font-size: 1.1rem;
             font-weight: 600;
         }

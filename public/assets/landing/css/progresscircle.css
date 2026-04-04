@@ -22,9 +22,12 @@
   stroke-width: 2;
   stroke-linecap: square;
   fill: none;
-  animation: circle-chart-fill 2s reverse; /* 1 */ 
-  transform: rotate(-90deg); /* 2, 3 */
-  transform-origin: center; /* 4 */
+  animation: circle-chart-fill 2s reverse;
+  /* 1 */
+  transform: rotate(-90deg);
+  /* 2, 3 */
+  transform-origin: center;
+  /* 4 */
 }
 
 /**
@@ -38,13 +41,14 @@
  */
 
 .circle-chart__circle--negative {
-  transform: rotate(-90deg) scale(1,-1); /* 1, 2, 3 */
+  transform: rotate(-90deg) scale(1, -1);
+  /* 1, 2, 3 */
 }
 
 .circle-chart__background {
   stroke: white;
   stroke-width: 1;
-  fill: none; 
+  fill: none;
 }
 
 .circle-chart__info {
@@ -54,22 +58,22 @@
 }
 
 .circle-chart__percent {
-    alignment-baseline: central;
-    text-anchor: middle;
-    font-size: 10px;
-    font-weight: bold;  
+  alignment-baseline: central;
+  text-anchor: middle;
+  font-size: 10px;
+  font-weight: bold;
 }
 
 .circle-chart__subline {
   alignment-baseline: central;
   text-anchor: middle;
   font-size: 3px;
-  fill:white;
+  fill: white;
 }
 
 
 .success-stroke {
-  stroke: #f4364f;
+  stroke: #053C7C;
 }
 
 .warning-stroke {
@@ -81,7 +85,9 @@
 }
 
 @keyframes circle-chart-fill {
-  to { stroke-dasharray: 0 100; }
+  to {
+    stroke-dasharray: 0 100;
+  }
 }
 
 @keyframes circle-chart-appear {

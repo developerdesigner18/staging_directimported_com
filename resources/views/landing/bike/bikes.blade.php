@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title','Bikes')
+@section('title', 'Bikes')
 @push('style')
     <style>
         .rid-menubar ul li a {
@@ -19,7 +19,7 @@
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 40px;
             transition: box-shadow 0.3s ease;
         }
@@ -29,19 +29,22 @@
             position: fixed;
             top: 100px;
             z-index: 10;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
             border-radius: 0;
             width: 1156px;
         }
+
         .search-filter-section {
             background: white;
             box-sizing: border-box;
         }
+
         .search-filter-inner {
             max-width: 1140px;
             margin: 0 auto;
             box-sizing: border-box;
         }
+
         /* Placeholder keeps layout from jumping */
         .search-filter-placeholder {
             height: 0;
@@ -64,9 +67,9 @@
 
         .search-input-wrapper input:focus {
             outline: none;
-            border-color: #dc3545;
+            border-color: #053C7C;
             background: #fff;
-            box-shadow: 0 5px 20px rgba(220, 53, 69, 0.1);
+            box-shadow: 0 5px 20px rgba(188, 33, 46, 0.1);
         }
 
         .search-input-wrapper .search-icon {
@@ -104,9 +107,9 @@
         }
 
         .engine-btn.active {
-            background: #dc3545;
+            background: #053C7C; /* ASJ Racing Red */
             color: white;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            box-shadow: 0 4px 15px rgba(188, 33, 46, 0.3);
         }
 
         /* Bikes Grid */
@@ -116,7 +119,7 @@
             border-radius: 18px;
             overflow: hidden;
             border: 1px solid #f1f1f1;
-            box-shadow: 0 4px 14px rgba(0,0,0,.06);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
             transition: all .3s ease;
         }
 
@@ -198,9 +201,12 @@
         /* ===== Price (centered like image 1) ===== */
         .bike-price-block {
             display: flex;
-            align-items: baseline;     /* matches flex items-baseline */
-            justify-content: center;   /* matches justify-center */
-            margin-bottom: 16px;       /* mb-4 */
+            align-items: baseline;
+            /* matches flex items-baseline */
+            justify-content: center;
+            /* matches justify-center */
+            margin-bottom: 16px;
+            /* mb-4 */
             gap: 4px;
         }
 
@@ -209,21 +215,25 @@
         /*    display: block;*/
         /*    font-size: 13px;*/
         /*    font-weight: 700;*/
-        /*    color: #dc2626;*/
+        /*    color: #053C7C; /* ASJ Racing Red */*/
         /*    margin-bottom: 2px;*/
         /*}*/
 
         .bike-price-block .price {
-            color: #dc2626;            /* text-red-600 */
-            font-size: 30px;           /* text-3xl */
-            font-weight: 900;          /* font-black */
+            color: #053C7C; /* ASJ Racing Red */
+            font-size: 30px;
+            /* text-3xl */
+            font-weight: 900;
+            /* font-black */
             line-height: 1;
         }
 
         .bike-price-block .period {
-            color: #dc2626;            /* text-red-600 */
-            font-size: 14px;           /* text-sm */
-            font-weight: 700;          /* font-bold */
+            color: #053C7C; /* ASJ Racing Red */
+            font-size: 14px;
+            /* text-sm */
+            font-weight: 700;
+            /* font-bold */
             white-space: nowrap;
         }
 
@@ -231,7 +241,7 @@
         /* ===== Button ===== */
         .btn-quote {
             width: 100%;
-            background: #b91c1c;
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%); /* ASJ Racing Red */
             color: #fff;
             border: none;
             padding: 15px 18px;
@@ -239,15 +249,15 @@
             font-size: 13px;
             letter-spacing: 1.4px;
             text-transform: uppercase;
-            box-shadow: 0 6px 14px rgba(185,28,28,.35);
+            box-shadow: 0 6px 14px rgba(188, 33, 46, .35);
             cursor: pointer;
             transition: all .3s ease;
         }
 
         .btn-quote:hover {
-            background: #991b1b;
+            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%); /* Racing Red Hover */
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(185,28,28,.45);
+            box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
         }
 
         /* Bike Card design ends here */
@@ -260,11 +270,11 @@
 
         /* No Results */
         .no-results {
-             background: white;
-             border-radius: 8px;
-             padding: 40px;
-             text-align: center;
-             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         /* Responsive */
@@ -274,10 +284,12 @@
                 overflow-x: auto;
                 padding-bottom: 5px;
             }
+
             .engine-btn {
                 white-space: nowrap;
             }
         }
+
         /* IMAGE-ONLY HERO */
         .hero-section {
             position: relative;
@@ -285,7 +297,14 @@
             left: 0px;
             right: 0px;
             height: 420px;
-            {{--background: url('{{ asset("assets/landing/images/hero-bike.png") }}') center center / cover no-repeat;--}}
+
+                {
+                    {
+                    --background: url('{{ asset("assets/landing/images/hero-bike.png") }}') center center / cover no-repeat;
+                    --
+                }
+            }
+
             overflow: hidden;
         }
 
@@ -309,12 +328,14 @@
             margin-bottom: 20px;
             border-bottom: 1px solid #e5e7eb;
         }
+
         .category-section-header::after {
             content: "";
             position: absolute;
             left: 0;
             right: 0;
-            bottom: 0;               /* EXACTLY at bottom */
+            bottom: 0;
+            /* EXACTLY at bottom */
             height: 1px;
             background: #e5e7eb;
         }
@@ -339,11 +360,14 @@
 
             border-radius: 8px 8px 0 0;
 
-            top: 1px;          /* overlaps the line */
+            top: 1px;
+            /* overlaps the line */
             margin-left: 12px;
 
-            z-index: 1;                        /* removes unwanted space */
+            z-index: 1;
+            /* removes unwanted space */
         }
+
         .category-section-header {
             margin-top: 30px;
             margin-bottom: 0;
@@ -389,6 +413,7 @@
             color: #999;
             font-size: 18px;
         }
+
         @media (max-width: 768px) {
             .filter-row {
                 flex-direction: column;
@@ -404,22 +429,24 @@
                 overflow-x: auto;
             }
         }
-        #cc{
+
+        #cc {
             bottom: 10px;
         }
+
         /* ===== CARD ===== */
         .bike-card {
             background: #fff;
             border-radius: 16px;
             overflow: hidden;
             border: 1px solid #f1f1f1;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
             transition: 0.3s ease;
         }
 
         .bike-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
         }
 
         /* ===== IMAGE ===== */
@@ -494,19 +521,19 @@
         }
 
         .price-from {
-            color: #dc2626;
+            color: #053C7C; /* ASJ Racing Red */
             font-size: 14px;
             font-weight: 700;
         }
 
         .price-amount {
-            color: #dc2626;
+            color: #053C7C; /* ASJ Racing Red */
             font-size: 30px;
             font-weight: 900;
         }
 
         .price-per {
-            color: #dc2626;
+            color: #053C7C; /* ASJ Racing Red */
             font-size: 14px;
             font-weight: 700;
         }
@@ -514,7 +541,7 @@
         /* ===== BUTTON ===== */
         .btn-adventure {
             width: 100%;
-            background: #c91c1c;
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%); /* ASJ Racing Red */
             color: #fff;
             border: none;
             padding: 14px;
@@ -528,15 +555,14 @@
         }
 
         .btn-adventure:hover {
-            background: #a31515;
+            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%); /* Racing Red Hover */
         }
-
     </style>
 @endpush
 
 @section('main')
     <div class="bikes-page-wrapper">
-       <div class="hero-section"></div>
+        <div class="hero-section"></div>
         <div class="container">
 
             <div class="search-filter-placeholder"></div>
@@ -577,20 +603,20 @@
 
                         @foreach($ccRanges as $rangeName => $rangeData)
                             @php
-                                // Get bikes in this range
-//                                $bikesInRange = collect();
-//                                foreach($rangeData['category_ids'] as $catId) {
-//                                    if(isset($groupedBikes[$catId])) {
-//                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
-//                                    }
-//                                }
-                            $bikesInRange = collect();
-                            foreach($rangeData['category_ids'] as $catId) {
-                                if(isset($groupedBikes[$catId])) {
-                                    $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
-                                }
-                            }
-                            $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
+                                        // Get bikes in this range
+                                //                                $bikesInRange = collect();
+                                //                                foreach($rangeData['category_ids'] as $catId) {
+                                //                                    if(isset($groupedBikes[$catId])) {
+                                //                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
+                                //                                    }
+                                //                                }
+                                        $bikesInRange = collect();
+                                        foreach ($rangeData['category_ids'] as $catId) {
+                                            if (isset($groupedBikes[$catId])) {
+                                                $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
+                                            }
+                                        }
+                                        $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
                             @endphp
 
                             @if($bikesInRange->count() > 0)
@@ -606,8 +632,8 @@
 
                                             <!-- Image -->
                                             <div class="bike-card-img-wrapper">
-                                                <a href="{{route('motorcycle.single',['slug' => $bike->slug])}}">
-                                                    <img src="{{asset(BIKE_PATH.$bike->images[0])}}" alt="{{$bike->name}}">
+                                                <a href="{{route('motorcycle.single', ['slug' => $bike->slug])}}">
+                                                    <img src="{{asset(BIKE_PATH . $bike->images[0])}}" alt="{{$bike->name}}">
                                                 </a>
                                             </div>
 
@@ -616,7 +642,7 @@
 
                                                 <!-- Title -->
                                                 <h4 class="bike-title">
-                                                    <a href="{{route('motorcycle.single',['slug' => $bike->slug])}}">
+                                                    <a href="{{route('motorcycle.single', ['slug' => $bike->slug])}}">
                                                         {{$bike->card_header ?? $bike->name}}
                                                     </a>
                                                 </h4>
@@ -641,7 +667,7 @@
                                                         <span>Adventure-Ready</span>
                                                     </div>
                                                 </div>
-{{--@dd($bike);--}}
+                                                {{--@dd($bike);--}}
                                                 <!-- Price -->
                                                 <div class="bike-price-block">
                                                     <span class="price-from">From</span>
@@ -650,19 +676,15 @@
                                                 </div>
 
                                                 <!-- Button -->
-                                                {{-- <button class="btn-adventure bikeRequestQuote"
-                                                        data-id="{{ $bike->id }}"
-                                                        data-name="{{ $bike->name }}"
-                                                        data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">
-                                                CHECK IT OUT
-                                                    </button> --}}
-                                                     <button class="btn-adventure btncheckout"
-                                                     data-slug="{{ $bike->slug }}"
-                                                        data-id="{{ $bike->id }}"
-                                                        data-name="{{ $bike->name }}"
-                                                        data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">
-                                                CHECK IT OUT
-                                                    </button>
+                                                {{-- <button class="btn-adventure bikeRequestQuote" data-id="{{ $bike->id }}"
+                                                    data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">
+                                                    CHECK IT OUT
+                                                </button> --}}
+                                                <button class="btn-adventure btncheckout" data-slug="{{ $bike->slug }}"
+                                                    data-id="{{ $bike->id }}" data-name="{{ $bike->name }}"
+                                                    data-image="{{ asset(BIKE_PATH . $bike->images[0]) }}">
+                                                    CHECK IT OUT
+                                                </button>
 
 
                                             </div>
@@ -674,10 +696,10 @@
                         @endforeach
                     @else
                         <div class="col-12">
-                             <div class="no-results">
-                                  <h4>No bikes found</h4>
-                                  <p>Try adjusting your search criteria</p>
-                             </div>
+                            <div class="no-results">
+                                <h4>No bikes found</h4>
+                                <p>Try adjusting your search criteria</p>
+                            </div>
                         </div>
                     @endif
                 </div>
@@ -692,10 +714,10 @@
 
 @section('script')
     <script !src="">
-        $(document).on('click', '.btncheckout', function() {
-    let slug = $(this).data('slug');
-    window.location.href = "/motorcycle/" + slug;
-});
+        $(document).on('click', '.btncheckout', function () {
+            let slug = $(this).data('slug');
+            window.location.href = "/motorcycle/" + slug;
+        });
         // Search functionality
         $('.search-bikes').on('keyup', function (e) {
             loadPageData(1);
@@ -734,7 +756,7 @@
         const maxValue = document.querySelector('.max-value');
 
         function updateSlider() {
-            if(!rangeMin || !rangeMax) return { min: 0, max: 100000 };
+            if (!rangeMin || !rangeMax) return { min: 0, max: 100000 };
 
             let min = parseInt(rangeMin.value);
             let max = parseInt(rangeMax.value);
@@ -751,11 +773,11 @@
             }
 
             // Update display values
-            if(minValue) minValue.textContent = min.toLocaleString();
-            if(maxValue) maxValue.textContent = max.toLocaleString();
+            if (minValue) minValue.textContent = min.toLocaleString();
+            if (maxValue) maxValue.textContent = max.toLocaleString();
 
             // Update slider track
-            if(sliderRange) {
+            if (sliderRange) {
                 const percentMin = (min / rangeMin.max) * 100;
                 const percentMax = (max / rangeMax.max) * 100;
 
@@ -766,20 +788,20 @@
             return { min, max };
         }
 
-        if(rangeMin) {
-            rangeMin.addEventListener('input', function() {
+        if (rangeMin) {
+            rangeMin.addEventListener('input', function () {
                 updateSlider();
             });
-            rangeMin.addEventListener('change', function() {
+            rangeMin.addEventListener('change', function () {
                 loadPageData(1);
             });
         }
 
-        if(rangeMax) {
-            rangeMax.addEventListener('input', function() {
+        if (rangeMax) {
+            rangeMax.addEventListener('input', function () {
                 updateSlider();
             });
-            rangeMax.addEventListener('change', function() {
+            rangeMax.addEventListener('change', function () {
                 loadPageData(1);
             });
         }
@@ -844,7 +866,7 @@
                         let path = response.data.image_url;
                         console.log(path)
                         $('.hero-section').css(
-                            'background','url('+path+') center center / cover no-repeat'
+                            'background', 'url(' + path + ') center center / cover no-repeat'
                         );
                     }
                 });

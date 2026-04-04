@@ -29,7 +29,7 @@
             transform: translateX(-50%);
             width: 100px;
             height: 4px;
-            background: linear-gradient(90deg, #F3364F, #d12a3f);
+            background: linear-gradient(90deg, #053C7C, #8A1821);
             border-radius: 2px;
         }
 
@@ -49,7 +49,7 @@
         }
 
         .card-header-custom {
-            background: linear-gradient(135deg, #F3364F 0%, #d12a3f 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
             color: white;
             padding: 1.5rem;
             border-bottom: none;
@@ -80,12 +80,12 @@
             border-radius: 15px;
             padding: 2rem;
             margin: 2rem 0;
-            border-left: 4px solid #F3364F;
+            border-left: 4px solid #053C7C;
             text-align: center;
         }
 
         .video-section h5 {
-            color: #F3364F;
+            color: #053C7C;
             font-weight: 600;
             margin-bottom: 1.5rem;
             font-size: 1.2rem;
@@ -114,7 +114,7 @@
         .happy-viewing {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #F3364F;
+            color: #053C7C;
             margin-top: 2rem;
         }
 

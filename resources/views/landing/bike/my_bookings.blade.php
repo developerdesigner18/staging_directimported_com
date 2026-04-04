@@ -153,8 +153,8 @@
         }
 
         .accessory-card.selected {
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 1px #0d6efd;
+            border-color: #053C7C;
+            box-shadow: 0 0 0 1px #053C7C;
         }
 
         .accessory-icon-box {
@@ -204,7 +204,7 @@
             width: 18px;
             height: 18px;
             border-radius: 50%;
-            background: #0d6efd;
+            background: #053C7C;
             color: white;
             display: none;
             align-items: center;

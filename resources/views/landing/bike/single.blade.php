@@ -1,5 +1,5 @@
-@extends('landing.master')
-@section('title',$bike->name)
+﻿@extends('landing.master')
+@section('title', $bike->name)
 
 @push('style')
     <style>
@@ -70,7 +70,7 @@
             background: #fff;
             border-radius: 12px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         /* Ensure parent row allows positioning */
@@ -79,7 +79,7 @@
         }
 
         .client-price-box {
-            background: #0f172a;
+            background: #de2b43;
             color: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -91,7 +91,7 @@
             margin: 5px 0;
             font-size: 26px;
             font-weight: 700;
-            color:white;
+            color: white;
         }
 
         .client-price-box small {
@@ -239,14 +239,16 @@
         }
 
         .bike-price-block .price {
-            color: #dc2626;
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 30px;
             font-weight: 900;
             line-height: 1;
         }
 
         .bike-price-block .period {
-            color: #dc2626;
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 14px;
             font-weight: 700;
             white-space: nowrap;
@@ -256,7 +258,8 @@
 
         .btn-view-details {
             width: 100%;
-            background: #b91c1c;
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
+            /* ASJ Racing Red */
             color: #fff;
             border: none;
             padding: 15px 18px;
@@ -264,7 +267,7 @@
             font-size: 13px;
             letter-spacing: 1.4px;
             text-transform: uppercase;
-            box-shadow: 0 6px 14px rgba(185,28,28,.35);
+            box-shadow: 0 6px 14px rgba(188, 33, 46, .35);
             cursor: pointer;
             transition: all .3s ease;
             text-decoration: none;
@@ -273,11 +276,13 @@
         }
 
         .btn-view-details:hover {
-            background: #991b1b;
+            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%);
+            /* Racing Red Hover */
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(185,28,28,.45);
+            box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
             color: #fff;
         }
+
         .related-bikes-section {
             margin-top: 60px;
             padding: 50px 0;
@@ -291,7 +296,7 @@
             border: 2px solid #e5e7eb;
             transition: all 0.3s ease;
             height: 100%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .related-bike-card:hover {
@@ -369,11 +374,12 @@
         .related-bike-view i {
             font-size: 14px;
         }
+
         .tech-spec-box {
             background: #ffffff;
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
         }
 
         .spec-item {
@@ -406,10 +412,11 @@
             font-weight: 700;
             margin-top: 4px;
         }
+
         .spec-icon i {
             font-size: 22px;
         }
-        
+
         /* Ensure datepicker is always on top */
         .ui-datepicker {
             z-index: 2000 !important;
@@ -421,9 +428,8 @@
 @section('main')
 
     <!-- HERO -->
-    <section class="rid-titlebar-2"
-             style="background: url('{{ isset($bike->banner) ? asset(BIKE_PATH.$bike->banner) : asset('uploads/bike_images/default-banner.jpg') }}');
-                background-size:cover; background-position:center; padding:80px 0; text-align:center; color:#fff;">
+    <section class="rid-titlebar-2" style="background: url('{{ isset($bike->banner) ? asset(BIKE_PATH . $bike->banner) : asset('uploads/bike_images/default-banner.jpg') }}');
+                        background-size:cover; background-position:center; padding:80px 0; text-align:center; color:#fff;">
         <div class="container">
             <h2>RENTAL DETAILS</h2>
         </div>
@@ -450,16 +456,14 @@
             <!-- LEFT CONTENT -->
             <div class="col-lg-8">
 
-                <img class="bike-details-main-img mb-3"
-                     src="{{ asset(BIKE_PATH.$bike->images[0]) }}"
-                     alt="{{ $bike->name }}">
+                <img class="bike-details-main-img mb-3" src="{{ asset(BIKE_PATH . $bike->images[0]) }}"
+                    alt="{{ $bike->name }}">
 
                 @if(count($bike->images) > 0)
                     <div class="row g-2">
                         @foreach($bike->images as $image)
                             <div class="col">
-                                <img src="{{ asset(BIKE_PATH.$image) }}"
-                                     class="bike-image">
+                                <img src="{{ asset(BIKE_PATH . $image) }}" class="bike-image">
                             </div>
                         @endforeach
                     </div>
@@ -487,10 +491,10 @@
                                 {!! $bike->description !!}
                             </div>
 
-<div class="tab-pane fade show active" id="specsTab">
+                            <div class="tab-pane fade show active" id="specsTab">
                                 <div class="tech-spec-box">
                                     <h4 class="tech-title">
-{{--                                        <i class="ri-settings-3-line text-danger me-2"></i>--}}
+                                        {{-- <i class="ri-settings-3-line text-danger me-2"></i>--}}
                                         Technical Specifications
                                     </h4>
 
@@ -593,17 +597,14 @@
                                 @endphp
                                 <div class="accordion-item position-relative">
                                     <h6 class="accordion-header" id="{{ $headingId }}">
-                                        <button class="rid-accordion-btn {{ $isFirst ? '' : 'collapsed' }}"
-                                                type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#{{ $collapseId }}"
-                                                aria-expanded="{{ $isFirst ? 'true' : 'false' }}">
+                                        <button class="rid-accordion-btn {{ $isFirst ? '' : 'collapsed' }}" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#{{ $collapseId }}"
+                                            aria-expanded="{{ $isFirst ? 'true' : 'false' }}">
                                             {{ $conf->title }}
                                         </button>
                                     </h6>
-                                    <div id="{{ $collapseId }}"
-                                         class="accordion-collapse collapse {{ $isFirst ? 'show' : '' }}"
-                                         data-bs-parent="#faqWrapDynamic">
+                                    <div id="{{ $collapseId }}" class="accordion-collapse collapse {{ $isFirst ? 'show' : '' }}"
+                                        data-bs-parent="#faqWrapDynamic">
                                         <div class="accordion-body">
                                             {!! $conf->description !!}
                                         </div>
@@ -635,31 +636,35 @@
 
                         <div class="mb-3">
                             <label class="form-label">PICK-UP DATE</label>
-                            <input type="text" class="form-control" id="single_pickup_date"  autocomplete="off" value="{{ date('Y-m-d') }}" >
+                            <input type="text" class="form-control" id="single_pickup_date" autocomplete="off"
+                                value="{{ date('Y-m-d') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">RETURN DATE</label>
-                            <input type="text" class="form-control" id="single_return_date" value="{{ date('Y-m-d') }}" autocomplete="off" >
+                            <input type="text" class="form-control" id="single_return_date" value="{{ date('Y-m-d') }}"
+                                autocomplete="off">
                         </div>
                         <input type="text" value="{{$bike->insurance_price}}" id="insurance_price" hidden>
 
-                        <button class="btn-check-availability mb-3"
-                                id="checkAvailabilityBtn"
-                                data-id="{{ $bike->id }}"
-                                data-name="{{ $bike->name }}"
-                                data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">
+                        <button class="btn-check-availability mb-3" id="checkAvailabilityBtn" data-id="{{ $bike->id }}"
+                            data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH . $bike->images[0]) }}">
                             CHECK AVAILABILITY
                         </button>
 
                         <div class="rates-section">
                             <h6>Rental Rates Per Day</h6>
                             <ul class="list-unstyled">
-                                <li><span>1 - 4 Days</span> <span>¥{{ number_format($bike->less_four_days_price) }} Per Day</span></li>
-                                <li><span>5 - 7 Days</span> <span>¥{{ number_format($bike->five_six_days_price) }} Per Day</span></li>
-                                <li><span>8 - 29 Days</span> <span>¥{{ number_format($bike->week_price) }} Per Day</span></li>
-                                <li><span>30+ Days</span> <span class="highlight-rate">¥{{ number_format($bike->month_price) }} Per Day</span></li>
-                                <li><span>Optional Insurance </span> <span>¥{{ number_format($bike->insurance_price) }} Per Day</span></li>
+                                <li><span>1 - 4 Days</span> <span>¥{{ number_format($bike->less_four_days_price) }} Per
+                                        Day</span></li>
+                                <li><span>5 - 7 Days</span> <span>¥{{ number_format($bike->five_six_days_price) }} Per
+                                        Day</span></li>
+                                <li><span>8 - 29 Days</span> <span>¥{{ number_format($bike->week_price) }} Per Day</span>
+                                </li>
+                                <li><span>30+ Days</span> <span
+                                        class="highlight-rate">¥{{ number_format($bike->month_price) }} Per Day</span></li>
+                                <li><span>Optional Insurance </span> <span>¥{{ number_format($bike->insurance_price) }} Per
+                                        Day</span></li>
                             </ul>
                         </div>
 
@@ -675,48 +680,47 @@
     </div>
 
     <!-- You Might Also Like Section -->
-   @if($relatedBikes->count() > 0)
-<div class="related-bikes-section">
-    <div class="container">
-        <h5 style="font-weight:600; margin-bottom:20px;">You Might Also Like</h5>
+    @if($relatedBikes->count() > 0)
+        <div class="related-bikes-section">
+            <div class="container">
+                <h5 style="font-weight:600; margin-bottom:20px;">You Might Also Like</h5>
 
-        <div class="row">
-            @foreach($relatedBikes as $relatedBike)
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="related-bike-card">
+                <div class="row">
+                    @foreach($relatedBikes as $relatedBike)
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="related-bike-card">
 
-                    <div class="related-bike-img">
-                        <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
-                            <img src="{{ asset(BIKE_PATH.$relatedBike->images[0]) }}"
-                                 alt="{{ $relatedBike->name }}">
-                        </a>
-                    </div>
+                                <div class="related-bike-img">
+                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
+                                        <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" alt="{{ $relatedBike->name }}">
+                                    </a>
+                                </div>
 
-                    <div class="related-bike-body">
-                        <div class="related-bike-title">
-                            {{ $relatedBike->name }}
-                        </div>
+                                <div class="related-bike-body">
+                                    <div class="related-bike-title">
+                                        {{ $relatedBike->name }}
+                                    </div>
 
-                        <div class="related-bike-bottom">
-                            <div class="related-bike-price">
-                                From ¥{{ number_format($relatedBike->less_four_days_price) }}
-                                <span>/per day</span>
+                                    <div class="related-bike-bottom">
+                                        <div class="related-bike-price">
+                                            From ¥{{ number_format($relatedBike->less_four_days_price) }}
+                                            <span>/per day</span>
+                                        </div>
+
+                                        <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
+                                            class="related-bike-view">
+                                            VIEW <i class="icofont-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
                             </div>
-
-                            <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
-                               class="related-bike-view">
-                                VIEW <i class="icofont-arrow-right"></i>
-                            </a>
                         </div>
-                    </div>
-
+                    @endforeach
                 </div>
             </div>
-            @endforeach
         </div>
-    </div>
-</div>
-@endif
+    @endif
 
 
 @endsection
@@ -758,7 +762,7 @@
             var sidebarOffset = $sidebar.offset().top;
             var sidebarWidth = $sidebar.width();
 
-            $(window).on('scroll resize', function() {
+            $(window).on('scroll resize', function () {
                 var scrollTop = $(window).scrollTop();
                 var parentOffset = $sidebarParent.offset().top;
                 var parentHeight = $sidebarParent.height();
@@ -820,7 +824,7 @@
             });
 
             // Thumbnail click smooth swap
-            $('.bike-image').on('click', function (){
+            $('.bike-image').on('click', function () {
                 let img = $(this).attr('src');
 
                 $('.bike-details-main-img').fadeOut(150, function () {
@@ -831,5 +835,3 @@
         });
     </script>
 @endsection
-
-

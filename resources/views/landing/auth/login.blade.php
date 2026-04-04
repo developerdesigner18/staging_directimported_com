@@ -85,13 +85,13 @@
         }
 
         .form-control:focus {
-            border-color: #F3364F;
+            border-color: #053C7C;
             box-shadow: 0 0 0 0.2rem rgba(243, 54, 79, 0.15);
             background: white;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #F3364F, #d12a47);
+            background: linear-gradient(45deg, #053C7C, #8A1821);
             border: none;
             border-radius: 12px;
             padding: 15px 30px;
@@ -106,7 +106,7 @@
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(243, 54, 79, 0.4);
-            background: linear-gradient(45deg, #d12a47, #b8243e);
+            background: linear-gradient(45deg, #8A1821, #b8243e);
         }
 
         .auth-links {
@@ -115,14 +115,14 @@
         }
 
         .auth-links a {
-            color: #F3364F;
+            color: #053C7C;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
         }
 
         .auth-links a:hover {
-            color: #d12a47;
+            color: #8A1821;
             text-decoration: underline;
         }
 
@@ -157,8 +157,8 @@
         }
 
         .form-check-input:checked {
-            background-color: #F3364F;
-            border-color: #F3364F;
+            background-color: #053C7C;
+            border-color: #053C7C;
         }
 
         .form-check-input:focus {
@@ -166,14 +166,14 @@
         }
 
         .forgot-password {
-            color: #F3364F;
+            color: #053C7C;
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
         }
 
         .forgot-password:hover {
-            color: #d12a47;
+            color: #8A1821;
             text-decoration: underline;
         }
 
@@ -186,7 +186,7 @@
 
         .alert-danger {
             background: rgba(243, 54, 79, 0.1);
-            color: #F3364F;
+            color: #053C7C;
         }
 
         @media (max-width: 768px) {
