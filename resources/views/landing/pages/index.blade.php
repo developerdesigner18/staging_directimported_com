@@ -528,40 +528,55 @@
             box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
         }
 
-        .cta-box {
-            padding: 40px 20px;
+        .top-20vh {
+            top: 20vh;
+        }
+
+        /* Reclaimed CTA Box Fixed Visibility */
+        #reclaimed-cta-box {
+            padding: 30px 20px;
             text-align: center;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 560px;
+            margin: -112px auto 0;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            position: relative;
+            z-index: 999;
         }
 
         .cta-title {
             font-weight: 800;
-            /*font-size: 1.5rem;*/
+            font-size: 24px;
             color: #000;
             margin-bottom: 20px;
+            letter-spacing: -0.3px;
+            text-transform: uppercase;
         }
 
         .cta-btn {
-            background-color: #053C7C;
-            border: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            border-radius: 5px;
-            width: 100%;
-            padding: 15px;
-            color: white;
             display: inline-block;
-            transition: all 0.3s ease;
+            background: linear-gradient(180deg, #1e4c8f 0%, #163a6b 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 14px 35px;
+            border-radius: 6px;
             text-decoration: none;
+            transition: 0.3s ease;
+            /* text-transform: uppercase; */
         }
 
-        .cta-btn:hover {
-            background-color: #042B59;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        ..cta-btn {
+            display: inline-block;
+            background: linear-gradient(180deg, #1e4c8f 0%, #163a6b 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 14px 35px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s ease;
         }
 
         .top-20vh {
@@ -645,6 +660,20 @@
         </section>
     @endif
     <!-- Banner Section End -->
+
+    <!-- Filter/CTA Section Start -->
+    <section class="rid-filter-1"
+        style="display: block !important; visibility: visible !important; opacity: 1 !important; position: relative !important; z-index: 9998 !important;">
+        <div class="container">
+            <div class="cta-box" id="reclaimed-cta-box">
+                <h2 class="cta-title">Buy cars from Japan</h2>
+                <a href="http://127.0.0.1:8000/motorcycle" class="cta-btn">
+                    Search auctions live here
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Filter/CTA Section End -->
 
     <!-- Our Services Section Start -->
     <section id="ourservices">

@@ -107,7 +107,8 @@
         }
 
         .engine-btn.active {
-            background: #053C7C; /* ASJ Racing Red */
+            background: #053C7C;
+            /* ASJ Racing Red */
             color: white;
             box-shadow: 0 4px 15px rgba(188, 33, 46, 0.3);
         }
@@ -215,12 +216,14 @@
         /*    display: block;*/
         /*    font-size: 13px;*/
         /*    font-weight: 700;*/
-        /*    color: #053C7C; /* ASJ Racing Red */*/
+        /*    color: #053C7C; /* ASJ Racing Red */
+        */
         /*    margin-bottom: 2px;*/
         /*}*/
 
         .bike-price-block .price {
-            color: #053C7C; /* ASJ Racing Red */
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 30px;
             /* text-3xl */
             font-weight: 900;
@@ -229,7 +232,8 @@
         }
 
         .bike-price-block .period {
-            color: #053C7C; /* ASJ Racing Red */
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 14px;
             /* text-sm */
             font-weight: 700;
@@ -241,7 +245,8 @@
         /* ===== Button ===== */
         .btn-quote {
             width: 100%;
-            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%); /* ASJ Racing Red */
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
+            /* ASJ Racing Red */
             color: #fff;
             border: none;
             padding: 15px 18px;
@@ -255,7 +260,8 @@
         }
 
         .btn-quote:hover {
-            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%); /* Racing Red Hover */
+            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%);
+            /* Racing Red Hover */
             transform: translateY(-2px);
             box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
         }
@@ -521,19 +527,22 @@
         }
 
         .price-from {
-            color: #053C7C; /* ASJ Racing Red */
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 14px;
             font-weight: 700;
         }
 
         .price-amount {
-            color: #053C7C; /* ASJ Racing Red */
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 30px;
             font-weight: 900;
         }
 
         .price-per {
-            color: #053C7C; /* ASJ Racing Red */
+            color: #053C7C;
+            /* ASJ Racing Red */
             font-size: 14px;
             font-weight: 700;
         }
@@ -541,7 +550,8 @@
         /* ===== BUTTON ===== */
         .btn-adventure {
             width: 100%;
-            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%); /* ASJ Racing Red */
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
+            /* ASJ Racing Red */
             color: #fff;
             border: none;
             padding: 14px;
@@ -555,14 +565,15 @@
         }
 
         .btn-adventure:hover {
-            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%); /* Racing Red Hover */
+            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%);
+            /* Racing Red Hover */
         }
     </style>
 @endpush
 
 @section('main')
     <div class="bikes-page-wrapper">
-        <div class="hero-section"></div>
+        {{-- <div class="hero-section"></div> --}}
         <div class="container">
 
             <div class="search-filter-placeholder"></div>
@@ -603,20 +614,20 @@
 
                         @foreach($ccRanges as $rangeName => $rangeData)
                             @php
-                                        // Get bikes in this range
+                                // Get bikes in this range
                                 //                                $bikesInRange = collect();
                                 //                                foreach($rangeData['category_ids'] as $catId) {
                                 //                                    if(isset($groupedBikes[$catId])) {
                                 //                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
                                 //                                    }
                                 //                                }
-                                        $bikesInRange = collect();
-                                        foreach ($rangeData['category_ids'] as $catId) {
-                                            if (isset($groupedBikes[$catId])) {
-                                                $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
-                                            }
-                                        }
-                                        $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
+                                $bikesInRange = collect();
+                                foreach ($rangeData['category_ids'] as $catId) {
+                                    if (isset($groupedBikes[$catId])) {
+                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
+                                    }
+                                }
+                                $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
                             @endphp
 
                             @if($bikesInRange->count() > 0)
