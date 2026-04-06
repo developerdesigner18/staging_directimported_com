@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\BikeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AccessoryController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\CustomMailController;
@@ -207,6 +208,17 @@ use App\Http\Controllers\Admin\UserPermissionController;
             Route::post('/update', 'updateCategory')->name('update');
             Route::post('/delete', 'deleteCategory')->name('delete');
         });
+    });
+
+    // Services
+    Route::controller(ServiceController::class)->prefix('service')->name('service.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update/{id}', 'update')->name('update');
+        Route::post('/delete', 'delete')->name('delete');
+        Route::post('/sort', 'updateSort')->name('sort');
     });
 
     // Locations

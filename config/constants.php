@@ -44,5 +44,8 @@ if (!defined('GALLERY_PATH'))
 if (!defined('BIKE_PATH'))
     define('BIKE_PATH', 'uploads/bike_images/');
 
+if (!defined('SERVICE_PATH'))
+    define('SERVICE_PATH', 'uploads/service_images/');
+
 if (!defined('DEFAULT_PATH'))
     define('DEFAULT_PATH', 'uploads/default/');

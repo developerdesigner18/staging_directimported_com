@@ -7,19 +7,19 @@
         <!-- Dark Logo-->
         <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{asset('assets/logo/main.png')}}" alt="" height="20">
-                    </span>
+                        <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="20" width="200">
+                    </span>2
             <span class="logo-lg">
-                        <img src="{{asset('assets/logo/main.png')}}" alt="" height="100">
+                        <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="100" width="200">
                     </span>
         </a>
         <!-- Light Logo-->
         <a href="{{route('admin.dashboard')}}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{asset('assets/logo/main.png')}}" alt="" height="20">
+                        <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="20" width="200">
                     </span>
             <span class="logo-lg">
-                        <img src="{{asset('assets/logo/main.png')}}" alt="" height="100">
+                        <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="100" width="200">
                     </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -76,6 +76,14 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                @endif
+
+                @if($user->hasRole('admin') || $user->can('services'))
+                <li class="nav-item">
+                    <a href="{{route('admin.service.index')}}" class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif">
+                        <i class="bx bx-layer"></i> <span data-key="t-dashboards">Services</span>
+                    </a>
                 </li>
                 @endif
 

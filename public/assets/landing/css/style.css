@@ -5212,7 +5212,7 @@ body.overlay-active:before {
 
 .cta-btn:hover {
     background-image: linear-gradient(180deg, #053C7C 0%, #042B59 100%);
-    color: #de2b43;
+    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
