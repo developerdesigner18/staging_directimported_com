@@ -322,7 +322,7 @@
         }
 
         .profile-container {
-            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
             min-height: 200px;
             position: relative;
         }
@@ -344,7 +344,7 @@
         }
 
         .nav-tabs .nav-link.active {
-            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
             color: white;
             border: none;
         }
@@ -456,7 +456,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
             border: none;
             border-radius: 8px;
             padding: 10px 25px;
@@ -528,7 +528,7 @@
         .page-item.active .page-link {
             z-index: 3;
             color: #fff;
-            background: linear-gradient(135deg, #053C7C 0%, #8A1821 100%);
+            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
             border: none;
         }
         .swal2-actions{
@@ -1489,3 +1489,4 @@
         }
     </script>
 @endsection
+

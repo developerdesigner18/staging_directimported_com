@@ -57,7 +57,9 @@ class BikeController extends Controller
         // Map categories to CC ranges
         $ccRanges = $this->mapCategoriesToRanges($categoryList);
 
-        return view('landing.bike.bikes', compact('categoryList', 'bikesList', 'bikesGroupedByCategory', 'limit', 'totalPages', 'ccRanges'));
+        $banner = Banner::first();
+
+        return view('landing.bike.bikes', compact('categoryList', 'bikesList', 'bikesGroupedByCategory', 'limit', 'totalPages', 'ccRanges', 'banner'));
     }
 
     public function pagination(Request $request)

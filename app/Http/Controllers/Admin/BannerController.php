@@ -80,7 +80,7 @@ class BannerController extends Controller
             $exists = true;
         }
         else {
-            $imageUrl = asset('uploads/bike_images/default-banner.jpg');
+            $imageUrl = asset('assets/landing/images/hero-bike.png');
             $exists = false;
         }
 

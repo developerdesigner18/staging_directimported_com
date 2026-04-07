@@ -12,7 +12,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $service = Service::all();
+        return view("landing.pages.services", compact("service"));
     }
 
     /**
@@ -36,7 +37,8 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        $services = Service::all();
+        return view('landing.pages.services', compact('service'));
     }
 
     /**

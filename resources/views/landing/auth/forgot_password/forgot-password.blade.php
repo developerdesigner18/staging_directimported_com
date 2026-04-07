@@ -91,7 +91,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #053C7C, #8A1821);
+            background: linear-gradient(45deg, #053C7C, #141733);
             border: none;
             border-radius: 12px;
             padding: 15px 30px;
@@ -387,3 +387,4 @@
 
     </script>
 @endsection
+

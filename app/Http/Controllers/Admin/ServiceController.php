@@ -99,7 +99,7 @@ class ServiceController extends Controller
             $service->save();
 
             DB::commit();
-            return $this->sendSuccess(__('Service added successfully!'));
+            return $this->sendSuccess('Service added successfully!');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());

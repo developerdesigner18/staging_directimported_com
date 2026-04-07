@@ -1,4 +1,4 @@
-ï»¿@extends('landing.master')
+@extends('landing.master')
 @section('title', $bike->name)
 
 @push('style')
@@ -630,7 +630,7 @@
 
                         <div class="client-price-box">
                             <small>STARTING FROM</small>
-                            <h4>Â¥{{ number_format($bike->month_price) }}</h4>
+                            <h4>¥{{ number_format($bike->month_price) }}</h4>
                             <span>/ Per Day</span>
                         </div>
 
@@ -655,15 +655,15 @@
                         <div class="rates-section">
                             <h6>Rental Rates Per Day</h6>
                             <ul class="list-unstyled">
-                                <li><span>1 - 4 Days</span> <span>Â¥{{ number_format($bike->less_four_days_price) }} Per
+                                <li><span>1 - 4 Days</span> <span>¥{{ number_format($bike->less_four_days_price) }} Per
                                         Day</span></li>
-                                <li><span>5 - 7 Days</span> <span>Â¥{{ number_format($bike->five_six_days_price) }} Per
+                                <li><span>5 - 7 Days</span> <span>¥{{ number_format($bike->five_six_days_price) }} Per
                                         Day</span></li>
-                                <li><span>8 - 29 Days</span> <span>Â¥{{ number_format($bike->week_price) }} Per Day</span>
+                                <li><span>8 - 29 Days</span> <span>¥{{ number_format($bike->week_price) }} Per Day</span>
                                 </li>
                                 <li><span>30+ Days</span> <span
-                                        class="highlight-rate">Â¥{{ number_format($bike->month_price) }} Per Day</span></li>
-                                <li><span>Optional Insurance </span> <span>Â¥{{ number_format($bike->insurance_price) }} Per
+                                        class="highlight-rate">¥{{ number_format($bike->month_price) }} Per Day</span></li>
+                                <li><span>Optional Insurance </span> <span>¥{{ number_format($bike->insurance_price) }} Per
                                         Day</span></li>
                             </ul>
                         </div>
@@ -703,7 +703,7 @@
 
                                     <div class="related-bike-bottom">
                                         <div class="related-bike-price">
-                                            From Â¥{{ number_format($relatedBike->less_four_days_price) }}
+                                            From ¥{{ number_format($relatedBike->less_four_days_price) }}
                                             <span>/per day</span>
                                         </div>
 

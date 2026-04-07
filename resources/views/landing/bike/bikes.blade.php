@@ -299,20 +299,12 @@
 
         /* IMAGE-ONLY HERO */
         .hero-section {
-            display: none;
             position: relative;
             width: 100%;
             left: 0px;
             right: 0px;
             height: 420px;
-
-                {
-                    {
-                    --background: url('{{ asset("assets/landing/images/hero-bike.png") }}') center center / cover no-repeat;
-                    --
-                }
-            }
-
+            background: url('{{ isset($banner) && $banner->image ? asset(BIKE_PATH . $banner->image) : asset("assets/landing/images/hero-bike.png") }}') center center / cover no-repeat;
             overflow: hidden;
         }
 

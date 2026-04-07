@@ -126,3 +126,4 @@
     </table>
     <input type="hidden" name="totalPrice[]" value="{{ $totalPrice }}">
 @endforeach
+

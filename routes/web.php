@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BikeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPassword\ForgotPasswordController;
 use App\Http\Controllers\ForgotPassword\ResetPasswordController;
+use Laravel\SerializableClosure\Contracts\Serializable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,8 +30,11 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/useful-links', 'usefulLinks')->name('useful.links');
     Route::get('/japan-law', 'japanLaw')->name('japan.law');
     Route::get('/ride-japan-law', 'rideJapanLaw')->name('ride.japan.law');
-    Route::get('/reviews','reviews')->name('reviews');
-    Route::get('/faqs','faqs')->name('faqs');
+    Route::get('/reviews', 'reviews')->name('reviews');
+    Route::get('/faqs', 'faqs')->name('faqs');
+});
+Route::controller(ServiceController::class)->prefix('services')->name('services.')->group(function () {
+    Route::get('/', 'index')->name('view');
 });
 Route::middleware('profile')->group(function () {
     Route::controller(BikeController::class)->group(function () {
@@ -75,7 +80,9 @@ Route::group(['middleware' => 'auth:web'], function () {
         Route::post('/profile-document-update', 'profileDocumentUpdate')->name('profile.documents.update');
         Route::post('/profile-change-password', 'profileChangePassword')->name('profile.change.password');
         Route::get('/logout', 'logout')->name('logout');
-        Route::get('/back-to-admin', 'backToAdmin'
+        Route::get(
+            '/back-to-admin',
+            'backToAdmin'
         )->name('back.to.admin');
     });
 });

@@ -8,6 +8,7 @@ use App\Models\Bike;
 use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\HeroSlider;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -24,6 +25,7 @@ class HomeController extends Controller
         $sliders = HeroSlider::orderBy('created_at', 'asc')->get();
         $gallery = Gallery::orderBy('created_at', 'desc')->get();
         $faqs = Faq::orderBy('created_at', 'desc')->get();
+        $services = Service::orderBy('created_at', 'desc')->limit(3)->get();
 
         $bikes = Bike::where('is_recommended', 1)->orderBy('created_at', 'desc')->limit(6)->get();
         $color = Color::first();
@@ -35,14 +37,14 @@ class HomeController extends Controller
             return $item->image;
         });
         $sliderImages = json_encode([...$array1, ...$array2]);
-        return view('landing.pages.index', compact('sliders', 'gallery', 'bikes','sliderImages','color','faqs'));
+        return view('landing.pages.index', compact('sliders', 'gallery', 'bikes', 'sliderImages', 'color', 'faqs', 'services'));
     }
 
     public function rentalPolicies()
     {
-        $policies=RentalPolicies::get();
+        $policies = RentalPolicies::get();
 
-        return view('landing.pages.rental-policies',compact('policies'));
+        return view('landing.pages.rental-policies', compact('policies'));
     }
 
     public function licenceRequirement()
@@ -83,7 +85,7 @@ class HomeController extends Controller
     public function faqs()
     {
         $faqs = Faq::orderBy('created_at', 'desc')->get();
-//        dd($faqs);
+        //        dd($faqs);
         return view('landing.pages.faqs', compact('faqs'));
     }
     public function contactPost(Request $request)
