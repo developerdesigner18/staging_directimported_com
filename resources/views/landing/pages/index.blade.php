@@ -612,18 +612,18 @@
         </div>
     </section>
     <!-- Filter/CTA Section End -->
-    @if($services->isNotEmpty())
-        <!-- Our Services Section Start -->
-        <section id="ourservices">
-            <div class="container">
-                <div class="inner-container-bg">
-                    <div class="d-flex justify-content-between align-items-center mb-5">
-                        <div class="section-title">
-                            <h2>Our Services</h2>
-                        </div>
-                        {{-- <a href="#" class="show-all-link">Show All</a> --}}
+    <!-- Our Services Section Start -->
+    <section id="ourservices">
+        <div class="container">
+            <div class="inner-container-bg">
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div class="section-title">
+                        <h2>Our Services</h2>
                     </div>
+                    {{-- <a href="#" class="show-all-link">Show All</a> --}}
+                </div>
 
+                @if($services->isNotEmpty())
                     <div class="row g-4">
                         @foreach ($services as $service)
                             <!-- Auction Inspection Services -->
@@ -648,10 +648,14 @@
                             READ MORE <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
-                </div>
+                @else
+                    <div class="text-center py-5">
+                        <p class="text-muted">No services available right now.</p>
+                    </div>
+                @endif
             </div>
-        </section>
-    @endif
+        </div>
+    </section>
 
 
     <!--  How-it-work Section Start-->
