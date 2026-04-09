@@ -5,14 +5,14 @@
             <div class="row">
                 <div class="col-sm-9 col-md-8 col-8">
                     <div class="rid-contact">
-                        <div class="business-contact">
+                        {{-- <div class="business-contact">
                             <a href="tel:+81648642081" class="text-white">
                                 <i class="flaticon-telephone-call me-2"></i>
                                 <span class="mr-40 d-none d-md-inline">
                                     +81 6 4864 2081
                                 </span>
                             </a>
-                        </div>
+                        </div> --}}
                         <div class="business-hour">
                             <div class="business-hour-mob">
                                 <i class="flaticon-clock me-2" data-bs-toggle="tooltip" title="Tokyo Time"
@@ -31,11 +31,7 @@
                 <div class="col-sm-4 col-md-4 col-12 d-flex justify-content-end align-items-center">
                     <div class="rid-social-links me-3">
                         <ul class="list-inline d-flex mb-0">
-                            <li class="list-inline-item mx-1">
-                                <a href="https://twitter.com" target="_blank" class="social-icon twitter bg-black">
-                                    <i class="bxl bx-twitter-x"></i>
-                                </a>
-                            </li>
+
                             <li class="list-inline-item mx-1">
                                 <a href="https://www.facebook.com/bikerentaljapan/" target="_blank"
                                     class="social-icon facebook">
@@ -88,11 +84,15 @@
                             <ul class="list-inline">
                                 <li class="list-inline-item"><a class="@if(request()->is('/')) active @endif"
                                         href="{{route('landing')}}">Home</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0);">Tours</a></li>
+                                <li class="list-inline-item"><a href="javascript:void(0);">About Us</a></li>
+                                {{-- <li class="list-inline-item"><a href="{{ route('motorcycle') }}"
+                                        class="@if(request()->is('motorcycle')) active @endif">Motorcycles</a></li> --}}
                                 <li class="list-inline-item"><a href="{{ route('motorcycle') }}"
-                                        class="@if(request()->is('motorcycle')) active @endif">Motorcycles</a></li>
+                                        class="@if(request()->is('motorcycle')) active @endif">Auction Access</a></li>
+                                <li class="list-inline-item"><a href="{{ route('services.view') }}"
+                                        class="@if(request()->is('services')) active @endif">Services</a></li>
 
-                                <li class="list-inline-item dropdown">
+                                {{-- <li class="list-inline-item dropdown">
                                     <a href="javascript:void (0);"
                                         class="dropdown-toggle @if(request()->is('my-bookings')) active @endif"
                                         data-bs-toggle="dropdown">Bookings</a>
@@ -101,12 +101,12 @@
                                                 class="font-10 m-0 dropdown-a @if(request()->is('my-bookings')) active @endif">Request
                                                 a Quote</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                                 <li class="list-inline-item"><a class="@if(request()->is('contact')) active @endif"
                                         href="{{route('contact')}}">Contact</a></li>
 
 
-                                <li class="list-inline-item dropdown">
+                                {{-- <li class="list-inline-item dropdown">
                                     <a href="javascript:void (0);"
                                         class="dropdown-toggle @if(request()->is(['rental-policies', 'licence-requirement', 'about-our-bikes', 'useful-links', 'japan-law', 'ride-japan-law'])) active @endif"
                                         data-bs-toggle="dropdown">More</a>
@@ -131,7 +131,7 @@
                                                 class="m-0 dropdown-a @if(request()->is('ride-japan-law')) active @endif">How
                                                 to Ride Safe in Japan</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                             </ul>
                         </nav>
                         <button class="rid-offcanvas-btn d-lg-none" aria-label="Main Menu Icon">

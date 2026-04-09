@@ -317,23 +317,24 @@
         <!--   Rid Menu     -->
         <div class="rid-menu d-flex justify-content-center text-center">
             <ul>
-                <li><a class="active" href="{{route('landing')}}">Home</a></li>
-                <li><a href="#">Tours</a></li>
-                <li><a href="{{ route('motorcycle') }}">Motorcycles</a></li>
-                <li class="dropdown">
+                <li><a class="active home" style="color:white !important;" href="{{route('landing')}}">Home</a></li>
+                <li><a href="{{route('contact')}}">Contact</a></li>
+                <li><a href="{{ route('motorcycle') }}">Auction Access</a></li>
+                <li><a href="{{ route('services.view') }}">Services</a></li>
+                {{-- <li class="dropdown">
                     <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('my.bookings') }}">Request a Quote</a></li>
                     </ul>
-                </li>
-                <li><a href="{{route('contact')}}">Contact</a></li>
+                </li> --}}
+
                 @if(!Auth::guard('web')->check())
                     <li><a href="{{ route('register') }}">Register</a></li>
                     <li><a href="{{ route('login') }}">Log in</a></li>
                     <li><a href="{{route('faqs')}}">FAQs</a></li>
                 @endif
 
-                <li class="dropdown">
+                {{-- <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">More</a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('rental.policies') }}">Rental Policies</a></li>
@@ -343,7 +344,7 @@
                         <li><a href="{{ route('japan.law') }}">Motorcycle Laws in Japan</a></li>
                         <li><a href="{{ route('ride.japan.law') }}">How to Ride Safe in Japan</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 @if (Auth::check())
 
                     <li><a href="{{route('logout')}}">Logout</a></li>

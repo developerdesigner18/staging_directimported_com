@@ -83,7 +83,7 @@ class BikeController extends Controller
             // Apply range filter if not "ALL"
             if ($range !== '0' && $range !== 0) {
                 $categoryIds = $this->getCategoryIdsByRange($range, $allCategories);
-                if (! empty($categoryIds)) {
+                if (!empty($categoryIds)) {
                     $query->whereIn('category_id', $categoryIds);
                 }
             }
@@ -109,7 +109,7 @@ class BikeController extends Controller
             }
 
             $html = '';
-            if (! $bikesList->isEmpty()) {
+            if (!$bikesList->isEmpty()) {
                 // Group bikes by category
                 $bikesGrouped = $bikesList->groupBy('category_id');
 
@@ -126,32 +126,32 @@ class BikeController extends Controller
                     $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
                     if ($bikesInRange->count() > 0) {
                         // Add range section header
-                        $html .= '<div class="col-12 category-section-header" id="cc" data-range="'.$rangeName.'">
-                            <span class="cc-range-title">'.e($rangeName).'</span>
+                        $html .= '<div class="col-12 category-section-header" id="cc" data-range="' . $rangeName . '">
+                            <span class="cc-range-title">' . e($rangeName) . '</span>
                         </div>';
 
                         // Add bikes in this range
                         foreach ($bikesInRange as $bike) {
                             $categoryName = $bike->category->name ?? 'Top Rated';
                             $description = \Illuminate\Support\Str::limit(strip_tags($bike->description), 40);
-                            $imageUrl = asset(BIKE_PATH.$bike->images[0]);
+                            $imageUrl = asset(BIKE_PATH . $bike->images[0]);
                             $singleRoute = route('motorcycle.single', ['slug' => $bike->slug]);
 
                             $html .= '<div class="col-lg-4 col-md-6 mb-4">
                                 <div class="bike-card">
                                     <div class="bike-card-img-wrapper">
-                                        <a href="'.$singleRoute.'">
-                                            <img src="'.$imageUrl.'" alt="'.$bike->name.'">
+                                        <a href="' . $singleRoute . '">
+                                            <img src="' . $imageUrl . '" alt="' . $bike->name . '">
                                         </a>
                                     </div>
                                     <div class="bike-card-body">
                                         <h4 class="bike-title">
-                                            <a href="'.$singleRoute.'">
-                                                '.($bike->card_header ?? $bike->name).'
+                                            <a href="' . $singleRoute . '">
+                                                ' . ($bike->card_header ?? $bike->name) . '
                                             </a>
                                         </h4>
                                         <div class="bike-subtitle">
-                                            '.($bike->card_subtitle ?? 'Premium Adventure Touring').'
+                                            ' . ($bike->card_subtitle ?? 'Premium Adventure Touring') . '
                                         </div>
                                         <div class="bike-emblem-row">
                                             <div class="emblem-item"><i class="bx bx-helmet"></i><span>Geared Up</span></div>
@@ -160,15 +160,15 @@ class BikeController extends Controller
                                         </div>
                                         <div class="bike-price-block">
                                             <span class="price-from">From</span>
-                                            <span class="price-amount">¥'.number_format($bike->month_price).'</span>
+                                            <span class="price-amount">¥' . number_format($bike->month_price) . '</span>
                                             <span class="price-per">/ Per Day</span>
                                         </div>
                                         <button class="btn-adventure btncheckout"
-                                        data-slug="'.$bike->slug.'"
-                                                data-id="'.$bike->id.'"
-                                                data-name="'.$bike->name.'"
-                                                data-insurance="'.$bike->insurance_price.'"
-                                                data-image="'.$imageUrl.'">
+                                        data-slug="' . $bike->slug . '"
+                                                data-id="' . $bike->id . '"
+                                                data-name="' . $bike->name . '"
+                                                data-insurance="' . $bike->insurance_price . '"
+                                                data-image="' . $imageUrl . '">
                                             CHECK IT OUT
                                         </button>
                                     </div>
@@ -402,40 +402,40 @@ class BikeController extends Controller
                 $subtotal = $price * $totalDays;
                 $details .= '<table class="table table-bordered mb-4 border-0">
                     <tr>
-                        <td colspan="2"><h5 class="text-center fw-bold m-0">BOOKING QUOTE #'.($key + 1).'</h5></td>
+                        <td colspan="2"><h5 class="text-center fw-bold m-0">BOOKING QUOTE #' . ($key + 1) . '</h5></td>
                     </tr>
                     <tbody>
                         <tr>
                             <td>Full name</td>
-                            <td>'.($booking->user->first_name.' '.($booking->user->last_name ?? '')).'</td>
+                            <td>' . ($booking->user->first_name . ' ' . ($booking->user->last_name ?? '')) . '</td>
                         </tr>
                         <tr>
                             <td>E-mail</td>
-                            <td>'.$booking->user->email.'</td>
+                            <td>' . $booking->user->email . '</td>
                         </tr>
                         <tr>
                             <td>Mobile</td>
-                            <td>'.$booking->user->mobile.'</td>
+                            <td>' . $booking->user->mobile . '</td>
                         </tr>
                         <tr>
                             <td>Bike Name</td>
-                            <td>'.$booking->bike->name.'</td>
+                            <td>' . $booking->bike->name . '</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
-                            <td>'.$totalDays.'</td>
+                            <td>' . $totalDays . '</td>
                         </tr>
                         <tr>
                             <td>Start Date</td>
-                            <td>'.date('d/m/Y', strtotime($booking->start_date)).' Pickup '.date('H:i A', strtotime($booking->start_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($booking->start_date)) . ' Pickup ' . date('H:i A', strtotime($booking->start_time)) . '</td>
                         </tr>
                         <tr>
                             <td>End Date</td>
-                            <td>'.date('d/m/Y', strtotime($booking->end_date)).' Drop off '.date('H:i A', strtotime($booking->end_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($booking->end_date)) . ' Drop off ' . date('H:i A', strtotime($booking->end_time)) . '</td>
                         </tr>
                         <tr>
                             <td>Total Bike Price</td>
-                            <td>¥'.$price.'</td>
+                            <td>¥' . $price . '</td>
                         </tr>
                     </tbody>
                     <tr>
@@ -453,8 +453,8 @@ class BikeController extends Controller
                         $subtotal += $accPrice;
                         $details .= '
                                 <tr class="">
-                                    <td>'.$accData->name.'</td>
-                                    <td>¥'.$accPrice.'</td>
+                                    <td>' . $accData->name . '</td>
+                                    <td>¥' . $accPrice . '</td>
                                 </tr>';
                     }
                 }
@@ -467,15 +467,15 @@ class BikeController extends Controller
                 $details .= '
                         <tr>
                             <td>TAX 10%</td>
-                            <td>¥'.number_format($tax).'</td>
+                            <td>¥' . number_format($tax) . '</td>
                         </tr>
                         <tr>
                             <td>Card Fee 3.65%</td>
-                            <td>¥'.number_format($cardFee).'</td>
+                            <td>¥' . number_format($cardFee) . '</td>
                         </tr>
                        <tr class="fw-bold fs-5">
                             <td>Total Price</td>
-                            <td>¥'.number_format($totalPrice).'</td>
+                            <td>¥' . number_format($totalPrice) . '</td>
                        </tr>
                     </tbody>
                 </table>';
@@ -510,35 +510,35 @@ class BikeController extends Controller
                     <tbody>
                         <tr>
                             <td>Full name</td>
-                            <td>'.($request->first_name.' '.($request->last_name ?? '')).'</td>
+                            <td>' . ($request->first_name . ' ' . ($request->last_name ?? '')) . '</td>
                         </tr>
                         <tr>
                             <td>E-mail</td>
-                            <td>'.$request->email.'</td>
+                            <td>' . $request->email . '</td>
                         </tr>
                         <tr>
                             <td>Mobile</td>
-                            <td>'.$request->mobile.'</td>
+                            <td>' . $request->mobile . '</td>
                         </tr>
                         <tr>
                             <td>Bike Name</td>
-                            <td>'.$request->bike_name[$key].'</td>
+                            <td>' . $request->bike_name[$key] . '</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
-                            <td>'.$totalDays.'</td>
+                            <td>' . $totalDays . '</td>
                         </tr>
                         <tr>
                             <td>Start Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->start_date)).' Pickup '.date('H:i A', strtotime($request->start_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->start_date)) . ' Pickup ' . date('H:i A', strtotime($request->start_time)) . '</td>
                         </tr>
                         <tr>
                             <td>End Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('H:i A', strtotime($request->end_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->end_date)) . ' Drop off ' . date('H:i A', strtotime($request->end_time)) . '</td>
                         </tr>
                         <tr>
                             <td>Total Bike Price</td>
-                            <td>¥'.$request->price[$key].'</td>
+                            <td>¥' . $request->price[$key] . '</td>
                         </tr>
                     </tbody>
                     <tr>
@@ -547,7 +547,7 @@ class BikeController extends Controller
                     <tbody>
                         <tr>
                             <td>Insurance</td>
-                            <td>'.(($insurance_price > 0) ? '¥'.$insurance_price : 'NA').'</td>
+                            <td>' . (($insurance_price > 0) ? '¥' . $insurance_price : 'NA') . '</td>
                         </tr>';
                     if ($acc_bike_id) {
                         foreach ($acc_bike_id as $acc_id) {
@@ -555,15 +555,15 @@ class BikeController extends Controller
                             $accPrice = ($accData->price > 0 ? $accData->price * ($totalDays > 0 ? $totalDays : 1) : 0);
                             $details .= '
                                 <tr class="">
-                                    <td>'.$accData->name.'</td>
-                                    <td>¥'.$accPrice.'</td>
+                                    <td>' . $accData->name . '</td>
+                                    <td>¥' . $accPrice . '</td>
                                 </tr>';
                         }
                     }
                     $details .= '
                            <tr class="fw-bold fs-5">
                                 <td>Total Price</td>
-                                <td>¥'.$request->totalPrice[$key].'</td>
+                                <td>¥' . $request->totalPrice[$key] . '</td>
                            </tr>
                         </tbody>
                     </table>';
@@ -653,7 +653,7 @@ class BikeController extends Controller
                     if ($acc_bike_id) {
                         foreach ($acc_bike_id as $acc_id) {
                             $accData = Accessories::find($acc_id);
-                            if (! $accData) {
+                            if (!$accData) {
                                 continue;
                             }
 
@@ -672,8 +672,8 @@ class BikeController extends Controller
 
                             $accessoryRows .= '
                         <tr>
-                            <td>'.e($accData->name).'</td>
-                            <td>¥'.number_format($accPrice).'</td>
+                            <td>' . e($accData->name) . '</td>
+                            <td>¥' . number_format($accPrice) . '</td>
                         </tr>';
                         }
                     }
@@ -692,20 +692,20 @@ class BikeController extends Controller
                         <td colspan="2"><h5 class="text-center fw-bold m-0">BOOKING QUOTE</h5></td>
                     </tr>
                     <tbody>
-                        <tr><td>Full name</td><td>'.e($request->first_name.' '.($request->last_name ?? '')).'</td></tr>
-                        <tr><td>E-mail</td><td>'.e($request->email).'</td></tr>
-                        <tr><td>Mobile</td><td>'.e($request->mobile).'</td></tr>
-                        <tr><td>Bike Name</td><td>'.e($request->bike_name[$key]).'</td></tr>
-                        <tr><td>Total Days</td><td>'.$totalDays.'</td></tr>
+                        <tr><td>Full name</td><td>' . e($request->first_name . ' ' . ($request->last_name ?? '')) . '</td></tr>
+                        <tr><td>E-mail</td><td>' . e($request->email) . '</td></tr>
+                        <tr><td>Mobile</td><td>' . e($request->mobile) . '</td></tr>
+                        <tr><td>Bike Name</td><td>' . e($request->bike_name[$key]) . '</td></tr>
+                        <tr><td>Total Days</td><td>' . $totalDays . '</td></tr>
                         <tr>
                             <td>Start Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->start_date)).' Pickup '.date('h:i A', strtotime($request->start_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->start_date)) . ' Pickup ' . date('h:i A', strtotime($request->start_time)) . '</td>
                         </tr>
                         <tr>
                             <td>End Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('h:i A', strtotime($request->end_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->end_date)) . ' Drop off ' . date('h:i A', strtotime($request->end_time)) . '</td>
                         </tr>
-                        <tr><td>Total Bike Price</td><td>¥'.$request->price[$key].'</td></tr>
+                        <tr><td>Total Bike Price</td><td>¥' . $request->price[$key] . '</td></tr>
                     </tbody>
                     <tr>
                         <td colspan="2"><h6 class="m-0 fw-bold">Accessories & Insurance</h6></td>
@@ -713,23 +713,23 @@ class BikeController extends Controller
                     <tbody>
                         <tr>
                             <td>Insurance</td>
-                            <td>'.(($insurance_price > 0) ? '¥'.$insurance_price : 'NA').'</td>
+                            <td>' . (($insurance_price > 0) ? '¥' . $insurance_price : 'NA') . '</td>
                         </tr>
-                        '.$accessoryRows.'
+                        ' . $accessoryRows . '
 
                         <!-- ✅ NEW -->
                         <tr>
                             <td>TAX 10%</td>
-                            <td>¥'.number_format($tax).'</td>
+                            <td>¥' . number_format($tax) . '</td>
                         </tr>
                         <tr>
                             <td>Card Fee 3.65%</td>
-                            <td>¥'.number_format($cardFee).'</td>
+                            <td>¥' . number_format($cardFee) . '</td>
                         </tr>
 
                         <tr class="fw-bold fs-5">
                             <td>Total Price</td>
-                            <td>¥'.number_format($totalPrice).'</td>
+                            <td>¥' . number_format($totalPrice) . '</td>
                         </tr>
                     </tbody>
                 </table>';

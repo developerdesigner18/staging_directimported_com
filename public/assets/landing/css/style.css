@@ -431,7 +431,7 @@ input:-webkit-autofill {
     02. Header
 -------------------------------------*/
 .rid-header-style-1 .rid-header-top {
-    background-image: linear-gradient(180deg, #0E488C 0%, #000000 100%);
+    background-color: #000;
     color: var(--white-color);
     padding: 10px 0;
 }
@@ -558,6 +558,8 @@ input:-webkit-autofill {
     font-weight: 500 !important;
 }
 
+
+
 /* Header Style 2 */
 
 .rid-header-style-2 .rid-header-bottom button img {
@@ -608,7 +610,7 @@ input:-webkit-autofill {
     font-size: 19px;
     font-weight: 500 !important;
     margin-right: 40px;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: #050B20 !important;
 }
 

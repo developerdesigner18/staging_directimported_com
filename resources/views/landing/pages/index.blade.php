@@ -381,9 +381,16 @@
             border-radius: 18px;
             overflow: hidden;
             border: 1px solid #f1f1f1;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, .06);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .04);
             transition: all .3s ease;
-            height: 500px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bike-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .1);
         }
 
         /*.bike-card:hover {*/
@@ -429,8 +436,11 @@
 
         /* ===== Body ===== */
         .bike-card-body {
-            padding: 26px 22px 28px;
+            padding: 24px 20px 28px;
             text-align: center;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         /* REMOVE side-by-side layout */
@@ -438,12 +448,11 @@
             display: block;
         }
 
-        /* ===== Title ===== */
-        .bike-info-row h5 {
-            font-size: 24px;
-            font-weight: 900;
+        .bike-title {
+            font-size: 22px;
+            font-weight: 800;
             color: #1f2937;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             line-height: 1.2;
         }
 
@@ -453,7 +462,6 @@
         }
 
 
-        /* ===== Subtitle ===== */
         .bike-subtitle {
             font-size: 14px;
             color: #6b7280;
@@ -465,58 +473,104 @@
         .bike-price-block {
             display: flex;
             align-items: baseline;
-            /* matches flex items-baseline */
             justify-content: center;
-            /* matches justify-center */
             margin-bottom: 16px;
-            /* mb-4 */
-            gap: 4px;
+            gap: 9px;
         }
 
 
-        .bike-price-block .price {
-            color: #053C7C;
-            /* ASJ Racing Red */
-            /* text-red-600 */
+        .bike-price-block .price-amount {
+            color: #991b1b;
             font-size: 30px;
-            /* text-3xl */
             font-weight: 900;
-            /* font-black */
             line-height: 1;
         }
 
-        .bike-price-block .period {
-            color: #053C7C;
-            /* ASJ Racing Red */
-            /* text-red-600 */
-            font-size: 14px;
-            /* text-sm */
+        .bike-price-block .price-from,
+        .bike-price-block .price-per {
+            color: #991b1b;
+            font-size: 28px;
             font-weight: 700;
-            /* font-bold */
+            white-space: nowrap;
+            text-transform: uppercase;
+        }
+
+        .section-title h2 {
+            display: flex;
+            align-items: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: #000B21;
+            margin-bottom: 0;
+        }
+
+        .section-title h2::before {
+            content: "";
+            display: inline-block;
+            width: 30px;
+            height: 2px;
+            background-color: #000B21;
+            margin-right: 15px;
+        }
+
+        .rid-how-it-work,
+        .rid-rentals-1 {
+            padding: 40px 0 !important;
+        }
+
+        /* ===== EMBLEM ROW ===== */
+        .bike-emblem-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            align-items: center;
+            margin-bottom: 22px;
+            padding: 12px 0;
+            border: none;
+        }
+
+        .emblem-item {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .emblem-item i {
+            display: block;
+            font-size: 22px;
+            color: #111827;
+            margin-bottom: 2px;
+        }
+
+        .emblem-item span {
+            font-size: 9px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.1px;
             white-space: nowrap;
         }
 
-        .btn-quote {
+        .btn-adventure {
             width: 100%;
             background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
-            /* ASJ Racing Red */
             color: #fff;
             border: none;
-            padding: 15px 18px;
+            padding: 14px 18px;
             font-weight: 800;
             font-size: 13px;
-            letter-spacing: 1.4px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-            box-shadow: 0 6px 14px rgba(188, 33, 46, .35);
+            border-radius: 8px;
             cursor: pointer;
             transition: all .3s ease;
         }
 
-        .btn-quote:hover {
-            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%) !important;
-            color: #de2b43 !important;
+        .btn-adventure:hover {
+            opacity: 0.9;
             transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
+            box-shadow: 0 10px 20px rgba(5, 60, 124, 0.2);
         }
 
         .top-20vh {
@@ -558,17 +612,7 @@
             /* text-transform: uppercase; */
         }
 
-        ..cta-btn {
-            display: inline-block;
-            background: linear-gradient(180deg, #1e4c8f 0%, #163a6b 100%);
-            color: #fff;
-            font-weight: 700;
-            font-size: 16px;
-            padding: 14px 35px;
-            border-radius: 6px;
-            text-decoration: none;
-            transition: 0.3s ease;
-        }
+
 
         .top-20vh {
             top: 20vh;
@@ -657,43 +701,75 @@
         </div>
     </section>
 
-
-    <!--  How-it-work Section Start-->
-    <div class="rid-how-it-work">
-
+    <!-- About IAS Japan Section Start -->
+    <section id="about-ias">
         <div class="container">
-            <h2 class="text-center">How it Works?</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="rid-info-box text-center">
-                        <i class="flaticon-magnifying-glass-search"></i>
-                        <h4>Find the Right Car</h4>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="rid-info-box text-center">
-                        <i class="flaticon-booking"></i>
-                        <h4>Buy it Online</h4>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="rid-info-box text-center">
-                        <img src="{{asset('assets/landing/images/car.png')}}" alt="Car">
-                        <h4>Enjoy your Ride</h4>
+            <div class="py-5">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title mb-5">
+                            <h2>About IAS Japan</h2>
+                        </div>
+
+                        <p class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
+                            Welcome to International Auto Select Japan LLC, where our mission is to connect car dealers and
+                            buyers around the world with reliable services in Japan. With years of experience in the
+                            automotive industry, we pride ourselves on delivering exceptional support, transparency, and
+                            efficiency to meet your business needs. Whether you are looking to source quality vehicles or
+                            expand your dealership's inventory, we are here to provide trusted solutions and build lasting
+                            partnerships.
+                        </p>
+
+                        <div class="who-points mb-5">
+                            <div class="who-point">
+                                <div class="who-point-icon">
+                                    <i class='bx bx-check'></i>
+                                </div>
+                                <p class="who-point-text">
+                                    International Auto Select Japan Export is a leading car export company dedicated to
+                                    making the process of buying and importing vehicles as seamless as possible.
+                                </p>
+                            </div>
+                            <div class="who-point">
+                                <div class="who-point-icon">
+                                    <i class='bx bx-check'></i>
+                                </div>
+                                <p class="who-point-text">
+                                    We offer a wide range of high-quality services to help you navigate the vehicle market
+                                    in Japan and expand your business reliably.
+                                </p>
+                            </div>
+                            <div class="who-point">
+                                <div class="who-point-icon">
+                                    <i class='bx bx-check'></i>
+                                </div>
+                                <p class="who-point-text">
+                                    We have built a reputation over the past 20 years for establishing long-term business
+                                    relationships based on trust. If you need this type of service, please contact us today.
+                                </p>
+                            </div>
+                        </div>
+
+                        <a href="#" class="btn-read-more">
+                            READ MORE <i class='bx bx-right-arrow-alt'></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+    <!-- About IAS Japan Section End -->
+
 
     @if(!$bikes->isEmpty())
         <div class="rid-rentals-1">
 
             <div class="container">
 
-                <h2 class="text-center">Most Popular Bikes</h2>
-                <div class="text-end mb-3">
-                    <a href="{{ route('motorcycle') }}" class="btn">See All</a>
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div class="section-title">
+                        <h2>Latest Cars</h2>
+                    </div>
                 </div>
                 <div class="row">
                     @foreach($bikes as $bike)
@@ -726,28 +802,39 @@
                                         {{ $bike->card_subtitle ?? ($bike->category->name ?? 'Premium Adventure Touring') }}
                                     </div>
 
-                                    <!-- Emblems / Icons -->
                                     <div class="bike-emblem-row">
-                                        <div class="emblem-item">
-                                            <i class='bx bx-helmet'></i>
-                                            <span>Geared Up</span>
-                                        </div>
+
+                                        <!-- Year -->
                                         <div class="emblem-item">
                                             <i class='bx bx-calendar'></i>
-                                            <span>Ready to Book</span>
+                                            <span>1994</span>
                                         </div>
+
+                                        <!-- Mileage -->
+                                        <div class="emblem-item">
+                                            <i class='bx bx-tachometer'></i>
+                                            <span>65000</span>
+                                        </div>
+
+                                        <!-- Fuel -->
                                         <div class="emblem-item">
                                             <i class='bx bx-gas-pump'></i>
-                                            <span>Adventure-Ready</span>
+                                            <span>Hybrid/Petrol</span>
                                         </div>
+
+                                        <!-- Transmission -->
+                                        <div class="emblem-item">
+                                            <i class='bx bx-git-branch'></i>
+                                            <span>ZF 8 Speed</span>
+                                        </div>
+
                                     </div>
 
-                                    <div>
+                                    <div style="margin-top: auto;">
                                         <!-- Price -->
                                         <div class="bike-price-block">
-                                            <span class="price-from">From</span>
                                             <span class="price-amount">¥{{ number_format($bike->month_price) }}</span>
-                                            <span class="price-per">/ Per Day</span>
+                                            <span class="price-per">fob</span>
                                         </div>
 
 
@@ -764,10 +851,44 @@
                     @endforeach
                 </div>
 
+                <div class="text-end mt-3">
+                    <a href="{{ route('motorcycle') }}" class="btn-read-more">
+                        SEE MORE <i class='bx bx-right-arrow-alt'></i>
+                    </a>
+                </div>
+
             </div>
         </div>
     @endif
     <!-- Rentals Section End -->
+
+
+    <!--  How-it-work Section Start-->
+    <div class="rid-how-it-work">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="rid-info-box text-center">
+                        <i class="flaticon-magnifying-glass-search"></i>
+                        <h4>Find the Right Car</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="rid-info-box text-center">
+                        <i class="flaticon-booking"></i>
+                        <h4>Buy it Online</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="rid-info-box text-center">
+                        <img src="{{asset('assets/landing/images/car.png')}}" alt="Car">
+                        <h4>Enjoy your Ride</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Matters To You Section Start -->
     <section id="matters-to-you">
