@@ -96,7 +96,12 @@ class AuthController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'current_password' => 'required',
-                'password' => 'required|confirmed',
+                'password' => 'required|confirmed|min:8',
+            ], [
+                'current_password.required' => 'The current password is required.',
+                'password.required' => 'The new password is required.',
+                'password.confirmed' => 'The password confirmation does not match.',
+                'password.min' => 'The password must be at least 8 characters.',
             ]);
 
             if ($validator->fails()) {

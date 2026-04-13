@@ -4,6 +4,20 @@
 @section('main')
     <div class="row">
         <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
+                <h4 class="mb-sm-0">Edit Service</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.service.index') }}">Service Management</a></li>
+                        <li class="breadcrumb-item active">Edit Service</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <form id="editForm" enctype="multipart/form-data">
@@ -145,15 +159,21 @@
                 FilePondPluginFileEncode,
                 FilePondPluginFileValidateSize,
                 FilePondPluginImageExifOrientation,
-                FilePondPluginImagePreview
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateType
             );
 
             const inputElement = document.querySelector('input.filepond');
             if (inputElement) {
                 FilePond.create(inputElement, {
                     allowMultiple: true,
-                    maxFiles: 5,
-                    acceptedFileTypes: ['image/*']
+                    maxFiles: 30,
+                    maxFileSize: '3MB', 
+                    maxTotalFileSize: '50MB',
+                    acceptedFileTypes: ['image/webp'],
+
+                    labelFileTypeNotAllowed: 'File of invalid type',
+                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                 });
             }
         }
@@ -227,14 +247,16 @@
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('errors')) {
-                                $.each(data.errors, function (key, value) {
-                                    $("#" + key + "-error").html(value[0]).show();
+                            if (data && data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + errorKey + "-error").html(errorMessage).show();
                                 });
-                            } else if (data.hasOwnProperty('message')) {
-                                sendError(data.message);
+                            } else if (data && data.hasOwnProperty('message')) {
+                                actionError(xhr, data.message);
                             } else {
-                                sendError("An error occurred. Please try again.");
+                                actionError(xhr, "An error occurred. Please check file sizes or try again.");
                             }
                         },
                         complete: function () {

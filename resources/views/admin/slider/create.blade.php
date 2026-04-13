@@ -9,7 +9,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Slides</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.slider.index') }}">Slider Management</a></li>
                         <li class="breadcrumb-item active">Create Slider</li>
                     </ol>
                 </div>
@@ -83,12 +83,17 @@
                 FilePondPluginFileEncode,
                 FilePondPluginFileValidateSize,
                 FilePondPluginImageExifOrientation,
-                FilePondPluginImagePreview
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateType
             );
 
             const inputElement = document.querySelector('input.filepond');
             if (inputElement) {
-                FilePond.create(inputElement);
+                FilePond.create(inputElement, {
+                    acceptedFileTypes: ['image/webp'],
+                    labelFileTypeNotAllowed: 'File of invalid type',
+                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
+                });
             }
         }
 
@@ -150,14 +155,15 @@
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('errors')) {
-                                $.each(data.errors, function (key, value) {
-                                    $("#" + key + "-error").html(value[0]).show();
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + key + "-error").html(errorMessage).show();
                                 });
                             } else if (data.hasOwnProperty('message')) {
-                                sendError(data.message); // Replace with your error handling
+                                actionError(xhr, data.message);
                             } else {
-                                sendError("An error occurred. Please try again."); // Generic error
+                                actionError(xhr);
                             }
                         },
                         complete: function () {

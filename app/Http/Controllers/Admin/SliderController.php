@@ -38,10 +38,20 @@ class SliderController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'nullable',
-            'image' => 'required',
+            'image' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $image = json_decode($value, true);
+                    if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
+                        $fail('The image must be of type: webp.');
+                    }
+                },
+            ],
             'description' => 'nullable',
             'link' => 'nullable',
             'button_text' => 'nullable',
+        ], [
+            'image.required' => 'Please upload an image for the slider.',
         ]);
 
         if ($validator->fails()) {
@@ -80,6 +90,17 @@ class SliderController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'nullable',
+            'image' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if (is_string($value) && \Illuminate\Support\Str::isJson($value)) {
+                        $image = json_decode($value, true);
+                        if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
+                            $fail('The image must be of type: webp.');
+                        }
+                    }
+                },
+            ],
             'description' => 'nullable',
             'link' => 'nullable',
             'button_text' => 'nullable',

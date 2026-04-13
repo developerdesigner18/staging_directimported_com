@@ -111,6 +111,9 @@ class FaqController extends Controller
                 'faqId' => 'required',
                 'editFaqTitle' => 'required',
                 'editFaqDescription' =>'required|string',
+            ], [
+                'editFaqTitle.required' => 'The title field is required.',
+                'editFaqDescription.required' => 'The description field is required.',
             ]);
 
             if ($validator->fails()) {

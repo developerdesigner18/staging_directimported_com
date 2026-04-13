@@ -25,7 +25,7 @@
                         <!-- Select New Banner -->
                         <div class="mb-3">
                             <label for="bannerImage" class="form-label">Select New Banner</label>
-                            <input class="form-control" type="file" id="bannerImage" name="banner_image" accept="image/*">
+                            <input class="form-control" type="file" id="bannerImage" name="banner_image" accept="image/webp">
                             <p id="banner_image-error" class="text-danger mt-1" style="display: none"></p>
                         </div>
 
@@ -46,13 +46,14 @@
                                 <i class="ri-delete-bin-6-line"></i>
                             </button>
                         </div>
-                    </form>
-                </div>
+                    
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="uploadBannerBtn">Upload</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="uploadBannerBtn">Upload</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -66,8 +67,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Bikes</a></li>
-                        <li class="breadcrumb-item active">Bike Management</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Bike Management</a></li>
+                        <li class="breadcrumb-item active">Bike List</li>
                     </ol>
                 </div>
             </div>
@@ -462,54 +463,90 @@
                         });
                         return ui;
                     }
-                    $('#uploadBannerBtn').on('click', function (e) {
-                        e.preventDefault();
+                    $.validator.addMethod('fileType', function(value, element, param) {
+                        return this.optional(element) || (element.files[0].type.match(param));
+                    }, 'The image must be of type: webp.');
 
-                        let formData = new FormData($('#bannerUploadForm')[0]);
-                        let element = $(this);
+                    $.validator.addMethod('fileSize', function(value, element, param) {
+                        return this.optional(element) || (element.files[0].size <= param);
+                    }, 'The image size must not exceed 2MB.');
 
-                        $.ajax({
-                            url: "{{ route('admin.banner.add') }}",
-                            method: "POST",
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            dataType: "JSON",
-                            beforeSend: function () {
-                                element.html('<i class="spinner-border spinner-border-sm"></i> Uploading...');
-                                element.attr('disabled', true);
-                                $('.text-danger').hide();
+                    $('#bannerUploadForm').validate({
+                        rules: {
+                            title: {
+                                required: true
                             },
-                            success: function (response) {
-                                if (response.status) {
-                                    // Update banner instantly
-                                    $('#currentBanner').attr('src', response.data.imageUrl);
-                                    $('#bannerTitle').val(response.data.title);
-
-                                    // Show success message
-                                    // sendSuccess(.data.message);
-
-                                    // Close modal after short delay
-                                    setTimeout(() => {
-                                        $('#bannerModal').modal('hide');
-                                    }, 1000);
-                                }
-                            },
-                            error: function (xhr) {
-                                let data = xhr.responseJSON;
-                                if (data && data.error) {
-                                    $.each(data.error, function (key, value) {
-                                        $("#" + key + "-error").html(value).show();
-                                    });
-                                } else {
-                                    sendError("Something went wrong.");
-                                }
-                            },
-                            complete: function () {
-                                element.html('Upload');
-                                element.attr('disabled', false);
+                            banner_image: {
+                                required: true,
+                                fileType: "image/webp",
+                                fileSize: 2097152 // 2MB in bytes
                             }
-                        });
+                        },
+                        messages: {
+                            title: {
+                                required: "Please enter a title."
+                            },
+                            banner_image: {
+                                required: "Please upload a banner image.",
+                                fileType: "The image must be of type: webp.",
+                                fileSize: "The image size must not exceed 2MB."
+                            }
+                        },
+                        errorPlacement: function (error, element) {
+                            $("#" + element.attr("name") + "-error").html(error.text()).show();
+                        },
+                        highlight: function (element) {
+                            $(element).addClass('is-invalid');
+                        },
+                        unhighlight: function (element) {
+                            $(element).removeClass('is-invalid');
+                            $("#" + $(element).attr("name") + "-error").hide();
+                        },
+                        submitHandler: function (form, e) {
+                            e.preventDefault();
+
+                            let formData = new FormData(form);
+                            let element = $('#uploadBannerBtn');
+
+                            $.ajax({
+                                url: "{{ route('admin.banner.add') }}",
+                                method: "POST",
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                dataType: "JSON",
+                                beforeSend: function () {
+                                    element.html('<i class="spinner-border spinner-border-sm"></i> Uploading...');
+                                    element.attr('disabled', true);
+                                    $('.text-danger').hide();
+                                },
+                                success: function (response) {
+                                    if (response.status) {
+                                        $('#currentBanner').attr('src', response.data.image_url);
+                                        $('#bannerTitle').val(response.data.title);
+
+                                        setTimeout(() => {
+                                            $('#bannerModal').modal('hide');
+                                        }, 1000);
+                                    }
+                                },
+                                error: function (xhr) {
+                                    let data = xhr.responseJSON;
+                                    if (data && data.error) {
+                                        $.each(data.error, function (key, value) {
+                                            let errorMessage = Array.isArray(value) ? value[0] : value;
+                                            $("#" + key + "-error").html(errorMessage).show();
+                                        });
+                                    } else {
+                                        sendError("Something went wrong.");
+                                    }
+                                },
+                                complete: function () {
+                                    element.html('Upload');
+                                    element.attr('disabled', false);
+                                }
+                            });
+                        }
                     });
                     $("#deleteBannerBtn").click(function(){
                             Swal.fire({

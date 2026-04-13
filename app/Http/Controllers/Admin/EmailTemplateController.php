@@ -78,9 +78,11 @@ class EmailTemplateController extends Controller
         public function updateEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
-
             'subject_name' => 'required',
             'description' => 'required',
+        ], [
+            'subject_name.required' => 'The subject field is required.',
+            'description.required' => 'The email body/description is required.',
         ]);
 
         if ($validator->fails()) {

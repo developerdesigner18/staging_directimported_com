@@ -87,6 +87,14 @@
                 </li>
                 @endif
 
+                @if($user->hasRole('admin') || $user->can('about_us'))
+                <li class="nav-item">
+                    <a href="{{route('admin.home_section.edit')}}" class="nav-link menu-link @if(request()->routeIs('admin.home_section.*')) active @endif">
+                        <i class="ri-information-line"></i> <span data-key="t-dashboards">About Us</span>
+                    </a>
+                </li>
+                @endif
+
                 @if($user->hasRole('admin') || $user->can('tours'))
 
                 <li class="nav-item">

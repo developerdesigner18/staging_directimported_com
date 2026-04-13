@@ -28,13 +28,22 @@ class SystemController extends Controller
             'MAIL_FROM_ADDRESS' => 'required|email',
             'MAIL_FROM_NAME' => 'required',
             'RECEIVER_MAIL' => 'required|email',
+        ], [
+            'MAIL_HOST.required' => 'The mail host field is required.',
+            'MAIL_PORT.required' => 'The mail port field is required.',
+            'MAIL_PORT.numeric' => 'The mail port must be a number.',
+            'MAIL_USERNAME.required' => 'The mail username field is required.',
+            'MAIL_PASSWORD.required' => 'The mail password field is required.',
+            'MAIL_ENCRYPTION.required' => 'Please select an encryption method.',
+            'MAIL_FROM_ADDRESS.required' => 'The from address field is required.',
+            'MAIL_FROM_ADDRESS.email' => 'Please enter a valid email address.',
+            'MAIL_FROM_NAME.required' => 'The from name field is required.',
+            'RECEIVER_MAIL.required' => 'The receiver mail field is required.',
+            'RECEIVER_MAIL.email' => 'Please enter a valid email address.',
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'errors' => $validator->errors()
-            ], 422);
+            return $this->sendValidationError($validator->errors());
         }
 
         try {
@@ -44,8 +53,8 @@ class SystemController extends Controller
             $envContent = file_get_contents($envPath);
 
             // Update each setting in the .env content
-            foreach ($request->all() as $key => $value) {
-                if (str_starts_with($key, 'MAIL_')) {
+            foreach ($request->except('_token') as $key => $value) {
+                if (str_starts_with($key, 'MAIL_') || $key === 'RECEIVER_MAIL') {
                     // Escape any quotes in the value
                     $escapedValue = str_replace('"', '\"', $value);
 

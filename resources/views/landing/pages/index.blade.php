@@ -702,53 +702,34 @@
     </section>
 
     <!-- About IAS Japan Section Start -->
+    @if($homeSection)
     <section id="about-ias">
         <div class="container">
             <div class="py-5">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title mb-5">
-                            <h2>About IAS Japan</h2>
+                            <h2>{{ $homeSection->title }}</h2>
                         </div>
 
-                        <p class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
-                            Welcome to International Auto Select Japan LLC, where our mission is to connect car dealers and
-                            buyers around the world with reliable services in Japan. With years of experience in the
-                            automotive industry, we pride ourselves on delivering exceptional support, transparency, and
-                            efficiency to meet your business needs. Whether you are looking to source quality vehicles or
-                            expand your dealership's inventory, we are here to provide trusted solutions and build lasting
-                            partnerships.
-                        </p>
+                        <div class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
+                            {!! $homeSection->short_description !!}
+                        </div>
 
+                        @if($homeSection->points->isNotEmpty())
                         <div class="who-points mb-5">
+                            @foreach($homeSection->points as $point)
                             <div class="who-point">
                                 <div class="who-point-icon">
                                     <i class='bx bx-check'></i>
                                 </div>
                                 <p class="who-point-text">
-                                    International Auto Select Japan Export is a leading car export company dedicated to
-                                    making the process of buying and importing vehicles as seamless as possible.
+                                    {{ $point->point_text }}
                                 </p>
                             </div>
-                            <div class="who-point">
-                                <div class="who-point-icon">
-                                    <i class='bx bx-check'></i>
-                                </div>
-                                <p class="who-point-text">
-                                    We offer a wide range of high-quality services to help you navigate the vehicle market
-                                    in Japan and expand your business reliably.
-                                </p>
-                            </div>
-                            <div class="who-point">
-                                <div class="who-point-icon">
-                                    <i class='bx bx-check'></i>
-                                </div>
-                                <p class="who-point-text">
-                                    We have built a reputation over the past 20 years for establishing long-term business
-                                    relationships based on trust. If you need this type of service, please contact us today.
-                                </p>
-                            </div>
+                            @endforeach
                         </div>
+                        @endif
 
                         <a href="#" class="btn-read-more">
                             READ MORE <i class='bx bx-right-arrow-alt'></i>
@@ -758,6 +739,7 @@
             </div>
         </div>
     </section>
+    @endif
     <!-- About IAS Japan Section End -->
 
 

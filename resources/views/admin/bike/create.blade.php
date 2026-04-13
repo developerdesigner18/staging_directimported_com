@@ -157,7 +157,7 @@
                         <div class="col-md-12 mb-2">
                             <label for="banner" class="form-label">Banner</label>
                             <label for="banner" class="custom-file-label w-100">
-                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/*">
+                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/webp">
                                 <label id="banner-error" class="text-danger error" style="display: none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;"></div>
                             </label>
@@ -340,21 +340,30 @@
                 FilePondPluginFileEncode,
                 FilePondPluginFileValidateSize,
                 FilePondPluginImageExifOrientation,
-                FilePondPluginImagePreview
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateType
             );
 
             const inputElement = document.querySelector('input.filepond');
             if (inputElement) {
                 FilePond.create(inputElement, {
                     allowMultiple: true,
-                    maxFiles: 5, // Adjust as needed
-                    acceptedFileTypes: ['image/*']
+                    maxFiles: 30, // Supports 20+ images
+                    maxFileSize: '3MB', // Limits per-file upload size safely
+                    maxTotalFileSize: '50MB', // Allows bulk upload
+                    acceptedFileTypes: ['image/webp'],
+                    labelFileTypeNotAllowed: 'File of invalid type',
+                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                 });
             }
         }
 
         $(document).ready(function () {
             initFilepond();
+
+            $.validator.addMethod('fileType', function(value, element, param) {
+                return this.optional(element) || (element.files[0].type.match(param));
+            }, 'The image must be of type: webp.');
 
             $("#addForm").validate({
                 rules: {
@@ -368,6 +377,10 @@
                     max_price: {required: true, number: true, min: 0},
                     'images[]': {required: true},
                     description: {required: true},
+                    number_plate: {required: true},
+                    card_header: {required: true},
+                    card_subtitle: {required: true},
+                    banner: {fileType: "image/webp"},
 
 
                 },
@@ -404,6 +417,7 @@
                     number_plate: {required: "The number plate  is required."},
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
+                    banner: {fileType: "The banner image must be of type: webp."}
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -437,19 +451,21 @@
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('errors')) {
+                            if (data && data.hasOwnProperty('errors')) {
                                 $.each(data.errors, function (key, value) {
-                                    $("#" + key + "-error").html(value[0]).show();
+                                    let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + errorKey + "-error").html(errorMessage).show();
                                 });
-                            } else if (data.hasOwnProperty('message')) {
+                            } else if (data && data.hasOwnProperty('message')) {
                                 sendError(data.message);
                             } else {
-                                sendError("An error occurred. Please try again.");
+                                sendError("An error occurred. Please check file sizes or try again.");
                             }
                         },
                         complete: function () {
                             $('button[type="submit"]').attr('disabled', false);
-                            $('button[type="submit"]').html('Submit');
+                            $('button[type="submit"]').html('Create Bike');
                         }
                     });
                 }

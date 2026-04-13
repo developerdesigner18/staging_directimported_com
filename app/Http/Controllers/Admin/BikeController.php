@@ -32,7 +32,7 @@ class BikeController extends Controller
             '0-125cc' => ['min' => 0, 'max' => 125],
         ];
     }
-    
+
     private function mapCategoriesToRanges($categories)
     {
         $ranges = $this->getCCRanges();
@@ -48,7 +48,7 @@ class BikeController extends Controller
 
         foreach ($categories as $category) {
             preg_match('/(\d+)/', $category->name, $matches);
-            $ccValue = isset($matches[1]) ? (int)$matches[1] : 0;
+            $ccValue = isset($matches[1]) ? (int) $matches[1] : 0;
 
             foreach ($ranges as $rangeName => $rangeLimits) {
                 if ($ccValue >= $rangeLimits['min'] && $ccValue <= $rangeLimits['max']) {
@@ -103,7 +103,7 @@ class BikeController extends Controller
         ", [$min, $max]);
             });
         }
-        
+
         $allCategories = Category::all();
         $ccRanges = $this->mapCategoriesToRanges($allCategories);
 
@@ -169,7 +169,7 @@ class BikeController extends Controller
         // we still paginate $bikes so $bikes variable exists for other possible code dependencies (even though grid uses bikesForGrid and table uses datatables).
         $bikes = $bikes->paginate(8);
 
-        return view('admin.bike.index', compact('bikes', 'search','range', 'bikesForGrid', 'ccRanges'));
+        return view('admin.bike.index', compact('bikes', 'search', 'range', 'bikesForGrid', 'ccRanges'));
     }
     public function create()
     {
@@ -210,6 +210,15 @@ class BikeController extends Controller
             'insurance_price' => 'nullable',
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'required|array',
+            'images.*' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $image = json_decode($value, true);
+                    if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
+                        $fail('The image must be of type: webp.');
+                    }
+                },
+            ],
             'description' => 'nullable|string',
             'engine' => 'nullable|string',
             'power' => 'nullable|string',
@@ -218,7 +227,7 @@ class BikeController extends Controller
             'tank_capacity' => 'nullable|string',
             'luggage' => 'nullable|string',
             'location' => 'nullable|string',
-            'banner' => 'nullable',
+            'banner' => 'nullable|image|mimes:webp',
             'free_accessory' => 'nullable',
             'extra_accessory' => 'nullable',
             'number_plate' => 'required',
@@ -315,6 +324,17 @@ class BikeController extends Controller
             'insurance_price' => 'nullable',
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'sometimes|array',
+            'images.*' => [
+                'sometimes',
+                function ($attribute, $value, $fail) {
+                    if (is_string($value) && \Illuminate\Support\Str::isJson($value)) {
+                        $image = json_decode($value, true);
+                        if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
+                            $fail('The image must be of type: webp.');
+                        }
+                    }
+                },
+            ],
             'removed_images' => 'nullable|string',
             'image_order' => 'nullable|string',
             'description' => 'nullable|string',
@@ -325,7 +345,7 @@ class BikeController extends Controller
             'tank_capacity' => 'nullable|string',
             'luggage' => 'nullable|string',
             'location' => 'nullable|string',
-            'banner' => 'nullable',
+            'banner' => 'nullable|image|mimes:webp',
             'free_accessory' => 'nullable',
             'extra_accessory' => 'nullable',
             'number_plate' => 'required',
@@ -378,7 +398,6 @@ class BikeController extends Controller
 
             $currentImages = $bike->images ?? [];
 
-            // 1️⃣ Remove deleted images
             if ($request->filled('removed_images')) {
 
                 $removedImages = explode(',', $request->removed_images);
@@ -397,7 +416,6 @@ class BikeController extends Controller
                 $currentImages = array_values($currentImages);
             }
 
-            // 2️⃣ Add new images
             if ($request->has('images')) {
 
                 foreach ($request->images as $image) {

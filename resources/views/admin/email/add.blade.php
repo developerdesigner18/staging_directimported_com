@@ -10,8 +10,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Create</a></li>
-                        <li class="breadcrumb-item active">Creat Email</li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.email.index') }}">Email Management</a></li>
+                        <li class="breadcrumb-item active">Create Email</li>
                     </ol>
                 </div>
             </div>

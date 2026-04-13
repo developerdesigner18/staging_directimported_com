@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">System Settings</h4>
+                <h4 class="mb-sm-0">System Settings Management</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">System</a></li>
-                        <li class="breadcrumb-item active">Settings</li>
+                        <li class="breadcrumb-item active">System Settings Management</li>
                     </ol>
                 </div>
             </div>
@@ -159,22 +159,18 @@
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
                         },
                         success: function (result) {
-                            if(result.success) {
-                                sendToast(result.message || 'Settings updated successfully!');
-                            } else {
-                                sendToast(result.message || 'An error occurred.','danger');
-                            }
+                            sendSuccess(result.message);
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('errors')) {
-                                $.each(data.errors, function (key, value) {
-                                    $("#" + key + "-error").html(value[0]).show();
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    $("#" + key + "-error").html(value).show();
                                 });
                             } else if (data.hasOwnProperty('message')) {
-                                sendToast(data.message,'danger');
+                                actionError(xhr, data.message);
                             } else {
-                                sendToast("An error occurred. Please try again.",'danger');
+                                actionError(xhr);
                             }
                         },
                         complete: function () {

@@ -24,7 +24,7 @@
                             <i class="ri-image-line" style="font-size: 48px; color: #adb5bd;"></i>
                             <span class="mt-2 text-muted">Click to upload image</span>
                         </div>
-                        <input type="file" id="galleryImageInput" name="image" class="d-none" accept="image/*">
+                        <input type="file" id="galleryImageInput" name="image" class="d-none" accept="image/webp">
                     </div>
                     <div class="form-text">Recommended size: 800x800px (1:1 ratio)</div>
                     <div id="galleryImageError" class="invalid-feedback d-block"></div>
@@ -64,7 +64,7 @@
                                 <i class="ri-edit-2-line"></i>
                             </button>
                         </div>
-                        <input type="file" id="editGalleryImageInput" name="image" class="d-none" accept="image/*">
+                        <input type="file" id="editGalleryImageInput" name="image" class="d-none" accept="image/webp">
                     </div>
                     <div class="form-text">Recommended size: 800x800px (1:1 ratio)</div>
                     <div id="editGalleryImageError" class="invalid-feedback d-block"></div>
@@ -90,8 +90,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Slides</a></li>
-                        <li class="breadcrumb-item active">Gallery Management</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Gallery Management</a></li>
+                        <li class="breadcrumb-item active">Gallery List</li>
                     </ol>
                 </div>
             </div>
@@ -217,15 +217,25 @@
                 }
             });
 
+            $.validator.addMethod('fileType', function(value, element, param) {
+                return this.optional(element) || (element.files[0].type.match(param));
+            }, 'The image must be of type: webp.');
+
             // Add Gallery Form Validation and Submission
             $("#addGalleryForm").validate({
                 rules: {
                     title: {required: true},
-                    image: {required: true}
+                    image: {
+                        required: true,
+                        fileType: "image/webp"
+                    }
                 },
                 messages: {
                     title: {required: "The title field is required."},
-                    image: {required: "Please upload an image for the gallery."}
+                    image: {
+                        required: "Please upload an image for the gallery.",
+                        fileType: "The image must be of type: webp."
+                    }
                 },
                 errorClass: 'is-invalid',
                 errorElement: 'div',
@@ -261,25 +271,18 @@
                             }, 1500);
                         },
                         error: function (xhr) {
-                            const errors = xhr.responseJSON?.errors || {};
+                            let data = xhr.responseJSON;
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + key + "Error").html(errorMessage).show();
+                                    $(`[name="${key}"]`).addClass('is-invalid');
+                                });
 
-                            // Clear previous errors
-                            $('.invalid-feedback').text('').hide();
-                            $('.is-invalid').removeClass('is-invalid');
-
-                            // Display new errors
-                            Object.keys(errors).forEach(field => {
-                                const errorField = $(`#${field}Error`);
-                                if (errorField.length) {
-                                    errorField.text(errors[field][0]).show();
-                                    $(`[name="${field}"]`).addClass('is-invalid');
-                                } else {
-                                    sendError(errors[field][0]);
-                                }
-                            });
-
-                            if (xhr.status === 500) {
-                                sendError('An error occurred on the server. Please try again later.');
+                            } else if (data.hasOwnProperty('message')) {
+                                actionError(xhr, data.message);
+                            } else {
+                                actionError(xhr);
                             }
                         },
                         complete: function () {
@@ -292,10 +295,16 @@
             // Edit Gallery Form Validation and Submission
             $("#editGalleryForm").validate({
                 rules: {
-                    title: {required: true}
+                    title: {required: true},
+                    image: {
+                        fileType: "image/webp"
+                    }
                 },
                 messages: {
-                    title: {required: "The title field is required."}
+                    title: {required: "The title field is required."},
+                    image: {
+                        fileType: "The image must be of type: webp."
+                    }
                 },
                 errorClass: 'is-invalid',
                 errorElement: 'div',
@@ -335,25 +344,23 @@
                             }, 1500);
                         },
                         error: function (xhr) {
-                            const errors = xhr.responseJSON?.errors || {};
+                            let data = xhr.responseJSON;
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    const errorField = $(`#edit${key.charAt(0).toUpperCase() + key.slice(1)}Error`);
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    if (errorField.length) {
+                                        errorField.text(errorMessage).show();
+                                        $(`#editGallery${key.charAt(0).toUpperCase() + key.slice(1)}`).addClass('is-invalid');
+                                    } else {
+                                        actionError(xhr, errorMessage);
+                                    }
+                                });
 
-                            // Clear previous errors
-                            $('.invalid-feedback').text('').hide();
-                            $('.is-invalid').removeClass('is-invalid');
-
-                            // Display new errors
-                            Object.keys(errors).forEach(field => {
-                                const errorField = $(`#edit${field.charAt(0).toUpperCase() + field.slice(1)}Error`);
-                                if (errorField.length) {
-                                    errorField.text(errors[field][0]).show();
-                                    $(`#editGallery${field.charAt(0).toUpperCase() + field.slice(1)}`).addClass('is-invalid');
-                                } else {
-                                    sendError(errors[field][0]);
-                                }
-                            });
-
-                            if (xhr.status === 500) {
-                                sendError('An error occurred on the server. Please try again later.');
+                            } else if (data.hasOwnProperty('message')) {
+                                actionError(xhr, data.message);
+                            } else {
+                                actionError(xhr);
                             }
                         },
                         complete: function () {

@@ -10,7 +10,7 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Edit</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.email.index') }}">Email Management</a></li>
                         <li class="breadcrumb-item active">Edit Email</li>
                     </ol>
                 </div>
@@ -121,14 +121,14 @@ let id=$('#id').val();
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('errors')) {
-                                $.each(data.errors, function (key, value) {
-                                    $("#" + key + "-error").html(value[0]).show();
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    $("#" + key + "-error").html(value).show();
                                 });
                             } else if (data.hasOwnProperty('message')) {
-                                sendError(data.message);
+                                actionError(xhr, data.message);
                             } else {
-                                sendError("An error occurred. Please try again.");
+                                actionError(xhr);
                             }
                         },
                         complete: function () {

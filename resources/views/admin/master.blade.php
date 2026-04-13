@@ -223,7 +223,14 @@
                             window.location.reload();
                         },
                         error: function (xhr) {
-                            actionError(xhr);
+                            let data = xhr.responseJSON;
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    sendError(value);
+                                });
+                            } else {
+                                actionError(xhr);
+                            }
                         }
                     });
                 }
@@ -284,7 +291,19 @@
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('message')) {
+                            if (data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    var errorLabel = $("#" + key + "-error");
+                                    if(key == 'password'){
+                                        errorLabel = $("#newPassword-error");
+                                    }
+                                    if (errorLabel.length) {
+                                        errorLabel.html(value).show();
+                                    } else {
+                                        sendError(value);
+                                    }
+                                });
+                            } else if (data.hasOwnProperty('message')) {
                                 actionError(xhr, data.message);
                             } else {
                                 actionError(xhr);

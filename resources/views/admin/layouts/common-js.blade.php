@@ -106,8 +106,8 @@
         var file = $(input).val();
         var ext = file.split('.').pop();
         var fileName = $(input).val().split('/').pop().split('\\').pop();
-        var videoext = ['mp4', 'webp', 'mkv', 'gif', 'm4v', 'webm', 'mov'];
-        var imgext = ['jpeg', 'jpg', 'png', 'gif', 'avif', 'svg'];
+        var videoext = ['mp4', 'mkv', 'm4v', 'webm', 'mov'];
+        var imgext = ['jpeg', 'jpg', 'png', 'gif', 'avif', 'svg', 'webp'];
         var docext = ['doc', 'pdf', 'docx', 'text', 'xls', 'xlsx', 'ppt', 'pptx', 'pptx', 'pptm'];
         var audioext = ['mp3', 'm4a', 'flac', 'mp4', 'wav', 'wma', 'aac'];
         $("label[for=" + value + "] .needsclick").addClass('uploadedvideo');

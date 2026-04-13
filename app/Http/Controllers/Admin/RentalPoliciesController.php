@@ -126,6 +126,10 @@ class RentalPoliciesController extends Controller
                 'policyId' => 'required',
                 'editPolicyTitle' => 'required|unique:rental_policies,key,' . $request->policyId,
                 'editDescription' =>'required|string',
+            ], [
+                'editPolicyTitle.required' => 'The policy title field is required.',
+                'editPolicyTitle.unique' => 'This policy title already exists.',
+                'editDescription.required' => 'The description field is required.',
             ]);
 
             if ($validator->fails()) {

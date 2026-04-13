@@ -16,13 +16,13 @@ class BannerController extends Controller
     public function add(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'banner_image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'banner_image' => 'required|image|mimes:webp|max:2048',
             'title' => 'required|string',
         ],
             [
                 'banner_image.required' => 'Please upload a banner image.',
                 'banner_image.image' => 'The uploaded file must be an image.',
-                'banner_image.mimes' => 'Allowed image formats are: jpeg, png, jpg, webp.',
+                'banner_image.mimes' => 'The image must be of type: webp.',
                 'banner_image.max' => 'The image size must not exceed 2MB.',
 
                 'title.required' => 'Please enter a title.',

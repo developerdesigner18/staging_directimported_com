@@ -8,8 +8,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Services</a></li>
-                        <li class="breadcrumb-item active">Service Management</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Service Management</a></li>
+                        <li class="breadcrumb-item active">Service List</li>
                     </ol>
                 </div>
             </div>

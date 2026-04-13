@@ -153,15 +153,17 @@
                         </div>
 
                         <!-- Banner -->
-                        <div class="mb-3">
+                        <div class="col-md-12 mb-2">
                             <label for="banner" class="form-label">Banner</label>
-                            <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/*">
-                            @if($bike->banner)
-                                <div class="uploaded-preview mt-2" style="width:240px;">
-                                    <img src="{{ asset(BIKE_PATH.$bike->banner) }}" class="w-100 object-fit-contain">
+                            <label for="banner" class="custom-file-label w-100">
+                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/webp">
+                                <label id="banner-error" class="text-danger error" style="display:none"></label>
+                                <div class="uploaded-preview mt-2" style="width: 240px;">
+                                    @if($bike->banner)
+                                        <img src="{{ asset(BIKE_PATH.$bike->banner) }}" alt="" class="imgupload w-100 h-100 object-contain" id="product-img"/>
+                                    @endif
                                 </div>
-                            @endif
-                            <label id="banner-error" class="text-danger error" style="display:none"></label>
+                            </label>
                         </div>
 
                         <!-- Images -->
@@ -360,15 +362,20 @@
                         FilePondPluginFileEncode,
                         FilePondPluginFileValidateSize,
                         FilePondPluginImageExifOrientation,
-                        FilePondPluginImagePreview
+                        FilePondPluginImagePreview,
+                        FilePondPluginFileValidateType
                     );
 
                     const inputElement = document.querySelector('input.filepond');
                     if (inputElement) {
                         FilePond.create(inputElement, {
                             allowMultiple: true,
-                            maxFiles: 5,
-                            acceptedFileTypes: ['image/*']
+                            maxFiles: 30,
+                            maxFileSize: '3MB', 
+                            maxTotalFileSize: '50MB',
+                            acceptedFileTypes: ['image/webp'],
+                            labelFileTypeNotAllowed: 'File of invalid type',
+                            fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                         });
                     }
                 }
@@ -414,6 +421,9 @@
                         $('#image_order').val(order.join(','));
                     });
 
+                    $.validator.addMethod('fileType', function(value, element, param) {
+                        return this.optional(element) || (element.files[0].type.match(param));
+                    }, 'The image must be of type: webp.');
 
                     $("#editForm").validate({
                         rules: {
@@ -425,10 +435,10 @@
                             month_price: {required: true, number: true, min: 0},
                             max_price: {required: true, number: true, min: 0},
                             description: {required: true},
-                            tec_spec: {required: true},
                             number_plate: {required: true},
                             card_header: { required: true },
                             card_subtitle: { required: true },
+                            banner: {fileType: "image/webp"},
                         },
                         messages: {
                             name: {required: "The bike name is required."},
@@ -459,11 +469,10 @@
                                 min: "Price must be a positive number."
                             },
                             description: {required: "Description is required."},
-                            tec_spec: {required: "Technical specifications are required."},
                             number_plate: {required: "The number plate  is required."},
                             card_header: { required: "Card header is required." },
                             card_subtitle: { required: "Card subtitle is required." },
-
+                            banner: {fileType: "The banner image must be of type: webp."}
                         },
                         errorClass: 'text-danger error',
                         errorPlacement: function (error, element) {
@@ -490,14 +499,16 @@
                                 },
                                 error: function (xhr) {
                                     let data = xhr.responseJSON;
-                                    if (data.hasOwnProperty('errors')) {
+                                    if (data && data.hasOwnProperty('errors')) {
                                         $.each(data.errors, function (key, value) {
-                                            $("#" + key + "-error").html(value[0]).show();
+                                            let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                            let errorMessage = Array.isArray(value) ? value[0] : value;
+                                            $("#" + errorKey + "-error").html(errorMessage).show();
                                         });
-                                    } else if (data.hasOwnProperty('message')) {
+                                    } else if (data && data.hasOwnProperty('message')) {
                                         sendError(data.message);
                                     } else {
-                                        sendError("An error occurred. Please try again.");
+                                        sendError("An error occurred. Please check file sizes or try again.");
                                     }
                                 },
                                 complete: function () {

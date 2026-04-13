@@ -33,8 +33,8 @@
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Slides</a></li>
-                        <li class="breadcrumb-item active">Slider Management</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Slider Management</a></li>
+                        <li class="breadcrumb-item active">Slider List</li>
                     </ol>
                 </div>
             </div>

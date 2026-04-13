@@ -16,6 +16,8 @@ use App\Models\Color;
 use League\HTMLToMarkdown\HtmlConverter;
 use App\Models\EmailTemplates;
 use App\Models\RentalPolicies;
+use App\Models\HomeSection;
+
 class HomeController extends Controller
 {
     use ResponseTrait;
@@ -29,6 +31,7 @@ class HomeController extends Controller
 
         $bikes = Bike::where('is_recommended', 1)->orderBy('created_at', 'desc')->limit(6)->get();
         $color = Color::first();
+        $homeSection = HomeSection::with('points')->first();
 
         $array1 = $sliders->map(function ($item) {
             return $item->image;
@@ -37,7 +40,7 @@ class HomeController extends Controller
             return $item->image;
         });
         $sliderImages = json_encode([...$array1, ...$array2]);
-        return view('landing.pages.index', compact('sliders', 'gallery', 'bikes', 'sliderImages', 'color', 'faqs', 'services'));
+        return view('landing.pages.index', compact('sliders', 'gallery', 'bikes', 'sliderImages', 'color', 'faqs', 'services', 'homeSection'));
     }
 
     public function rentalPolicies()

@@ -19,36 +19,38 @@ function fileName($ext, $prefix = 'img_')
 // Upload File
 function uploadFile($file, $path, $prefix = 'img_')
 {
-    //    dd('dd');
-    //    dd(get_class($file));
-    $extension = $file->getExtension();      // get user file extension
-    $fileName = $prefix.time().'_'.uniqid().'.'.$extension;      // generate unique filename
-    $file->move(public_path($path), $fileName);          // move to your destination folder
+    $manager = new \Intervention\Image\ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
+    $image = $manager->read($file);
+    $fileName = $prefix . time() . '_' . uniqid() . '.webp';
 
-    return $fileName;                                     // return filename for DB
+    if (!File::exists(public_path($path))) {
+        File::makeDirectory(public_path($path), 0755, true);
+    }
+
+    $image->toWebp(80)->save(public_path($path) . $fileName);
+
+    return $fileName;
 }
+
 function uploadFilepondEncodedFile($json, $path, $prefix = 'img_')
 {
-
     $bannerJson = json_decode($json, true);
+    if (!isset($bannerJson['data']) || !isset($bannerJson['type'])) {
+        return null;
+    }
 
     $base64Image = base64_decode($bannerJson['data']);
 
-    // Get extension from MIME type
-    $mimeType = $bannerJson['type'];
-    $extension = explode('/', $mimeType)[1];
-
-    // Create ImageManager instance with driver (e.g., 'gd')
     $manager = new \Intervention\Image\ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
-    $image = $manager->read($base64Image); // Use `read()` instead of `make()`
+    $image = $manager->read($base64Image);
 
-    $tempPath = tempnam(sys_get_temp_dir(), $prefix);
-    $tempPathWithExt = $tempPath.'.'.$extension;
-    $image->save($tempPathWithExt);
+    $fileName = $prefix . time() . '_' . uniqid() . '.webp';
 
-    $uploadedFile = new \Illuminate\Http\File($tempPathWithExt);
-    $fileName = uploadFile($uploadedFile, $path, $prefix);
-    unlink($tempPath);
+    if (!File::exists(public_path($path))) {
+        File::makeDirectory(public_path($path), 0755, true);
+    }
+
+    $image->toWebp(80)->save(public_path($path) . $fileName);
 
     return $fileName;
 }

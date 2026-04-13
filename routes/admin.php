@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\RentalPoliciesController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\UserPermissionController;
+use App\Http\Controllers\Admin\HomeSectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -219,6 +220,12 @@ use App\Http\Controllers\Admin\UserPermissionController;
         Route::post('/update/{id}', 'update')->name('update');
         Route::post('/delete', 'delete')->name('delete');
         Route::post('/sort', 'updateSort')->name('sort');
+    });
+
+    // Home Section (About Us)
+    Route::controller(HomeSectionController::class)->prefix('home-section')->name('home_section.')->group(function () {
+        Route::get('/edit', 'edit')->name('edit');
+        Route::post('/update', 'update')->name('update');
     });
 
     // Locations
