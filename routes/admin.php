@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\SiteSettingsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ColorController;
@@ -34,17 +35,18 @@ use App\Http\Controllers\Admin\HomeSectionController;
 |
 */
 
-    Route::group(['middleware' =>  ['guest:admin,employee']], function () {
-        Route::controller(AuthController::class)->group(function () {
-            Route::get('/login', 'login')->name('login');
-            Route::post('/login-action', 'loginAction')->name('login-action');
-        });
+Route::group(['middleware' => ['guest:admin,employee']], function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
+        Route::post('/login-action', 'loginAction')->name('login-action');
     });
+});
 
-    Route::group(['middleware' => ['auth:admin,employee']], function () {
-        Route::get('/login-as-user/{id}',
-            [\App\Http\Controllers\Admin\AuthController::class, 'loginAsUser']
-        )->name('loginAsUser');
+Route::group(['middleware' => ['auth:admin,employee']], function () {
+    Route::get(
+        '/login-as-user/{id}',
+        [\App\Http\Controllers\Admin\AuthController::class, 'loginAsUser']
+    )->name('loginAsUser');
     // Dashboard
     Route::group(['middleware' => ['check_permission:dashboard']], function () {
         Route::controller(DashboardController::class)->group(function () {
@@ -123,8 +125,13 @@ use App\Http\Controllers\Admin\HomeSectionController;
             Route::get('/', 'index')->name('settings');
             Route::post('/', 'update')->name('settings.update');
         });
-    });
 
+
+    });
+    Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('site.')->group(function () {
+        // Route::get('/', 'index')->name('settings');
+        Route::post('/', 'update')->name('update');
+    });
     // Gallery
     Route::group(['middleware' => ['check_permission:gallery']], function () {
         Route::controller(GalleryController::class)->prefix('gallery')->name('gallery.')->group(function () {
@@ -173,7 +180,7 @@ use App\Http\Controllers\Admin\HomeSectionController;
 
     // Bikes
     Route::group(['middleware' => ['check_permission:bikes']], function () {
-        Route::controller(BikeController::class)->prefix('bike')->name('bike.')->group(function () {
+        Route::controller(BikeController::class)->prefix('car')->name('bike.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::get('/views/{id}', 'view')->name('view');

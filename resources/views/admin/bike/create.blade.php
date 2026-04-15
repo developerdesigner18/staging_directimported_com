@@ -1,16 +1,16 @@
 @extends('admin.master')
-@section('title','Create Bike')
+@section('title', 'Create Car')
 
 @section('main')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Create Bike</h4>
+                <h4 class="mb-sm-0">Create Car</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">bike</a></li>
-                        <li class="breadcrumb-item active">Create Bike</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Car</a></li>
+                        <li class="breadcrumb-item active">Create Car</li>
                     </ol>
                 </div>
             </div>
@@ -27,8 +27,8 @@
 
                         <!-- Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Bike Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter bike name">
+                            <label for="name" class="form-label">Car Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter car name">
                             <label id="name-error" class="text-danger error" for="name" style="display: none"></label>
                         </div>
 
@@ -41,7 +41,8 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            <label id="category_id-error" class="text-danger error" for="category_id" style="display: none"></label>
+                            <label id="category_id-error" class="text-danger error" for="category_id"
+                                style="display: none"></label>
                         </div>
 
                         <!-- Pricing -->
@@ -49,28 +50,32 @@
                             <div class="col-md-6">
                                 <label for="less_four_days_price" class="form-label">1-4 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="less_four_days_price"
-                                       name="less_four_days_price" placeholder="Enter price">
-                                <label id="less_four_days_price-error" class="text-danger error" style="display: none"></label>
+                                    name="less_four_days_price" placeholder="Enter price">
+                                <label id="less_four_days_price-error" class="text-danger error"
+                                    style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="five_six_days_price" class="form-label">5-6 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="five_six_days_price"
-                                       name="five_six_days_price" placeholder="Enter price">
-                                <label id="five_six_days_price-error" class="text-danger error" style="display: none"></label>
+                                    name="five_six_days_price" placeholder="Enter price">
+                                <label id="five_six_days_price-error" class="text-danger error"
+                                    style="display: none"></label>
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="week_price" class="form-label">Weekly Price</label>
-                                <input type="number" step="0.01" class="form-control" id="week_price" name="week_price" placeholder="Enter price">
+                                <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
+                                    placeholder="Enter price">
                                 <label id="week_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="month_price" class="form-label">Monthly Price</label>
-                                <input type="number" step="0.01" class="form-control" id="month_price" name="month_price" placeholder="Enter price">
+                                <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
+                                    placeholder="Enter price">
                                 <label id="month_price-error" class="text-danger error" style="display: none"></label>
                             </div>
                         </div>
@@ -78,13 +83,15 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="max_price" class="form-label">Maximum Price</label>
-                                <input type="number" step="0.01" class="form-control" id="max_price" name="max_price" placeholder="Enter maximum price">
+                                <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
+                                    placeholder="Enter maximum price">
                                 <label id="max_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="insurance_price" class="form-label">Insurance Price</label>
-                                <input type="number" step="0.01" class="form-control" id="insurance_price" name="insurance_price" placeholder="Enter insurance price">
+                                <input type="number" step="0.01" class="form-control" id="insurance_price"
+                                    name="insurance_price" placeholder="Enter insurance price">
                                 <label id="insurance_price-error" class="text-danger error" style="display: none"></label>
                             </div>
                         </div>
@@ -99,7 +106,8 @@
                                             <option value="{{ $acc->id }}">{{ $acc->name }}</option>
                                         @endforeach
                                     </select>
-                                    <label id="free_accessory-error" class="text-danger error" style="display: none"></label>
+                                    <label id="free_accessory-error" class="text-danger error"
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="col-lg-6">
@@ -109,7 +117,8 @@
                                             <option value="{{ $acc->id }}">{{ $acc->name }}</option>
                                         @endforeach
                                     </select>
-                                    <label id="extra_accessory-error" class="text-danger error" style="display: none"></label>
+                                    <label id="extra_accessory-error" class="text-danger error"
+                                        style="display: none"></label>
                                 </div>
 
 
@@ -123,8 +132,8 @@
                                 <!-- Number Plate -->
                                 <div class="col-lg-6">
                                     <label for="numberPlate" class="form-label">Number Plate</label>
-                                    <input type="text" class="form-control" id="numberPlate"
-                                           name="number_plate" placeholder="Enter number plate number">
+                                    <input type="text" class="form-control" id="numberPlate" name="number_plate"
+                                        placeholder="Enter number plate number">
                                     <label id="number_plate-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -133,8 +142,7 @@
                                     <label class="form-label">Location</label>
                                     <select class="form-select select2" name="location">
                                         @foreach($locations ?? [] as $location)
-                                            <option value="{{ $location->id }}"
-                                                    {{ old('location_id', $bike->location_id ?? '') == $location->id ? 'selected' : '' }}>
+                                            <option value="{{ $location->id }}" {{ old('location_id', $bike->location_id ?? '') == $location->id ? 'selected' : '' }}>
                                                 {{ $location->name }}
                                             </option>
                                         @endforeach
@@ -146,9 +154,10 @@
 
                         <!-- Recommended -->
                         <div class="mb-3">
-                            <label class="form-label">Recommended Bike</label>
+                            <label class="form-label">Recommended Car</label>
                             <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended" value="1">
+                                <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended"
+                                    value="1">
                                 <label class="form-check-label" for="is_recommended">Mark as recommended</label>
                             </div>
                         </div>
@@ -157,7 +166,8 @@
                         <div class="col-md-12 mb-2">
                             <label for="banner" class="form-label">Banner</label>
                             <label for="banner" class="custom-file-label w-100">
-                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/webp">
+                                <input type="file" id="banner" class="form-control file-preview" name="banner"
+                                    accept="image/webp">
                                 <label id="banner-error" class="text-danger error" style="display: none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;"></div>
                             </label>
@@ -165,8 +175,9 @@
 
                         <!-- Images -->
                         <div class="mb-3">
-                            <label for="images" class="form-label">Bike Images</label>
-                            <input type="file" class="filepond" id="images" name="images[]" multiple data-allow-reorder="true" data-max-file-size="10MB">
+                            <label for="images" class="form-label">Car Images</label>
+                            <input type="file" class="filepond" id="images" name="images[]" multiple
+                                data-allow-reorder="true" data-max-file-size="10MB">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
 
@@ -231,7 +242,7 @@
                                 <div class="mb-3">
                                     <label for="card_header" class="form-label">Card Header</label>
                                     <input type="text" class="form-control" id="card_header" name="card_header"
-                                           placeholder="Enter card title (Frontend)">
+                                        placeholder="Enter card title (Frontend)">
                                     <label id="card_header-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -239,7 +250,7 @@
                                 <div class="mb-3">
                                     <label for="card_subtitle" class="form-label">Card Subtitle</label>
                                     <input type="text" class="form-control" id="card_subtitle" name="card_subtitle"
-                                           placeholder="Enter card subtitle (Frontend)">
+                                        placeholder="Enter card subtitle (Frontend)">
                                     <label id="card_subtitle-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -260,7 +271,7 @@
 @section('script')
     <script>
         tinymce.init({
-                selector: '#description_editor',
+            selector: '#description_editor',
             height: 300,
             menubar: true,
             plugins: 'lists link image help wordcount code media table',
@@ -315,12 +326,12 @@
                         const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                         const embedHtml = '<iframe src="' + embedUrl +
                             '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                        resolve({html: embedHtml});
+                        resolve({ html: embedHtml });
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 } else {
-                    resolve({html: ''});
+                    resolve({ html: '' });
                 }
             },
             setup: function (editor) {
@@ -361,32 +372,32 @@
         $(document).ready(function () {
             initFilepond();
 
-            $.validator.addMethod('fileType', function(value, element, param) {
+            $.validator.addMethod('fileType', function (value, element, param) {
                 return this.optional(element) || (element.files[0].type.match(param));
             }, 'The image must be of type: webp.');
 
             $("#addForm").validate({
                 rules: {
 
-                    name: {required: true},
-                    category_id: {required: true},
-                    less_four_days_price: {required: true, number: true, min: 0},
-                    five_six_days_price: {required: true, number: true, min: 0},
-                    week_price: {required: true, number: true, min: 0},
-                    month_price: {required: true, number: true, min: 0},
-                    max_price: {required: true, number: true, min: 0},
-                    'images[]': {required: true},
-                    description: {required: true},
-                    number_plate: {required: true},
-                    card_header: {required: true},
-                    card_subtitle: {required: true},
-                    banner: {fileType: "image/webp"},
+                    name: { required: true },
+                    category_id: { required: true },
+                    less_four_days_price: { required: true, number: true, min: 0 },
+                    five_six_days_price: { required: true, number: true, min: 0 },
+                    week_price: { required: true, number: true, min: 0 },
+                    month_price: { required: true, number: true, min: 0 },
+                    max_price: { required: true, number: true, min: 0 },
+                    'images[]': { required: true },
+                    description: { required: true },
+                    number_plate: { required: true },
+                    card_header: { required: true },
+                    card_subtitle: { required: true },
+                    banner: { fileType: "image/webp" },
 
 
                 },
                 messages: {
-                    name: {required: "The bike name is required."},
-                    category_id: {required: "Please select a category."},
+                    name: { required: "The car name is required." },
+                    category_id: { required: "Please select a category." },
                     less_four_days_price: {
                         required: "Price for 1-3 days is required.",
                         number: "Please enter a valid number.",
@@ -412,12 +423,12 @@
                         number: "Please enter a valid number.",
                         min: "Price must be a positive number."
                     },
-                    'images[]': {required: "Please upload at least one image."},
-                    description: {required: "Description is required."},
-                    number_plate: {required: "The number plate  is required."},
+                    'images[]': { required: "Please upload at least one image." },
+                    description: { required: "Description is required." },
+                    number_plate: { required: "The number plate  is required." },
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
-                    banner: {fileType: "The banner image must be of type: webp."}
+                    banner: { fileType: "The banner image must be of type: webp." }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -439,7 +450,7 @@
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
                         },
                         success: function (result) {
-                            sendSuccess(result.message || 'Bike created successfully!');
+                            sendSuccess(result.message || 'Car created successfully!');
                             form.reset();
                             const pond = FilePond.find(document.querySelector('input.filepond'));
                             if (pond) {
@@ -465,7 +476,7 @@
                         },
                         complete: function () {
                             $('button[type="submit"]').attr('disabled', false);
-                            $('button[type="submit"]').html('Create Bike');
+                            $('button[type="submit"]').html('Create Car');
                         }
                     });
                 }

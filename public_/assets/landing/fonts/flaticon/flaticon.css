@@ -1,0 +1,212 @@
+@font-face {
+    font-family: "flaticon";
+    src: url("flaticon1ee9.ttf?127a918d183f341f23fb88932902271c") format("truetype"),
+url("flaticon1ee9.woff?127a918d183f341f23fb88932902271c") format("woff"),
+url("flaticon1ee9.woff2?127a918d183f341f23fb88932902271c") format("woff2"),
+url("flaticon1ee9.eot?127a918d183f341f23fb88932902271c#iefix") format("embedded-opentype"),
+url("flaticon1ee9.svg?127a918d183f341f23fb88932902271c#flaticon") format("svg");
+}
+
+i[class^="flaticon-"]:before, i[class*=" flaticon-"]:before {
+    font-family: flaticon !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.flaticon-telephone-call:before {
+    content: "\f101";
+}
+.flaticon-clock:before {
+    content: "\f102";
+}
+.flaticon-avatar:before {
+    content: "\f103";
+}
+.flaticon-magnifying-glass-search:before {
+    content: "\f104";
+}
+.flaticon-booking:before {
+    content: "\f105";
+}
+.flaticon-frame:before {
+    content: "\f106";
+}
+.flaticon-bike-helmet:before {
+    content: "\f107";
+}
+.flaticon-play:before {
+    content: "\f108";
+}
+.flaticon-history:before {
+    content: "\f109";
+}
+.flaticon-globe:before {
+    content: "\f10a";
+}
+.flaticon-refund:before {
+    content: "\f10b";
+}
+.flaticon-call-center:before {
+    content: "\f10c";
+}
+.flaticon-up-arrow:before {
+    content: "\f10d";
+}
+.flaticon-right-arrow:before {
+    content: "\f10e";
+}
+.flaticon-right-arrow-1:before {
+    content: "\f10f";
+}
+.flaticon-share:before {
+    content: "\f110";
+}
+.flaticon-next:before {
+    content: "\f111";
+}
+.flaticon-down-arrow:before {
+    content: "\f112";
+}
+.flaticon-previous:before {
+    content: "\f113";
+}
+.flaticon-forward:before {
+    content: "\f114";
+}
+.flaticon-placeholder:before {
+    content: "\f115";
+}
+.flaticon-compass:before {
+    content: "\f116";
+}
+.flaticon-motorcycle:before {
+    content: "\f117";
+}
+.flaticon-keylock:before {
+    content: "\f118";
+}
+.flaticon-bike-helmet-1:before {
+    content: "\f119";
+}
+.flaticon-google-play:before {
+    content: "\f11a";
+}
+.flaticon-user:before {
+    content: "\f11b";
+}
+.flaticon-folder:before {
+    content: "\f11c";
+}
+.flaticon-crowd:before {
+    content: "\f11d";
+}
+.flaticon-customer-support:before {
+    content: "\f11e";
+}
+.flaticon-heart:before {
+    content: "\f11f";
+}
+.flaticon-helmet:before {
+    content: "\f120";
+}
+.flaticon-odometer-for-kilometers-and-speed-control:before {
+    content: "\f121";
+}
+.flaticon-world:before {
+    content: "\f122";
+}
+.flaticon-open-message:before {
+    content: "\f123";
+}
+.flaticon-coin:before {
+    content: "\f124";
+}
+.flaticon-play-1:before {
+    content: "\f125";
+}
+.flaticon-bubble-chat:before {
+    content: "\f126";
+}
+.flaticon-quotes:before {
+    content: "\f127";
+}
+.flaticon-smartphone:before {
+    content: "\f128";
+}
+.flaticon-pin:before {
+    content: "\f129";
+}
+.flaticon-earth:before {
+    content: "\f12a";
+}
+.flaticon-turn-direction:before {
+    content: "\f12b";
+}
+.flaticon-send:before {
+    content: "\f12c";
+}
+.flaticon-airplane:before {
+    content: "\f12d";
+}
+.flaticon-search:before {
+    content: "\f12e";
+}
+.flaticon-setting:before {
+    content: "\f12f";
+}
+.flaticon-list:before {
+    content: "\f130";
+}
+.flaticon-grid:before {
+    content: "\f131";
+}
+.flaticon-location-1:before {
+    content: "\f132";
+}
+.flaticon-month:before {
+    content: "\f133";
+}
+.flaticon-smiley:before {
+    content: "\f134";
+}
+.flaticon-employee:before {
+    content: "\f135";
+}
+.flaticon-businessman:before {
+    content: "\f136";
+}
+.flaticon-manager:before {
+    content: "\f137";
+}
+.flaticon-business-man:before {
+    content: "\f138";
+}
+.flaticon-businessman-1:before {
+    content: "\f139";
+}
+.flaticon-male:before {
+    content: "\f13a";
+}
+.flaticon-shield:before {
+    content: "\f13b";
+}
+.flaticon-headphones:before {
+    content: "\f13c";
+}
+.flaticon-internet:before {
+    content: "\f13d";
+}
+.flaticon-internet-1:before {
+    content: "\f13e";
+}
+.flaticon-apple-logo:before {
+    content: "\f13f";
+}
+.flaticon-bike:before {
+    content: "\f140";
+}

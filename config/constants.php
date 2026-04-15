@@ -49,3 +49,6 @@ if (!defined('SERVICE_PATH'))
 
 if (!defined('DEFAULT_PATH'))
     define('DEFAULT_PATH', 'uploads/default/');
+
+if (!defined('LOGO_PATH'))
+    define('LOGO_PATH', 'assets/logo/');

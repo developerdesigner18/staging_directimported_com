@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
+use App\Models\SiteSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,8 @@ class SystemController extends Controller
 
     public function index()
     {
-        return view('admin.system.settings');
+        $settings = SiteSettings::first();
+        return view('admin.system.settings', compact('settings'));
     }
 
     public function update(Request $request)
@@ -84,4 +86,6 @@ class SystemController extends Controller
             return $this->sendError($exception->getMessage());
         }
     }
+
+
 }
