@@ -294,7 +294,7 @@
                             if (data.hasOwnProperty('error')) {
                                 $.each(data.error, function (key, value) {
                                     var errorLabel = $("#" + key + "-error");
-                                    if(key == 'password'){
+                                    if (key == 'password') {
                                         errorLabel = $("#newPassword-error");
                                     }
                                     if (errorLabel.length) {

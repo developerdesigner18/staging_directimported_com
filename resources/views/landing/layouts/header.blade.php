@@ -33,20 +33,18 @@
                         <ul class="list-inline d-flex mb-0">
 
                             <li class="list-inline-item mx-1">
-                                <a href="https://www.facebook.com/bikerentaljapan/" target="_blank"
-                                    class="social-icon facebook">
+                                <a href="{{ getSetting()->facebook_url }}" target="_blank" class="social-icon facebook">
                                     <i class="bxl bx-facebook"></i>
                                 </a>
                             </li>
                             <li class="list-inline-item mx-1">
-                                <a href="https://www.instagram.com/ezmotokansai/" target="_blank"
+                                <a href="{{ getSetting()->instagram_url }}" target="_blank"
                                     class="social-icon instagram">
                                     <i class="bxl bx-instagram"></i>
                                 </a>
                             </li>
                             <li class="list-inline-item mx-1">
-                                <a href="https://www.youtube.com/channel/UCFqU9FtrLMK7_8F1HBEzPQg" target="_blank"
-                                    class="social-icon youtube">
+                                <a href="{{ getSetting()->youtube_url }}" target="_blank" class="social-icon youtube">
                                     <i class="bxl bx-youtube"></i>
                                 </a>
                             </li>
@@ -75,7 +73,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-2 col-md-8 col-sm-8 col-6">
                     <a href="{{route('landing')}}">
-                        <img class="logo" src="{{asset('assets/logo/image (2).png')}}" alt="Ridexo Logo Yellow">
+                        <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow">
                     </a>
                 </div>
                 <div class="col-lg-10 col-md-4 col-sm-4 col-6">

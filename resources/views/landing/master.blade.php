@@ -311,7 +311,7 @@
         </button>
         <!--        -->
         <a href="{{route('landing')}}">
-            <img src="{{asset('assets/logo/main.png')}}" alt="ridexo footer logo">
+            <img src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="ridexo footer logo">
         </a>
 
         <!--   Rid Menu     -->

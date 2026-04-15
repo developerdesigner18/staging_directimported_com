@@ -22,7 +22,7 @@
                 <!-- Company Info & Social -->
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                     <a href="{{route('landing')}}" class="d-inline-block mb-3">
-                        <img src="{{asset('assets/logo/Logo-white.png')}}" alt="IAS JAPAN Footer Logo"
+                        <img src="{{asset('assets/logo/' . getSetting()->footer_logo)}}" alt="IAS JAPAN Footer Logo"
                             style="max-height: 60px;">
                     </a>
                     <p class="rid-footer-info mb-4">

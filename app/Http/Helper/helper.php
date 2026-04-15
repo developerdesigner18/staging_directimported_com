@@ -3,6 +3,7 @@
 // FOR GLOBAL FUNCTIONS
 
 // Generate Filename
+use App\Models\SiteSettings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
@@ -13,7 +14,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 
 function fileName($ext, $prefix = 'img_')
 {
-    return $prefix.now()->format('dmYHisv').rand(100000, 999999).'.'.$ext;
+    return $prefix . now()->format('dmYHisv') . rand(100000, 999999) . '.' . $ext;
 }
 
 // Upload File
@@ -59,7 +60,7 @@ function uploadFilepondEncodedFile($json, $path, $prefix = 'img_')
 function dateToHuman($date, $format = 'Y-m-d H:i:s', $timezone = 'UTC')
 {
     try {
-        if (! empty($date)) {
+        if (!empty($date)) {
             return \Carbon\Carbon::parse($date, 'UTC')
                 ->tz($timezone)
                 ->format($format);
@@ -76,7 +77,7 @@ function generateBookingId()
     $today = now()->format('Ymd'); // Short date: YYMMDD
     $random = strtoupper(Str::random(4)); // Random 4 letters/numbers
 
-    return 'BK'.$today.$random;
+    return 'BK' . $today . $random;
 }
 function diffInDays($date1, $date2)
 {
@@ -114,13 +115,13 @@ function bikePagination($totalPages, $active = 1)
     // Previous
     $prevPage = max(1, $active - 1);
     $html .= '<li class="list-inline-item">
-                <a class="previous" href="javascript:void(0);" data-page="'.$prevPage.'">
+                <a class="previous" href="javascript:void(0);" data-page="' . $prevPage . '">
                     <i class="icofont-thin-left"></i>
                 </a>
               </li>';
 
     // First page
-    $html .= '<li class="list-inline-item page-btn '.(($active == 1) ? 'active' : '').'" data-page="1">
+    $html .= '<li class="list-inline-item page-btn ' . (($active == 1) ? 'active' : '') . '" data-page="1">
                 <a href="javascript:void(0);">1</a>
               </li>';
 
@@ -134,8 +135,8 @@ function bikePagination($totalPages, $active = 1)
     $end = min($totalPages - 1, $active + 1);
 
     for ($i = $start; $i <= $end; $i++) {
-        $html .= '<li class="list-inline-item page-btn '.(($i == $active) ? 'active' : '').'" data-page="'.$i.'">
-                    <a href="javascript:void(0);">'.$i.'</a>
+        $html .= '<li class="list-inline-item page-btn ' . (($i == $active) ? 'active' : '') . '" data-page="' . $i . '">
+                    <a href="javascript:void(0);">' . $i . '</a>
                   </li>';
     }
 
@@ -146,15 +147,15 @@ function bikePagination($totalPages, $active = 1)
 
     // Last page
     if ($totalPages > 1) {
-        $html .= '<li class="list-inline-item page-btn '.(($active == $totalPages) ? 'active' : '').'" data-page="'.$totalPages.'">
-                    <a href="javascript:void(0);">'.$totalPages.'</a>
+        $html .= '<li class="list-inline-item page-btn ' . (($active == $totalPages) ? 'active' : '') . '" data-page="' . $totalPages . '">
+                    <a href="javascript:void(0);">' . $totalPages . '</a>
                   </li>';
     }
 
     // Next
     $nextPage = min($totalPages, $active + 1);
     $html .= '<li class="list-inline-item">
-                <a class="next" href="javascript:void(0);" data-page="'.$nextPage.'">
+                <a class="next" href="javascript:void(0);" data-page="' . $nextPage . '">
                     <i class="icofont-thin-right"></i>
                 </a>
               </li>';
@@ -166,7 +167,7 @@ function bikePagination($totalPages, $active = 1)
 
 function deleteImage($file, $path)
 {
-    $filepath = public_path($path).basename($file);
+    $filepath = public_path($path) . basename($file);
     if (File::exists($filepath)) {
         File::delete($filepath);
 
@@ -188,7 +189,7 @@ function generateTemporaryPassword($firstName, $lastName, $bookingId)
     $randomPart = Str::random(2);
 
     // Combine sab parts
-    $tempPassword = $fnPart.$lnPart.$bookingPart.$randomPart;
+    $tempPassword = $fnPart . $lnPart . $bookingPart . $randomPart;
 
     return $tempPassword;
 }
@@ -211,4 +212,8 @@ function sendDynamicEmail($to, $templateKey, $data)
 
     Mail::to($to)->send(new ApprovedMail($template->subject, $markdownBody));
     return true;
+}
+function getSetting()
+{
+    return SiteSettings::first();
 }

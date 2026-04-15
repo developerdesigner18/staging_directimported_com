@@ -1,5 +1,5 @@
 <!--favicon icon-->
-<link rel="icon" type="image/png" href="{{asset('assets/logo/main.png')}}">
+<link rel="icon" type="image/webp" href="{{asset('assets/logo/' . getSetting()->logo)}}">
 
 <!-- Inject:css -->
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/fonts/icofont/icofont.min.css')}}">

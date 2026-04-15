@@ -7,19 +7,23 @@
         <!-- Dark Logo-->
         <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
             <span class="logo-sm">
-                <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="20" width="200">
+                <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin dark logo" height="20"
+                    width="200">
             </span>2
             <span class="logo-lg">
-                <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="100" width="200">
+                <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin dark logo" height="100"
+                    width="200">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="{{route('admin.dashboard')}}" class="logo logo-light">
             <span class="logo-sm">
-                <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="20" width="200">
+                <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin light logo" height="20"
+                    width="200">
             </span>
             <span class="logo-lg">
-                <img src="{{asset('assets/logo/image (2).png')}}" alt="" height="100" width="200">
+                <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin light logo" height="100"
+                    width="200">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
