@@ -581,7 +581,7 @@
                                                 <img src="{{$user->profile_img}}"
                                                      alt="Profile Image"
                                                      id="profileImagePreview"
-                                                     class="rounded-circle">
+                                                     class="rounded-circle" loading="lazy">
                                                 <input type="file" id="profileImageInput" name="profile"
                                                        accept="image/*" class="d-none">
                                                 <div class="camera-icon"
@@ -716,7 +716,7 @@
                                         <div class="document-body">
                                             <div class="document-images">
                                                 @if($user->userDetail?->getRawOriginal('passport'))
-                                                    <img src="{{ $user->userDetail->passport }}" class="document-thumb" onclick="showImagePreview(this.src)">
+                                                    <img src="{{ $user->userDetail->passport }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="Passport Document" loading="lazy">
                                                 @else
                                                     <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
                                                 @endif
@@ -741,10 +741,10 @@
                                         <div class="document-body">
                                             <div class="document-images">
                                                 @if($user->userDetail?->getRawOriginal('regular_lic'))
-                                                    <img src="{{ $user->userDetail->regular_lic }}" class="document-thumb" onclick="showImagePreview(this.src)">
+                                                    <img src="{{ $user->userDetail->regular_lic }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="License Front" loading="lazy">
                                                 @endif
                                                 @if($user->userDetail?->getRawOriginal('regular_lic_back'))
-                                                    <img src="{{ $user->userDetail->regular_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)">
+                                                    <img src="{{ $user->userDetail->regular_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="License Back" loading="lazy">
                                                 @endif
                                                 @if(!$user->userDetail?->getRawOriginal('regular_lic'))
                                                     <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
@@ -770,10 +770,10 @@
                                         <div class="document-body">
                                             <div class="document-images">
                                                 @if($user->userDetail?->getRawOriginal('international_lic'))
-                                                    <img src="{{ $user->userDetail->international_lic }}" class="document-thumb" onclick="showImagePreview(this.src)">
+                                                    <img src="{{ $user->userDetail->international_lic }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="IDP Front" loading="lazy">
                                                 @endif
                                                 @if($user->userDetail?->getRawOriginal('international_lic_back'))
-                                                    <img src="{{ $user->userDetail->international_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)">
+                                                    <img src="{{ $user->userDetail->international_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="IDP Back" loading="lazy">
                                                 @endif
                                                 @if(!$user->userDetail?->getRawOriginal('international_lic'))
                                                     <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
@@ -835,7 +835,7 @@
                                                         <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                         <div class="dp-upload-label">Click to Upload Passport Photo</div>
                                                         <div class="dp-upload-sub">or drag and drop</div>
-                                                        <img class="dp-preview d-none" id="passportThumb">
+                                                        <img class="dp-preview d-none" id="passportThumb" alt="Passport Preview" loading="lazy">
                                                     </div>
                                                     <input type="file" id="passportInput" name="passport" class="d-none" accept="image/*">
                                                 </div>
@@ -863,13 +863,13 @@
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                             <div class="dp-upload-label">Click to upload Licence front side</div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="regularLicThumb">
+                                                            <img class="dp-preview d-none" id="regularLicThumb" alt="License Front Preview" loading="lazy">
                                                         </div>
                                                         <div class="dp-upload-zone" id="regularBackZone" onclick="document.getElementById('regularBackInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                             <div class="dp-upload-label">Click to upload Licence back side</div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="regularBackThumb">
+                                                            <img class="dp-preview d-none" id="regularBackThumb" alt="License Back Preview" loading="lazy">
                                                         </div>
                                                     </div>
                                                     <input type="file" id="regularLicInput" name="regular_lic" class="d-none" accept="image/*">
@@ -902,13 +902,13 @@
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                             <div class="dp-upload-label">Click to upload IDP front side</div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="idpFrontThumb">
+                                                            <img class="dp-preview d-none" id="idpFrontThumb" alt="IDP Front Preview" loading="lazy">
                                                         </div>
                                                         <div class="dp-upload-zone" id="idpBackZone" onclick="document.getElementById('internationalLicBackInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                             <div class="dp-upload-label">Click to upload IDP back side</div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="idpBackThumb">
+                                                            <img class="dp-preview d-none" id="idpBackThumb" alt="IDP Back Preview" loading="lazy">
                                                         </div>
                                                     </div>
                                                     <input type="file" id="internationalLicInput" name="international_lic" class="d-none" accept="image/*">
@@ -1472,7 +1472,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <img src="${src}">
+                    <img src="${src}" alt="Image Preview" loading="lazy">
                 </div>
             </div>
         </div>

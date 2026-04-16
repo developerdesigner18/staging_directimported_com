@@ -154,7 +154,7 @@
 
                                         <div class="col-md-4 mb-3 mb-md-0">
                                             <img src="{{ asset($image) }}" alt="{{ $item->title }}"
-                                                class="img-fluid rounded w-100 services-img">
+                                                class="img-fluid rounded w-100 services-img" loading="lazy">
                                         </div>
 
                                         <div class="col-md-8">

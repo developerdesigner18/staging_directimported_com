@@ -1180,7 +1180,7 @@ input:-webkit-autofill {
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: 15px;
+    top: 5px;
     right: 10px;
 }
 

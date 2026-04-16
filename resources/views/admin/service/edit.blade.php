@@ -168,12 +168,7 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 30,
-                    maxFileSize: '3MB', 
-                    maxTotalFileSize: '50MB',
-                    acceptedFileTypes: ['image/webp'],
 
-                    labelFileTypeNotAllowed: 'File of invalid type',
-                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                 });
             }
         }

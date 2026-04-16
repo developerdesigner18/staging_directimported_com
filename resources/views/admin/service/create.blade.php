@@ -35,7 +35,7 @@
                         <!-- Images -->
                         <div class="mb-3">
                             <label for="images" class="form-label">Service Images</label>
-                            <input type="file" class="filepond" id="images" name="images[]" multiple data-allow-reorder="true" data-max-file-size="10MB">
+                            <input type="file" class="filepond" id="images" name="images[]" multiple data-allow-reorder="true">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
 
@@ -149,11 +149,6 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 30,
-                    maxFileSize: '3MB', 
-                    maxTotalFileSize: '50MB',
-                    acceptedFileTypes: ['image/webp'],
-                    labelFileTypeNotAllowed: 'File of invalid type',
-                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                 });
             }
         }

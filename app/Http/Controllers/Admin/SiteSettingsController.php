@@ -23,10 +23,10 @@ class SiteSettingsController extends Controller
                 'instagram_url' => 'required|url',
                 'twitter_url' => 'required|url',
                 'youtube_url' => 'required|url',
-                'logo' => 'nullable|image|mimes:webp|max:2048',
-                'admin_logo' => 'nullable|image|mimes:webp|max:2048',
-                'footer_logo' => 'nullable|image|mimes:webp|max:2048',
-                'favicon' => 'nullable|image|mimes:webp|max:2048',
+                'logo' => 'nullable|image',
+                'admin_logo' => 'nullable|image',
+                'footer_logo' => 'nullable|image',
+                'favicon' => 'nullable|image',
             ]
         );
 

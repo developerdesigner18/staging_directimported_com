@@ -282,7 +282,7 @@
     <!-- Full Page Loader -->
     <div class="loader-container">
         <div class="loader">
-            <img src="{{asset('assets/logo/image (1).png')}}" alt="Logo">
+            <img src="{{asset('assets/logo/image (1).png')}}" alt="Logo" loading="lazy">
         </div>
     </div>
 
@@ -311,7 +311,7 @@
         </button>
         <!--        -->
         <a href="{{route('landing')}}">
-            <img src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="ridexo footer logo">
+            <img src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="ridexo footer logo" loading="lazy">
         </a>
 
         <!--   Rid Menu     -->

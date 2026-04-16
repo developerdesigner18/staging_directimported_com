@@ -156,7 +156,7 @@
                         <div class="col-md-12 mb-2">
                             <label for="banner" class="form-label">Banner</label>
                             <label for="banner" class="custom-file-label w-100">
-                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/webp">
+                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/*">
                                 <label id="banner-error" class="text-danger error" style="display:none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;">
                                     @if($bike->banner)
@@ -371,11 +371,6 @@
                         FilePond.create(inputElement, {
                             allowMultiple: true,
                             maxFiles: 30,
-                            maxFileSize: '3MB', 
-                            maxTotalFileSize: '50MB',
-                            acceptedFileTypes: ['image/webp'],
-                            labelFileTypeNotAllowed: 'File of invalid type',
-                            fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                         });
                     }
                 }
@@ -421,9 +416,7 @@
                         $('#image_order').val(order.join(','));
                     });
 
-                    $.validator.addMethod('fileType', function(value, element, param) {
-                        return this.optional(element) || (element.files[0].type.match(param));
-                    }, 'The image must be of type: webp.');
+
 
                     $("#editForm").validate({
                         rules: {
@@ -438,7 +431,7 @@
                             number_plate: {required: true},
                             card_header: { required: true },
                             card_subtitle: { required: true },
-                            banner: {fileType: "image/webp"},
+                            banner: {required: false},
                         },
                         messages: {
                             name: {required: "The bike name is required."},
@@ -472,7 +465,7 @@
                             number_plate: {required: "The number plate  is required."},
                             card_header: { required: "Card header is required." },
                             card_subtitle: { required: "Card subtitle is required." },
-                            banner: {fileType: "The banner image must be of type: webp."}
+
                         },
                         errorClass: 'text-danger error',
                         errorPlacement: function (error, element) {

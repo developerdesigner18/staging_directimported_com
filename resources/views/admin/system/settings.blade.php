@@ -154,7 +154,7 @@
                             <!-- Logo -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Main Logo</label>
-                                <input type="file" name="logo" class="form-control" accept="image/webp">
+                                <input type="file" name="logo" class="form-control" accept="image/*">
                                 <p id="logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->logo))
                                     <div class="mt-2">
@@ -167,7 +167,7 @@
                             <!-- Admin Logo -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Admin Logo</label>
-                                <input type="file" name="admin_logo" class="form-control" accept="image/webp">
+                                <input type="file" name="admin_logo" class="form-control" accept="image/*">
                                 <p id="admin_logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->admin_logo))
                                     <div class="mt-2">
@@ -180,7 +180,7 @@
                             <!-- Footer Logo -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Footer Logo</label>
-                                <input type="file" name="footer_logo" class="form-control" accept="image/webp">
+                                <input type="file" name="footer_logo" class="form-control" accept="image/*">
                                 <p id="footer_logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->footer_logo))
                                     <div class="mt-2">
@@ -193,7 +193,7 @@
                             <!-- Favicon -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Favicon</label>
-                                <input type="file" name="favicon" class="form-control" accept="image/webp">
+                                <input type="file" name="favicon" class="form-control" accept="image/*">
                                 <p id="favicon-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->favicon))
                                     <div class="mt-2">
@@ -219,21 +219,7 @@
 @section('script')
     <script>
         $(document).ready(function () {
-            // Custom validation for file type
-            $.validator.addMethod("isWebp", function (value, element) {
-                if (element.files && element.files.length > 0) {
-                    return element.files[0].type === "image/webp";
-                }
-                return true; // Not required
-            }, "Please upload a valid webp image.");
 
-            // Custom validation for file size
-            $.validator.addMethod("maxSize", function (value, element, param) {
-                if (element.files && element.files.length > 0) {
-                    return element.files[0].size <= param;
-                }
-                return true; // Not required
-            }, "File size must not exceed 2MB.");
 
             $("#settingsForm").validate({
                 rules: {
@@ -305,10 +291,10 @@
                     instagram_url: { required: true, url: true },
                     twitter_url: { required: true, url: true },
                     youtube_url: { required: true, url: true },
-                    logo: { isWebp: true, maxSize: 2097152 },
-                    admin_logo: { isWebp: true, maxSize: 2097152 },
-                    footer_logo: { isWebp: true, maxSize: 2097152 },
-                    favicon: { isWebp: true, maxSize: 512000 }
+                    logo: { required: false },
+                    admin_logo: { required: false },
+                    footer_logo: { required: false },
+                    favicon: { required: false }
                 },
                 messages: {
                     facebook_url: { required: "Please enter a facebook url.", url: "Please enter a valid URL." },

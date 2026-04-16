@@ -215,7 +215,7 @@
                                 <img src="{{ asset(BIKE_PATH . $booking->bike->images[0]) }}"
                                      alt="{{ $booking->bike->name }}"
                                      class="img-fluid"
-                                     style="width: 100%; height: 100%; object-fit: cover;">
+                                     style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                             @else
                                 <i class="ri-motorbike-fill text-muted" style="font-size: 4rem;"></i>
                             @endif

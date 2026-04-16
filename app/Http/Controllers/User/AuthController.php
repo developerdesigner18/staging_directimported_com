@@ -278,11 +278,11 @@ class AuthController extends Controller
         $validator = Validator::make($request->all(), [
             'regular_license_number' => ['nullable', 'regex:/^[A-Z0-9\s-]{5,20}$/i'],
             'idp_number' => ['nullable', 'regex:/^[A-Z0-9\s-]{5,20}$/i'],
-            'passport' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'passport' => ['nullable', 'file'],
             'passport_number' => ['nullable', 'regex:/^[A-Z0-9\s-]{5,20}$/i'], // optional
 
-            'international_lic' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
-            'regular_lic' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
+            'international_lic' => ['nullable', 'file'],
+            'regular_lic' => ['nullable', 'file'],
         ], [
 
             //  Regular License
@@ -299,30 +299,20 @@ class AuthController extends Controller
             'idp_number.regex' => 'International License (IDP) Number must contain only letters, numbers, spaces, and dashes (5–20 characters).',
 
             'passport.file' => 'Passport must be a valid file.',
-            'passport.mimes' => 'Passport must be in JPG, JPEG, or PNG format.',
-            'passport.max' => 'Passport file size must not exceed 5MB.',
 
             //  International License Upload
             'international_lic.file' => 'International License must be a valid file.',
-            'international_lic.mimes' => 'International License must be in JPG, JPEG, or PNG format.',
-            'international_lic.max' => 'International License file size must not exceed 5MB.',
 
 
             //  International Back License Upload
             'international_lic_back.file' => 'International Back License must be a valid file.',
-            'international_lic_back.mimes' => 'International Back License must be in JPG, JPEG, or PNG format.',
-            'international_lic_back.max' => 'International Back License file size must not exceed 5MB.',
 
 
             //  Regular License Upload
             'regular_lic.file' => 'Regular License must be a valid file.',
-            'regular_lic.mimes' => 'Regular License must be in JPG, JPEG, or PNG format.',
-            'regular_lic.max' => 'Regular License file size must not exceed 5MB.',
 
             //  Regular Back License Upload
             'regular_lic_back.file' => 'Regular Back License must be a valid file.',
-            'regular_lic_back.mimes' => 'Regular Back License must be in JPG, JPEG, or PNG format.',
-            'regular_lic_back.max' => 'Regular Back License file size must not exceed 5MB.',
         ]);
         if ($validator->fails()) {
             return $this->sendValidationError($validator->errors());

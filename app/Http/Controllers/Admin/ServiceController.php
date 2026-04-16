@@ -68,20 +68,12 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'images' => 'required|array',
-            'images.*' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    $image = json_decode($value, true);
-                    if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
-                        $fail('The image must be of type: webp.');
-                    }
-                },
-            ],
+            'images.*' => 'required',
             'description' => 'required|string',
         ], [
             'title.required' => 'The service title is required.',
             'images.required' => 'Please upload at least one image.',
-            'images.*.required' => 'The image must be of type: webp.',
+            'images.*.required' => 'The image is required.',
             'description.required' => 'Description is required.',
         ]);
 
@@ -131,17 +123,7 @@ class ServiceController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'images' => 'sometimes|array',
-            'images.*' => [
-                'sometimes',
-                function ($attribute, $value, $fail) {
-                    if (is_string($value) && \Illuminate\Support\Str::isJson($value)) {
-                        $image = json_decode($value, true);
-                        if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
-                            $fail('The image must be of type: webp.');
-                        }
-                    }
-                },
-            ],
+            'images.*' => 'sometimes',
             'removed_images' => 'nullable|string',
             'image_order' => 'nullable|string',
             'description' => 'required|string',

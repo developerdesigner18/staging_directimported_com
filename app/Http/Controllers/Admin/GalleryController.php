@@ -36,11 +36,10 @@ class GalleryController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:webp',
+            'image' => 'required|image',
         ], [
             'title.required' => 'The gallery title is required.',
             'image.required' => 'Please upload an image for the gallery.',
-            'image.mimes' => 'The image must be of type: webp.',
         ]);
 
         if ($validator->fails()) {
@@ -88,10 +87,9 @@ class GalleryController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:galleries,id',
             'title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:webp',
+            'image' => 'nullable|image',
         ], [
             'title.required' => 'The gallery title is required.',
-            'image.mimes' => 'The image must be of type: webp.',
         ]);
 
         if ($validator->fails()) {

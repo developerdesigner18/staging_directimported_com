@@ -2,836 +2,884 @@
 @section('title', $bike->name)
 
 @push('style')
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #E42E46;
+            --primary-blue: #1B447A;
+            --secondary-blue: #111827;
+            --text-main: #111827;
+            --text-secondary: #4B5563;
+            --bg-page: #F3F4F6;
+            --accent-green: #D1FAE5;
+            --accent-green-text: #10B981;
         }
 
-        /* BREADCRUMB */
-        .page-breadcrumb-wrapper {
-            background: #f3f4f6;
-            padding: 15px 0;
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: var(--text-main);
         }
 
-        .breadcrumb-box {
+        /* Responsive Header Adjustments */
+        @media (max-width: 767px) {
+            header .logo {
+                display: none !important;
+            }
+        }
+
+        .bike-detail-wrapper {
+            padding: 50px 0;
+        }
+
+        /* Gallery */
+        .main-image-container {
+            position: relative;
             background: #fff;
-            padding: 12px 20px;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            border: 1px solid #E5E7EB;
         }
 
-        .breadcrumb-box a {
-            color: #6b7280;
-            text-decoration: none;
-        }
-
-        .breadcrumb-box span {
-            margin: 0 6px;
-            color: #9ca3af;
-        }
-
-        .breadcrumb-box .active {
-            font-weight: 600;
-            color: #111827;
-        }
-
-        /* IMAGE */
-        .bike-details-main-img {
+        .main-image-container img {
             width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-green);
+            color: #065F46;
+            padding: 6px 15px;
             border-radius: 10px;
-        }
-
-        .bike-image {
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.3s;
-        }
-
-        .bike-image:hover {
-            opacity: 0.8;
-        }
-
-        /* SIDEBAR */
-        .booking-sidebar {
-            position: relative;
-            align-self: flex-start;
-        }
-
-        .booking-sidebar.is-fixed {
-            position: fixed;
-            top: 100px;
-            width: inherit;
-            max-height: calc(100vh - 120px);
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .client-booking-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        /* Ensure parent row allows positioning */
-        .container .row {
-            overflow: visible !important;
-        }
-
-        .client-price-box {
-            background: #de2b43;
-            color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .client-price-box h4 {
-            margin: 5px 0;
-            font-size: 26px;
-            font-weight: 700;
-            color: white;
-        }
-
-        .client-price-box small {
-            display: block;
-            font-size: 12px;
-            letter-spacing: 1px;
-        }
-
-        .client-price-box span {
-            font-size: 12px;
-            opacity: 0.8;
-        }
-
-        .form-label {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .form-control {
-            border-radius: 6px;
-            height: 42px;
-        }
-
-        .btn-check-availability {
-            background: var(--primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 12px;
-            font-weight: 600;
-            width: 100%;
-        }
-
-        .btn-check-availability:hover {
-            opacity: 0.9;
-        }
-
-        .rates-section {
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .rates-section h6 {
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            color: #6b7280;
-        }
-
-        .rates-section li {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 6px;
-        }
-
-        .highlight-rate {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-
-        .whatsapp-line {
             font-size: 13px;
-            margin-top: 15px;
-            text-align: center;
-            color: #6b7280;
-        }
-
-        .bike-tabs .nav-link {
-            border: none;
-            color: #9ca3af;
-            font-weight: 600;
-            margin-right: 25px;
-        }
-
-        .bike-tabs .nav-link.active {
-            color: #E42E46;
-            border-bottom: 3px solid #E42E46;
-        }
-
-        /* Related Bikes Section */
-        .related-bikes-section {
-            margin-top: 60px;
-            padding: 50px 0;
-            background: #f8f9fa;
-        }
-
-        .related-bikes-title {
-            font-size: 28px;
             font-weight: 700;
-            text-align: center;
+            z-index: 10;
+        }
+
+        .thumbs-slider-wrapper {
+            position: relative;
             margin-bottom: 40px;
-            color: #1f2937;
+            padding: 0;
+            overflow: visible;
         }
 
-
-
-        .bike-tag {
-            display: inline-block;
-            margin-top: 6px;
-            color: black;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 6px 14px;
-            border-radius: 999px;
-            text-transform: uppercase;
-            letter-spacing: .5px;
+        .gallery-thumbs-slider .slick-slide {
+            padding: 0 6px;
         }
 
-
-
-        .bike-info-row {
-            display: block;
-        }
-
-        .bike-info-row h5 {
-            font-size: 24px;
-            font-weight: 900;
-            color: #1f2937;
-            margin-bottom: 2px;
-            line-height: 1.2;
-        }
-
-        .bike-info-row h5 a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .bike-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 22px;
-            font-weight: 500;
-        }
-
-        .bike-price-block {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            margin-bottom: 16px;
-            gap: 4px;
-        }
-
-        .bike-price-block .price {
-            color: #053C7C;
-            /* ASJ Racing Red */
-            font-size: 30px;
-            font-weight: 900;
-            line-height: 1;
-        }
-
-        .bike-price-block .period {
-            color: #053C7C;
-            /* ASJ Racing Red */
-            font-size: 14px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-
-
-        .btn-view-details {
-            width: 100%;
-            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
-            /* ASJ Racing Red */
-            color: #fff;
-            border: none;
-            padding: 15px 18px;
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: 1.4px;
-            text-transform: uppercase;
-            box-shadow: 0 6px 14px rgba(188, 33, 46, .35);
+        .thumb-box {
             cursor: pointer;
-            transition: all .3s ease;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-        }
-
-        .btn-view-details:hover {
-            background: linear-gradient(135deg, #042B59 0%, #053C7C 100%);
-            /* Racing Red Hover */
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
-            color: #fff;
-        }
-
-        .related-bikes-section {
-            margin-top: 60px;
-            padding: 50px 0;
-            background: #f8f9fa;
-        }
-
-        .related-bike-card {
-            background: #fff;
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            border: 2px solid #e5e7eb;
-            transition: all 0.3s ease;
-            height: 100%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 2px solid transparent;
+            transition: 0.2s;
         }
 
-        .related-bike-card:hover {
-            border-color: #E42E46;
-            box-shadow: 0 8px 20px rgba(228, 46, 70, 0.15);
-            transform: translateY(-4px);
+        .thumb-box.active {
+            border-color: var(--primary-blue);
         }
 
-        .related-bike-img {
-            height: 220px;
-            background: #f3f4f6;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .related-bike-img img {
+        .thumb-box img {
             width: 100%;
-            height: 100%;
+            height: 90px;
             object-fit: cover;
-            transition: transform 0.4s ease;
         }
 
-        .related-bike-card:hover .related-bike-img img {
-            transform: scale(1.05);
-        }
-
-        .related-bike-body {
-            padding: 20px;
-        }
-
-        .related-bike-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .related-bike-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid #f1f1f1;
-        }
-
-        .related-bike-price {
-            font-size: 16px;
-            font-weight: 900;
-            color: #E42E46;
-        }
-
-        .related-bike-price span {
-            font-size: 12px;
-            font-weight: 500;
-            color: #6b7280;
-        }
-
-        .related-bike-view {
-            font-size: 13px;
-            font-weight: 700;
-            text-decoration: none;
-            color: #6b7280;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .related-bike-view:hover {
-            color: #E42E46;
-            gap: 8px;
-        }
-
-        .related-bike-view i {
-            font-size: 14px;
-        }
-
-        .tech-spec-box {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        .spec-item {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .spec-icon {
-            width: 55px;
-            height: 55px;
-            background: #f3f4f6;
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            background: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            color: #374151;
-        }
-
-        .spec-item small {
-            font-size: 12px;
-            font-weight: 700;
-            color: #6b7280;
-            letter-spacing: 1px;
-        }
-
-        .spec-item h6 {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 20;
+            border: 1px solid #E5E7EB;
+            color: #111;
             font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .slider-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .slider-btn-left { 
+            left: -16px; 
+        }
+        
+        .slider-btn-right { 
+            right: -16px; 
+        }
+
+        /* Main Image Arrows */
+        .main-slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 30;
+            transition: all 0.3s;
+        }
+
+        .main-slider-btn:hover {
+            background: #fff;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .main-slider-btn.prev {
+            left: 20px;
+        }
+
+        .main-slider-btn.next {
+            right: 20px;
+        }
+
+        @media (max-width: 575px) {
+            .main-slider-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 20px;
+            }
+            .main-slider-btn.prev { left: 10px; }
+            .main-slider-btn.next { right: 10px; }
+        }
+
+        /* Right Sidebar */
+        .sidebar-inner {
+            background: #F3F4F6;
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .vehicle-title-main {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            color: #111;
+        }
+
+        .vehicle-desc-small {
+            font-size: 14px;
+            color: #4B5563;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .price-info-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 1px solid #E5E7EB;
+        }
+
+        .price-card-label {
+            font-size: 16px;
             font-weight: 700;
-            margin-top: 4px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
         }
 
-        .spec-icon i {
+        .price-card-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #111;
+            margin: 0;
+            letter-spacing: -1px;
+        }
+
+        .sidebar-form-card {
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            border: none;
+        }
+
+        .sidebar-form-card h4 {
+            font-size: 21px;
+            font-weight: 800;
+            margin-bottom: 25px;
+            color: #111;
+        }
+
+        .form-label-custom {
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 10px;
+            display: block;
+            text-transform: capitalize;
+            letter-spacing: 0.3px;
+        }
+
+        .form-input-custom {
+            background: #fff;
+            border: 1px solid #CBD5E1;
+            border-radius: 10px;
+            padding: 0 15px !important;
+            height: 48px !important;
+            line-height: 46px !important; /* height - borders */
+            font-size: 14px;
+            width: 100%;
+            margin-bottom: 15px;
+            color: #111;
+            transition: all 0.2s;
+            box-sizing: border-box !important;
+        }
+
+        select.form-input-custom {
+            appearance: none;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 35px;
+            cursor: pointer;
+            display: block; /* Selects don't support flex properly */
+        }
+
+        .form-input-custom:focus {
+            outline: none;
+            border-color: #111;
+            box-shadow: none;
+        }
+
+        .form-input-custom::placeholder {
+            color: #94A3B8;
+        }
+
+        .btn-quote-main {
+            background: #1B447A;
+            color: #fff;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-quote-main:hover {
+            background: #143560;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(27, 68, 122, 0.15);
+        }
+
+        .btn-quote-main:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(27, 68, 122, 0.1);
+        }
+
+        .form-footnote {
+            font-size: 11px;
+            color: #9CA3AF;
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.4;
+        }
+
+        /* Details */
+        .car-details-section-title {
+            font-size: 34px;
+            font-weight: 800;
+            margin: 60px 0 30px;
+            display: flex;
+            align-items: center;
+            color: #111;
+        }
+
+        .car-details-section-title i {
+            margin-left: 20px;
+            color: #4B5563;
+            font-size: 30px;
+        }
+
+        .details-heading-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .details-heading-row h3 {
+            font-size: 30px;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .grade-badge-custom {
+            background: #F3F4F6;
+            padding: 8px 10px 8px 30px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .grade-badge-custom span {
             font-size: 22px;
+            font-weight: 700;
         }
 
-        /* Ensure datepicker is always on top */
-        .ui-datepicker {
-            z-index: 2000 !important;
+        .grade-val-circle {
+            width: 44px;
+            height: 44px;
+            background: #1B447A;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
         }
+
+        .details-grid-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px 40px;
+            border: 1px solid #EDEDED;
+        }
+
+        .spec-grid-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .spec-grid-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-icon-box {
+            width: 45px;
+            font-size: 30px;
+            color: #111;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spec-label-box {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .spec-label-main {
+            font-size: 17px;
+            font-weight: 500;
+            color: #333;
+            display: block;
+        }
+
+        .spec-label-sub {
+            font-size: 13px;
+            color: #6B7280;
+            font-weight: 500;
+        }
+
+        .spec-value-box {
+            font-size: 17px;
+            font-weight: 600;
+            color: #111;
+            text-align: right;
+        }
+
+        /* Accordion */
+        .bike-faq-container {
+            margin-top: 50px;
+        }
+
+        .accordion-item {
+            border: none;
+            background: #F3F4F6;
+            margin-bottom: 5px;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .accordion-button {
+            background: #F3F4F6 !important;
+            color: #111 !important;
+            font-weight: 700;
+            padding: 22px 25px;
+            box-shadow: none !important;
+            font-size: 18px;
+        }
+
+        .accordion-button::after {
+            content: "+";
+            background-image: none;
+            font-size: 26px;
+            font-weight: 300;
+            color: #333;
+            transform: none !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            content: "-";
+        }
+
+        .accordion-body {
+            padding: 0 25px 30px;
+            color: #4B5563;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 991px) {
+            .vehicle-title-main { font-size: 32px; }
+            .details-grid-card { padding: 20px; }
+        }
+
+        /* Slick Slider Dots - Fixing the numbers issue */
+        .slick-dots {
+            display: flex !important;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 30px 0 0;
+            gap: 8px;
+        }
+
+        .slick-dots li {
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .slick-dots li button {
+            font-size: 0;
+            line-height: 0;
+            display: block;
+            width: 10px;
+            height: 10px;
+            padding: 0;
+            cursor: pointer;
+            border: 0;
+            outline: none;
+            background: #CBD5E1;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .slick-dots li button:before {
+            display: none !important;
+        }
+
+        .slick-dots li.slick-active button {
+            background: var(--primary-blue);
+            width: 25px;
+            border-radius: 10px;
+        }
+
+        /* Related Bikes Slider Arrows */
+        .related-bikes-slider .slick-prev, 
+        .related-bikes-slider .slick-next {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .related-bikes-slider .slick-prev:hover, 
+        .related-bikes-slider .slick-next:hover {
+            background: var(--primary-blue);
+        }
+
+        .related-bikes-slider .slick-prev:before, 
+        .related-bikes-slider .slick-next:before {
+            color: #111;
+            font-family: 'boxicons';
+            font-size: 24px;
+            opacity: 1;
+        }
+
+        .related-bikes-slider .slick-prev:hover:before, 
+        .related-bikes-slider .slick-next:hover:before {
+            color: #fff;
+        }
+
+        .related-bikes-slider .slick-prev { left: -20px; }
+        .related-bikes-slider .slick-next { right: -20px; }
+
+        .related-bikes-slider .slick-prev:before { content: "\ea41"; } /* bx-chevron-left */
+        .related-bikes-slider .slick-next:before { content: "\ea42"; } /* bx-chevron-right */
+
     </style>
 @endpush
 
-
 @section('main')
-
-    <!-- HERO -->
-    <section class="rid-titlebar-2" style="background: url('{{ isset($bike->banner) ? asset(BIKE_PATH . $bike->banner) : asset('uploads/bike_images/default-banner.jpg') }}');
-                        background-size:cover; background-position:center; padding:80px 0; text-align:center; color:#fff;">
+    <div class="bike-detail-wrapper">
         <div class="container">
-            <h2>RENTAL DETAILS</h2>
-        </div>
-    </section>
-
-
-    <!-- BREADCRUMB -->
-    <div class="page-breadcrumb-wrapper">
-        <div class="container">
-            <div class="breadcrumb-box">
-                <a href="{{ route('landing') }}">Home</a>
-                <span>/</span>
-                <a href="{{ route('motorcycle') }}">Bikes</a>
-                <span>/</span>
-                <span class="active">{{ $bike->name }}</span>
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container my-5">
-        <div class="row" style="overflow: visible;">
-
-            <!-- LEFT CONTENT -->
-            <div class="col-lg-8">
-
-                <img class="bike-details-main-img mb-3" src="{{ asset(BIKE_PATH . $bike->images[0]) }}"
-                    alt="{{ $bike->name }}">
-
-                @if(count($bike->images) > 0)
-                    <div class="row g-2">
-                        @foreach($bike->images as $image)
-                            <div class="col">
-                                <img src="{{ asset(BIKE_PATH . $image) }}" class="bike-image">
-                            </div>
-                        @endforeach
+            <div class="row">
+                <!-- LEFT CONTENT -->
+                <div class="col-lg-7 col-xl-8">
+                    <!-- Main Image container -->
+                    <div class="main-image-container">
+                        <span class="status-badge">Status: Available</span>
+                        <img id="bike-display-img" src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}">
+                        <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i class="bx bx-chevron-left"></i></button>
+                        <button class="main-slider-btn next" onclick="moveMainImage('next')"><i class="bx bx-chevron-right"></i></button>
                     </div>
-                @endif
 
-                <!-- TABS -->
-                <div class="row mt-5">
-                    <div class="col-12">
-
-                        <ul class="nav nav-tabs bike-tabs border-0">
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#overviewTab">OVERVIEW</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#specsTab">SPECS</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#requirementsTab">REQUIREMENTS</a>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content mt-4">
-
-                            <div class="tab-pane fade" id="overviewTab">
-                                {!! $bike->description !!}
-                            </div>
-
-                            <div class="tab-pane fade show active" id="specsTab">
-                                <div class="tech-spec-box">
-                                    <h4 class="tech-title">
-                                        {{-- <i class="ri-settings-3-line text-danger me-2"></i>--}}
-                                        Technical Specifications
-                                    </h4>
-
-                                    <div class="row mt-4">
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-speed-up-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>ENGINE</small>
-                                                    <h6>{{ $bike->engine }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-flashlight-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>POWER</small>
-                                                    <h6>{{ $bike->power }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-ruler-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>SEAT HEIGHT</small>
-                                                    <h6>{{ $bike->seat_height }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-scales-2-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>WEIGHT</small>
-                                                    <h6>{{ $bike->weight }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-gas-station-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>TANK CAPACITY</small>
-                                                    <h6>{{ $bike->tank_capacity }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-4">
-                                            <div class="spec-item">
-                                                <div class="spec-icon">
-                                                    <i class="ri-briefcase-4-line"></i>
-                                                </div>
-                                                <div>
-                                                    <small>LUGGAGE</small>
-                                                    <h6>{{ $bike->luggage }}</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="tab-pane fade" id="requirementsTab">
-                                <p>Please check detailed rental requirements below.</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- FAQ SECTION MOVED INSIDE col-lg-8 -->
-                <div class="row mt-5 mb-5">
-                    <div class="col-12">
-                        <div class="rid-accordion" id="faqWrapDynamic">
-                            @foreach($bikeConf as $index => $conf)
-                                @php
-                                    $headingId = 'heading' . $index;
-                                    $collapseId = 'collapse' . $index;
-                                    $isFirst = $index === 0;
-                                @endphp
-                                <div class="accordion-item position-relative">
-                                    <h6 class="accordion-header" id="{{ $headingId }}">
-                                        <button class="rid-accordion-btn {{ $isFirst ? '' : 'collapsed' }}" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#{{ $collapseId }}"
-                                            aria-expanded="{{ $isFirst ? 'true' : 'false' }}">
-                                            {{ $conf->title }}
-                                        </button>
-                                    </h6>
-                                    <div id="{{ $collapseId }}" class="accordion-collapse collapse {{ $isFirst ? 'show' : '' }}"
-                                        data-bs-parent="#faqWrapDynamic">
-                                        <div class="accordion-body">
-                                            {!! $conf->description !!}
-                                        </div>
-                                    </div>
+                    <!-- Thumbnails slider wrapper -->
+                    <div class="thumbs-slider-wrapper">
+                        <div class="gallery-thumbs-slider">
+                            @foreach($bike->images as $index => $image)
+                                <div class="thumb-box {{ $index === 0 ? 'active' : '' }}" onclick="changeMainImage('{{ asset(BIKE_PATH . $image) }}', this)">
+                                    <img src="{{ asset(BIKE_PATH . $image) }}" alt="Bike thumbnail">
                                 </div>
                             @endforeach
                         </div>
+                        <button class="slider-btn slider-btn-left"><i class="bx bx-chevron-left"></i></button>
+                        <button class="slider-btn slider-btn-right"><i class="bx bx-chevron-right"></i></button>
+                    </div>
+
+                    <!-- Car Details Title -->
+                    <h2 class="car-details-section-title">Car Details <i class="bx bx-key"></i></h2>
+
+                    <!-- Vehicle Details Grid -->
+                    <div class="details-heading-row">
+                        <h3>Vehicle Details</h3>
+                        <div class="grade-badge-custom">
+                            <span>Auction Grade</span>
+                            <div class="grade-val-circle">2</div>
+                        </div>
+                    </div>
+
+                    <div class="details-grid-card">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-file"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Vehicle description</span>
+                                    </div>
+                                    <div class="spec-value-box"></div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-car"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Make</span>
+                                        <span class="spec-label-sub">Rugged adventure motorcycle</span>
+                                    </div>
+                                    <div class="spec-value-box">Honda</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-palette"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Exterior colour</span>
+                                    </div>
+                                    <div class="spec-value-box">Blue</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-layer"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Body type</span>
+                                    </div>
+                                    <div class="spec-value-box">Adventure Touring</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-gas-pump"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Fuel type</span>
+                                    </div>
+                                    <div class="spec-value-box">Gasoline</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-tachometer"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Odometer</span>
+                                    </div>
+                                    <div class="spec-value-box">120,000 km</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-calendar"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Model Year</span>
+                                    </div>
+                                    <div class="spec-value-box">2018</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-select-multiple"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Interior colour</span>
+                                    </div>
+                                    <div class="spec-value-box">White</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-cog"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Engine</span>
+                                    </div>
+                                    <div class="spec-value-box">{{ $bike->engine }}</div>
+                                </div>
+                                <div class="spec-grid-item">
+                                    <div class="spec-icon-box"><i class="bx bx-reset"></i></div>
+                                    <div class="spec-label-box">
+                                        <span class="spec-label-main">Transmission</span>
+                                    </div>
+                                    <div class="spec-value-box">6-speed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ Section -->
+                    <div class="bike-faq-container accordion" id="bikeFaqMain">
+                        @foreach($bikeConf as $index => $conf)
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqHeading{{ $index }}">
+                                    <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
+                                        {{ $conf->title }}
+                                    </button>
+                                </h2>
+                                <div id="faqCollapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" data-bs-parent="#bikeFaqMain">
+                                    <div class="accordion-body">
+                                        {!! $conf->description !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
 
-            </div>
+                <!-- RIGHT SIDEBAR -->
+                <div class="col-lg-5 col-xl-4 mt-5 mt-lg-0">
+                    <div class="sidebar-inner sticky-top" style="top: 100px; z-index: 5;">
+                        <h1 class="vehicle-title-main">{{ $bike->name }}</h1>
+                        <p class="vehicle-desc-small">{{ $bike->card_subtitle ?? 'Premium Rental 1000cc (or Expert Export Model)' }}</p>
 
-            <!-- RIGHT SIDEBAR -->
-            <div class="col-lg-4">
-                <div class="booking-sidebar">
-                    <div class="client-booking-card">
-
-                        <h5 class="fw-bold mb-1">{{ $bike->name }}</h5>
-
-                        <p class="small text-muted mb-3">
-                            {{$bike->card_subtitle ?? ""}}
-                        </p>
-
-                        <div class="client-price-box">
-                            <small>STARTING FROM</small>
-                            <h4>¥{{ number_format($bike->month_price) }}</h4>
-                            <span>/ Per Day</span>
+                        <div class="price-info-card">
+                            <span class="price-card-label">FOB Purchase Price:</span>
+                            <h2 class="price-card-value">Â¥{{ number_format(1655000) }}</h2>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">PICK-UP DATE</label>
-                            <input type="text" class="form-control" id="single_pickup_date" autocomplete="off"
-                                value="{{ date('Y-m-d') }}">
+                        <div class="sidebar-form-card">
+                            <h4 class="mb-4 fw-bold">Contact Form</h4>
+                            <form action="#" method="POST">
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Full Name</label>
+                                    <input type="text" class="form-input-custom" placeholder="">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Email</label>
+                                    <input type="email" class="form-input-custom" placeholder="">
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label-custom">Phone Number</label>
+                                            <input type="text" class="form-input-custom" placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="mb-3">
+                                            <label class="form-label-custom">Preferred Contact Method</label>
+                                            <select class="form-input-custom">
+                                                <option>Email</option>
+                                                <option>Phone</option>
+                                                <option>WhatsApp</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label-custom">Vehicle ID</label>
+                                    <input type="text" class="form-input-custom" value="{{ $bike->name }}" readonly style="background-color: #fff;">
+                                </div>
+
+                                <div class="mt-4">
+                                    <h4 class="mb-4 fw-bold">Destination Details</h4>
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label class="form-label-custom">Destination Country</label>
+                                                <select class="form-input-custom">
+                                                    <option>ðŸ‡ºðŸ‡¸ USA</option>
+                                                    <option>ðŸ‡¬ðŸ‡§ UK</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="mb-3">
+                                                <label class="form-label-custom">Nearest Major Port /</label>
+                                                <input type="text" class="form-input-custom" placeholder="Postal Code">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-quote-main mt-2">REQUEST EXPORT QUOTE</button>
+                                <p class="form-footnote mt-3" style="font-size: 11px; text-align: left; opacity: 0.7;">Our team will confirm availability and send your detailed quote</p>
+                            </form>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">RETURN DATE</label>
-                            <input type="text" class="form-control" id="single_return_date" value="{{ date('Y-m-d') }}"
-                                autocomplete="off">
-                        </div>
-                        <input type="text" value="{{$bike->insurance_price}}" id="insurance_price" hidden>
-
-                        <button class="btn-check-availability mb-3" id="checkAvailabilityBtn" data-id="{{ $bike->id }}"
-                            data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH . $bike->images[0]) }}">
-                            CHECK AVAILABILITY
-                        </button>
-
-                        <div class="rates-section">
-                            <h6>Rental Rates Per Day</h6>
-                            <ul class="list-unstyled">
-                                <li><span>1 - 4 Days</span> <span>¥{{ number_format($bike->less_four_days_price) }} Per
-                                        Day</span></li>
-                                <li><span>5 - 7 Days</span> <span>¥{{ number_format($bike->five_six_days_price) }} Per
-                                        Day</span></li>
-                                <li><span>8 - 29 Days</span> <span>¥{{ number_format($bike->week_price) }} Per Day</span>
-                                </li>
-                                <li><span>30+ Days</span> <span
-                                        class="highlight-rate">¥{{ number_format($bike->month_price) }} Per Day</span></li>
-                                <li><span>Optional Insurance </span> <span>¥{{ number_format($bike->insurance_price) }} Per
-                                        Day</span></li>
-                            </ul>
-                        </div>
-
-                        <div class="whatsapp-line">
-                            Questions ask us on WhatsApp or call
-                        </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- You Might Also Like Section -->
-    @if($relatedBikes->count() > 0)
-        <div class="related-bikes-section">
-            <div class="container">
-                <h5 style="font-weight:600; margin-bottom:20px;">You Might Also Like</h5>
-
-                <div class="row">
-                    @foreach($relatedBikes as $relatedBike)
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="related-bike-card">
-
-                                <div class="related-bike-img">
-                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
-                                        <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" alt="{{ $relatedBike->name }}">
-                                    </a>
+    <!-- RELATED SECTION -->
+    <section class="py-5 bg-white border-top mt-5">
+        <div class="container">
+            <h2 class="fw-bold mb-4" style="color: #111; font-size: 32px;">You Might Also Like</h2>
+            <div class="related-bikes-slider">
+                @foreach($relatedBikes as $relatedBike)
+                    <div class="px-2">
+                        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+                            <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
+                                <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" class="card-img-top" style="height: 240px; object-fit: cover;">
+                            </a>
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3" style="font-size: 20px;">{{ $relatedBike->name }}</h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="fw-bold text-danger fs-5">From Â¥{{ number_format($relatedBike->less_four_days_price) }} <span class="text-muted fw-normal fs-6">/ day</span></div>
+                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}" class="text-secondary fw-bold text-decoration-none">VIEW <i class="bx bx-right-arrow-alt"></i></a>
                                 </div>
-
-                                <div class="related-bike-body">
-                                    <div class="related-bike-title">
-                                        {{ $relatedBike->name }}
-                                    </div>
-
-                                    <div class="related-bike-bottom">
-                                        <div class="related-bike-price">
-                                            From ¥{{ number_format($relatedBike->less_four_days_price) }}
-                                            <span>/per day</span>
-                                        </div>
-
-                                        <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
-                                            class="related-bike-view">
-                                            VIEW <i class="icofont-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
-    @endif
-
-
+    </section>
 @endsection
+
 @section('script')
     <script>
-        $(document).ready(function () {
-
-            // Pick-up Date datepicker (1 month, past dates disabled)
-            $("#single_pickup_date").datepicker({
-                numberOfMonths: 3,
-                dateFormat: "yy-mm-dd",
-                minDate: 0,
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (selected) {
-                    var startDate = $(this).datepicker('getDate');
-                    $("#single_return_date").datepicker("option", "minDate", startDate);
-
-                    // Clear return date if it is before the newly selected pick-up date
-                    var endDate = $("#single_return_date").datepicker('getDate');
-                    if (endDate && endDate < startDate) {
-                        $("#single_return_date").val('');
-                    }
-                }
-            });
-
-            // Return Date datepicker (1 month, past dates disabled)
-            $("#single_return_date").datepicker({
-                numberOfMonths: 3,
-                dateFormat: "yy-mm-dd",
-                minDate: 0,
-                changeMonth: true,
-                changeYear: true
-            });
-
-            // Fixed Sidebar on Scroll
-            var $sidebar = $('.booking-sidebar');
-            var $sidebarParent = $sidebar.parent();
-            var sidebarOffset = $sidebar.offset().top;
-            var sidebarWidth = $sidebar.width();
-
-            $(window).on('scroll resize', function () {
-                var scrollTop = $(window).scrollTop();
-                var parentOffset = $sidebarParent.offset().top;
-                var parentHeight = $sidebarParent.height();
-                var sidebarHeight = $sidebar.outerHeight();
-
-                // Update width on resize
-                if (!$sidebar.hasClass('is-fixed')) {
-                    sidebarWidth = $sidebar.width();
-                }
-
-                if (scrollTop + 100 > parentOffset && scrollTop + sidebarHeight + 120 < parentOffset + parentHeight) {
-                    $sidebar.addClass('is-fixed').css('width', sidebarWidth + 'px');
-                } else {
-                    $sidebar.removeClass('is-fixed').css('width', '');
-                }
-            });
-
-            $('a[href="#requirementsTab"]').on('shown.bs.tab', function () {
-
-                let faqSection = $('#faqWrapDynamic');
-
-                if (faqSection.length) {
-
-                    // Smooth scroll (better than jQuery animate)
-                    window.scrollTo({
-                        top: faqSection.offset().top - 120,
-                        behavior: 'smooth'
-                    });
-
-                    // Wait a bit longer so scroll fully completes
-                    setTimeout(function () {
-
-                        let requirementBtn = null;
-
-                        $('#faqWrapDynamic .rid-accordion-btn').each(function () {
-                            let text = $(this).text().trim().toLowerCase();
-                            if (text === 'requirements') {
-                                requirementBtn = $(this);
-                            }
-                        });
-
-                        if (requirementBtn) {
-
-                            let target = $(requirementBtn.attr('data-bs-target'));
-
-                            // Close any open item smoothly
-                            $('#faqWrapDynamic .accordion-collapse.show')
-                                .not(target)
-                                .collapse('hide');
-
-                            // Small delay for smoother transition
-                            setTimeout(function () {
-                                target.collapse('show');
-                            }, 200);
+        $(document).ready(function() {
+            // Initialize Gallery Thumbs Slider
+            const $thumbsSlider = $('.gallery-thumbs-slider');
+            
+            $thumbsSlider.slick({
+                slidesToShow: 5,
+                slidesToScroll: 5,
+                rows: 2,
+                slidesPerRow: 1,
+                prevArrow: $('.slider-btn-left'),
+                nextArrow: $('.slider-btn-right'),
+                infinite: true,
+                dots: false,
+                autoplay: false,
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 3,
+                            rows: 2
                         }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 2,
+                            rows: 2
+                        }
+                    }
+                ]
+            });
 
-                    }, 700); // longer delay = smoother feeling
+            // Synchronize main image with slider movement
+            $thumbsSlider.on('afterChange', function(event, slick, currentSlide) {
+                const activeThumb = $(this).find(`.slick-slide[data-slick-index="${currentSlide}"] .thumb-box`);
+                const newSrc = activeThumb.find('img').attr('src');
+                
+                if (newSrc) {
+                    $('#bike-display-img').attr('src', newSrc);
+                    $('.thumb-box').removeClass('active');
+                    activeThumb.addClass('active');
                 }
             });
 
-            // Thumbnail click smooth swap
-            $('.bike-image').on('click', function () {
-                let img = $(this).attr('src');
-
-                $('.bike-details-main-img').fadeOut(150, function () {
-                    $(this).attr('src', img).fadeIn(200);
-                });
+            // Initialize Related Bikes Slider
+            $('.related-bikes-slider').slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                responsive: [
+                    {
+                        breakpoint: 992,
+                        settings: {
+                            slidesToShow: 2
+                        }
+                    },
+                    {
+                        breakpoint: 576,
+                        settings: {
+                            slidesToShow: 1
+                        }
+                    }
+                ]
             });
-
         });
+
+        function changeMainImage(src, el) {
+            $('#bike-display-img').attr('src', src);
+            $('.thumb-box').removeClass('active');
+            $(el).addClass('active');
+            
+            // Sync slider to this index if it's from a manual click
+            const slickIndex = $(el).closest('.slick-slide').data('slick-index');
+            if (slickIndex !== undefined) {
+                $('.gallery-thumbs-slider').slick('slickGoTo', slickIndex);
+            }
+        }
+
+        function moveMainImage(direction) {
+            const $slider = $('.gallery-thumbs-slider');
+            if (direction === 'next') {
+                $slider.slick('slickNext');
+            } else {
+                $slider.slick('slickPrev');
+            }
+        }
     </script>
 @endsection

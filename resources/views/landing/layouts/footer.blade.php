@@ -23,7 +23,7 @@
                 <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
                     <a href="{{route('landing')}}" class="d-inline-block mb-3">
                         <img src="{{asset('assets/logo/' . getSetting()->footer_logo)}}" alt="IAS JAPAN Footer Logo"
-                            style="max-height: 60px;">
+                            style="max-height: 60px;" loading="lazy">
                     </a>
                     <p class="rid-footer-info mb-4">
                         By 2003, we identified a critical need for accessible data and Auction Services and shifted our

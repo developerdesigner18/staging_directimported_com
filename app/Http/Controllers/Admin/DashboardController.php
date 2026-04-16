@@ -26,7 +26,7 @@ class DashboardController extends Controller
     public function uploadImage(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'file' => 'required|image|mimes:jpg,jpeg,png,gif,webp'
+            'file' => 'required|image'
         ]);
 
         if ($validator->fails()) {

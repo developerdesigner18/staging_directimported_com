@@ -292,21 +292,21 @@
                         </div>
                         <div class="card-body-custom">
                             <div class="flags-container">
-                                <div class="flag"><img src="{{asset('assets/license/Australia.png')}}" alt="Australia"></div>
-                                <div class="flag"><img src="{{asset('assets/license/New-Zealand.png')}}" alt="New Zealand"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Canada.png')}}" alt="Canada"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Denmark.png')}}" alt="Denmark"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Hong-Kong.png')}}" alt="Hong Kong"></div>
-                                <div class="flag"><img src="{{asset('assets/license/India.png')}}" alt="India"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Ireland.png')}}" alt="Ireland"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Israel.png')}}" alt="Israel"></div>
-                                <div class="flag"><img src="{{asset('assets/license/United-States.png')}}" alt="United States"></div>
-                                <div class="flag"><img src="{{asset('assets/license/United-Kingdom.png')}}" alt="United Kingdom"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Spain.png')}}" alt="Spain"></div>
-                                <div class="flag"><img src="{{asset('assets/license/South-Korea.png')}}" alt="South Korea"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Russia.png')}}" alt="Russia"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Norway.png')}}" alt="Norway"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Sweden.png')}}" alt="Sweden"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Australia.png')}}" alt="Australia" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/New-Zealand.png')}}" alt="New Zealand" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Canada.png')}}" alt="Canada" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Denmark.png')}}" alt="Denmark" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Hong-Kong.png')}}" alt="Hong Kong" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/India.png')}}" alt="India" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Ireland.png')}}" alt="Ireland" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Israel.png')}}" alt="Israel" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/United-States.png')}}" alt="United States" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/United-Kingdom.png')}}" alt="United Kingdom" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Spain.png')}}" alt="Spain" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/South-Korea.png')}}" alt="South Korea" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Russia.png')}}" alt="Russia" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Norway.png')}}" alt="Norway" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Sweden.png')}}" alt="Sweden" loading="lazy"></div>
                             </div>
 
                             <div class="requirements-box">
@@ -315,7 +315,7 @@
                             </div>
 
                             <div class="text-center">
-                                <img src="{{asset('assets/license/licence.jpg')}}" alt="licence" class="license-image">
+                                <img src="{{asset('assets/license/licence.jpg')}}" alt="licence" class="license-image" loading="lazy">
                             </div>
 
                             <div class="requirements-box">
@@ -327,7 +327,7 @@
                             </div>
 
                             <div class="text-center">
-                                <img src="{{asset('assets/license/idp-edited.jpg')}}" alt="IDP" class="license-image">
+                                <img src="{{asset('assets/license/idp-edited.jpg')}}" alt="IDP" class="license-image" loading="lazy">
                             </div>
 
                             <div class="important-notes">
@@ -360,14 +360,14 @@
                         </div>
                         <div class="card-body-custom">
                             <div class="flags-container">
-                                <div class="flag"><img src="{{asset('assets/license/Belgium.png')}}" alt="Belgium"></div>
-                                <div class="flag"><img src="{{asset('assets/license/France.png')}}" alt="France"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Germany.png')}}" alt="Germany"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Switzerland.png')}}" alt="Switzerland"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Indonesia.png')}}" alt="Indonesia"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Slovenia.png')}}" alt="Slovenia"></div>
-                                <div class="flag"><img src="{{asset('assets/license/Taiwan.png')}}" alt="Taiwan"></div>
-                                <div class="flag"><img src="{{asset('assets/license/estonia.jpg')}}" alt="Estonia"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Belgium.png')}}" alt="Belgium" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/France.png')}}" alt="France" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Germany.png')}}" alt="Germany" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Switzerland.png')}}" alt="Switzerland" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Indonesia.png')}}" alt="Indonesia" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Slovenia.png')}}" alt="Slovenia" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/Taiwan.png')}}" alt="Taiwan" loading="lazy"></div>
+                                <div class="flag"><img src="{{asset('assets/license/estonia.jpg')}}" alt="Estonia" loading="lazy"></div>
                             </div>
 
                             <div class="requirements-box">
@@ -375,7 +375,7 @@
                             </div>
 
                             <div class="text-center">
-                                <img src="{{asset('assets/license/licence2.jpg')}}" alt="licence" class="license-image">
+                                <img src="{{asset('assets/license/licence2.jpg')}}" alt="licence" class="license-image" loading="lazy">
                             </div>
 
                             <div class="important-notes">
@@ -398,7 +398,7 @@
                             </div>
 
                             <div class="text-center">
-                                <img src="{{asset('assets/license/licence-jpn.jpg')}}" alt="Japanese licence" class="license-image">
+                                <img src="{{asset('assets/license/licence-jpn.jpg')}}" alt="Japanese licence" class="license-image" loading="lazy">
                             </div>
 
                             <div class="important-notes">
@@ -421,9 +421,9 @@
                         <h5 style="color: white; font-weight: 600; margin-bottom: 2rem;">Special Notes:</h5>
 
                         <div style="margin-bottom: 2rem;">
-                            <img src="{{asset('assets/license/Belgium.png')}}" alt="Belgium">
-                            <img src="{{asset('assets/license/France.png')}}" alt="France">
-                            <img src="{{asset('assets/license/Monaco.png')}}" alt="Monaco">
+                            <img src="{{asset('assets/license/Belgium.png')}}" alt="Belgium" loading="lazy">
+                            <img src="{{asset('assets/license/France.png')}}" alt="France" loading="lazy">
+                            <img src="{{asset('assets/license/Monaco.png')}}" alt="Monaco" loading="lazy">
                             <br><br>
                             <strong>License holders from Belgium, France and Monaco have two options:</strong><br>
                             • Obtain a 1949 Geneva Convention based IDP, as the "Group 1" countries mentioned above.<br>
@@ -431,9 +431,9 @@
                         </div>
 
                         <div style="margin-bottom: 2rem;">
-                            <img src="{{asset('assets/license/Italy.png')}}" alt="Italy">
-                            <img src="{{asset('assets/license/Poland.png')}}" alt="Poland">
-                            <img src="{{asset('assets/license/Russia.png')}}" alt="Russia">
+                            <img src="{{asset('assets/license/Italy.png')}}" alt="Italy" loading="lazy">
+                            <img src="{{asset('assets/license/Poland.png')}}" alt="Poland" loading="lazy">
+                            <img src="{{asset('assets/license/Russia.png')}}" alt="Russia" loading="lazy">
                             <br><br>
                             <strong>Italy, Poland and Russia signed both the:</strong><br>
                             – 1949 Geneva Convention on road traffic.<br>
@@ -442,13 +442,13 @@
                         </div>
 
                         <div style="margin-bottom: 2rem;">
-                            <img src="{{asset('assets/license/United-States.png')}}" alt="United States">
+                            <img src="{{asset('assets/license/United-States.png')}}" alt="United States" loading="lazy">
                             <br><br>
                             In the USA, only two organizations are allowed to sell real, legal IDPs: the <a href="www.aaa.com/PPInternational/IDP_IADP.html" target="_blank" style="color: white; text-decoration: underline;">American Automobile Association,</a> and the American Automobile Touring Alliance, which offers IDPs through the <a href="http://www.nacroadservice.com/nonmember_services.htm" target="_blank" style="color: white; text-decoration: underline;">National Automobile Club.</a>
 
                             <div class="jaf-logos">
-                                <img src="{{asset('assets/license/aaa.png')}}" alt="AAA">
-                                <img src="{{asset('assets/license/logo_large.gif')}}" alt="National Automobile Club">
+                                <img src="{{asset('assets/license/aaa.png')}}" alt="AAA" loading="lazy">
+                                <img src="{{asset('assets/license/logo_large.gif')}}" alt="National Automobile Club" loading="lazy">
                             </div>
                         </div>
                     </div>

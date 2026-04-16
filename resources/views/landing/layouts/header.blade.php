@@ -73,7 +73,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-2 col-md-8 col-sm-8 col-6">
                     <a href="{{route('landing')}}">
-                        <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow">
+                        <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow" loading="lazy">
                     </a>
                 </div>
                 <div class="col-lg-10 col-md-4 col-sm-4 col-6">

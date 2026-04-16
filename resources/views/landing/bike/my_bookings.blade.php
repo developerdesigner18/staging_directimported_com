@@ -653,7 +653,7 @@
                                         </button>
                                         <h5 class="mb-0">${item.name}</h5>
                                     </div>
-                                    <img src="${item.image}" class="img-fluid mb-2" style="max-width: 100%; height:auto;border-radius: 20px;">
+                                    <img src="${item.image}" class="img-fluid mb-2" style="max-width: 100%; height:auto;border-radius: 20px;" alt="Bike Image" loading="lazy">
                                     <input type="hidden" value="${item.id}" name="bike_ids[]">
                                 </div>
                                 <div class="col-12">

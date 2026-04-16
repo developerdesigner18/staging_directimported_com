@@ -210,15 +210,7 @@ class BikeController extends Controller
             'insurance_price' => 'nullable',
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'required|array',
-            'images.*' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    $image = json_decode($value, true);
-                    if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
-                        $fail('The image must be of type: webp.');
-                    }
-                },
-            ],
+            'images.*' => 'required',
             'description' => 'nullable|string',
             'engine' => 'nullable|string',
             'power' => 'nullable|string',
@@ -227,7 +219,7 @@ class BikeController extends Controller
             'tank_capacity' => 'nullable|string',
             'luggage' => 'nullable|string',
             'location' => 'nullable|string',
-            'banner' => 'nullable|image|mimes:webp',
+            'banner' => 'nullable|image',
             'free_accessory' => 'nullable',
             'extra_accessory' => 'nullable',
             'number_plate' => 'required',
@@ -324,17 +316,7 @@ class BikeController extends Controller
             'insurance_price' => 'nullable',
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'sometimes|array',
-            'images.*' => [
-                'sometimes',
-                function ($attribute, $value, $fail) {
-                    if (is_string($value) && \Illuminate\Support\Str::isJson($value)) {
-                        $image = json_decode($value, true);
-                        if ($image && isset($image['type']) && $image['type'] !== 'image/webp') {
-                            $fail('The image must be of type: webp.');
-                        }
-                    }
-                },
-            ],
+            'images.*' => 'sometimes',
             'removed_images' => 'nullable|string',
             'image_order' => 'nullable|string',
             'description' => 'nullable|string',
@@ -345,7 +327,7 @@ class BikeController extends Controller
             'tank_capacity' => 'nullable|string',
             'luggage' => 'nullable|string',
             'location' => 'nullable|string',
-            'banner' => 'nullable|image|mimes:webp',
+            'banner' => 'nullable|image',
             'free_accessory' => 'nullable',
             'extra_accessory' => 'nullable',
             'number_plate' => 'required',

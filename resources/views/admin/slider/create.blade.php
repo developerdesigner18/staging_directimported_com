@@ -36,7 +36,7 @@
                         <div class="mb-3">
                             <label for="image" class="form-label">Slider Image</label>
                             <input type="file" class="filepond" id="image" name="image"
-                                   data-allow-reorder="true" data-max-file-size="10MB" data-max-files="1">
+                                   data-allow-reorder="true">
                             <label id="image-error" class="text-danger error" for="image"
                                    style="display: none"></label>
                         </div>
@@ -90,9 +90,7 @@
             const inputElement = document.querySelector('input.filepond');
             if (inputElement) {
                 FilePond.create(inputElement, {
-                    acceptedFileTypes: ['image/webp'],
-                    labelFileTypeNotAllowed: 'File of invalid type',
-                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
+
                 });
             }
         }

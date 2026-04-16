@@ -109,14 +109,14 @@
                     <div class="col-lg-8 col-md-12">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <img class="bike-details-main-img" src="{{ asset(BIKE_PATH.$bike->images[0]) }}" alt="{{ $bike->name }}">
+                                <img class="bike-details-main-img" src="{{ asset(BIKE_PATH.$bike->images[0]) }}" alt="{{ $bike->name }}" loading="lazy">
                             </div>
                         </div>
                         @if(count($bike->images) > 0)
                             <div class="row g-2">
                                 @for($i = 0; $i < count($bike->images); $i++)
                                     <div class="col popup-gallery">
-                                        <img src="{{ asset(BIKE_PATH.$bike->images[$i]) }}" alt="{{ $bike->name }} - Image {{ $i }}" class="bike-image" role="button">
+                                        <img src="{{ asset(BIKE_PATH.$bike->images[$i]) }}" alt="{{ $bike->name }} - Image {{ $i }}" class="bike-image" role="button" loading="lazy">
                                     </div>
                                 @endfor
                             </div>

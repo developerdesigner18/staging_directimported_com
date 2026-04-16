@@ -675,7 +675,7 @@
                                 <div class="service-card h-100">
                                     <div class="icon-wrapper">
                                         <img src="{{ isset($service->images[0]) ? asset(SERVICE_PATH . $service->images[0]) : asset('uploads/user_documents/default.jpg') }}"
-                                            alt={{ $service->title }}>
+                                            alt="{{ $service->title }}" loading="lazy">
                                     </div>
                                     <h4>{{ $service->title }}</h4>
                                     <p>
@@ -762,9 +762,9 @@
                                 <div class="bike-card-img-wrapper">
                                     <a href="{{ route('motorcycle.single', ['slug' => $bike->slug]) }}">
                                         @if(isset($bike->images[0]))
-                                            <img src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}">
+                                            <img src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}" loading="lazy">
                                         @else
-                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $bike->name }}">
+                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $bike->name }}" loading="lazy">
                                         @endif
                                     </a>
                                 </div>
@@ -864,7 +864,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="rid-info-box text-center">
-                        <img src="{{asset('assets/landing/images/car.png')}}" alt="Car">
+                        <img src="{{asset('assets/landing/images/car.png')}}" alt="Car" loading="lazy">
                         <h4>Enjoy your Ride</h4>
                     </div>
                 </div>
@@ -900,7 +900,7 @@
                                 <div class="feature-item">
                                     <div class="feature-icon">
                                         <img src="{{asset('assets/landing/images/matter-section/Service_2.png')}}"
-                                            alt="English speakers">
+                                            alt="English speakers" loading="lazy">
                                     </div>
                                     <h4 class="feature-title">English speakers</h4>
                                     <p class="feature-text">
@@ -914,7 +914,7 @@
                                 <div class="feature-item">
                                     <div class="feature-icon">
                                         <img src="{{asset('assets/landing/images/matter-section/diamonds.svg')}}"
-                                            alt="Reliable">
+                                            alt="Reliable" loading="lazy">
                                     </div>
                                     <h4 class="feature-title">Reliable, honesty, trust</h4>
                                     <p class="feature-text">
@@ -928,7 +928,7 @@
                                 <div class="feature-item">
                                     <div class="feature-icon">
                                         <img src="{{asset('assets/landing/images/matter-section/dollar-square.svg')}}"
-                                            alt="Pricing">
+                                            alt="Pricing" loading="lazy">
                                     </div>
                                     <h4 class="feature-title">Clear and Honest Pricing</h4>
                                     <p class="feature-text">
@@ -942,7 +942,7 @@
                                 <div class="feature-item">
                                     <div class="feature-icon">
                                         <img src="{{asset('assets/landing/images/matter-section/car.svg')}}"
-                                            alt="Inspection">
+                                            alt="Inspection" loading="lazy">
                                     </div>
                                     <h4 class="feature-title">Professional Inspection</h4>
                                     <p class="feature-text">
@@ -1006,7 +1006,7 @@
                 <!-- Right Column (Images) -->
                 <div class="col-lg-6">
                     <div class="who-img-area">
-                        <img src="{{asset('assets/landing/images/who/left-img-1.png')}}" alt="Who We Are" class="img-fluid">
+                        <img src="{{asset('assets/landing/images/who/left-img-1.png')}}" alt="Who We Are" class="img-fluid" loading="lazy">
                     </div>
                 </div>
 
@@ -1156,6 +1156,7 @@
                 const newImg = document.createElement('img');
                 newImg.src = imageUrl;
                 newImg.alt = "Carousel Image";
+                newImg.loading = "lazy";
 
                 newImgContainer.appendChild(newImg);
                 slideElement.appendChild(newImgContainer);

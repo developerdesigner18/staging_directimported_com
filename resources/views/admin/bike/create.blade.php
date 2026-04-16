@@ -167,7 +167,7 @@
                             <label for="banner" class="form-label">Banner</label>
                             <label for="banner" class="custom-file-label w-100">
                                 <input type="file" id="banner" class="form-control file-preview" name="banner"
-                                    accept="image/webp">
+                                    accept="image/*">
                                 <label id="banner-error" class="text-danger error" style="display: none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;"></div>
                             </label>
@@ -177,7 +177,7 @@
                         <div class="mb-3">
                             <label for="images" class="form-label">Car Images</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple
-                                data-allow-reorder="true" data-max-file-size="10MB">
+                                data-allow-reorder="true">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
 
@@ -360,11 +360,6 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 30, // Supports 20+ images
-                    maxFileSize: '3MB', // Limits per-file upload size safely
-                    maxTotalFileSize: '50MB', // Allows bulk upload
-                    acceptedFileTypes: ['image/webp'],
-                    labelFileTypeNotAllowed: 'File of invalid type',
-                    fileValidateTypeLabelExpectedTypes: 'Expects .webp',
                 });
             }
         }
@@ -372,9 +367,7 @@
         $(document).ready(function () {
             initFilepond();
 
-            $.validator.addMethod('fileType', function (value, element, param) {
-                return this.optional(element) || (element.files[0].type.match(param));
-            }, 'The image must be of type: webp.');
+
 
             $("#addForm").validate({
                 rules: {
@@ -391,7 +384,7 @@
                     number_plate: { required: true },
                     card_header: { required: true },
                     card_subtitle: { required: true },
-                    banner: { fileType: "image/webp" },
+                    banner: { required: false },
 
 
                 },
@@ -428,7 +421,7 @@
                     number_plate: { required: "The number plate  is required." },
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
-                    banner: { fileType: "The banner image must be of type: webp." }
+
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {

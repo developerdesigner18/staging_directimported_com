@@ -24,7 +24,7 @@
                             <i class="ri-image-line" style="font-size: 48px; color: #adb5bd;"></i>
                             <span class="mt-2 text-muted">Click to upload image</span>
                         </div>
-                        <input type="file" id="galleryImageInput" name="image" class="d-none" accept="image/webp">
+                        <input type="file" id="galleryImageInput" name="image" class="d-none" accept="image/*">
                     </div>
                     <div class="form-text">Recommended size: 800x800px (1:1 ratio)</div>
                     <div id="galleryImageError" class="invalid-feedback d-block"></div>
@@ -64,7 +64,7 @@
                                 <i class="ri-edit-2-line"></i>
                             </button>
                         </div>
-                        <input type="file" id="editGalleryImageInput" name="image" class="d-none" accept="image/webp">
+                        <input type="file" id="editGalleryImageInput" name="image" class="d-none" accept="image/*">
                     </div>
                     <div class="form-text">Recommended size: 800x800px (1:1 ratio)</div>
                     <div id="editGalleryImageError" class="invalid-feedback d-block"></div>
@@ -217,9 +217,7 @@
                 }
             });
 
-            $.validator.addMethod('fileType', function(value, element, param) {
-                return this.optional(element) || (element.files[0].type.match(param));
-            }, 'The image must be of type: webp.');
+
 
             // Add Gallery Form Validation and Submission
             $("#addGalleryForm").validate({
@@ -227,14 +225,12 @@
                     title: {required: true},
                     image: {
                         required: true,
-                        fileType: "image/webp"
                     }
                 },
                 messages: {
                     title: {required: "The title field is required."},
                     image: {
                         required: "Please upload an image for the gallery.",
-                        fileType: "The image must be of type: webp."
                     }
                 },
                 errorClass: 'is-invalid',
@@ -297,13 +293,13 @@
                 rules: {
                     title: {required: true},
                     image: {
-                        fileType: "image/webp"
+                        required: false
                     }
                 },
                 messages: {
                     title: {required: "The title field is required."},
                     image: {
-                        fileType: "The image must be of type: webp."
+                        required: false
                     }
                 },
                 errorClass: 'is-invalid',

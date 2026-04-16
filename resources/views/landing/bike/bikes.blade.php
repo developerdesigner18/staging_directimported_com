@@ -638,7 +638,7 @@
                                             <!-- Image -->
                                             <div class="bike-card-img-wrapper">
                                                 <a href="{{route('motorcycle.single', ['slug' => $bike->slug])}}">
-                                                    <img src="{{asset(BIKE_PATH . $bike->images[0])}}" alt="{{$bike->name}}">
+                                                    <img src="{{asset(BIKE_PATH . $bike->images[0])}}" alt="{{$bike->name}}" loading="lazy">
                                                 </a>
                                             </div>
 
