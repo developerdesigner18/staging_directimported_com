@@ -798,27 +798,25 @@
             
             $thumbsSlider.slick({
                 slidesToShow: 5,
-                slidesToScroll: 5,
-                rows: 2,
-                slidesPerRow: 1,
+                slidesToScroll: 1,
                 prevArrow: $('.slider-btn-left'),
                 nextArrow: $('.slider-btn-right'),
                 infinite: true,
                 dots: false,
-                autoplay: false,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                pauseOnHover: true,
                 responsive: [
                     {
                         breakpoint: 768,
                         settings: {
-                            slidesToShow: 3,
-                            rows: 2
+                            slidesToShow: 3
                         }
                     },
                     {
                         breakpoint: 480,
                         settings: {
-                            slidesToShow: 2,
-                            rows: 2
+                            slidesToShow: 2
                         }
                     }
                 ]
