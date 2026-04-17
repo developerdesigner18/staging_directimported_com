@@ -359,7 +359,7 @@
             if (inputElement) {
                 FilePond.create(inputElement, {
                     allowMultiple: true,
-                    maxFiles: 30, // Supports 20+ images
+                    maxFiles: 60, // Increased to 60 images
                 });
             }
         }

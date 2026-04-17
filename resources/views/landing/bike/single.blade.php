@@ -60,69 +60,77 @@
             z-index: 10;
         }
 
-        .thumbs-slider-wrapper {
-            position: relative;
+        .gallery-thumbs-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
             margin-bottom: 40px;
-            padding: 0;
-            overflow: visible;
-        }
-
-        .gallery-thumbs-slider .slick-slide {
-            padding: 0 6px;
         }
 
         .thumb-box {
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             border: 2px solid transparent;
-            transition: 0.2s;
+            transition: all 0.2s ease;
+            aspect-ratio: 4/3;
         }
 
         .thumb-box.active {
             border-color: var(--primary-blue);
+            transform: scale(0.95);
+            box-shadow: 0 0 0 2px rgba(27, 68, 122, 0.2);
         }
 
         .thumb-box img {
             width: 100%;
-            height: 90px;
+            height: 100%;
             object-fit: cover;
         }
 
-        .slider-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 32px;
-            height: 32px;
-            background: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 20;
-            border: 1px solid #E5E7EB;
-            color: #111;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s;
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+
+            line-height: 35px;
         }
 
-        .slider-btn:hover {
-            background: #f8f9fa;
-            transform: translateY(-50%) scale(1.1);
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            top: 9px;
+
         }
 
-        .slider-btn-left { 
-            left: -16px; 
+        .select2-container--default .select2-selection--single {
+
+            height: 39px;
         }
-        
-        .slider-btn-right { 
-            right: -16px; 
+
+        @media (max-width: 1200px) {
+            .gallery-thumbs-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
         }
+
+        @media (max-width: 991px) {
+            .gallery-thumbs-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        @media (max-width: 767px) {
+            .gallery-thumbs-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-thumbs-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+        }
+
 
         /* Main Image Arrows */
+
         .main-slider-btn {
             position: absolute;
             top: 50%;
@@ -145,7 +153,7 @@
         .main-slider-btn:hover {
             background: #fff;
             transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .main-slider-btn.prev {
@@ -162,221 +170,216 @@
                 height: 36px;
                 font-size: 20px;
             }
-            .main-slider-btn.prev { left: 10px; }
-            .main-slider-btn.next { right: 10px; }
+
+            .main-slider-btn.prev {
+                left: 10px;
+            }
+
+            .main-slider-btn.next {
+                right: 10px;
+            }
         }
 
         /* Right Sidebar */
         .sidebar-inner {
-            background: #F3F4F6;
-            border-radius: 20px;
-            padding: 40px;
-            border: 1px solid #E5E7EB;
+            background: #fff;
+            border-radius: 16px;
+            padding: 12px 12px 10px;
+            /* controls top & bottom space */
         }
 
+        .sidebar-inner h1 {
+            margin-top: 0;
+        }
+
+        /* TITLE */
         .vehicle-title-main {
-            font-size: 38px;
+            font-size: 22px;
             font-weight: 800;
+            margin: 0;
             line-height: 1.1;
-            margin-bottom: 10px;
-            color: #111;
         }
 
         .vehicle-desc-small {
-            font-size: 14px;
-            color: #4B5563;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-
-        .price-info-card {
-            background: #fff;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            text-align: center;
-            border: 1px solid #E5E7EB;
-        }
-
-        .price-card-label {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .price-card-value {
-            font-size: 36px;
-            font-weight: 800;
-            color: #111;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        .sidebar-form-card {
-            background: transparent;
-            padding: 0;
-            box-shadow: none;
-            border: none;
-        }
-
-        .sidebar-form-card h4 {
-            font-size: 21px;
-            font-weight: 800;
-            margin-bottom: 25px;
-            color: #111;
-        }
-
-        .form-label-custom {
             font-size: 13px;
-            font-weight: 700;
-            color: #475569;
-            margin-bottom: 10px;
-            display: block;
-            text-transform: capitalize;
-            letter-spacing: 0.3px;
+            color: #6B7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
-        .form-input-custom {
-            background: #fff;
-            border: 1px solid #CBD5E1;
+
+
+        /* PRICE */
+        .price-info-card {
+            background: #E11D48;
+            color: #fff;
+            padding: 18px;
             border-radius: 10px;
-            padding: 0 15px !important;
-            height: 48px !important;
-            line-height: 46px !important; /* height - borders */
-            font-size: 14px;
+            text-align: center;
+            margin: 8px 0;
+        }
+
+        .price-info-card strong {
+            display: block;
+            font-size: 22px;
+            margin-top: 5px;
+        }
+
+        /* FORM BOX */
+        .sidebar-form-box {
+            background: #E5E7EB;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 12px;
+        }
+
+        /* HEAD */
+        .sidebar-form-box h4 {
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        /* LABEL */
+        .sidebar-form-box label {
+            font-size: 10px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* INPUT */
+        .sidebar-form-box input,
+        .sidebar-form-box select,
+        .sidebar-form-box textarea {
             width: 100%;
-            margin-bottom: 15px;
-            color: #111;
-            transition: all 0.2s;
-            box-sizing: border-box !important;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid #D1D5DB;
+            padding: 0 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            background: #fff;
         }
 
-        select.form-input-custom {
-            appearance: none;
-            background-color: #fff;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23333'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 16px;
-            padding-right: 35px;
-            cursor: pointer;
-            display: block; /* Selects don't support flex properly */
+        /* TEXTAREA */
+        .sidebar-form-box textarea {
+            height: 80px;
+            padding: 8px;
         }
 
-        .form-input-custom:focus {
-            outline: none;
-            border-color: #111;
-            box-shadow: none;
+        /* 2 COLUMN */
+        .row-2 {
+            display: flex;
+            gap: 10px;
         }
 
-        .form-input-custom::placeholder {
-            color: #94A3B8;
+        .row-2>div {
+            width: 50%;
         }
 
-        .btn-quote-main {
+        /* VEHICLE ID */
+        .vehicle-id-label {
+            margin-top: 5px;
+        }
+
+        .vehicle-id-box {
+            background: #fff;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        /* BUTTON */
+        .btn-submit {
+            width: 100%;
             background: #1B447A;
             color: #fff;
             border: none;
-            width: 100%;
-            padding: 18px;
-            border-radius: 10px;
-            font-weight: 800;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            margin-top: 5px;
-            transition: all 0.3s ease;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
         }
 
-        .btn-quote-main:hover {
-            background: #143560;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(27, 68, 122, 0.15);
-        }
-
-        .btn-quote-main:active {
-            transform: translateY(0);
-            box-shadow: 0 5px 10px rgba(27, 68, 122, 0.1);
-        }
-
-        .form-footnote {
-            font-size: 11px;
-            color: #9CA3AF;
-            text-align: center;
-            margin-top: 15px;
-            line-height: 1.4;
+        /* STICKY */
+        .sticky-sidebar-wrapper {
+            position: sticky;
+            top: 90px;
         }
 
         /* Details */
         .car-details-section-title {
-            font-size: 34px;
+            justify-content: space-between;
+            font-size: 24px;
             font-weight: 800;
-            margin: 60px 0 30px;
+            margin: 30px 0 15px;
             display: flex;
             align-items: center;
             color: #111;
         }
 
         .car-details-section-title i {
-            margin-left: 20px;
+            margin-left: 15px;
             color: #4B5563;
-            font-size: 30px;
+            font-size: 22px;
         }
 
         .details-heading-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
         }
 
         .details-heading-row h3 {
-            font-size: 30px;
+            font-size: 20px;
             font-weight: 800;
             margin: 0;
         }
 
         .grade-badge-custom {
             background: #F3F4F6;
-            padding: 8px 10px 8px 30px;
+            padding: 5px 8px 5px 15px;
             border-radius: 999px;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             border: 1px solid #E5E7EB;
         }
 
         .grade-badge-custom span {
-            font-size: 22px;
+            font-size: 14px;
             font-weight: 700;
         }
 
         .grade-val-circle {
-            width: 44px;
-            height: 44px;
+            width: 30px;
+            height: 30px;
             background: #1B447A;
             color: #fff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 16px;
             font-weight: 800;
         }
 
         .details-grid-card {
             background: #fff;
-            border-radius: 20px;
-            padding: 30px 40px;
+            border-radius: 12px;
+            padding: 15px 20px;
             border: 1px solid #EDEDED;
         }
 
         .spec-grid-item {
             display: flex;
             align-items: center;
-            padding: 18px 0;
+            padding: 10px 0;
             border-bottom: 1px solid #F1F5F9;
         }
 
@@ -385,10 +388,10 @@
         }
 
         .spec-icon-box {
-            width: 45px;
-            font-size: 30px;
+            width: 35px;
+            font-size: 20px;
             color: #111;
-            margin-right: 20px;
+            margin-right: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -396,24 +399,24 @@
 
         .spec-label-box {
             flex: 1;
-            padding-right: 20px;
+            padding-right: 15px;
         }
 
         .spec-label-main {
-            font-size: 17px;
+            font-size: 14px;
             font-weight: 500;
             color: #333;
             display: block;
         }
 
         .spec-label-sub {
-            font-size: 13px;
+            font-size: 11px;
             color: #6B7280;
             font-weight: 500;
         }
 
         .spec-value-box {
-            font-size: 17px;
+            font-size: 14px;
             font-weight: 600;
             color: #111;
             text-align: right;
@@ -421,53 +424,71 @@
 
         /* Accordion */
         .bike-faq-container {
-            margin-top: 50px;
+            margin-top: 25px;
         }
 
         .accordion-item {
             border: none;
             background: #F3F4F6;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             border-radius: 12px !important;
             overflow: hidden;
+            padding: 0px;
+        }
+
+        .bx-key:before {
+            font-size: 42px;
         }
 
         .accordion-button {
-            background: #F3F4F6 !important;
-            color: #111 !important;
+            background: #1B447A !important;
+            color: #ffffffff !important;
+            font-family: 'Inter', sans-serif !important;
             font-weight: 700;
-            padding: 22px 25px;
+            padding: 0px 18px;
             box-shadow: none !important;
-            font-size: 18px;
-        }
-
-        .accordion-button::after {
-            content: "+";
+            font-size: 14px;
             background-image: none;
-            font-size: 26px;
-            font-weight: 300;
-            color: #333;
-            transform: none !important;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             transition: 0.3s;
         }
 
         .accordion-button:not(.collapsed)::after {
-            content: "-";
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            color: white;
         }
 
+        .accordion-button::after {
+
+
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: white !important;
+        }
+
+
+
         .accordion-body {
-            padding: 0 25px 30px;
+            padding: 0 20px 20px;
             color: #4B5563;
-            font-size: 16px;
+            font-size: 13px;
             line-height: 1.6;
+            font-family: 'Inter', sans-serif !important;
         }
 
         @media (max-width: 991px) {
-            .vehicle-title-main { font-size: 32px; }
-            .details-grid-card { padding: 20px; }
+            .vehicle-title-main {
+                font-size: 32px;
+            }
+
+            .details-grid-card {
+                padding: 20px;
+            }
         }
 
         /* Slick Slider Dots - Fixing the numbers issue */
@@ -512,23 +533,23 @@
         }
 
         /* Related Bikes Slider Arrows */
-        .related-bikes-slider .slick-prev, 
+        .related-bikes-slider .slick-prev,
         .related-bikes-slider .slick-next {
             width: 40px;
             height: 40px;
             background: #fff;
             border-radius: 50%;
             z-index: 10;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
         }
 
-        .related-bikes-slider .slick-prev:hover, 
+        .related-bikes-slider .slick-prev:hover,
         .related-bikes-slider .slick-next:hover {
             background: var(--primary-blue);
         }
 
-        .related-bikes-slider .slick-prev:before, 
+        .related-bikes-slider .slick-prev:before,
         .related-bikes-slider .slick-next:before {
             color: #111;
             font-family: 'boxicons';
@@ -536,17 +557,29 @@
             opacity: 1;
         }
 
-        .related-bikes-slider .slick-prev:hover:before, 
+        .related-bikes-slider .slick-prev:hover:before,
         .related-bikes-slider .slick-next:hover:before {
             color: #fff;
         }
 
-        .related-bikes-slider .slick-prev { left: -20px; }
-        .related-bikes-slider .slick-next { right: -20px; }
+        .related-bikes-slider .slick-prev {
+            left: -20px;
+        }
 
-        .related-bikes-slider .slick-prev:before { content: "\ea41"; } /* bx-chevron-left */
-        .related-bikes-slider .slick-next:before { content: "\ea42"; } /* bx-chevron-right */
+        .related-bikes-slider .slick-next {
+            right: -20px;
+        }
 
+        .related-bikes-slider .slick-prev:before {
+            content: "\ea41";
+        }
+
+        /* bx-chevron-left */
+        .related-bikes-slider .slick-next:before {
+            content: "\ea42";
+        }
+
+        /* bx-chevron-right */
     </style>
 @endpush
 
@@ -560,22 +593,22 @@
                     <div class="main-image-container">
                         <span class="status-badge">Status: Available</span>
                         <img id="bike-display-img" src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}">
-                        <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i class="bx bx-chevron-left"></i></button>
-                        <button class="main-slider-btn next" onclick="moveMainImage('next')"><i class="bx bx-chevron-right"></i></button>
+                        <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i
+                                class="bx bx-chevron-left"></i></button>
+                        <button class="main-slider-btn next" onclick="moveMainImage('next')"><i
+                                class="bx bx-chevron-right"></i></button>
                     </div>
 
-                    <!-- Thumbnails slider wrapper -->
-                    <div class="thumbs-slider-wrapper">
-                        <div class="gallery-thumbs-slider">
-                            @foreach($bike->images as $index => $image)
-                                <div class="thumb-box {{ $index === 0 ? 'active' : '' }}" onclick="changeMainImage('{{ asset(BIKE_PATH . $image) }}', this)">
-                                    <img src="{{ asset(BIKE_PATH . $image) }}" alt="Bike thumbnail">
-                                </div>
-                            @endforeach
-                        </div>
-                        <button class="slider-btn slider-btn-left"><i class="bx bx-chevron-left"></i></button>
-                        <button class="slider-btn slider-btn-right"><i class="bx bx-chevron-right"></i></button>
+                    <!-- Thumbnails grid wrapper -->
+                    <div class="gallery-thumbs-grid">
+                        @foreach($bike->images as $index => $image)
+                            <div class="thumb-box {{ $index === 0 ? 'active' : '' }}"
+                                onclick="changeMainImage('{{ asset(BIKE_PATH . $image) }}', this)">
+                                <img src="{{ asset(BIKE_PATH . $image) }}" alt="Bike thumbnail">
+                            </div>
+                        @endforeach
                     </div>
+
 
                     <!-- Car Details Title -->
                     <h2 class="car-details-section-title">Car Details <i class="bx bx-key"></i></h2>
@@ -674,11 +707,15 @@
                         @foreach($bikeConf as $index => $conf)
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeading{{ $index }}">
-                                    <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $index }}" aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
+                                    <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $index }}"
+                                        aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
                                         {{ $conf->title }}
                                     </button>
                                 </h2>
-                                <div id="faqCollapse{{ $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" data-bs-parent="#bikeFaqMain">
+                                <div id="faqCollapse{{ $index }}"
+                                    class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                                    data-bs-parent="#bikeFaqMain">
                                     <div class="accordion-body">
                                         {!! $conf->description !!}
                                     </div>
@@ -690,73 +727,74 @@
 
                 <!-- RIGHT SIDEBAR -->
                 <div class="col-lg-5 col-xl-4 mt-5 mt-lg-0">
-                    <div class="sidebar-inner sticky-top" style="top: 100px; z-index: 5;">
-                        <h1 class="vehicle-title-main">{{ $bike->name }}</h1>
-                        <p class="vehicle-desc-small">{{ $bike->card_subtitle ?? 'Premium Rental 1000cc (or Expert Export Model)' }}</p>
+                    <div class="sidebar-inner sticky-sidebar-wrapper">
+
+                        <h1 class="vehicle-title-main">
+                            Honda Africa Twin CRF1000L #1
+                        </h1>
+
+                        <p class="vehicle-desc-small">
+                            Premium Rental 1000cc
+                        </p>
 
                         <div class="price-info-card">
-                            <span class="price-card-label">FOB Purchase Price:</span>
-                            <h2 class="price-card-value">¥{{ number_format(1655000) }}</h2>
+                            <div>FOB = Full on Board</div>
+                            <strong>¥1,655,000 FOB</strong>
                         </div>
 
-                        <div class="sidebar-form-card">
-                            <h4 class="mb-4 fw-bold">Contact Form</h4>
-                            <form action="#" method="POST">
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Full Name</label>
-                                    <input type="text" class="form-input-custom" placeholder="">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Email</label>
-                                    <input type="email" class="form-input-custom" placeholder="">
-                                </div>
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <div class="mb-3">
-                                            <label class="form-label-custom">Phone Number</label>
-                                            <input type="text" class="form-input-custom" placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="mb-3">
-                                            <label class="form-label-custom">Preferred Contact Method</label>
-                                            <select class="form-input-custom">
-                                                <option>Email</option>
-                                                <option>Phone</option>
-                                                <option>WhatsApp</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label-custom">Vehicle ID</label>
-                                    <input type="text" class="form-input-custom" value="{{ $bike->name }}" readonly style="background-color: #fff;">
-                                </div>
+                        <div class="sidebar-form-box">
 
-                                <div class="mt-4">
-                                    <h4 class="mb-4 fw-bold">Destination Details</h4>
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label class="form-label-custom">Destination Country</label>
-                                                <select class="form-input-custom">
-                                                    <option>🇺🇸 USA</option>
-                                                    <option>🇬🇧 UK</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="mb-3">
-                                                <label class="form-label-custom">Nearest Major Port /</label>
-                                                <input type="text" class="form-input-custom" placeholder="Postal Code">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h4>Contact Us</h4>
 
-                                <button type="submit" class="btn-quote-main mt-2">REQUEST EXPORT QUOTE</button>
-                                <p class="form-footnote mt-3" style="font-size: 11px; text-align: left; opacity: 0.7;">Our team will confirm availability and send your detailed quote</p>
-                            </form>
+                            <label>Full Name</label>
+                            <input type="text">
+
+                            <label>Email</label>
+                            <input type="email">
+
+                            <div class="row-2">
+                                <div>
+                                    <label>Phone Number</label>
+                                    <input type="text">
+                                </div>
+                                <div>
+                                    <label>Preferred Contact Method</label>
+                                    <select>
+                                        <option>Select...</option>
+                                        <option>Email</option>
+                                        <option>Phone</option>
+                                        <option>WhatsApp</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <label class="vehicle-id-label">* Vehicle ID :</label>
+                            <div class="vehicle-id-box">
+                                Honda Africa Twin CRF1000L
+                            </div>
+
+                            <div class="row-2">
+                                <div>
+                                    <label>Destination Country</label>
+                                    <select>
+                                        <option>🇺🇸 USA</option>
+                                        <option>🇬🇧 UK</option>
+                                        <option>🇦🇺 Australia</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Nearest Major Port / Postal Code</label>
+                                    <input type="text">
+                                </div>
+                            </div>
+
+                            <label>Message</label>
+                            <textarea></textarea>
+
+                            <button class="btn-submit">
+                                REQUEST VEHICLE DETAILS & QUOTE
+                            </button>
+
                         </div>
                     </div>
                 </div>
@@ -773,13 +811,18 @@
                     <div class="px-2">
                         <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
                             <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
-                                <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" class="card-img-top" style="height: 240px; object-fit: cover;">
+                                <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" class="card-img-top"
+                                    style="height: 240px; object-fit: cover;">
                             </a>
                             <div class="card-body p-4">
                                 <h5 class="fw-bold mb-3" style="font-size: 20px;">{{ $relatedBike->name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <div class="fw-bold text-danger fs-5">From ¥{{ number_format($relatedBike->less_four_days_price) }} <span class="text-muted fw-normal fs-6">/ day</span></div>
-                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}" class="text-secondary fw-bold text-decoration-none">VIEW <i class="bx bx-right-arrow-alt"></i></a>
+                                    <div class="fw-bold text-danger fs-5">From
+                                        ¥{{ number_format($relatedBike->less_four_days_price) }} <span
+                                            class="text-muted fw-normal fs-6">/ day</span></div>
+                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
+                                        class="text-secondary fw-bold text-decoration-none">VIEW <i
+                                            class="bx bx-right-arrow-alt"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -792,48 +835,7 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            // Initialize Gallery Thumbs Slider
-            const $thumbsSlider = $('.gallery-thumbs-slider');
-            
-            $thumbsSlider.slick({
-                slidesToShow: 5,
-                slidesToScroll: 1,
-                prevArrow: $('.slider-btn-left'),
-                nextArrow: $('.slider-btn-right'),
-                infinite: true,
-                dots: false,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                pauseOnHover: true,
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            slidesToShow: 3
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 2
-                        }
-                    }
-                ]
-            });
-
-            // Synchronize main image with slider movement
-            $thumbsSlider.on('afterChange', function(event, slick, currentSlide) {
-                const activeThumb = $(this).find(`.slick-slide[data-slick-index="${currentSlide}"] .thumb-box`);
-                const newSrc = activeThumb.find('img').attr('src');
-                
-                if (newSrc) {
-                    $('#bike-display-img').attr('src', newSrc);
-                    $('.thumb-box').removeClass('active');
-                    activeThumb.addClass('active');
-                }
-            });
-
+        $(document).ready(function () {
             // Initialize Related Bikes Slider
             $('.related-bikes-slider').slick({
                 slidesToShow: 3,
@@ -863,21 +865,28 @@
             $('#bike-display-img').attr('src', src);
             $('.thumb-box').removeClass('active');
             $(el).addClass('active');
-            
-            // Sync slider to this index if it's from a manual click
-            const slickIndex = $(el).closest('.slick-slide').data('slick-index');
-            if (slickIndex !== undefined) {
-                $('.gallery-thumbs-slider').slick('slickGoTo', slickIndex);
-            }
+
+            // Ensure the active thumbnail is somewhat visible if there are many rows
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         function moveMainImage(direction) {
-            const $slider = $('.gallery-thumbs-slider');
+            const $active = $('.thumb-box.active');
+            let $target;
+
             if (direction === 'next') {
-                $slider.slick('slickNext');
+                $target = $active.next('.thumb-box');
+                if ($target.length === 0) $target = $('.thumb-box').first();
             } else {
-                $slider.slick('slickPrev');
+                $target = $active.prev('.thumb-box');
+                if ($target.length === 0) $target = $('.thumb-box').last();
+            }
+
+            if ($target.length) {
+                const newSrc = $target.find('img').attr('src');
+                changeMainImage(newSrc, $target[0]);
             }
         }
+
     </script>
 @endsection

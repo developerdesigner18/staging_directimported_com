@@ -370,7 +370,7 @@
                     if (inputElement) {
                         FilePond.create(inputElement, {
                             allowMultiple: true,
-                            maxFiles: 30,
+                            maxFiles: 60,
                         });
                     }
                 }
