@@ -91,6 +91,7 @@
         .select2-container--default .select2-selection--single .select2-selection__rendered {
 
             line-height: 35px;
+            font-size: 12px;
         }
 
         .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -243,7 +244,7 @@
 
         /* LABEL */
         .sidebar-form-box label {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             margin-bottom: 4px;
             display: block;
