@@ -34,6 +34,9 @@
                             <span class="text-muted">{{ dateToHuman($bike->created_at) }}</span>
                             <br>
                             <div class="action-btn text-end">
+                                <a class="btn btn-primary btn-sm" href="{{ route('admin.bike.specs', $bike->id) }}" data-bs-toggle="tooltip" title="Manage Specs">
+                                    <i class="ri-settings-4-line"></i>
+                                </a>
                                 <a class="btn btn-success btn-sm" href="{{ route('admin.bike.edit', $bike->id) }}" data-bs-toggle="tooltip" title="Edit Bike">
                                     <i class="ri-pencil-line"></i>
                                 </a>

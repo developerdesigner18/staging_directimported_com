@@ -637,30 +637,29 @@
                                     <div class="spec-icon-box"><i class="bx bx-car"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Make</span>
-                                        <span class="spec-label-sub">Rugged adventure motorcycle</span>
                                     </div>
-                                    <div class="spec-value-box">Honda</div>
+                                    <div class="spec-value-box">{{ $bike->category->name ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-palette"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Exterior colour</span>
                                     </div>
-                                    <div class="spec-value-box">Blue</div>
+                                    <div class="spec-value-box"></div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-layer"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Body type</span>
                                     </div>
-                                    <div class="spec-value-box">Adventure Touring</div>
+                                    <div class="spec-value-box"></div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-gas-pump"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Fuel type</span>
                                     </div>
-                                    <div class="spec-value-box">Gasoline</div>
+                                    <div class="spec-value-box"></div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -669,35 +668,35 @@
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Odometer</span>
                                     </div>
-                                    <div class="spec-value-box">120,000 km</div>
+                                    <div class="spec-value-box">{{ $bike->spec->odometer ?? '' }} km</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-calendar"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Model Year</span>
                                     </div>
-                                    <div class="spec-value-box">2018</div>
+                                    <div class="spec-value-box">{{ $bike->spec->model_year ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-select-multiple"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Interior colour</span>
                                     </div>
-                                    <div class="spec-value-box">White</div>
+                                    <div class="spec-value-box">{{ $bike->spec->interior_color ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-cog"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Engine</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->engine }}</div>
+                                    <div class="spec-value-box">{{ $bike->spec->engine ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-reset"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Transmission</span>
                                     </div>
-                                    <div class="spec-value-box">6-speed</div>
+                                    <div class="spec-value-box">{{ $bike->spec->transmission ?? '' }}</div>
                                 </div>
                             </div>
                         </div>
@@ -731,16 +730,16 @@
                     <div class="sidebar-inner sticky-sidebar-wrapper">
 
                         <h1 class="vehicle-title-main">
-                            Honda Africa Twin CRF1000L #1
+                            {{ $bike->name }}
                         </h1>
 
                         <p class="vehicle-desc-small">
-                            Premium Rental 1000cc
+                            {{ $bike->category->name ?? '' }}
                         </p>
 
                         <div class="price-info-card">
                             <div>FOB = Full on Board</div>
-                            <strong>¥1,655,000 FOB</strong>
+                            <strong>¥{{ number_format($bike->max_price) }} FOB</strong>
                         </div>
 
                         <div class="sidebar-form-box">
@@ -771,7 +770,7 @@
 
                             <label class="vehicle-id-label">* Vehicle ID :</label>
                             <div class="vehicle-id-box">
-                                Honda Africa Twin CRF1000L
+                                {{ $bike->name }}
                             </div>
 
                             <div class="row-2">

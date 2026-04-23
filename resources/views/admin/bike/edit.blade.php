@@ -204,48 +204,6 @@
                             <input type="hidden" id="description" name="description" value="{{ $bike->description }}">
                         </div>
 
-                        <!-- Technical Specifications -->
-                        <!-- Simple Technical Specifications -->
-                        <div class="card mt-4">
-                            <div class="card-header bg-light">
-                                <h5 class="mb-0">Technical Specifications</h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Engine</label>
-                                        <input type="text" value="{{ $bike->engine }}" name="engine" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Power</label>
-                                        <input type="text" value="{{ $bike->power }}" name="power" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Seat Height</label>
-                                        <input type="text" value="{{ $bike->seat_height }}" name="seat_height" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Weight</label>
-                                        <input type="text" name="weight" value="{{ $bike->weight }}" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Tank Capacity</label>
-                                        <input type="text" name="tank_capacity" value="{{ $bike->tank_capacity }}" class="form-control">
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Luggage</label>
-                                        <input type="text" name="luggage" value="{{ $bike->luggage }}" class="form-control">
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
                         <!-- ================= Card Settings Section ================= -->
                         <div class="card mt-4">
                             <div class="card-header bg-light">

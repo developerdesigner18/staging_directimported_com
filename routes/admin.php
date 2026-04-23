@@ -189,6 +189,8 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/update/{id}', 'update')->name('update');
             Route::post('/delete', 'delete')->name('delete');
             Route::post('/sort', 'updateSort')->name('sort');
+            Route::get('/specs/{id}', 'specs')->name('specs');
+            Route::post('/specs/update/{id}', 'updateSpecs')->name('specs.update');
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
         });

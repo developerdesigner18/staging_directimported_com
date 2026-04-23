@@ -27,12 +27,6 @@ class Bike extends Model
         'images',
         'banner',
         'description',
-        'engine',
-        'power',
-        'seat_height',
-        'weight',
-        'tank_capacity',
-        'luggage',
         'address',
         'is_recommended',
         'location',
@@ -54,14 +48,17 @@ class Bike extends Model
         'free_accessory' => 'array',
         'extra_accessory' => 'array',
     ];
-
+    public function spec()
+    {
+        return $this->hasOne(CarSpec::class);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id')
             ->where('type', CategoryType::BIKE);
     }
 
-//    public function freeAccessories()
+    //    public function freeAccessories()
 //    {
 //        return Accessories::whereIn('id', $this->free_accessory??[])->get();
 //    }

@@ -195,7 +195,7 @@ class BikeController extends Controller
     public function singleBike($slug)
     {
 
-        $bike = Bike::with('map')->where('slug', $slug)->firstOrFail();
+        $bike = Bike::with(['map', 'spec'])->where('slug', $slug)->firstOrFail();
         $bikeConf = BikeConfiguration::get();
         $banner = Banner::first();
 

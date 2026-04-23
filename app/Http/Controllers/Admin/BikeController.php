@@ -11,6 +11,7 @@ use App\Models\Location;
 use App\Models\BikeConfiguration;
 use App\Models\Category;
 use App\Models\HeroSlider;
+use App\Models\CarSpec;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -134,23 +135,27 @@ class BikeController extends Controller
                     // Action buttons
                     $editUrl = route('admin.bike.edit', $row->id);
                     $viewUrl = route('admin.bike.view', $row->id);
+                    $specsUrl = route('admin.bike.specs', $row->id);
 
                     $buttons = '
                     <ul class="list-inline mb-0 d-flex justify-content-center text-center">
                         <li class="list-inline-item">
-                              <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Bike">
-                               <i class="ri-eye-line"></i>
+                               <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Bike">
+                                <i class="ri-eye-line"></i>
                             </a>
-                            </button>
                         </li>
-
+                        <li class="list-inline-item">
+                               <a href="' . $specsUrl . '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Manage Specs">
+                                <i class="ri-settings-4-line"></i>
+                            </a>
+                        </li>
                         <li class="list-inline-item">
                             <a href="' . $editUrl . '" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Edit Bike">
                                 <i class="ri-pencil-line"></i>
                             </a>
                         </li>
                          <li class="list-inline-item">
-                                  <button class="btn btn-danger btn-sm" onclick="deleteBike(' . $row->id . ', this)" data-bs-toggle="tooltip" title="Delete Bike">
+                                   <button class="btn btn-danger btn-sm" onclick="deleteBike(' . $row->id . ', this)" data-bs-toggle="tooltip" title="Delete Bike">
                                 <i class="ri-delete-bin-line"></i>
                             </button>
                         </li>
@@ -212,12 +217,6 @@ class BikeController extends Controller
             'images' => 'required|array',
             'images.*' => 'required',
             'description' => 'nullable|string',
-            'engine' => 'nullable|string',
-            'power' => 'nullable|string',
-            'seat_height' => 'nullable|string',
-            'weight' => 'nullable|string',
-            'tank_capacity' => 'nullable|string',
-            'luggage' => 'nullable|string',
             'location' => 'nullable|string',
             'banner' => 'nullable|image',
             'free_accessory' => 'nullable',
@@ -269,12 +268,6 @@ class BikeController extends Controller
 
             $bike->images = $images;
             $bike->description = $request->description;
-            $bike->engine = $request->engine;
-            $bike->power = $request->power;
-            $bike->seat_height = $request->seat_height;
-            $bike->weight = $request->weight;
-            $bike->tank_capacity = $request->tank_capacity;
-            $bike->luggage = $request->luggage;
             $bike->card_header = $request->card_header;
             $bike->card_subtitle = $request->card_subtitle;
 
@@ -320,12 +313,6 @@ class BikeController extends Controller
             'removed_images' => 'nullable|string',
             'image_order' => 'nullable|string',
             'description' => 'nullable|string',
-            'engine' => 'nullable|string',
-            'power' => 'nullable|string',
-            'seat_height' => 'nullable|string',
-            'weight' => 'nullable|string',
-            'tank_capacity' => 'nullable|string',
-            'luggage' => 'nullable|string',
             'location' => 'nullable|string',
             'banner' => 'nullable|image',
             'free_accessory' => 'nullable',
@@ -442,12 +429,6 @@ class BikeController extends Controller
 
             // Description & specs
             $bike->description = $request->description;
-            $bike->engine = $request->engine;
-            $bike->power = $request->power;
-            $bike->seat_height = $request->seat_height;
-            $bike->weight = $request->weight;
-            $bike->tank_capacity = $request->tank_capacity;
-            $bike->luggage = $request->luggage;
             $bike->save();
 
             DB::commit();
@@ -553,6 +534,55 @@ class BikeController extends Controller
             return $this->sendError($exception->getMessage());
         }
     }
+    public function specs($id)
+    {
+        $bike = Bike::with('spec')->findOrFail($id);
+        return view('admin.bike.specs', compact('bike'));
+    }
 
+    public function updateSpecs(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'engine' => 'nullable|string',
+            'power' => 'nullable|string',
+            'seat_height' => 'nullable|string',
+            'weight' => 'nullable|string',
+            'tank_capacity' => 'nullable|string',
+            'luggage' => 'nullable|string',
+            'odometer' => 'nullable|integer',
+            'model_year' => 'nullable|integer',
+            'interior_color' => 'nullable|string',
+            'transmission' => 'nullable|string',
+        ]);
 
+        if ($validator->fails()) {
+            return $this->sendValidationError($validator->errors());
+        }
+
+        try {
+            DB::beginTransaction();
+
+            CarSpec::updateOrCreate(
+                ['bike_id' => $id],
+                $request->only([
+                    'engine',
+                    'power',
+                    'seat_height',
+                    'weight',
+                    'tank_capacity',
+                    'luggage',
+                    'odometer',
+                    'model_year',
+                    'interior_color',
+                    'transmission'
+                ])
+            );
+
+            DB::commit();
+            return $this->sendSuccess(__('Specifications updated successfully!'));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->sendError($exception->getMessage());
+        }
+    }
 }
