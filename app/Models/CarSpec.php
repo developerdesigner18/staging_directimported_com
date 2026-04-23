@@ -9,12 +9,11 @@ class CarSpec extends Model
     use SoftDeletes;
     protected $fillable = [
         'bike_id',
+        'make',
+        'exterior_color',
+        'body_type',
+        'fuel_type',
         'engine',
-        'power',
-        'seat_height',
-        'weight',
-        'tank_capacity',
-        'luggage',
         'odometer',
         'model_year',
         'interior_color',

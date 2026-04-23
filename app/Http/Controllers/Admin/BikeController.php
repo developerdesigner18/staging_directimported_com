@@ -543,12 +543,11 @@ class BikeController extends Controller
     public function updateSpecs(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
+            'make' => 'nullable|string',
+            'exterior_color' => 'nullable|string',
+            'body_type' => 'nullable|string',
+            'fuel_type' => 'nullable|string',
             'engine' => 'nullable|string',
-            'power' => 'nullable|string',
-            'seat_height' => 'nullable|string',
-            'weight' => 'nullable|string',
-            'tank_capacity' => 'nullable|string',
-            'luggage' => 'nullable|string',
             'odometer' => 'nullable|integer',
             'model_year' => 'nullable|integer',
             'interior_color' => 'nullable|string',
@@ -565,12 +564,11 @@ class BikeController extends Controller
             CarSpec::updateOrCreate(
                 ['bike_id' => $id],
                 $request->only([
+                    'make',
+                    'exterior_color',
+                    'body_type',
+                    'fuel_type',
                     'engine',
-                    'power',
-                    'seat_height',
-                    'weight',
-                    'tank_capacity',
-                    'luggage',
                     'odometer',
                     'model_year',
                     'interior_color',

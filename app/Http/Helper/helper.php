@@ -215,5 +215,5 @@ function sendDynamicEmail($to, $templateKey, $data)
 }
 function getSetting()
 {
-    return SiteSettings::first();
+    return SiteSettings::first() ?? new SiteSettings();
 }

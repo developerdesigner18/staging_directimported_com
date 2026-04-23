@@ -14,14 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('bike_id')->constrained()->onDelete('cascade');
 
+            $table->string('make')->nullable();
+            $table->string('exterior_color')->nullable();
+            $table->string('body_type')->nullable();
+            $table->string('fuel_type')->nullable();
             $table->string('engine')->nullable();
-            $table->string('power')->nullable();
-            $table->string('seat_height')->nullable();
-            $table->string('weight')->nullable();
-            $table->string('tank_capacity')->nullable();
-            $table->string('luggage')->nullable();
-
-            // fields from your image
             $table->integer('odometer')->nullable();
             $table->year('model_year')->nullable();
             $table->string('interior_color')->nullable();

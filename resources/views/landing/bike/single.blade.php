@@ -627,39 +627,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="spec-grid-item">
-                                    <div class="spec-icon-box"><i class="bx bx-file"></i></div>
-                                    <div class="spec-label-box">
-                                        <span class="spec-label-main">Vehicle description</span>
-                                    </div>
-                                    <div class="spec-value-box"></div>
-                                </div>
-                                <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-car"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Make</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->category->name ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $bike->spec->make ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-palette"></i></div>
                                     <div class="spec-label-box">
-                                        <span class="spec-label-main">Exterior colour</span>
+                                        <span class="spec-label-main">Exterior Color</span>
                                     </div>
-                                    <div class="spec-value-box"></div>
+                                    <div class="spec-value-box">{{ $bike->spec->exterior_color ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-layer"></i></div>
                                     <div class="spec-label-box">
-                                        <span class="spec-label-main">Body type</span>
+                                        <span class="spec-label-main">Body Type</span>
                                     </div>
-                                    <div class="spec-value-box"></div>
+                                    <div class="spec-value-box">{{ $bike->spec->body_type ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-gas-pump"></i></div>
                                     <div class="spec-label-box">
-                                        <span class="spec-label-main">Fuel type</span>
+                                        <span class="spec-label-main">Fuel Type</span>
                                     </div>
-                                    <div class="spec-value-box"></div>
+                                    <div class="spec-value-box">{{ $bike->spec->fuel_type ?? '' }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">

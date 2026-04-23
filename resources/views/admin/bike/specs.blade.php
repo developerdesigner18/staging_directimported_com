@@ -26,39 +26,33 @@
                         <div class="row">
                             <!-- Technical Specs -->
                             <div class="col-md-6 mb-3">
+                                <label class="form-label">Make</label>
+                                <input type="text" name="make" class="form-control"
+                                    value="{{ $bike->spec->make ?? '' }}" placeholder="e.g. Toyota">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Exterior Color</label>
+                                <input type="text" name="exterior_color" class="form-control" value="{{ $bike->spec->exterior_color ?? '' }}"
+                                    placeholder="e.g. Pearl White">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Body Type</label>
+                                <input type="text" name="body_type" class="form-control"
+                                    value="{{ $bike->spec->body_type ?? '' }}" placeholder="e.g. SUV">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Fuel Type</label>
+                                <input type="text" name="fuel_type" class="form-control"
+                                    value="{{ $bike->spec->fuel_type ?? '' }}" placeholder="e.g. Hybrid">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">Engine</label>
                                 <input type="text" name="engine" class="form-control"
                                     value="{{ $bike->spec->engine ?? '' }}" placeholder="e.g. 2.0L Turbo">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Power</label>
-                                <input type="text" name="power" class="form-control" value="{{ $bike->spec->power ?? '' }}"
-                                    placeholder="e.g. 200 HP">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Seat Height</label>
-                                <input type="text" name="seat_height" class="form-control"
-                                    value="{{ $bike->spec->seat_height ?? '' }}" placeholder="e.g. 800 mm">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Weight</label>
-                                <input type="text" name="weight" class="form-control"
-                                    value="{{ $bike->spec->weight ?? '' }}" placeholder="e.g. 1500 kg">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Tank Capacity</label>
-                                <input type="text" name="tank_capacity" class="form-control"
-                                    value="{{ $bike->spec->tank_capacity ?? '' }}" placeholder="e.g. 50 Liters">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Luggage</label>
-                                <input type="text" name="luggage" class="form-control"
-                                    value="{{ $bike->spec->luggage ?? '' }}" placeholder="e.g. 400 Liters">
                             </div>
 
 
