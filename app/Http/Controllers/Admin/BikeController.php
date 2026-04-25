@@ -135,18 +135,12 @@ class BikeController extends Controller
                     // Action buttons
                     $editUrl = route('admin.bike.edit', $row->id);
                     $viewUrl = route('admin.bike.view', $row->id);
-                    $specsUrl = route('admin.bike.specs', $row->id);
 
                     $buttons = '
                     <ul class="list-inline mb-0 d-flex justify-content-center text-center">
                         <li class="list-inline-item">
                                <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Bike">
                                 <i class="ri-eye-line"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                               <a href="' . $specsUrl . '" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Manage Specs">
-                                <i class="ri-settings-4-line"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
@@ -273,6 +267,20 @@ class BikeController extends Controller
 
             $bike->save();
 
+            // Save Technical Specifications
+            CarSpec::create([
+                'bike_id' => $bike->id,
+                'make' => $request->make,
+                'exterior_color' => $request->exterior_color,
+                'body_type' => $request->body_type,
+                'fuel_type' => $request->fuel_type,
+                'engine' => $request->engine,
+                'odometer' => $request->odometer,
+                'model_year' => $request->model_year,
+                'interior_color' => $request->interior_color,
+                'transmission' => $request->transmission,
+            ]);
+
             DB::commit();
             return $this->sendSuccess(__('bike added successfully!'));
         } catch (\Exception $exception) {
@@ -283,7 +291,7 @@ class BikeController extends Controller
 
     public function edit($id)
     {
-        $bike = Bike::findOrFail($id);
+        $bike = Bike::with('spec')->findOrFail($id);
         $categories = Category::select('id', 'name')->where('type', CategoryType::BIKE->value)->get();
         $freeAccessories = Accessories::where('type', 'FREE')->get();
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
@@ -430,6 +438,22 @@ class BikeController extends Controller
             // Description & specs
             $bike->description = $request->description;
             $bike->save();
+
+            // Update Technical Specifications
+            CarSpec::updateOrCreate(
+                ['bike_id' => $bike->id],
+                [
+                    'make' => $request->make,
+                    'exterior_color' => $request->exterior_color,
+                    'body_type' => $request->body_type,
+                    'fuel_type' => $request->fuel_type,
+                    'engine' => $request->engine,
+                    'odometer' => $request->odometer,
+                    'model_year' => $request->model_year,
+                    'interior_color' => $request->interior_color,
+                    'transmission' => $request->transmission,
+                ]
+            );
 
             DB::commit();
 

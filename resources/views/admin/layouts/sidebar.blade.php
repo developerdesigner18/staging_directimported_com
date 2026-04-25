@@ -65,7 +65,7 @@
                             href="#sidebarBikes" data-bs-toggle="collapse" role="button"
                             aria-expanded="{{ (request()->is('admin/bike*') || request()->is('admin/bike/category*')) ? 'true' : 'false' }}"
                             aria-controls="sidebarBikes">
-                            <i class="ri-motorbike-line"></i> <span data-key="t-multi-level">Carss</span>
+                            <i class="ri-motorbike-line"></i> <span data-key="t-multi-level">Cars</span>
                         </a>
                         <div class="menu-dropdown collapse @if(request()->is('admin/bike*') || request()->is('admin/bike/category*')) show @endif"
                             id="sidebarBikes">
@@ -109,30 +109,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('tours'))
 
-                    <li class="nav-item">
-                        <a class="nav-link menu-link @if(request()->is('admin/tour*')) active @endif" href="#sidebarTours"
-                            data-bs-toggle="collapse" role="button"
-                            aria-expanded="{{ request()->is('admin/tour*') ? 'true' : 'false' }}"
-                            aria-controls="sidebarTours">
-                            <i class="ri-map-2-line"></i> <span data-key="t-multi-level">Tours</span>
-                        </a>
-                        <div class="menu-dropdown collapse @if(request()->is('admin/tour*')) show @endif" id="sidebarTours">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-key="t-level-1.1">Tours</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-key="t-level-1.1">Tour Categories</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" data-key="t-level-1.1">Tour Configuration</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                @endif
 
                 @if($user->hasRole('admin') || $user->can('accessories_equipments'))
                     <li class="nav-item">

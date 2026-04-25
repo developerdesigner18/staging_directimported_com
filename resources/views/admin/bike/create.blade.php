@@ -189,6 +189,62 @@
                             <label id="description-error" class="text-danger error" style="display: none"></label>
                         </div>
 
+                        <!-- ================= Technical Specifications ================= -->
+                        <div class="card mt-4">
+                            <div class="card-header bg-light">
+                                <h5 class="mb-0">Technical Specifications</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Make</label>
+                                        <input type="text" name="make" class="form-control" placeholder="e.g. Toyota">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Exterior Color</label>
+                                        <input type="text" name="exterior_color" class="form-control" placeholder="e.g. Pearl White">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Body Type</label>
+                                        <input type="text" name="body_type" class="form-control" placeholder="e.g. SUV">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Fuel Type</label>
+                                        <input type="text" name="fuel_type" class="form-control" placeholder="e.g. Hybrid">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Engine</label>
+                                        <input type="text" name="engine" class="form-control" placeholder="e.g. 2.0L Turbo">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Odometer (km)</label>
+                                        <input type="number" name="odometer" class="form-control" placeholder="e.g. 50000">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Model Year</label>
+                                        <input type="number" name="model_year" class="form-control" placeholder="e.g. 2022">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Interior Color</label>
+                                        <input type="text" name="interior_color" class="form-control" placeholder="e.g. Black Leather">
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Transmission</label>
+                                        <input type="text" name="transmission" class="form-control" placeholder="e.g. Automatic / Manual">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ========================================================== -->
+
                         <!-- ================= Card Settings Section ================= -->
                         <div class="card mt-4">
                             <div class="card-header bg-light">
