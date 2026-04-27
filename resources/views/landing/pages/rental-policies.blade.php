@@ -373,7 +373,7 @@
                             {{-- </div>--}}
                         {{-- <div class="card-body-custom">--}}
                             {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>The rental motorcycle (251cc or more) is insured with compulsory third party
+                                {{-- <li>The rental car (251cc or more) is insured with compulsory third party
                                     insurance plus a rental insurance policy covering: (Third part injury: Unlimited, Third
                                     Party Property: Unlimited, Personal injury: 80,000,000 yen, Property: 2,000,000yen,
                                     passenger: 5,000,000 yen, an excess of 300,000 is payable on all claims). For mopeds or
@@ -413,21 +413,21 @@
                             {{-- <div class="insurance-explanation">--}}
                                 {{-- <h5 class="insurance-title">Our insurance in Layman's terms</h5>--}}
                                 {{-- <p>Our rental insurance covers everything legally required by Japanese law as laid out
-                                    in our terms and conditions. However, damage to the bike regardless of fault is not
+                                    in our terms and conditions. However, damage to the car regardless of fault is not
                                     covered, this is far too expensive and not financially viable to have as a business
-                                    expense plus with the nature of the rental bike business there are more claims than
+                                    expense plus with the nature of the rental car business there are more claims than
                                     private ownership resulting in higher and higher premiums so unfortunately the customer
                                     has to cover this. This is commonplace in Japan and as far as we know there are no
-                                    companies offering full insurance to cover bike damage. In the case of single vehicle
+                                    companies offering full insurance to cover car damage. In the case of single vehicle
                                     accident, this excess is unlimited and could potentially be the amount to replace the
-                                    whole bike. Some travel insurance policies cover this so we urge you to take out this
+                                    whole car. Some travel insurance policies cover this so we urge you to take out this
                                     kind of cover if available. We offer the excess reduction insurance of 1000/day which
                                     reduces the excess from unlimited to a maximum of 300,000 jpy. This is not available on
-                                    some bikes so please do ask when booking. In the case of multiple vehicle accidents, a
+                                    some cars so please do ask when booking. In the case of multiple vehicle accidents, a
                                     300,000 jpy excess is automatically charged and will be adjusted depending on the police
                                     investigation where they award percentage blame and insurance is paid accordingly. In
                                     Japan, the larger vehicle has an automatic higher percentage blame, so a car has
-                                    responsibility over a motorcycle, a motocycle over a bicycle etc. So riding a motorcycle
+                                    responsibility over a car, a motocycle over a bicycle etc. So riding a car
                                     is finacially percentage blame wise safer. However it is extremely rare to be given 0%
                                     blame, being on the road anyway you are considered to be partly to blame for any
                                     accident involving yourself so typically if you are hit while stationary at a traffic
@@ -491,7 +491,7 @@
                             {{-- </div>--}}
                         {{-- <div class="card-body-custom">--}}
                             {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>The motorcycle must under no circumstances be used for or have any the following
+                                {{-- <li>The car must under no circumstances be used for or have any the following
                                     activities applied to it:</li>--}}
                                 {{-- </ol>--}}
 
@@ -569,7 +569,7 @@
                                 {{-- <li>In the case of lost keys, the renter is liable for the actual replacement costs
                                     only, however if further costs are incurred the renter is liable for those.</li>--}}
                                 {{-- <li>If rental goods or extras are damaged, the customer is liable to be charged a fixed
-                                    amount for each item. Please confirm it in the details when you return the bike. The
+                                    amount for each item. Please confirm it in the details when you return the car. The
                                     replacement costs are based on the RRP of the specific parts.</li>--}}
                                 {{-- <li>Except in the case of a rental being canceled by us, we do not refund the full
                                     amount. If we ask for a return earlier than is contracted due to unforeseen

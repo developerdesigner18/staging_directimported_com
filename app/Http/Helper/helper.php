@@ -107,7 +107,7 @@ function totalBookingDays($startDate, $endDate, $endTime = null)
     return (int) $days;
 }
 
-function bikePagination($totalPages, $active = 1)
+function carPagination($totalPages, $active = 1)
 {
     $html = '<div class="rid-pagination text-center">
         <ul class="list-inline">';

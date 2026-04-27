@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title',$bike->name)
+@section('title',$car->name)
 @push('style')
     <style>
         :root {
@@ -23,7 +23,7 @@
 @endpush
 @section('main')
     <!-- Titlebar Section Start -->
-    <section class="rid-titlebar-2 rid-rental-details-banner" style="@if(isset($bike->banner) && $bike->banner) background: url({{ asset(BIKE_PATH.$bike->banner) }}); @endif">
+    <section class="rid-titlebar-2 rid-rental-details-banner" style="@if(isset($car->banner) && $car->banner) background: url({{ asset(CAR_PATH.$car->banner) }}); @endif">
         <div class="container">
             <h2>Rental Details</h2>
             <nav aria-label="breadcrumb">
@@ -38,21 +38,21 @@
 
     <section class="rid-rental-details sec-space">
         <div class="container">
-            <div class="bike-details-top">
+            <div class="car-details-top">
                 <div class="row">
                     <div class="col-md-4">
-                        <a class="btn d-grid bikeRequestQuote" href="javascript:void(0);" data-id="{{ $bike->id }}" data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">Build Your Quote Now</a>
+                        <a class="btn d-grid carRequestQuote" href="javascript:void(0);" data-id="{{ $car->id }}" data-name="{{ $car->name }}" data-image="{{ asset(CAR_PATH.$car->images[0]) }}">Build Your Quote Now</a>
                     </div>
                     <div class="col-md-8">
-                        <div class="bike-details-info d-flex justify-content-between align-items-center">
-                            <h3>{{$bike->name}}</h3>
-                            <h4>From ¥{{$bike->less_four_days_price}}</h4>
+                        <div class="car-details-info d-flex justify-content-between align-items-center">
+                            <h3>{{$car->name}}</h3>
+                            <h4>From ¥{{$car->less_four_days_price}}</h4>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="bike-details-gallery sec-space-bottom">
+            <div class="car-details-gallery sec-space-bottom">
                 <div class="row">
                     <div class="col-lg-4 col-md-12">
                         <!-- Pricing Section -->
@@ -66,7 +66,7 @@
                                         <i class="fas fa-calendar-day text-primary-custom fs-2"></i>
                                     </div>
                                     <h5 class="card-title text-danger">1-4 Days</h5>
-                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($bike->less_four_days_price) }}</h3>
+                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($car->less_four_days_price) }}</h3>
                                 </div>
                             </div>
                             <div class="card border-0 shadow-sm pricing-card my-2">
@@ -75,7 +75,7 @@
                                         <i class="fas fa-calendar-day text-primary-custom fs-2"></i>
                                     </div>
                                     <h5 class="card-title text-danger">5-6 Days</h5>
-                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($bike->five_six_days_price) }}</h3>
+                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($car->five_six_days_price) }}</h3>
                                 </div>
                             </div>
                             <div class="card border-0 shadow-sm pricing-card my-2 position-relative popular-card">
@@ -87,7 +87,7 @@
                                         <i class="fas fa-calendar-day text-primary-custom fs-2"></i>
                                     </div>
                                     <h5 class="card-title text-danger">7 Days</h5>
-                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($bike->week_price) }}</h3>
+                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($car->week_price) }}</h3>
                                 </div>
                             </div>
                             <div class="card border-0 shadow-sm pricing-card my-2">
@@ -96,27 +96,27 @@
                                         <i class="fas fa-calendar-day text-primary-custom fs-2"></i>
                                     </div>
                                     <h5 class="card-title text-danger">Monthly</h5>
-                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($bike->month_price) }}</h3>
+                                    <h3 class="price-amount text-dark mb-0">¥{{ number_format($car->month_price) }}</h3>
                                 </div>
                             </div>
                         </div>
-                        @if($bike->location)
-                            <div class="bike-details-sidebar rid-map-2">
-                                <iframe src="https://www.google.com/maps?q={{ $bike->location }}&output=embed" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        @if($car->location)
+                            <div class="car-details-sidebar rid-map-2">
+                                <iframe src="https://www.google.com/maps?q={{ $car->location }}&output=embed" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                             </div>
                         @endif
                     </div>
                     <div class="col-lg-8 col-md-12">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <img class="bike-details-main-img" src="{{ asset(BIKE_PATH.$bike->images[0]) }}" alt="{{ $bike->name }}" loading="lazy">
+                                <img class="car-details-main-img" src="{{ asset(CAR_PATH.$car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
                             </div>
                         </div>
-                        @if(count($bike->images) > 0)
+                        @if(count($car->images) > 0)
                             <div class="row g-2">
-                                @for($i = 0; $i < count($bike->images); $i++)
+                                @for($i = 0; $i < count($car->images); $i++)
                                     <div class="col popup-gallery">
-                                        <img src="{{ asset(BIKE_PATH.$bike->images[$i]) }}" alt="{{ $bike->name }} - Image {{ $i }}" class="bike-image" role="button" loading="lazy">
+                                        <img src="{{ asset(CAR_PATH.$car->images[$i]) }}" alt="{{ $car->name }} - Image {{ $i }}" class="car-image" role="button" loading="lazy">
                                     </div>
                                 @endfor
                             </div>
@@ -125,18 +125,18 @@
                 </div>
             </div>
 
-            <div class="bike-details-description">
+            <div class="car-details-description">
                 <div class="row">
                     <div class="col-lg-8 col-md-12">
-                        <div class="bike-details-info-2">
+                        <div class="car-details-info-2">
                             <h4>Description</h4>
-                            {!! $bike->description !!}
+                            {!! $car->description !!}
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12">
                         <div class="detail-spec-single">
                             <h4>Technical Specification</h4>
-                            {!! $bike->tec_spec !!}
+                            {!! $car->tec_spec !!}
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="row mt-5 mb-5">
                     <div class="col-lg-12">
                         <div class="rid-accordion" id="faqWrapDynamic">
-                            @foreach($bikeConf as $index => $conf)
+                            @foreach($carConf as $index => $conf)
                                 @php
                                     $headingId = 'heading' . $index;
                                     $collapseId = 'collapse' . $index;
@@ -182,9 +182,9 @@
 @section('script')
     <script !src="">
         $(document).ready(function () {
-            $('.bike-image').on('click', function (){
+            $('.car-image').on('click', function (){
                 var img = $(this).attr('src');
-                $('.bike-details-main-img').attr('src',img);
+                $('.car-details-main-img').attr('src',img);
             });
         })
     </script>

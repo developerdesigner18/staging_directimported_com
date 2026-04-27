@@ -16,18 +16,18 @@ class BookingMail extends Mailable
 
     public $user;
     public $booking;
-    public $bike;
+    public $car;
     public $selected_accessories;
     public $included_accessories;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($user, $booking, $bike, $selected_accessories, $included_accessories)
+    public function __construct($user, $booking, $car, $selected_accessories, $included_accessories)
     {
         $this->user = $user;
         $this->booking = $booking;
-        $this->bike = $bike;
+        $this->car = $car;
         $this->selected_accessories = $selected_accessories;
         $this->included_accessories = $included_accessories;
     }

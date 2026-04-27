@@ -319,7 +319,7 @@
             <ul>
                 <li><a class="active home" style="color:white !important;" href="{{route('landing')}}">Home</a></li>
                 <li><a href="{{route('contact')}}">Contact</a></li>
-                <li><a href="{{ route('motorcycle') }}">Auction Access</a></li>
+                <li><a href="{{ route('car') }}">Auction Access</a></li>
                 <li><a href="{{ route('services.view') }}">Services</a></li>
                 {{-- <li class="dropdown">
                     <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
@@ -339,9 +339,9 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('rental.policies') }}">Rental Policies</a></li>
                         <li><a href="{{ route('licence.requirement') }}">Licence Requirement</a></li>
-                        <li><a href="{{ route('about.our.bikes') }}">About Our Bikes</a></li>
+                        <li><a href="{{ route('about.our.cars') }}">About Our Cars</a></li>
                         <li><a href="{{ route('useful.links') }}">Useful Links</a></li>
-                        <li><a href="{{ route('japan.law') }}">Motorcycle Laws in Japan</a></li>
+                        <li><a href="{{ route('japan.law') }}">Car Laws in Japan</a></li>
                         <li><a href="{{ route('ride.japan.law') }}">How to Ride Safe in Japan</a></li>
                     </ul>
                 </li> --}}

@@ -9,23 +9,23 @@
 <input type="hidden" name="end_time" value="{{ $request->end_time }}">
 <input type="hidden" name="location" value="{{ $request->location }}">
 <input type="hidden" name="comment" value="{{ $request->comment }}">
-<input type="hidden" name="acc_bike_id" value="{{ json_encode($request->acc_bike_id)??'' }}">
+<input type="hidden" name="acc_car_id" value="{{ json_encode($request->acc_car_id)??'' }}">
 @foreach($bookings as $key => $booking)
     @php
-        $bikeData = \App\Models\Bike::find($booking['bike_id']);
+        $carData = \App\Models\Car::find($booking['car_id']);
         $accessories = $booking['selected_accessories'] ?? [];
         $totalDays = totalBookingDays($booking['start_date'], $booking['end_date'], $booking['end_time']);
 
-        $pricePerDay = $bikeData->getTieredPrice($totalDays);
+        $pricePerDay = $carData->getTieredPrice($totalDays);
         $price = $pricePerDay * $totalDays;
-        $insurance_price = $booking['insurance'] ? $bikeData->insurance_price * ($totalDays): 0;
+        $insurance_price = $booking['insurance'] ? $carData->insurance_price * ($totalDays): 0;
 
         $subtotal = $price + $insurance_price;
     @endphp
     <input type="hidden" name="booking_id[]" value="{{ $booking['booking_id'] }}">
-    <input type="hidden" name="bike_id[]" value="{{ $booking['bike_id'] }}">
-    <input type="hidden" name="bike_name[]" value="{{ $bikeData->name }}">
-    <input type="hidden" name="included_accessories[]" value="{{ json_encode($bikeData->free_accessory)??'' }}">
+    <input type="hidden" name="car_id[]" value="{{ $booking['car_id'] }}">
+    <input type="hidden" name="car_name[]" value="{{ $carData->name }}">
+    <input type="hidden" name="included_accessories[]" value="{{ json_encode($carData->free_accessory)??'' }}">
     <input type="hidden" name="price[]" value="{{ $price }}">
     <input type="hidden" name="insurance_price[]" value="{{ ($insurance_price>0) ? $insurance_price : 0 }}">
     <input type="hidden" name="insurance[]" value="{{ $booking['insurance']??0 }}">
@@ -48,8 +48,8 @@
             <td>{{ $booking['mobile'] }}</td>
         </tr>
         <tr style="border-bottom: 1px solid #000;">
-            <td class="d-flex justify-content-between">Bike Name <span class="fw-bold">:</span></td>
-            <td>{{ $bikeData->name }}</td>
+            <td class="d-flex justify-content-between">Car Name <span class="fw-bold">:</span></td>
+            <td>{{ $carData->name }}</td>
         </tr>
         <tr style="border-bottom: 1px solid #000;">
             <td class="d-flex justify-content-between">Total Days <span class="fw-bold">:</span></td>
@@ -66,7 +66,7 @@
                 off {{ date('h:i A', strtotime($booking['end_time'])) }}</td>
         </tr>
         <tr style="border-bottom: 1px solid #000;">
-            <td class="d-flex justify-content-between">Total Bike Price <span class="fw-bold">:</span></td>
+            <td class="d-flex justify-content-between">Total Car Price <span class="fw-bold">:</span></td>
             <td>¥{{ $price }}</td>
         </tr>
         <tr style="border-top: 2px solid #000;border-bottom: 1px solid #000;">

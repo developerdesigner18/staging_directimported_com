@@ -196,11 +196,11 @@
                                 </div>
                             </div>
 
-                            <!-- Link Item: Motorcycle Trip Packing List -->
+                            <!-- Link Item: Car Trip Packing List -->
                             <div class="link-item">
                                 <div class="link-icon">🎒</div>
                                 <div class="link-content">
-                                    <h4><a href="https://drive.google.com/open?id=1MnuZll_ke0IUo_gQwtCHWwIlifB9vaBT" target="_blank">Motorcycle Trip Packing List</a></h4>
+                                    <h4><a href="https://drive.google.com/open?id=1MnuZll_ke0IUo_gQwtCHWwIlifB9vaBT" target="_blank">Car Trip Packing List</a></h4>
                                     <p>We expect you’ve been planning this for a long time and have it covered, but please do take a look at this list just to make sure nothing has slipped your mind.</p>
                                 </div>
                             </div>
@@ -210,7 +210,7 @@
                                 <div class="link-icon">📍</div>
                                 <div class="link-content">
                                     <h4><a href="https://www.japan.travel/en/destinations/kansai/" target="_blank">JNTO - Destination Kansai</a></h4>
-                                    <p>Kansai and the surrounding areas are an amazing, beautiful and interesting place. We have made up some great tours however there is always much more to see that have nothing to do with bikes so please have a look and ride there anyway!</p>
+                                    <p>Kansai and the surrounding areas are an amazing, beautiful and interesting place. We have made up some great tours however there is always much more to see that have nothing to do with cars so please have a look and ride there anyway!</p>
                                 </div>
                             </div>
 

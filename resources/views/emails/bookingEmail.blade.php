@@ -50,8 +50,8 @@ Please use the payment form to complete your booking <a href="javascript:void(0)
     <td>{{ $booking->status?->label() ?? 'Processing - Approval pending' }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">
-    <th style="display: flex;justify-content: space-between;">Selected Bikes <span>:</span></th>
-    <td>{{ $bike->name }}</td>
+    <th style="display: flex;justify-content: space-between;">Selected Cars <span>:</span></th>
+    <td>{{ $car->name }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">
     <th style="display: flex;justify-content: space-between;">Included Accessories <span>:</span></th>

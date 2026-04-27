@@ -105,7 +105,7 @@
 @section('main')
     <div class="laws-container">
         <div class="container">
-            <h2 class="main-title text-center">BIKE LAWS IN JAPAN</h2>
+            <h2 class="main-title text-center">CAR LAWS IN JAPAN</h2>
 
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10">
@@ -119,14 +119,14 @@
                         </div>
                         <div class="card-body-custom">
                             <div class="setPage">
-                                <img src="{{asset('assets/laws/0.jpg')}}" alt="Japanese Bike Law 1" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/1.jpg')}}" alt="Japanese Bike Law 2" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/2.jpg')}}" alt="Japanese Bike Law 3" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/3.jpg')}}" alt="Japanese Bike Law 4" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/4.jpg')}}" alt="Japanese Bike Law 5" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/5.jpg')}}" alt="Japanese Bike Law 6" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/6.jpg')}}" alt="Japanese Bike Law 7" class="law-image" loading="lazy">
-                                <img src="{{asset('assets/laws/7.jpg')}}" alt="Japanese Bike Law 8" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/0.jpg')}}" alt="Japanese Car Law 1" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/1.jpg')}}" alt="Japanese Car Law 2" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/2.jpg')}}" alt="Japanese Car Law 3" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/3.jpg')}}" alt="Japanese Car Law 4" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/4.jpg')}}" alt="Japanese Car Law 5" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/5.jpg')}}" alt="Japanese Car Law 6" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/6.jpg')}}" alt="Japanese Car Law 7" class="law-image" loading="lazy">
+                                <img src="{{asset('assets/laws/7.jpg')}}" alt="Japanese Car Law 8" class="law-image" loading="lazy">
                             </div>
                         </div>
                     </div>

@@ -75,7 +75,7 @@
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
-                <a href="{{ route('admin.bike.create') }}" class="btn btn-success">
+                <a href="{{ route('admin.car.create') }}" class="btn btn-success">
                     <i class="ri-add-line align-bottom me-1"></i> Add New
                 </a>
                 <button type="button" class="btn btn-success btn-label" data-bs-toggle="modal"
@@ -85,7 +85,7 @@
         </div>
 
         <div class="col-sm">
-            {{-- <form method="GET" action="{{ route('admin.bike.index') }}">--}}
+            {{-- <form method="GET" action="{{ route('admin.car.index') }}">--}}
                 <form id="gridSearchForm">
                     <div class="d-flex justify-content-sm-end gap-2">
 
@@ -129,14 +129,14 @@
     </div>
 
     <div id="gridView">
-        @include('admin.bike.grid_list')
+        @include('admin.car.grid_list')
     </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div id="tableView" style="display:none;">
-                        <table class="table table-bordered" id="bikeTable">
+                        <table class="table table-bordered" id="carTable">
 
                         </table>
                     </div>
@@ -149,7 +149,7 @@
 @section('script')
     <script>
         function makeGridSortable() {
-            $(".bike-sortable-group").sortable({
+            $(".car-sortable-group").sortable({
                 items: "> div.sortable-item",
                 placeholder: "ui-state-highlight",
                 update: function (event, ui) {
@@ -162,7 +162,7 @@
                     });
 
                     $.ajax({
-                        url: "{{ route('admin.bike.sort') }}",
+                        url: "{{ route('admin.car.sort') }}",
                         method: "POST",
                         data: {
                             _token: "{{ csrf_token() }}",
@@ -185,7 +185,7 @@
             $(this).closest('.btn-group').find('.dropdown-toggle').text(rangeText);
             if ($('#gridView').is(':visible')) {
                 $.ajax({
-                    url: "{{ route('admin.bike.index') }}",
+                    url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         range: range,
@@ -201,22 +201,22 @@
                 // Table View is visible, reload DataTable with the new range
                 // The range will be stored in session by the controller
                 $.ajax({
-                    url: "{{ route('admin.bike.index') }}",
+                    url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         range: range,
                         search_keyword: keyword,
                     },
                     success: function (response) {
-                        $('#bikeTable').DataTable().ajax.reload();
+                        $('#carTable').DataTable().ajax.reload();
                     }
                 });
             }
         });
-        function deleteBike(id, element) {
+        function deleteCar(id, element) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "Are you sure you want to remove this bike?",
+                text: "Are you sure you want to remove this car?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, remove",
@@ -227,7 +227,7 @@
             }).then(function (t) {
                 if (t.value) {
                     $.ajax({
-                        url: "{{route('admin.bike.delete')}}",
+                        url: "{{route('admin.car.delete')}}",
                         dataType: "JSON",
                         method: "POST",
                         data: {
@@ -289,7 +289,7 @@
 
             // ============ GRID VIEW BUTTON ============
             $('#gridViewBtn').click(function () {
-                $('#bikeTable').DataTable().clear().destroy();
+                $('#carTable').DataTable().clear().destroy();
 
                 $('#gridView').show();
                 $('#tableView').hide();
@@ -299,7 +299,7 @@
                 // Load grid with current search keyword
                 let keyword = $('input[name="search"]').val();
                 $.ajax({
-                    url: "{{ route('admin.bike.index') }}",
+                    url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         search_keyword: keyword,
@@ -319,9 +319,9 @@
                 $('#gridView').hide();
                 $('#tableView').show();
 
-                if (!$.fn.dataTable.isDataTable('#bikeTable')) {
+                if (!$.fn.dataTable.isDataTable('#carTable')) {
 
-                    var dataTable = $('#bikeTable').DataTable({
+                    var dataTable = $('#carTable').DataTable({
                         processing: true,
                         serverSide: true,
                         order: [], // disable default ordering
@@ -358,7 +358,7 @@
                             },
                         ],
                         ajax: {
-                            url: '{{ route("admin.bike.index") }}',
+                            url: '{{ route("admin.car.index") }}',
                             type: "GET",
                             dataType: "JSON",
                             data: function (f) {
@@ -377,7 +377,7 @@
                     });
 
                 } else {
-                    $('#bikeTable').DataTable().ajax.reload(null, false);
+                    $('#carTable').DataTable().ajax.reload(null, false);
                 }
             });
 
@@ -386,7 +386,7 @@
                 let keyword = $('input[name="search"]').val();
 
                 $.ajax({
-                    url: "{{ route('admin.bike.index') }}",
+                    url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         search_keyword: keyword,
@@ -425,12 +425,12 @@
 
             // ============ FUNCTION: Make Table Sortable ============
             function makeTableSortable() {
-                $('#bikeTable tbody').sortable({
+                $('#carTable tbody').sortable({
                     helper: fixWidthHelper,
                     update: function (event, ui) {
                         let order = [];
 
-                        $('#bikeTable tbody tr').each(function (index, element) {
+                        $('#carTable tbody tr').each(function (index, element) {
                             order.push({
                                 id: $(element).attr('id'),
                                 position: index + 1
@@ -438,7 +438,7 @@
                         });
 
                         $.ajax({
-                            url: "{{ route('admin.bike.sort') }}",
+                            url: "{{ route('admin.car.sort') }}",
                             method: "POST",
                             data: {
                                 _token: "{{ csrf_token() }}",

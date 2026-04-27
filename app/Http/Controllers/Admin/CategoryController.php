@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function __construct(Request $request)
     {
         $this->categoryType = strtoupper($request->route('type'));
-        if (!in_array($this->categoryType, [CategoryType::BIKE->value, CategoryType::TOUR->value, CategoryType::GALLERY->value])) {
+        if (!in_array($this->categoryType, [CategoryType::CAR->value, CategoryType::TOUR->value, CategoryType::GALLERY->value])) {
             abort(404, 'Invalid category type');
         }
     }

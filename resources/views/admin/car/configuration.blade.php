@@ -1,16 +1,16 @@
 @extends('admin.master')
-@section('title','Bike Configuration')
+@section('title','Car Configuration')
 
 @section('main')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Bike Configuration</h4>
+                <h4 class="mb-sm-0">Car Configuration</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">System</a></li>
-                        <li class="breadcrumb-item active">Bike Configuration</li>
+                        <li class="breadcrumb-item active">Car Configuration</li>
                     </ol>
                 </div>
             </div>
@@ -20,9 +20,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form id="bikeConfigForm" method="POST" action="{{ route('admin.bike.configuration.update') }}">
+                    <form id="carConfigForm" method="POST" action="{{ route('admin.car.configuration.update') }}">
                         @csrf
-                        <h5 class="mb-3">Bike Information Configuration</h5>
+                        <h5 class="mb-3">Car Information Configuration</h5>
 
                         <!-- Rate Details -->
                         <div class="mb-3">
@@ -177,7 +177,7 @@
             });
 
             // Rest of your validation and form submission code...
-            $("#bikeConfigForm").validate({
+            $("#carConfigForm").validate({
                 rules: {
                     rate_details: {required: true},
                     what_to_expect: {required: true},
@@ -221,7 +221,7 @@
                         },
                         success: function (result) {
                             if (result.success) {
-                                sendToast(result.message || 'Bike configuration updated successfully!');
+                                sendToast(result.message || 'Car configuration updated successfully!');
                             } else {
                                 sendToast(result.message || 'An error occurred.', 'danger');
                             }

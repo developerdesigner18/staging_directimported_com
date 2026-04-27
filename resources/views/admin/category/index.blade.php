@@ -159,7 +159,7 @@
                 {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
             ],
             ajax: {
-                url: '{{ route("admin.category.list",['type' => 'bike']) }}',
+                url: '{{ route("admin.category.list",['type' => 'car']) }}',
                 type: "POST",
                 dataType: "JSON",
                 data: function (f) {
@@ -200,7 +200,7 @@
             }).then(function (t) {
                 if (t.value) {
                     $.ajax({
-                        url: "{{route('admin.category.delete',['type' => 'bike'])}}",
+                        url: "{{route('admin.category.delete',['type' => 'car'])}}",
                         dataType: "JSON",
                         method: "POST",
                         data: {
@@ -237,7 +237,7 @@
 
         function getCategory(id, element) {
             $.ajax({
-                url: "{{route('admin.category.edit',['type' => 'bike'])}}",
+                url: "{{route('admin.category.edit',['type' => 'car'])}}",
                 dataType: "JSON",
                 method: "POST",
                 data: {
@@ -289,7 +289,7 @@
                 submitHandler: function (form, e) {
                     e.preventDefault();
                     $.ajax({
-                        url: "{{route('admin.category.add',['type' => 'bike'])}}",
+                        url: "{{route('admin.category.add',['type' => 'car'])}}",
                         method: "post",
                         dataType: "json",
                         data: new FormData(form),
@@ -341,7 +341,7 @@
                 submitHandler: function (form, e) {
                     e.preventDefault();
                     $.ajax({
-                        url: "{{route('admin.category.update',['type' => 'bike'])}}",
+                        url: "{{route('admin.category.update',['type' => 'car'])}}",
                         method: "post",
                         dataType: "json",
                         data: new FormData(form),

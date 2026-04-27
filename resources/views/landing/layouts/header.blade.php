@@ -83,10 +83,10 @@
                                 <li class="list-inline-item"><a class="@if(request()->is('/')) active @endif"
                                         href="{{route('landing')}}">Home</a></li>
                                 <li class="list-inline-item"><a href="javascript:void(0);">About Us</a></li>
-                                {{-- <li class="list-inline-item"><a href="{{ route('motorcycle') }}"
-                                        class="@if(request()->is('motorcycle')) active @endif">Motorcycles</a></li> --}}
-                                <li class="list-inline-item"><a href="{{ route('motorcycle') }}"
-                                        class="@if(request()->is('motorcycle')) active @endif">Auction Access</a></li>
+                                {{-- <li class="list-inline-item"><a href="{{ route('car') }}"
+                                        class="@if(request()->is('car')) active @endif">Cars</a></li> --}}
+                                <li class="list-inline-item"><a href="{{ route('car') }}"
+                                        class="@if(request()->is('car')) active @endif">Auction Access</a></li>
                                 <li class="list-inline-item"><a href="{{ route('services.view') }}"
                                         class="@if(request()->is('services')) active @endif">Services</a></li>
 
@@ -106,7 +106,7 @@
 
                                 {{-- <li class="list-inline-item dropdown">
                                     <a href="javascript:void (0);"
-                                        class="dropdown-toggle @if(request()->is(['rental-policies', 'licence-requirement', 'about-our-bikes', 'useful-links', 'japan-law', 'ride-japan-law'])) active @endif"
+                                        class="dropdown-toggle @if(request()->is(['rental-policies', 'licence-requirement', 'about-our-cars', 'useful-links', 'japan-law', 'ride-japan-law'])) active @endif"
                                         data-bs-toggle="dropdown">More</a>
 
                                     <ul class="dropdown-menu px-2">
@@ -116,14 +116,14 @@
                                         <li><a href="{{ route('licence.requirement') }}"
                                                 class="m-0 dropdown-a @if(request()->is('licence-requirement')) active @endif">Licence
                                                 Requirement</a></li>
-                                        <li><a href="{{ route('about.our.bikes') }}"
-                                                class="m-0 dropdown-a @if(request()->is('about-our-bikes')) active @endif">About
-                                                Our Motorcycles</a></li>
+                                        <li><a href="{{ route('about.our.cars') }}"
+                                                class="m-0 dropdown-a @if(request()->is('about-our-cars')) active @endif">About
+                                                Our Cars</a></li>
                                         <li><a href="{{ route('useful.links') }}"
                                                 class="m-0 dropdown-a @if(request()->is('useful-links')) active @endif">Useful
                                                 Links</a></li>
                                         <li><a href="{{ route('japan.law') }}"
-                                                class="m-0 dropdown-a @if(request()->is('japan-law')) active @endif">Motorcycle
+                                                class="m-0 dropdown-a @if(request()->is('japan-law')) active @endif">Car
                                                 Laws in Japan</a></li>
                                         <li><a href="{{ route('ride.japan.law') }}"
                                                 class="m-0 dropdown-a @if(request()->is('ride-japan-law')) active @endif">How

@@ -115,7 +115,7 @@ let id=$('#id').val();
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
                         },
                         success: function (result) {
-                            sendSuccess(result.message || 'Bike updated successfully!').then(() => {
+                            sendSuccess(result.message || 'Car updated successfully!').then(() => {
                                                                                                    window.location.href = "{{ route('admin.email.index') }}";
                                                                                                });
                         },

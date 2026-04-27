@@ -3,12 +3,12 @@
 
 @foreach($bookings as $key => $booking)
 @php
-    $bikeData = \App\Models\Bike::find($booking['bike_id']);
+    $carData = \App\Models\Car::find($booking['car_id']);
     $accessories = $booking['selected_accessories'] ?? [];
     $totalDays = totalBookingDays($booking['start_date'], $booking['end_date'], $booking['end_time']);
-    $pricePerDay = $bikeData->getTieredPrice($totalDays);
+    $pricePerDay = $carData->getTieredPrice($totalDays);
     $price = $pricePerDay * $totalDays;
-    $insurance_price = $booking['insurance'] ? $bikeData->insurance_price * $totalDays : 0;
+    $insurance_price = $booking['insurance'] ? $carData->insurance_price * $totalDays : 0;
 
     $subtotal = $price + $insurance_price;
 @endphp
@@ -30,8 +30,8 @@
     <td>{{ $booking['mobile'] }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">
-    <td style="display: flex;justify-content: space-between;">Bike Name <span>:</span></td>
-    <td>{{ $bikeData->name }}</td>
+    <td style="display: flex;justify-content: space-between;">Car Name <span>:</span></td>
+    <td>{{ $carData->name }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">
     <td style="display: flex;justify-content: space-between;">Total Days <span>:</span></td>
@@ -46,7 +46,7 @@
     <td>{{ date('d - M- Y', strtotime($booking['end_date'])) }} Drop off {{ date('h:i A', strtotime($booking['end_time'])) }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">
-    <td style="display: flex;justify-content: space-between;">Total Bike Price <span>:</span></td>
+    <td style="display: flex;justify-content: space-between;">Total Car Price <span>:</span></td>
     <td>¥{{ $price }}</td>
 </tr>
 <tr style="border-bottom: 1px solid #000;">

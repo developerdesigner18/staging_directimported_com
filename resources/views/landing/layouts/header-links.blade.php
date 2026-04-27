@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/magnific-popup.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/slick.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/bike-card.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/car-card.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/responsive.css')}}">
 
 <link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />

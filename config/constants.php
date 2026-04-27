@@ -41,8 +41,8 @@ if (!defined('SLIDER_PATH'))
 if (!defined('GALLERY_PATH'))
     define('GALLERY_PATH', 'uploads/gallery_images/');
 
-if (!defined('BIKE_PATH'))
-    define('BIKE_PATH', 'uploads/bike_images/');
+if (!defined('CAR_PATH'))
+    define('CAR_PATH', 'uploads/car_images/');
 
 if (!defined('SERVICE_PATH'))
     define('SERVICE_PATH', 'uploads/service_images/');

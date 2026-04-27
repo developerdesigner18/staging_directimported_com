@@ -323,7 +323,7 @@
                                 "1968" written in the front cover, it is NOT valid in Japan:<br><br>
                                 <strong>CANNOT Drive in Japan</strong><br>
                                 ↓<br>
-                                It also has to be stamped on "A" for motorcycles, and the 1 year validity has to be in force:
+                                It also has to be stamped on "A" for cars, and the 1 year validity has to be in force:
                             </div>
 
                             <div class="text-center">
@@ -341,7 +341,7 @@
                                         <li>It has to be issued in the same country than the driver license.</li>
                                         <li>It has to be based on the 1949 Geneva Convention. Only these are recognized by Japan. It has to say "1949 Geneva Convention" on the front cover.</li>
                                         <li>Check that the IDP is not expired.</li>
-                                        <li>Check that the IDP is correctly stamped for motorcycle use.</li>
+                                        <li>Check that the IDP is correctly stamped for car use.</li>
                                         <li>Check that the IDP is issued by the correct licensing authority.</li>
                                         <li>The IDP has no validity on its own. It has to be accompanied at all times by a valid driving license.</li>
                                     </ol>
@@ -408,8 +408,8 @@
                                 <div class="note-list">
                                     <ol>
                                         <li>Please check the expiration date, make sure it is still valid.</li>
-                                        <li>Does your motorcycle license have any restrictions like engine displacement, transmission type, etc.? If so, the same restrictions will apply in Japan.</li>
-                                        <li>You must have spent 3 months in the country where your motorcycle license was issued after obtaining the license. This is a requirement by Japanese law.</li>
+                                        <li>Does your car license have any restrictions like engine displacement, transmission type, etc.? If so, the same restrictions will apply in Japan.</li>
+                                        <li>You must have spent 3 months in the country where your car license was issued after obtaining the license. This is a requirement by Japanese law.</li>
                                     </ol>
                                 </div>
                             </div>
@@ -457,11 +457,11 @@
                     <div class="translation-service">
                         <h5>License Translation Service</h5>
 
-                        <p>Some countries require a translation by JAF (Japanese Automobile Federation) of the home license. Group 2 of our license requirement page: <a href="https://bikerentaljapan.com/license" style="color: #053C7C;">https://bikerentaljapan.com/license</a> (Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia) and any license that is not in ALPHABET including but not limited to licenses written in Arabic or Russian, or licenses issued in the Republic of Korea, Kingdom of Thailand, Lao People's Democratic Republic, and the Republic of the Union of Myanmar.</p>
+                        <p>Some countries require a translation by JAF (Japanese Automobile Federation) of the home license. Group 2 of our license requirement page: <a href="https://carrentaljapan.com/license" style="color: #053C7C;">https://carrentaljapan.com/license</a> (Belgium, France, Germany, Switzerland, Monaco, Slovenia, Taiwan or Estonia) and any license that is not in ALPHABET including but not limited to licenses written in Arabic or Russian, or licenses issued in the Republic of Korea, Kingdom of Thailand, Lao People's Democratic Republic, and the Republic of the Union of Myanmar.</p>
 
                         <p>More information can be seen here: <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license" style="color: #053C7C;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/foreign-nationals-license</a></p>
 
-                        <p>JAF offers this service in person at one of their offices, the nearest to Bike Rental Japan located here:<br>
+                        <p>JAF offers this service in person at one of their offices, the nearest to Car Rental Japan located here:<br>
                             <a href="https://goo.gl/maps/5c9vHjHN5tkSTqUZ7" style="color: #053C7C;">https://goo.gl/maps/5c9vHjHN5tkSTqUZ7</a></p>
 
                         <div class="requirements-box">
@@ -472,7 +472,7 @@
                             • Total: ¥5,000
                         </div>
 
-                        <p>JAF also provides an online application however this can only be applied for from within Japan and takes 2 weeks so we at Bike Rental Japan offer this service for you so your translation will be ready for you on pick up of your bike.</p>
+                        <p>JAF also provides an online application however this can only be applied for from within Japan and takes 2 weeks so we at Car Rental Japan offer this service for you so your translation will be ready for you on pick up of your car.</p>
 
                         <p><strong>Please select the "License Translation Service 5000 yen" on the "accessories" section of the booking form.</strong></p>
 
@@ -491,7 +491,7 @@
                         <p>Full information for JAF conditions can be seen here, please be sure to read and understand all parts:<br>
                             <a href="https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas" style="color: #053C7C;">https://english.jaf.or.jp/driving-in-japan/drive-in-japan/about-dltas</a></p>
 
-                        <p><strong>Please note, Bike Rental Japan's cancellation policy will be applied in the case of any delayed license translation processing regardless of fault.</strong></p>
+                        <p><strong>Please note, Car Rental Japan's cancellation policy will be applied in the case of any delayed license translation processing regardless of fault.</strong></p>
                     </div>
 
                 </div>

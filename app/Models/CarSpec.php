@@ -8,7 +8,7 @@ class CarSpec extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'bike_id',
+        'car_id',
         'make',
         'exterior_color',
         'body_type',
@@ -21,7 +21,7 @@ class CarSpec extends Model
     ];
     public function car()
     {
-        return $this->belongsTo(Bike::class);
+        return $this->belongsTo(Car::class);
     }
     protected $casts = [
         'odometer' => 'integer',

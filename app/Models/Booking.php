@@ -15,7 +15,7 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'booking_id',
-        'bike_id',
+        'car_id',
         'start_date',
         'end_date',
         'total_days',
@@ -67,9 +67,9 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function bike()
+    public function car()
     {
-        return $this->belongsTo(Bike::class);
+        return $this->belongsTo(Car::class);
     }
 
     public function selectedAccessoriesList()

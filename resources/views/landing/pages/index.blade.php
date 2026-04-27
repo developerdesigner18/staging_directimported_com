@@ -374,9 +374,9 @@
             border-color: #4a90e2;
         }
 
-        /* Bikes Grid */
+        /* Cars Grid */
         /* ===== Card ===== */
-        .bike-card {
+        .car-card {
             background: #fff;
             border-radius: 18px;
             overflow: hidden;
@@ -388,37 +388,37 @@
             flex-direction: column;
         }
 
-        .bike-card:hover {
+        .car-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, .1);
         }
 
-        /*.bike-card:hover {*/
+        /*.car-card:hover {*/
         /*    box-shadow: 0 24px 40px rgba(0,0,0,.15);*/
         /*    transform: translateY(-6px);*/
         /*}*/
 
         /* ===== Image ===== */
-        .bike-card-img-wrapper {
+        .car-card-img-wrapper {
             position: relative;
             height: 260px;
             background: #e5e7eb;
             overflow: hidden;
         }
 
-        .bike-card-img-wrapper img {
+        .car-card-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform .5s ease;
         }
 
-        .bike-card:hover img {
+        .car-card:hover img {
             transform: scale(1.06);
         }
 
         /* ===== Tag ===== */
-        .bike-tag {
+        .car-tag {
             display: inline-block;
             margin-top: 6px;
 
@@ -435,7 +435,7 @@
         }
 
         /* ===== Body ===== */
-        .bike-card-body {
+        .car-card-body {
             padding: 24px 20px 28px;
             text-align: center;
             flex: 1;
@@ -444,11 +444,11 @@
         }
 
         /* REMOVE side-by-side layout */
-        .bike-info-row {
+        .car-info-row {
             display: block;
         }
 
-        .bike-title {
+        .car-title {
             font-size: 22px;
             font-weight: 800;
             color: #1f2937;
@@ -456,13 +456,13 @@
             line-height: 1.2;
         }
 
-        .bike-info-row h5 a {
+        .car-info-row h5 a {
             text-decoration: none;
             color: inherit;
         }
 
 
-        .bike-subtitle {
+        .car-subtitle {
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 22px;
@@ -470,7 +470,7 @@
         }
 
         /* ===== Price (centered like image 1) ===== */
-        .bike-price-block {
+        .car-price-block {
             display: flex;
             align-items: baseline;
             justify-content: center;
@@ -479,15 +479,15 @@
         }
 
 
-        .bike-price-block .price-amount {
+        .car-price-block .price-amount {
             color: #991b1b;
             font-size: 30px;
             font-weight: 900;
             line-height: 1;
         }
 
-        .bike-price-block .price-from,
-        .bike-price-block .price-per {
+        .car-price-block .price-from,
+        .car-price-block .price-per {
             color: #991b1b;
             font-size: 28px;
             font-weight: 700;
@@ -519,7 +519,7 @@
         }
 
         /* ===== EMBLEM ROW ===== */
-        .bike-emblem-row {
+        .car-emblem-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             align-items: center;
@@ -649,7 +649,7 @@
         <div class="container">
             <div class="cta-box" id="reclaimed-cta-box">
                 <h2 class="cta-title">Buy cars from Japan</h2>
-                <a href="http://127.0.0.1:8000/motorcycle" class="cta-btn">
+                <a href="http://127.0.0.1:8000/car" class="cta-btn">
                     Search auctions live here
                 </a>
             </div>
@@ -743,7 +743,7 @@
     <!-- About IAS Japan Section End -->
 
 
-    @if(!$bikes->isEmpty())
+    @if(!$cars->isEmpty())
         <div class="rid-rentals-1">
 
             <div class="container">
@@ -754,37 +754,37 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach($bikes as $bike)
+                    @foreach($cars as $car)
                         <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="bike-card">
+                            <div class="car-card">
 
                                 <!-- Image -->
-                                <div class="bike-card-img-wrapper">
-                                    <a href="{{ route('motorcycle.single', ['slug' => $bike->slug]) }}">
-                                        @if(isset($bike->images[0]))
-                                            <img src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}" loading="lazy">
+                                <div class="car-card-img-wrapper">
+                                    <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                        @if(isset($car->images[0]))
+                                            <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
                                         @else
-                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $bike->name }}" loading="lazy">
+                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $car->name }}" loading="lazy">
                                         @endif
                                     </a>
                                 </div>
 
                                 <!-- Body -->
-                                <div class="bike-card-body">
+                                <div class="car-card-body">
 
                                     <!-- Title -->
-                                    <h4 class="bike-title">
-                                        <a href="{{ route('motorcycle.single', ['slug' => $bike->slug]) }}">
-                                            {{ $bike->card_header ?? $bike->name }}
+                                    <h4 class="car-title">
+                                        <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                            {{ $car->card_header ?? $car->name }}
                                         </a>
                                     </h4>
 
                                     <!-- Subtitle -->
-                                    <div class="bike-subtitle">
-                                        {{ $bike->card_subtitle ?? ($bike->category->name ?? 'Premium Adventure Touring') }}
+                                    <div class="car-subtitle">
+                                        {{ $car->card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
                                     </div>
 
-                                    <div class="bike-emblem-row">
+                                    <div class="car-emblem-row">
 
                                         <!-- Year -->
                                         <div class="emblem-item">
@@ -814,15 +814,15 @@
 
                                     <div style="margin-top: auto;">
                                         <!-- Price -->
-                                        <div class="bike-price-block">
-                                            <span class="price-amount">¥{{ number_format($bike->month_price) }}</span>
+                                        <div class="car-price-block">
+                                            <span class="price-amount">¥{{ number_format($car->month_price) }}</span>
                                             <span class="price-per">fob</span>
                                         </div>
 
 
-                                        <button class="btn-adventure btncheckout" data-slug="{{ $bike->slug }}"
-                                            data-id="{{ $bike->id }}" data-name="{{ $bike->name }}"
-                                            data-image="{{ isset($bike->images[0]) ? asset(BIKE_PATH . $bike->images[0]) : '' }}">
+                                        <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
+                                            data-id="{{ $car->id }}" data-name="{{ $car->name }}"
+                                            data-image="{{ isset($car->images[0]) ? asset(CAR_PATH . $car->images[0]) : '' }}">
                                             CHECK IT OUT
                                         </button>
                                     </div>
@@ -834,7 +834,7 @@
                 </div>
 
                 <div class="text-end mt-3">
-                    <a href="{{ route('motorcycle') }}" class="btn-read-more">
+                    <a href="{{ route('car') }}" class="btn-read-more">
                         SEE MORE <i class='bx bx-right-arrow-alt'></i>
                     </a>
                 </div>
@@ -1016,22 +1016,22 @@
 
 
 
-    <!-- Our Bike Section Start -->
-    <section class="rid-our-bike sec-space">
+    <!-- Our Car Section Start -->
+    <section class="rid-our-car sec-space">
         <div class="container">
             <h2 class="text-center">Why Us?</h2>
             <div class="row">
                 <div class="col-lg-6">
                     <div class="about-content pe-4">
                         <h3>Discover Japan from the Best Starting Point</h3>
-                        <p>We are a motorcycle rental company situated in the second city in Japan - Osaka. We have very
+                        <p>We are a car rental company situated in the second city in Japan - Osaka. We have very
                             quick and easy access to much more than Tokyo. Osaka city itself has a wide variety of
                             foods, is famous for its friendly and down-to-earth people, is less crowded but at the same
                             time has all the shopping and entertainment facilities you'd expect. A little further away
                             is stylish Kobe city, then historic Kyoto and Nara - 4 great cities all within an hour.</p>
 
-                        <h3 class="mt-4">The Perfect Base for Your Motorcycle Adventure</h3>
-                        <p>But wait, you're here to ride bikes right? Well what better position in Japan to start
+                        <h3 class="mt-4">The Perfect Base for Your Car Adventure</h3>
+                        <p>But wait, you're here to ride cars right? Well what better position in Japan to start
                             touring than here in Osaka? Our shop location is minutes away from Suita interchange, with
                             access to 3 major highways heading wherever you want. You can be on a country road in about
                             20 minutes from pick up!</p>
@@ -1045,7 +1045,7 @@
                             springs, volcanoes and even more food!</p>
 
                         <h3 class="mt-4">Our Commitment to You</h3>
-                        <p>We have a wide range of high quality, professionally maintained motorcycles available for
+                        <p>We have a wide range of high quality, professionally maintained cars available for
                             rent at reasonable prices, with a good range of accessories if you are travelling light.
                             Please do have a look through our website - any questions please don't hesitate to ask. Why
                             not be different and start your tour from Osaka!</p>
@@ -1116,7 +1116,7 @@
     <script>
         $(document).on('click', '.btncheckout', function () {
             let slug = $(this).data('slug');
-            window.location.href = "/motorcycle/" + slug;
+            window.location.href = "/car/" + slug;
         });
         document.addEventListener('DOMContentLoaded', () => {
             const sliderContainer = document.querySelector('.slider-container');

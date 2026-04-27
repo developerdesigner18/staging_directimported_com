@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title', $bike->name)
+@section('title', $car->name)
 
 @push('style')
     <style>
@@ -36,18 +36,18 @@
         }
 
         /* IMAGE */
-        .bike-details-main-img {
+        .car-details-main-img {
             width: 100%;
             border-radius: 10px;
         }
 
-        .bike-image {
+        .car-image {
             cursor: pointer;
             border-radius: 6px;
             transition: 0.3s;
         }
 
-        .bike-image:hover {
+        .car-image:hover {
             opacity: 0.8;
         }
 
@@ -163,26 +163,26 @@
             color: #6b7280;
         }
 
-        .bike-tabs .nav-link {
+        .car-tabs .nav-link {
             border: none;
             color: #9ca3af;
             font-weight: 600;
             margin-right: 25px;
         }
 
-        .bike-tabs .nav-link.active {
+        .car-tabs .nav-link.active {
             color: #E42E46;
             border-bottom: 3px solid #E42E46;
         }
 
-        /* Related Bikes Section */
-        .related-bikes-section {
+        /* Related Cars Section */
+        .related-cars-section {
             margin-top: 60px;
             padding: 50px 0;
             background: #f8f9fa;
         }
 
-        .related-bikes-title {
+        .related-cars-title {
             font-size: 28px;
             font-weight: 700;
             text-align: center;
@@ -192,7 +192,7 @@
 
 
 
-        .bike-tag {
+        .car-tag {
             display: inline-block;
             margin-top: 6px;
             color: black;
@@ -206,11 +206,11 @@
 
 
 
-        .bike-info-row {
+        .car-info-row {
             display: block;
         }
 
-        .bike-info-row h5 {
+        .car-info-row h5 {
             font-size: 24px;
             font-weight: 900;
             color: #1f2937;
@@ -218,19 +218,19 @@
             line-height: 1.2;
         }
 
-        .bike-info-row h5 a {
+        .car-info-row h5 a {
             text-decoration: none;
             color: inherit;
         }
 
-        .bike-subtitle {
+        .car-subtitle {
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 22px;
             font-weight: 500;
         }
 
-        .bike-price-block {
+        .car-price-block {
             display: flex;
             align-items: baseline;
             justify-content: center;
@@ -238,7 +238,7 @@
             gap: 4px;
         }
 
-        .bike-price-block .price {
+        .car-price-block .price {
             color: #053C7C;
             /* ASJ Racing Red */
             font-size: 30px;
@@ -246,7 +246,7 @@
             line-height: 1;
         }
 
-        .bike-price-block .period {
+        .car-price-block .period {
             color: #053C7C;
             /* ASJ Racing Red */
             font-size: 14px;
@@ -283,13 +283,13 @@
             color: #fff;
         }
 
-        .related-bikes-section {
+        .related-cars-section {
             margin-top: 60px;
             padding: 50px 0;
             background: #f8f9fa;
         }
 
-        .related-bike-card {
+        .related-car-card {
             background: #fff;
             border-radius: 12px;
             overflow: hidden;
@@ -299,35 +299,35 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
-        .related-bike-card:hover {
+        .related-car-card:hover {
             border-color: #E42E46;
             box-shadow: 0 8px 20px rgba(228, 46, 70, 0.15);
             transform: translateY(-4px);
         }
 
-        .related-bike-img {
+        .related-car-img {
             height: 220px;
             background: #f3f4f6;
             overflow: hidden;
             position: relative;
         }
 
-        .related-bike-img img {
+        .related-car-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
 
-        .related-bike-card:hover .related-bike-img img {
+        .related-car-card:hover .related-car-img img {
             transform: scale(1.05);
         }
 
-        .related-bike-body {
+        .related-car-body {
             padding: 20px;
         }
 
-        .related-bike-title {
+        .related-car-title {
             font-size: 16px;
             font-weight: 700;
             color: #111827;
@@ -335,7 +335,7 @@
             line-height: 1.3;
         }
 
-        .related-bike-bottom {
+        .related-car-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -343,19 +343,19 @@
             border-top: 1px solid #f1f1f1;
         }
 
-        .related-bike-price {
+        .related-car-price {
             font-size: 16px;
             font-weight: 900;
             color: #E42E46;
         }
 
-        .related-bike-price span {
+        .related-car-price span {
             font-size: 12px;
             font-weight: 500;
             color: #6b7280;
         }
 
-        .related-bike-view {
+        .related-car-view {
             font-size: 13px;
             font-weight: 700;
             text-decoration: none;
@@ -366,12 +366,12 @@
             gap: 4px;
         }
 
-        .related-bike-view:hover {
+        .related-car-view:hover {
             color: #E42E46;
             gap: 8px;
         }
 
-        .related-bike-view i {
+        .related-car-view i {
             font-size: 14px;
         }
 
@@ -429,7 +429,7 @@
 
     <!-- HERO -->
     <section class="rid-titlebar-2"
-        style="background: url('{{ isset($bike->banner) ? asset(BIKE_PATH . $bike->banner) : asset('uploads/bike_images/default-banner.jpg') }}');
+        style="background: url('{{ isset($car->banner) ? asset(CAR_PATH . $car->banner) : asset('uploads/car_images/default-banner.jpg') }}');
                                 background-size:cover; background-position:center; padding:80px 0; text-align:center; color:#fff;">
         <div class="container">
             <h2>RENTAL DETAILS</h2>
@@ -443,9 +443,9 @@
             <div class="breadcrumb-box">
                 <a href="{{ route('landing') }}">Home</a>
                 <span>/</span>
-                <a href="{{ route('motorcycle') }}">Bikes</a>
+                <a href="{{ route('car') }}">Cars</a>
                 <span>/</span>
-                <span class="active">{{ $bike->name }}</span>
+                <span class="active">{{ $car->name }}</span>
             </div>
         </div>
     </div>
@@ -457,14 +457,14 @@
             <!-- LEFT CONTENT -->
             <div class="col-lg-8">
 
-                <img class="bike-details-main-img mb-3" src="{{ asset(BIKE_PATH . $bike->images[0]) }}"
-                    alt="{{ $bike->name }}" loading="lazy">
+                <img class="car-details-main-img mb-3" src="{{ asset(CAR_PATH . $car->images[0]) }}"
+                    alt="{{ $car->name }}" loading="lazy">
 
-                @if(count($bike->images) > 0)
+                @if(count($car->images) > 0)
                     <div class="row g-2">
-                        @foreach($bike->images as $image)
+                        @foreach($car->images as $image)
                             <div class="col">
-                                <img src="{{ asset(BIKE_PATH . $image) }}" class="bike-image" loading="lazy">
+                                <img src="{{ asset(CAR_PATH . $image) }}" class="car-image" loading="lazy">
                             </div>
                         @endforeach
                     </div>
@@ -474,7 +474,7 @@
                 <div class="row mt-5">
                     <div class="col-12">
 
-                        <ul class="nav nav-tabs bike-tabs border-0">
+                        <ul class="nav nav-tabs car-tabs border-0">
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#overviewTab">OVERVIEW</a>
                             </li>
@@ -489,7 +489,7 @@
                         <div class="tab-content mt-4">
 
                             <div class="tab-pane fade" id="overviewTab">
-                                {!! $bike->description !!}
+                                {!! $car->description !!}
                             </div>
 
                             <div class="tab-pane fade show active" id="specsTab">
@@ -508,7 +508,7 @@
                                                 </div>
                                                 <div>
                                                     <small>ENGINE</small>
-                                                    <h6>{{ $bike->engine }}</h6>
+                                                    <h6>{{ $car->engine }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -520,7 +520,7 @@
                                                 </div>
                                                 <div>
                                                     <small>POWER</small>
-                                                    <h6>{{ $bike->power }}</h6>
+                                                    <h6>{{ $car->power }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -532,7 +532,7 @@
                                                 </div>
                                                 <div>
                                                     <small>SEAT HEIGHT</small>
-                                                    <h6>{{ $bike->seat_height }}</h6>
+                                                    <h6>{{ $car->seat_height }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -544,7 +544,7 @@
                                                 </div>
                                                 <div>
                                                     <small>WEIGHT</small>
-                                                    <h6>{{ $bike->weight }}</h6>
+                                                    <h6>{{ $car->weight }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -556,7 +556,7 @@
                                                 </div>
                                                 <div>
                                                     <small>TANK CAPACITY</small>
-                                                    <h6>{{ $bike->tank_capacity }}</h6>
+                                                    <h6>{{ $car->tank_capacity }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -568,7 +568,7 @@
                                                 </div>
                                                 <div>
                                                     <small>LUGGAGE</small>
-                                                    <h6>{{ $bike->luggage }}</h6>
+                                                    <h6>{{ $car->luggage }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -590,7 +590,7 @@
                 <div class="row mt-5 mb-5">
                     <div class="col-12">
                         <div class="rid-accordion" id="faqWrapDynamic">
-                            @foreach($bikeConf as $index => $conf)
+                            @foreach($carConf as $index => $conf)
                                 @php
                                     $headingId = 'heading' . $index;
                                     $collapseId = 'collapse' . $index;
@@ -623,15 +623,15 @@
                 <div class="booking-sidebar">
                     <div class="client-booking-card">
 
-                        <h5 class="fw-bold mb-1">{{ $bike->name }}</h5>
+                        <h5 class="fw-bold mb-1">{{ $car->name }}</h5>
 
                         <p class="small text-muted mb-3">
-                            {{$bike->card_subtitle ?? ""}}
+                            {{$car->card_subtitle ?? ""}}
                         </p>
 
                         <div class="client-price-box">
                             <small>STARTING FROM</small>
-                            <h4>{{ number_format($bike->month_price) }}</h4>
+                            <h4>{{ number_format($car->month_price) }}</h4>
                             <span>/ Per Day</span>
                         </div>
 
@@ -646,25 +646,25 @@
                             <input type="text" class="form-control" id="single_return_date" value="{{ date('Y-m-d') }}"
                                 autocomplete="off">
                         </div>
-                        <input type="text" value="{{$bike->insurance_price}}" id="insurance_price" hidden>
+                        <input type="text" value="{{$car->insurance_price}}" id="insurance_price" hidden>
 
-                        <button class="btn-check-availability mb-3" id="checkAvailabilityBtn" data-id="{{ $bike->id }}"
-                            data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH . $bike->images[0]) }}">
+                        <button class="btn-check-availability mb-3" id="checkAvailabilityBtn" data-id="{{ $car->id }}"
+                            data-name="{{ $car->name }}" data-image="{{ asset(CAR_PATH . $car->images[0]) }}">
                             CHECK AVAILABILITY
                         </button>
 
                         <div class="rates-section">
                             <h6>Rental Rates Per Day</h6>
                             <ul class="list-unstyled">
-                                <li><span>1 - 4 Days</span> <span>�{{ number_format($bike->less_four_days_price) }} Per
+                                <li><span>1 - 4 Days</span> <span>�{{ number_format($car->less_four_days_price) }} Per
                                         Day</span></li>
-                                <li><span>5 - 7 Days</span> <span>�{{ number_format($bike->five_six_days_price) }} Per
+                                <li><span>5 - 7 Days</span> <span>�{{ number_format($car->five_six_days_price) }} Per
                                         Day</span></li>
-                                <li><span>8 - 29 Days</span> <span>�{{ number_format($bike->week_price) }} Per Day</span>
+                                <li><span>8 - 29 Days</span> <span>�{{ number_format($car->week_price) }} Per Day</span>
                                 </li>
                                 <li><span>30+ Days</span> <span
-                                        class="highlight-rate">�{{ number_format($bike->month_price) }} Per Day</span></li>
-                                <li><span>Optional Insurance </span> <span>�{{ number_format($bike->insurance_price) }} Per
+                                        class="highlight-rate">�{{ number_format($car->month_price) }} Per Day</span></li>
+                                <li><span>Optional Insurance </span> <span>�{{ number_format($car->insurance_price) }} Per
                                         Day</span></li>
                             </ul>
                         </div>
@@ -681,36 +681,36 @@
     </div>
 
     <!-- You Might Also Like Section -->
-    @if($relatedBikes->count() > 0)
-        <div class="related-bikes-section">
+    @if($relatedCars->count() > 0)
+        <div class="related-cars-section">
             <div class="container">
                 <h5 style="font-weight:600; margin-bottom:20px;">You Might Also Like</h5>
 
                 <div class="row">
-                    @foreach($relatedBikes as $relatedBike)
+                    @foreach($relatedCars as $relatedCar)
                         <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="related-bike-card">
+                            <div class="related-car-card">
 
-                                <div class="related-bike-img">
-                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
-                                        <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" alt="{{ $relatedBike->name }}"
+                                <div class="related-car-img">
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
+                                        <img src="{{ asset(CAR_PATH . $relatedCar->images[0]) }}" alt="{{ $relatedCar->name }}"
                                             loading="lazy">
                                     </a>
                                 </div>
 
-                                <div class="related-bike-body">
-                                    <div class="related-bike-title">
-                                        {{ $relatedBike->name }}
+                                <div class="related-car-body">
+                                    <div class="related-car-title">
+                                        {{ $relatedCar->name }}
                                     </div>
 
-                                    <div class="related-bike-bottom">
-                                        <div class="related-bike-price">
-                                            From �{{ number_format($relatedBike->less_four_days_price) }}
+                                    <div class="related-car-bottom">
+                                        <div class="related-car-price">
+                                            From �{{ number_format($relatedCar->less_four_days_price) }}
                                             <span>/per day</span>
                                         </div>
 
-                                        <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
-                                            class="related-bike-view">
+                                        <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}"
+                                            class="related-car-view">
                                             VIEW <i class="icofont-arrow-right"></i>
                                         </a>
                                     </div>
@@ -826,10 +826,10 @@
             });
 
             // Thumbnail click smooth swap
-            $('.bike-image').on('click', function () {
+            $('.car-image').on('click', function () {
                 let img = $(this).attr('src');
 
-                $('.bike-details-main-img').fadeOut(150, function () {
+                $('.car-details-main-img').fadeOut(150, function () {
                     $(this).attr('src', img).fadeIn(200);
                 });
             });

@@ -38,7 +38,7 @@ class BannerController extends Controller
             $banner = Banner::first();
 
             // Upload new image
-            $imagePath = uploadFile($request->file('banner_image'), BIKE_PATH, 'banner_');
+            $imagePath = uploadFile($request->file('banner_image'), CAR_PATH, 'banner_');
 
             if ($banner) {
                 // Update existing banner
@@ -54,7 +54,7 @@ class BannerController extends Controller
 
                 $banner->save();
             }
-            $imageUrl = asset(BIKE_PATH . $banner->image);
+            $imageUrl = asset(CAR_PATH . $banner->image);
 
             DB::commit();
             return $this->sendResponse('Banner saved successfully!',
@@ -74,11 +74,11 @@ class BannerController extends Controller
         $banner = Banner::first();
 
         if ($banner && $banner->image) {
-            $imageUrl = asset(BIKE_PATH . $banner->image);
+            $imageUrl = asset(CAR_PATH . $banner->image);
             $exists = true;
         }
         else {
-            $imageUrl = asset('assets/landing/images/hero-bike.png');
+            $imageUrl = asset('assets/landing/images/hero-car.png');
             $exists = false;
         }
 
@@ -98,8 +98,8 @@ class BannerController extends Controller
 
             if ($banner) {
 
-                if ($banner->image && file_exists(public_path(BIKE_PATH . $banner->image))) {
-                    unlink(public_path(BIKE_PATH . $banner->image));
+                if ($banner->image && file_exists(public_path(CAR_PATH . $banner->image))) {
+                    unlink(public_path(CAR_PATH . $banner->image));
                 }
                 $banner->delete();
 

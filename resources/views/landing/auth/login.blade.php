@@ -231,8 +231,8 @@
                         <div class="">
                             <div>
                                 <h3 class="mb-4">Welcome Back!</h3>
-                                <p class="mb-0">Start your motorcycle adventure in Japan. Login to access your bookings
-                                    and explore our premium bike collection.</p>
+                                <p class="mb-0">Start your car adventure in Japan. Login to access your bookings
+                                    and explore our premium car collection.</p>
                             </div>
                         </div>
                     </div>

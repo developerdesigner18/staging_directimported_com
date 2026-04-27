@@ -33,9 +33,9 @@ class Category extends Model
         return $query->where('type', CategoryType::GALLERY);
     }
 
-    public function scopeBikeCategory($query)
+    public function scopeCarCategory($query)
     {
-        return $query->where('type', CategoryType::BIKE);
+        return $query->where('type', CategoryType::CAR);
     }
 
 

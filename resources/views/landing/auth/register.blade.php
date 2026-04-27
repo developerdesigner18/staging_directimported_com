@@ -248,7 +248,7 @@
                             <div>
                                 <h3 class="mb-4">Join Our Community!</h3>
                                 <p class="mb-0">Create your account and start exploring Japan on two wheels. Access
-                                    premium motorcycles and unforgettable touring experiences.</p>
+                                    premium cars and unforgettable touring experiences.</p>
                             </div>
                         </div>
                     </div>

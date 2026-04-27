@@ -30,7 +30,7 @@
             color: #333;
             margin-bottom: 12px;
         }
-        .bike-name {
+        .car-name {
             color: #b91c1c; /* Deep Red */
             font-weight: 700;
             font-size: 1.25rem;
@@ -168,7 +168,7 @@
             border-top: 1px solid #e5e7eb;
         }
         /* Layout overrides */
-        .bike-img-container {
+        .car-img-container {
             border-radius: 8px;
             overflow: hidden;
             background-color: #f3f4f6;
@@ -199,7 +199,7 @@
         <h2 class="page-title">Confirm Your Booking</h2>
 
         <div class="booking-card">
-            <!-- Selected Bike Section -->
+            <!-- Selected Car Section -->
             <a href="{{ route('profile.settings') }}">
                 <div class="bg-danger text-white p-2 back-btn">
                 <svg fill="#000000" height="20px" width="20px" viewBox="0 0 24 24" id="left-arrow" data-name="Flat Line" xmlns="http://www.w3.org/2000/svg" class="icon flat-line" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><line id="primary" x1="21" y1="12" x2="3" y2="12" style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></line><polyline id="primary-2" data-name="primary" points="6 9 3 12 6 15" style="fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;"></polyline></g></svg>
@@ -207,22 +207,22 @@
                 </div>
             </a>
             <div class="mb-4">
-                <h5 class="section-header-small">Selected Bike</h5>
+                <h5 class="section-header-small">Selected Car</h5>
                 <div class="row g-4">
                     <div class="col-md-5">
-                        <div class="bike-img-container">
-                            @if($booking->bike && $booking->bike->images && count($booking->bike->images) > 0)
-                                <img src="{{ asset(BIKE_PATH . $booking->bike->images[0]) }}"
-                                     alt="{{ $booking->bike->name }}"
+                        <div class="car-img-container">
+                            @if($booking->car && $booking->car->images && count($booking->car->images) > 0)
+                                <img src="{{ asset(CAR_PATH . $booking->car->images[0]) }}"
+                                     alt="{{ $booking->car->name }}"
                                      class="img-fluid"
                                      style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                             @else
-                                <i class="ri-motorbike-fill text-muted" style="font-size: 4rem;"></i>
+                                <i class="ri-motorcar-fill text-muted" style="font-size: 4rem;"></i>
                             @endif
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <h3 class="bike-name mb-1">{{ $booking->bike->name ?? 'Unknown Bike' }}</h3>
+                        <h3 class="car-name mb-1">{{ $booking->car->name ?? 'Unknown Car' }}</h3>
                         <div class="booking-id mb-3">Booking ID: #{{ $booking->booking_id ?? 'N/A' }}</div>
 
                         <div class="mb-3">

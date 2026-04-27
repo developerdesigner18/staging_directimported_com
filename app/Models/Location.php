@@ -13,8 +13,8 @@ class Location extends Model
         'google_map_link'
     ];
 
-    public function bikes()
+    public function cars()
     {
-        return $this->hasMany(Bike::class);
+        return $this->hasMany(Car::class);
     }
 }

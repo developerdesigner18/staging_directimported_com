@@ -508,8 +508,8 @@ function verifyDocument(id, field, element) {
                                 $("#" + key + "-error").html(value).show();
                             });
 
-                            if (data.error.hasOwnProperty('bike_ids')) {
-                                sendError(data.error.bike_ids);
+                            if (data.error.hasOwnProperty('car_ids')) {
+                                sendError(data.error.car_ids);
                             }
                         } else if (data.hasOwnProperty('message')) {
                             actionError(xhr, data.message);

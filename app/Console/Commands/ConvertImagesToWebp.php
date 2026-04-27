@@ -15,11 +15,11 @@ class ConvertImagesToWebp extends Command
 
     /**
      * Each entry: [ table, column, path, isJson ]
-     *  isJson = true means the column holds a JSON array of filenames (bikes.images, services.images)
+     *  isJson = true means the column holds a JSON array of filenames (cars.images, services.images)
      */
     private array $targets = [
-        ['table' => 'bikes',        'column' => 'images',  'path' => 'uploads/bike_images/',    'isJson' => true],
-        ['table' => 'bikes',        'column' => 'banner',  'path' => 'uploads/bike_images/',    'isJson' => false],
+        ['table' => 'cars',        'column' => 'images',  'path' => 'uploads/car_images/',    'isJson' => true],
+        ['table' => 'cars',        'column' => 'banner',  'path' => 'uploads/car_images/',    'isJson' => false],
         ['table' => 'banners',      'column' => 'image',   'path' => 'uploads/banner_images/',  'isJson' => false],
         ['table' => 'galleries',    'column' => 'image',   'path' => 'uploads/gallery_images/', 'isJson' => false],
         ['table' => 'hero_sliders', 'column' => 'image',   'path' => 'uploads/slider_images/',  'isJson' => false],

@@ -11,7 +11,7 @@ use App\Mail\Documentverification;
 use App\Mail\PaymentEmail;
 use App\Mail\SendLoginDetail;
 use App\Models\Accessories;
-use App\Models\Bike;
+use App\Models\Car;
 use App\Models\Booking;
 use App\Models\EmailTemplates;
 use App\Models\User;
@@ -33,7 +33,7 @@ class BookingController extends Controller
     {
         // dd('dd');
         try {
-            $response = Booking::with(['user', 'bike'])->where('user_id', $request->id);
+            $response = Booking::with(['user', 'car'])->where('user_id', $request->id);
 
             return DataTables::eloquent($response)
                 ->addIndexColumn()
@@ -203,18 +203,18 @@ class BookingController extends Controller
     public function calculateQuote(Request $request)
     {
         try {
-            $bike = Bike::find($request->bike_id);
-            if (! $bike) {
-                return $this->sendError('Bike not found', 404);
+            $car = Car::find($request->car_id);
+            if (! $car) {
+                return $this->sendError('Car not found', 404);
             }
 
             $totalDays = totalBookingDays($request->start_date, $request->end_date, $request->end_time);
 
-            $pricePerDay = $bike->getTieredPrice($totalDays);
+            $pricePerDay = $car->getTieredPrice($totalDays);
             $price = $pricePerDay * $totalDays;
 
             // Form sends insurance boolean
-            $insurance_price = ($request->has('insurance') && $request->insurance == 1) ? ($bike->insurance_price * $totalDays) : 0;
+            $insurance_price = ($request->has('insurance') && $request->insurance == 1) ? ($car->insurance_price * $totalDays) : 0;
 
             $subtotal = $price + $insurance_price;
 
@@ -305,8 +305,8 @@ class BookingController extends Controller
                 }
 
                 // Also add insurance if selected
-                if ($booking->insurance && $booking->bike) {
-                    $insPrice = $booking->bike->insurance_price * $booking->totalDays();
+                if ($booking->insurance && $booking->car) {
+                    $insPrice = $booking->car->insurance_price * $booking->totalDays();
                     $html .= '<tr class="text-muted">
                                 <td>-</td>
                                 <td>Optional Insurance</td>
@@ -554,26 +554,26 @@ class BookingController extends Controller
     //    public function view($id)
     //    {
     //        $rowData = Booking::with('user')->find($id);
-    //   $bikes = Bike::all();
+    //   $cars = Car::all();
     //        $accessories = Accessories::all();
-    //        return view('admin.booking.view',compact('rowData','bikes','accessories'));
+    //        return view('admin.booking.view',compact('rowData','cars','accessories'));
     //    }
     public function view(Request $request, $id)
     {
-        $rowData = Booking::with('user', 'bike')->find($id);
-        $bikes = Bike::all();
+        $rowData = Booking::with('user', 'car')->find($id);
+        $cars = Car::all();
         $accessories = Accessories::all();
 
-        $bike = $rowData->bike;
+        $car = $rowData->car;
 
-        // IDs stored in bike table (JSON)
+        // IDs stored in car table (JSON)
         $freeAccessoryIds = $rowData->included_accessories ?? [];
         $extraAccessoryIds = $rowData->selected_accessories ?? [];
         $freeList = Accessories::where('type', 'FREE')->get();
         $extraList = Accessories::where('type', 'EXTRA')->get();
 
         return view('admin.booking.view', compact(
-            'rowData', 'bikes',
+            'rowData', 'cars',
             'freeList', 'extraList',
             'freeAccessoryIds', 'extraAccessoryIds'
         ));
@@ -594,7 +594,7 @@ class BookingController extends Controller
             'location' => 'nullable',
             'comment' => 'nullable',
             'status' => 'required',
-            'bike_id' => 'required',
+            'car_id' => 'required',
             'included_accessories' => 'nullable',
             'selected_accessories' => 'nullable',
             'system_comment' => 'nullable',
@@ -612,13 +612,13 @@ class BookingController extends Controller
             DB::beginTransaction();
             $booking = Booking::find($id);
 
-            $bike = Bike::find($request->bike_id);
+            $car = Car::find($request->car_id);
             $totalDays = totalBookingDays($request->start_date, $request->end_date, $request->end_time);
 
-            $pricePerDay = $bike->getTieredPrice($totalDays);
+            $pricePerDay = $car->getTieredPrice($totalDays);
             $price = $pricePerDay * $totalDays;
 
-            $insurance_price = ($request->has('insurance') && $request->insurance == 1) ? ($bike->insurance_price * $totalDays) : 0;
+            $insurance_price = ($request->has('insurance') && $request->insurance == 1) ? ($car->insurance_price * $totalDays) : 0;
             $subtotal = $price + $insurance_price;
 
             $details = '<table class="table table-bordered mb-4 border-0">
@@ -639,8 +639,8 @@ class BookingController extends Controller
                             <td>'.(isset($booking->user) ? $booking->user->mobile : '').'</td>
                         </tr>
                         <tr>
-                            <td>Bike Name</td>
-                            <td>'.$bike->name.'</td>
+                            <td>Car Name</td>
+                            <td>'.$car->name.'</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
@@ -655,7 +655,7 @@ class BookingController extends Controller
                             <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('h:i A', strtotime($request->end_time)).'</td>
                         </tr>
                         <tr>
-                            <td>Total Bike Price</td>
+                            <td>Total Car Price</td>
                             <td>¥'.$price.'</td>
                         </tr>
                     </tbody>
@@ -725,7 +725,7 @@ class BookingController extends Controller
             $booking->location = $request->location;
             $booking->comment = $request->comment ?? null;
             $booking->status = $request->status;
-            $booking->bike_id = $request->bike_id;
+            $booking->car_id = $request->car_id;
             $booking->included_accessories = $request->included_accessories;
             $booking->selected_accessories = $request->selected_accessories;
             $booking->system_comment = $request->system_comment ?? null;
@@ -766,7 +766,7 @@ class BookingController extends Controller
 
     public function contractPreview(Request $request)
     {
-        $rowData = Booking::with(['user.userDetail', 'bike'])
+        $rowData = Booking::with(['user.userDetail', 'car'])
             ->where('booking_id', $request->id)
             ->first();
 
@@ -777,21 +777,21 @@ class BookingController extends Controller
     //    {
     //        try {
     //            $booking = Booking::findOrFail($request->id);
-    //            $bike = Bike::findOrFail($request->bike_id);
+    //            $car = Car::findOrFail($request->car_id);
     //
     //            $totalDays = diffInDays($booking->start_date, $booking->end_date);
     //
-    //            // Calculate bike price
-    //            $price = $bike->max_price;
+    //            // Calculate car price
+    //            $price = $car->max_price;
     //
     //            if ($totalDays <= 4) {
-    //                $price = $bike->less_four_days_price;
+    //                $price = $car->less_four_days_price;
     //            } elseif ($totalDays >= 5 && $totalDays <= 6) {
-    //                $price = $bike->five_six_days_price;
+    //                $price = $car->five_six_days_price;
     //            } elseif ($totalDays == 7) {
-    //                $price = $bike->week_price;
+    //                $price = $car->week_price;
     //            } elseif ($totalDays >= 8 && $totalDays <= 30) {
-    //                $price = $bike->month_price;
+    //                $price = $car->month_price;
     //            }
     //
     //            // ---- BEGIN HTML ----
@@ -803,11 +803,11 @@ class BookingController extends Controller
     //                <tr><td>Full name</td><td>'.$booking->user->first_name.' '.($booking->user->last_name ?? '').'</td></tr>
     //                <tr><td>E-mail</td><td>'.$booking->user->email.'</td></tr>
     //                <tr><td>Mobile</td><td>'.$booking->user->mobile.'</td></tr>
-    //                <tr><td>Bike Name</td><td>'.$bike->name.'</td></tr>
+    //                <tr><td>Car Name</td><td>'.$car->name.'</td></tr>
     //                <tr><td>Total Days</td><td>'.$totalDays.'</td></tr>
     //                <tr><td>Start Date</td><td>'.date('d/m/Y', strtotime($booking->start_date)).' Pickup '.date('H:i A', strtotime($booking->start_time)).'</td></tr>
     //                <tr><td>End Date</td><td>'.date('d/m/Y', strtotime($booking->end_date)).' Drop off '.date('H:i A', strtotime($booking->end_time)).'</td></tr>
-    //                <tr><td>Total Bike Price</td><td>¥'.$price.'</td></tr>
+    //                <tr><td>Total Car Price</td><td>¥'.$price.'</td></tr>
     //            </tbody>
     //
     //            <tr>
@@ -817,11 +817,11 @@ class BookingController extends Controller
     //            <tbody>
     //                <tr>
     //                    <td>Insurance</td>
-    //                    <td>¥'.$bike->insurance_price.'</td>
+    //                    <td>¥'.$car->insurance_price.'</td>
     //                </tr>
     //        ';
     //
-    //    foreach ($bike->freeAccessories() as $acc) {
+    //    foreach ($car->freeAccessories() as $acc) {
     //    $details .= '
     //        <tr>
     //            <td>'.$acc->name.' (Free)</td>
@@ -829,7 +829,7 @@ class BookingController extends Controller
     //        </tr>';
     // }
     // // EXTRA ACCESSORIES
-    // foreach ($bike->extraAccessories() as $acc) {
+    // foreach ($car->extraAccessories() as $acc) {
     //
     //    $accPrice = ($acc->price > 0)
     //        ? $acc->price * ($totalDays > 0 ? $totalDays : 1)
@@ -861,7 +861,7 @@ class BookingController extends Controller
     //                new BookingMail(
     //                    $booking->user,
     //                    $booking,
-    //                    $booking->bike,
+    //                    $booking->car,
     //                    $selected_accessories,
     //                    $included_accessories
     //                )
@@ -883,19 +883,19 @@ class BookingController extends Controller
         //        dd($request->included_accessories, $request->selected_accessories);
         try {
             $booking = Booking::findOrFail($request->id);
-            $bike = Bike::findOrFail($request->bike_id);
+            $car = Car::findOrFail($request->car_id);
 
             $totalDays = totalBookingDays($booking->start_date, $booking->end_date, $booking->end_time);
 
-            $price = $bike->max_price;
+            $price = $car->max_price;
             if ($totalDays <= 4) {
-                $price = $bike->less_four_days_price;
+                $price = $car->less_four_days_price;
             } elseif ($totalDays >= 5 && $totalDays <= 6) {
-                $price = $bike->five_six_days_price;
+                $price = $car->five_six_days_price;
             } elseif ($totalDays == 7) {
-                $price = $bike->week_price;
+                $price = $car->week_price;
             } elseif ($totalDays >= 8 && $totalDays <= 30) {
-                $price = $bike->month_price;
+                $price = $car->month_price;
             }
 
             $details = '<table class="table table-bordered mb-4 border-0">
@@ -916,8 +916,8 @@ class BookingController extends Controller
                             <td>'.$booking->user->mobile.'</td>
                         </tr>
                         <tr>
-                            <td>Bike Name</td>
-                            <td>'.$bike->name.'</td>
+                            <td>Car Name</td>
+                            <td>'.$car->name.'</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
@@ -932,7 +932,7 @@ class BookingController extends Controller
                             <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('H:i A', strtotime($request->end_time)).'</td>
                         </tr>
                         <tr>
-                            <td>Total Bike Price</td>
+                            <td>Total Car Price</td>
                             <td>¥'.$price.'</td>
                         </tr>
                     </tbody>
@@ -968,7 +968,7 @@ class BookingController extends Controller
             $selected_accessories = collect($booking->selectedAccessoriesList())->pluck('name')->toArray();
             $included_accessories = collect($booking->includedAccessoriesList())->pluck('name')->toArray();
 
-            Mail::to($booking->user->email)->send(new BookingMail($booking->user, $booking, $booking->bike, $selected_accessories, $included_accessories));
+            Mail::to($booking->user->email)->send(new BookingMail($booking->user, $booking, $booking->car, $selected_accessories, $included_accessories));
 
             return $this->sendSuccess('Booking Detail Sent successfully');
         } catch (Exception $exception) {

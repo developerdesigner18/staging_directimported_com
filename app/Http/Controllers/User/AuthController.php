@@ -61,7 +61,7 @@ class AuthController extends Controller
     {
         try {
             $userId = auth()->guard('web')->id();
-            $response = Booking::with(['user', 'bike'])->where('user_id', $userId)->latest();
+            $response = Booking::with(['user', 'car'])->where('user_id', $userId)->latest();
 
             return DataTables::eloquent($response)
                 ->addIndexColumn()
@@ -89,7 +89,7 @@ class AuthController extends Controller
     public function viewBooking(Request $request)
     {
         $booking_id=$request->booking_id;
-        $booking=Booking::with(['user','bike'])->where('booking_id' ,$booking_id)->first();
+        $booking=Booking::with(['user','car'])->where('booking_id' ,$booking_id)->first();
         return view('landing.auth.view-bookings',compact('booking'));
     }
 

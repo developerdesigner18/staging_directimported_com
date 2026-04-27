@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\ResponseTrait;
 use App\Mail\ContactFormMail;
-use App\Models\Bike;
+use App\Models\Car;
 use App\Models\Faq;
 use App\Models\Gallery;
 use App\Models\HeroSlider;
@@ -29,7 +29,7 @@ class HomeController extends Controller
         $faqs = Faq::orderBy('created_at', 'desc')->get();
         $services = Service::orderBy('created_at', 'desc')->limit(3)->get();
 
-        $bikes = Bike::where('is_recommended', 1)->orderBy('created_at', 'desc')->limit(6)->get();
+        $cars = Car::where('is_recommended', 1)->orderBy('created_at', 'desc')->limit(6)->get();
         $color = Color::first();
         $homeSection = HomeSection::with('points')->first();
 
@@ -40,7 +40,7 @@ class HomeController extends Controller
             return $item->image;
         });
         $sliderImages = json_encode([...$array1, ...$array2]);
-        return view('landing.pages.index', compact('sliders', 'gallery', 'bikes', 'sliderImages', 'color', 'faqs', 'services', 'homeSection'));
+        return view('landing.pages.index', compact('sliders', 'gallery', 'cars', 'sliderImages', 'color', 'faqs', 'services', 'homeSection'));
     }
 
     public function rentalPolicies()
@@ -55,9 +55,9 @@ class HomeController extends Controller
         return view('landing.pages.licence-requirement');
     }
 
-    public function aboutOurBikes()
+    public function aboutOurCars()
     {
-        return view('landing.pages.about-our-bikes');
+        return view('landing.pages.about-our-cars');
     }
 
     public function usefulLinks()

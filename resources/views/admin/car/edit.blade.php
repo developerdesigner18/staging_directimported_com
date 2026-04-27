@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Edit Bike')
+@section('title','Edit Car')
 
 @section('main')
     <div class="row">
@@ -8,11 +8,11 @@
                 <div class="card-body">
                     <form id="editForm" enctype="multipart/form-data">
                         @csrf
-                        <!-- Bike Name -->
+                        <!-- Car Name -->
                         <div class="mb-3">
-                            <label for="name" class="form-label">Bike Name</label>
+                            <label for="name" class="form-label">Car Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                   value="{{ $bike->name }}" placeholder="Enter bike name">
+                                   value="{{ $car->name }}" placeholder="Enter car name">
                             <label id="name-error" class="text-danger error" style="display:none"></label>
                         </div>
 
@@ -23,7 +23,7 @@
                                 <option value="">Select Category</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}"
-                                            {{ $bike->category_id == $category->id ? 'selected' : '' }}>
+                                            {{ $car->category_id == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
@@ -36,14 +36,14 @@
                             <div class="col-md-6">
                                 <label for="less_four_days_price" class="form-label">1-4 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="less_four_days_price"
-                                       name="less_four_days_price" value="{{ $bike->less_four_days_price }}">
+                                       name="less_four_days_price" value="{{ $car->less_four_days_price }}">
                                 <label id="less_four_days_price-error" class="text-danger error" style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="five_six_days_price" class="form-label">5-6 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="five_six_days_price"
-                                       name="five_six_days_price" value="{{ $bike->five_six_days_price }}">
+                                       name="five_six_days_price" value="{{ $car->five_six_days_price }}">
                                 <label id="five_six_days_price-error" class="text-danger error" style="display:none"></label>
                             </div>
                         </div>
@@ -52,14 +52,14 @@
                             <div class="col-md-6">
                                 <label for="week_price" class="form-label">Weekly Price</label>
                                 <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
-                                       value="{{ $bike->week_price }}">
+                                       value="{{ $car->week_price }}">
                                 <label id="week_price-error" class="text-danger error" style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="month_price" class="form-label">Monthly Price</label>
                                 <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
-                                       value="{{ $bike->month_price }}">
+                                       value="{{ $car->month_price }}">
                                 <label id="month_price-error" class="text-danger error" style="display:none"></label>
                             </div>
                         </div>
@@ -68,14 +68,14 @@
                             <div class="col-md-6">
                                 <label for="max_price" class="form-label">Maximum Price</label>
                                 <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
-                                       value="{{ $bike->max_price }}">
+                                       value="{{ $car->max_price }}">
                                 <label id="max_price-error" class="text-danger error" style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="insurance_price" class="form-label">Insurance Price</label>
                                 <input type="number" step="0.01" class="form-control" id="insurance_price"
-                                       name="insurance_price" value="{{ $bike->insurance_price }}">
+                                       name="insurance_price" value="{{ $car->insurance_price }}">
                                 <label id="insurance_price-error" class="text-danger error" style="display:none"></label>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                                 <select class="form-select select2-multiple" name="free_accessory[]" multiple>
                                     @foreach($freeAccessories as $accessory)
                                         <option value="{{ $accessory['id'] }}"
-                                                {{ isset($bike->free_accessory) && in_array($accessory['id'], $bike->free_accessory) ? 'selected' : '' }}>
+                                                {{ isset($car->free_accessory) && in_array($accessory['id'], $car->free_accessory) ? 'selected' : '' }}>
                                             {{ $accessory['name'] }}
                                         </option>
                                     @endforeach
@@ -103,7 +103,7 @@
                                 <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
                                     @foreach($extraAccessories as $accessory)
                                         <option value="{{ $accessory['id'] }}"
-                                                {{ isset($bike->extra_accessory) && in_array($accessory['id'], $bike->extra_accessory) ? 'selected' : '' }}>
+                                                {{ isset($car->extra_accessory) && in_array($accessory['id'], $car->extra_accessory) ? 'selected' : '' }}>
                                             {{ $accessory['name'] }}
                                         </option>
                                     @endforeach
@@ -119,7 +119,7 @@
                             <div class="col-lg-6 mb-3">
                                 <label for="numberPlate" class="form-label">Number Plate</label>
                                 <input type="text" class="form-control" id="numberPlate"
-                                       value="{{ $bike->number_plate }}" name="number_plate">
+                                       value="{{ $car->number_plate }}" name="number_plate">
                                 <label id="number_plate-error" class="text-danger error" style="display:none"></label>
                             </div>
 
@@ -129,7 +129,7 @@
                                     <option value="">-- Select Location --</option>
                                     @foreach($locations as $location)
                                         <option value="{{ $location->id }}"
-                                                {{ $bike->location_id == $location->id ? 'selected' : '' }}>
+                                                {{ $car->location_id == $location->id ? 'selected' : '' }}>
                                             {{ $location->name }}
                                         </option>
                                     @endforeach
@@ -141,11 +141,11 @@
 
                         <!-- Recommended Switch -->
                         <div class="mb-3">
-                            <label class="form-label">Recommended Bike</label>
+                            <label class="form-label">Recommended Car</label>
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" id="is_recommended"
                                        name="is_recommended" value="1"
-                                        {{ $bike->is_recommended ? 'checked' : '' }}>
+                                        {{ $car->is_recommended ? 'checked' : '' }}>
                                 <label class="form-check-label" for="is_recommended">
                                     Mark as recommended
                                 </label>
@@ -159,8 +159,8 @@
                                 <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/*">
                                 <label id="banner-error" class="text-danger error" style="display:none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;">
-                                    @if($bike->banner)
-                                        <img src="{{ asset(BIKE_PATH.$bike->banner) }}" alt="" class="imgupload w-100 h-100 object-contain" id="product-img"/>
+                                    @if($car->banner)
+                                        <img src="{{ asset(CAR_PATH.$car->banner) }}" alt="" class="imgupload w-100 h-100 object-contain" id="product-img"/>
                                     @endif
                                 </div>
                             </label>
@@ -168,17 +168,17 @@
 
                         <!-- Images -->
                         <div class="mb-3">
-                            <label for="images" class="form-label">Bike Images</label>
+                            <label for="images" class="form-label">Car Images</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple>
 
-                            @if($bike->images)
+                            @if($car->images)
                                 <div id="sortable-images" class="d-flex flex-wrap">
-                                    @foreach($bike->images as $image)
+                                    @foreach($car->images as $image)
                                         <div class="image-preview-container me-2 mb-2"
                                              data-image="{{ $image }}"
                                              style="cursor: grab;">
 
-                                            <img src="{{ asset(BIKE_PATH.$image) }}"
+                                            <img src="{{ asset(CAR_PATH.$image) }}"
                                                  class="img-thumbnail"
                                                  style="height:100px;"
                                                  draggable="false">
@@ -200,8 +200,8 @@
                         <!-- Description -->
                         <div class="mb-3">
                             <label for="description_editor" class="form-label">Description</label>
-                            <textarea class="form-control" id="description_editor" rows="5">{{ $bike->description }}</textarea>
-                            <input type="hidden" id="description" name="description" value="{{ $bike->description }}">
+                            <textarea class="form-control" id="description_editor" rows="5">{{ $car->description }}</textarea>
+                            <input type="hidden" id="description" name="description" value="{{ $car->description }}">
                         </div>
 
                         <!-- ================= Technical Specifications ================= -->
@@ -214,55 +214,55 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Make</label>
                                         <input type="text" name="make" class="form-control"
-                                            value="{{ $bike->spec->make ?? '' }}" placeholder="e.g. Toyota">
+                                            value="{{ $car->spec->make ?? '' }}" placeholder="e.g. Toyota">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Exterior Color</label>
                                         <input type="text" name="exterior_color" class="form-control"
-                                            value="{{ $bike->spec->exterior_color ?? '' }}" placeholder="e.g. Pearl White">
+                                            value="{{ $car->spec->exterior_color ?? '' }}" placeholder="e.g. Pearl White">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Body Type</label>
                                         <input type="text" name="body_type" class="form-control"
-                                            value="{{ $bike->spec->body_type ?? '' }}" placeholder="e.g. SUV">
+                                            value="{{ $car->spec->body_type ?? '' }}" placeholder="e.g. SUV">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Fuel Type</label>
                                         <input type="text" name="fuel_type" class="form-control"
-                                            value="{{ $bike->spec->fuel_type ?? '' }}" placeholder="e.g. Hybrid">
+                                            value="{{ $car->spec->fuel_type ?? '' }}" placeholder="e.g. Hybrid">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Engine</label>
                                         <input type="text" name="engine" class="form-control"
-                                            value="{{ $bike->spec->engine ?? '' }}" placeholder="e.g. 2.0L Turbo">
+                                            value="{{ $car->spec->engine ?? '' }}" placeholder="e.g. 2.0L Turbo">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Odometer (km)</label>
                                         <input type="number" name="odometer" class="form-control"
-                                            value="{{ $bike->spec->odometer ?? '' }}" placeholder="e.g. 50000">
+                                            value="{{ $car->spec->odometer ?? '' }}" placeholder="e.g. 50000">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Model Year</label>
                                         <input type="number" name="model_year" class="form-control"
-                                            value="{{ $bike->spec->model_year ?? '' }}" placeholder="e.g. 2022">
+                                            value="{{ $car->spec->model_year ?? '' }}" placeholder="e.g. 2022">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Interior Color</label>
                                         <input type="text" name="interior_color" class="form-control"
-                                            value="{{ $bike->spec->interior_color ?? '' }}" placeholder="e.g. Black Leather">
+                                            value="{{ $car->spec->interior_color ?? '' }}" placeholder="e.g. Black Leather">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Transmission</label>
                                         <input type="text" name="transmission" class="form-control"
-                                            value="{{ $bike->spec->transmission ?? '' }}" placeholder="e.g. Automatic / Manual">
+                                            value="{{ $car->spec->transmission ?? '' }}" placeholder="e.g. Automatic / Manual">
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
                                 <div class="mb-3">
                                     <label for="card_header" class="form-label">Card Header</label>
                                     <input type="text" class="form-control" id="card_header" name="card_header"
-                                           placeholder="Enter card title (Frontend)" value="{{ $bike->card_header ?? '' }}">
+                                           placeholder="Enter card title (Frontend)" value="{{ $car->card_header ?? '' }}">
                                     <label id="card_header-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -288,7 +288,7 @@
                                 <div class="mb-3">
                                     <label for="card_subtitle" class="form-label">Card Subtitle</label>
                                     <input type="text" class="form-control" id="card_subtitle" name="card_subtitle"
-                                           placeholder="Enter card subtitle (Frontend)" value="{{ $bike->card_subtitle ?? '' }}">
+                                           placeholder="Enter card subtitle (Frontend)" value="{{ $car->card_subtitle ?? '' }}">
                                     <label id="card_subtitle-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -457,7 +457,7 @@
                             banner: {required: false},
                         },
                         messages: {
-                            name: {required: "The bike name is required."},
+                            name: {required: "The car name is required."},
                             category_id: {required: "Please select a category."},
                             less_four_days_price: {
                                 required: "Price for 1-3 days is required.",
@@ -498,7 +498,7 @@
                             e.preventDefault();
 
                             $.ajax({
-                                url: "{{ route('admin.bike.update', $bike->id) }}",
+                                url: "{{ route('admin.car.update', $car->id) }}",
                                 method: "POST",
                                 dataType: "json",
                                 data: new FormData(form),
@@ -510,8 +510,8 @@
                                     $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
                                 },
                                 success: function (result) {
-                                    sendSuccess(result.message || 'Bike updated successfully!');
-                                    window.location.href = "{{ route('admin.bike.index') }}";
+                                    sendSuccess(result.message || 'Car updated successfully!');
+                                    window.location.href = "{{ route('admin.car.index') }}";
                                 },
                                 error: function (xhr) {
                                     let data = xhr.responseJSON;

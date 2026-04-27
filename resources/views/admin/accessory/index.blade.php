@@ -281,7 +281,7 @@
         // Search Icon Logic
         function renderIcons(container, filter = '') {
             container.innerHTML = '';
-            bikeAccessoryIcons
+            carAccessoryIcons
                 .filter(icon => icon.includes(filter))
                 .forEach(icon => {
                     const option = document.createElement('div');

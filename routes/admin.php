@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\SystemController;
 use App\Http\Controllers\Admin\GalleryController;
-use App\Http\Controllers\Admin\BikeController;
+use App\Http\Controllers\Admin\CarController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\AccessoryController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -178,9 +178,9 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         });
     });
 
-    // Bikes
-    Route::group(['middleware' => ['check_permission:bikes']], function () {
-        Route::controller(BikeController::class)->prefix('car')->name('bike.')->group(function () {
+    // Cars
+    Route::group(['middleware' => ['check_permission:cars']], function () {
+        Route::controller(CarController::class)->prefix('car')->name('car.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/create', 'create')->name('create');
             Route::get('/views/{id}', 'view')->name('view');
@@ -206,8 +206,8 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         });
 
         Route::group([
-            'prefix' => 'bike/category/{type}',
-            'where' => ['type' => 'bike'],
+            'prefix' => 'car/category/{type}',
+            'where' => ['type' => 'car'],
             'as' => 'category.',
             'controller' => CategoryController::class
         ], function () {

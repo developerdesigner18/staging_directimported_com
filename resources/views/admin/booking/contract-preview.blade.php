@@ -209,12 +209,12 @@
     $totalDays = (int) $rowData->totalDays();
     $totalDays = max(1, $totalDays);
 
-    // Bike base price calculation
-    $bike = $rowData->bike;
-    $dailyRate = $bike ? $bike->getTieredPrice($totalDays) : 0;
+    // Car base price calculation
+    $car = $rowData->car;
+    $dailyRate = $car ? $car->getTieredPrice($totalDays) : 0;
 
-    // Total bike price for the duration
-    $totalBikePrice = $dailyRate * $totalDays;
+    // Total car price for the duration
+    $totalCarPrice = $dailyRate * $totalDays;
 
     // Insurance
     $insurancePrice = $rowData->insurance_price ?? 0;
@@ -267,7 +267,7 @@
     }
     
     // Aggregate for breakdown
-    $breakdownSubTotal = $totalBikePrice + $insurancePrice + $helmetPrice + $secondHelmetPrice + $pannierPrice + $dryBagPrice + $otherExtraPrice;
+    $breakdownSubTotal = $totalCarPrice + $insurancePrice + $helmetPrice + $secondHelmetPrice + $pannierPrice + $dryBagPrice + $otherExtraPrice;
     $breakdownTax = round($breakdownSubTotal * 0.10);
     
     // Card fee 3.65% calculated on (Subtotal + Tax)
@@ -302,7 +302,7 @@
                 <div id="contractPage1" class="contract-page">
                     
                     <div class="contract-header">
-                        <h3>MOTORCYCLE RENTAL AGREEMENT & CONDITION REPORT</h3>
+                        <h3>CAR RENTAL AGREEMENT & CONDITION REPORT</h3>
                         <div class="date">{{ now()->format('d F Y') }}</div>
                     </div>
 
@@ -379,12 +379,12 @@
                         <div style="display: flex; align-items: flex-end; margin-bottom: 10px; font-size: 12px;">
                             <div style="width: 18%;"><span style="text-decoration: underline;">Vehicle Name</span></div>
                             <div style="flex-grow: 1; border-bottom: 1px solid #000; text-align: center; padding-bottom: 2px;">
-                                {{ $rowData->bike->name ?? '' }} 
-                                @if(isset($rowData->bike->number_plate))
-                                {{ $rowData->bike->number_plate }}
+                                {{ $rowData->car->name ?? '' }} 
+                                @if(isset($rowData->car->number_plate))
+                                {{ $rowData->car->number_plate }}
                                 @endif
-                                @if(isset($rowData->bike->id))
-                                ID#{{ $rowData->bike->id }}
+                                @if(isset($rowData->car->id))
+                                ID#{{ $rowData->car->id }}
                                 @endif
                             </div>
                         </div>
@@ -464,7 +464,7 @@
                     <div class="images-container">
                         <div class="image-box">
                             <div class="image-upload-wrapper">
-                                <img id="leftImagePreview" src="{{ asset('assets/landing/images/bike-details/right.jpg')}}" alt="Left">
+                                <img id="leftImagePreview" src="{{ asset('assets/landing/images/car-details/right.jpg')}}" alt="Left">
                                 <button class="camera-btn" id="leftImageButton" data-html2canvas-ignore="true">
                                     <i class="ri-camera-fill"></i>
                                 </button>
@@ -473,7 +473,7 @@
                         </div>
                         <div class="image-box">
                             <div class="image-upload-wrapper">
-                                <img id="rightImagePreview" src="{{ asset('assets/landing/images/bike-details/left.png')}}" alt="Right">
+                                <img id="rightImagePreview" src="{{ asset('assets/landing/images/car-details/left.png')}}" alt="Right">
                                 <button class="camera-btn" id="rightImageButton" data-html2canvas-ignore="true">
                                     <i class="ri-camera-fill"></i>
                                 </button>
@@ -514,7 +514,7 @@
                                     <th style="border: 2px solid #000; font-size: 11px; font-weight: bold; padding: 1px; width: 30%;">Totals</th>
                                 </tr>
                                 <tr>
-                                    <th style="border: 1px solid #000; padding: 1px; font-weight: bold; font-size: 11px;">Motorcycle Rate</th>
+                                    <th style="border: 1px solid #000; padding: 1px; font-weight: bold; font-size: 11px;">Car Rate</th>
                                     <th style="border: 1px solid #000; border-right: 2px solid #000; padding: 1px; font-weight: bold; font-size: 9px; width: 15%;">Per/Day</th>
                                     <td style="border: 1px solid #000; padding: 1px; background: linear-gradient(to top right, transparent 49%, black 49%, black 51%, transparent 51%);"></td>
                                 </tr>
@@ -526,7 +526,7 @@
                                         </div>
                                     </td>
                                     <td style="border: 1px solid #000; border-right: 2px solid #000; padding: 1px;">{{ $totalDays }}</td>
-                                    <td style="border: 1px solid #000; padding: 1px;">¥{{ number_format($totalBikePrice, 0) }}</td>
+                                    <td style="border: 1px solid #000; padding: 1px;">¥{{ number_format($totalCarPrice, 0) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="2" style="border: 1px solid #000; border-right: 2px solid #000; padding: 1px; text-align: center; font-size: 10px;">Discount</td>
@@ -691,10 +691,10 @@
                                 </div>
                                 
                                 <div style="text-align: center; font-size: 10px; line-height: 1.5; margin-top: 15px;">
-                                    <div style="font-weight: bold; font-size: 11px;">Bike Rental Japan <span style="font-weight: normal;">by EZ Moto Kansai</span></div>
+                                    <div style="font-weight: bold; font-size: 11px;">Car Rental Japan <span style="font-weight: normal;">by EZ Moto Kansai</span></div>
                                     <div>4-10 -B1 Senrioka Shimo, Suita Shi, Osaka</div>
                                     <div><span style="text-decoration: underline;">TEL:06 4864 2081</span></div>
-                                    <div><span style="text-decoration: underline;">E-Mail : rental@bikerentaljapan.com</span></div>
+                                    <div><span style="text-decoration: underline;">E-Mail : rental@carrentaljapan.com</span></div>
                                 </div>
                             </div>
                         </div> <!-- Closes MIDDLE & RIGHT AREA -->
@@ -721,14 +721,14 @@
                     </div>
                     
                     <div style="border-top: 2px solid #000; border-bottom: 2px solid #000; margin-top: 5px; padding: 5px 0; font-size: 13px; font-weight: bold; margin-bottom: 5px; display: flex;">
-                        <div style="width: 150px;">Bike model</div>
+                        <div style="width: 150px;">Car model</div>
                         <div style="font-weight: normal; flex-grow: 1; text-align: center;">
-                            {{ $rowData->bike->name ?? '' }} 
-                            @if(isset($rowData->bike->number_plate))
-                            {{ $rowData->bike->number_plate }}
+                            {{ $rowData->car->name ?? '' }} 
+                            @if(isset($rowData->car->number_plate))
+                            {{ $rowData->car->number_plate }}
                             @endif
-                            @if(isset($rowData->bike->id))
-                            ID#{{ $rowData->bike->id }}
+                            @if(isset($rowData->car->id))
+                            ID#{{ $rowData->car->id }}
                             @endif
                         </div>
                     </div>
@@ -745,7 +745,7 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 12px 10px; vertical-align: top;">1. NON-RETURN</td>
-                            <td style="border: 1px solid #000; padding: 12px 10px;">I understand that if the motorcycle is not returned within 24 hours of the scheduled time and I have made no contact with EZMOTO, the vehicle will be reported as STOLEN to the Japanese police.</td>
+                            <td style="border: 1px solid #000; padding: 12px 10px;">I understand that if the car is not returned within 24 hours of the scheduled time and I have made no contact with EZMOTO, the vehicle will be reported as STOLEN to the Japanese police.</td>
                             <td style="border: 1px solid #000; padding: 12px 10px;"></td>
                         </tr>
                         <tr>
@@ -755,7 +755,7 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 12px 10px; vertical-align: top;">3. DAMAGE & ERI</td>
-                            <td style="border: 1px solid #000; padding: 12px 10px;">I understand my liability for damage is capped at ¥300,000 – ¥500,000 (if ERI/CDW is selected). This includes coverage for "dropping" the bike. Displayed on the bike listing page.<br><div style="text-align: right; margin-top: 10px;">ERI/CDW &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selected [ &nbsp;&nbsp;&nbsp;&nbsp; ] Declined [ &nbsp;&nbsp;&nbsp;&nbsp; ]</div></td>
+                            <td style="border: 1px solid #000; padding: 12px 10px;">I understand my liability for damage is capped at ¥300,000 – ¥500,000 (if ERI/CDW is selected). This includes coverage for "dropping" the car. Displayed on the car listing page.<br><div style="text-align: right; margin-top: 10px;">ERI/CDW &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Selected [ &nbsp;&nbsp;&nbsp;&nbsp; ] Declined [ &nbsp;&nbsp;&nbsp;&nbsp; ]</div></td>
                             <td style="border: 1px solid #000; padding: 12px 10px;"></td>
                         </tr>
                         <tr>
@@ -775,7 +775,7 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 12px 10px; vertical-align: top;">7. SAFETY AND SIGNS</td>
-                            <td style="border: 1px solid #000; padding: 12px 10px;">I Have watched the Safety and signs Videos displayed on Bike rental Japans website and have studied the signs page.</td>
+                            <td style="border: 1px solid #000; padding: 12px 10px;">I Have watched the Safety and signs Videos displayed on Car rental Japans website and have studied the signs page.</td>
                             <td style="border: 1px solid #000; padding: 12px 10px;"></td>
                         </tr>
                         <tr>
@@ -785,7 +785,7 @@
                         </tr>
                         <tr>
                             <td style="border: 1px solid #000; padding: 12px 10px; vertical-align: top;">9. PROHIBITED USE</td>
-                            <td style="border: 1px solid #000; padding: 12px 10px;">Use of the motorcycle on roads that do not appear on any map for roaduse, beaches, or racing tracks is strictly prohibited.</td>
+                            <td style="border: 1px solid #000; padding: 12px 10px;">Use of the car on roads that do not appear on any map for roaduse, beaches, or racing tracks is strictly prohibited.</td>
                             <td style="border: 1px solid #000; padding: 12px 10px;"></td>
                         </tr>
                     </table>
@@ -826,15 +826,15 @@
             <div id="contractPage3" class="contract-page" style="margin-top: 50px; border-top: 1px dashed #ccc; padding-top: 20px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; font-family: 'Times New Roman', serif;">
                     <div style="width: 250px; border: 1px solid #ccc; padding: 10px; display: flex; justify-content: center; align-items: center;">
-                        <img src="{{ asset('assets/logo/main.png') }}" style="width: 100%; display: block;" alt="Bike Rental Japan">
+                        <img src="{{ asset('assets/logo/main.png') }}" style="width: 100%; display: block;" alt="Car Rental Japan">
                     </div>
                     <div style="text-align: right; font-size: 13px; line-height: 1.4;">
-                        <strong>Bike Rental Japan Ezmoto Kansai</strong> &nbsp; 4-10 B1<br>
+                        <strong>Car Rental Japan Ezmoto Kansai</strong> &nbsp; 4-10 B1<br>
                         Senrioka Shimo, Suita Shi, Osaka, 565-0813<br>
                         <span style="font-family: Arial;">☎</span> 080-3770-0740<br>
                         <span style="font-family: Arial;">☎</span> 06-4864-2081<br>
-                        ✉ Rental@bikerentaljapan.com<br>
-                        <a href="http://www.bikerentaljapan.com" style="color: blue; text-decoration: underline;">www.bikerentaljapan.com</a>
+                        ✉ Rental@carrentaljapan.com<br>
+                        <a href="http://www.carrentaljapan.com" style="color: blue; text-decoration: underline;">www.carrentaljapan.com</a>
                     </div>
                 </div>
 
@@ -863,7 +863,7 @@
                         <div style="width: 48%;">
                             <p style="margin-bottom: 15px; font-weight: bold;">USEFUL TRANSLATIONS (Point to these if you need help)</p>
                             
-                            <p style="margin-bottom: 15px;"><strong>"I am not the owner, I am renting the bike from Bike Rental Japan."</strong> 私 は持ち主ではなくてバイクレンタルジャパンから借りています。</p>
+                            <p style="margin-bottom: 15px;"><strong>"I am not the owner, I am renting the car from Car Rental Japan."</strong> 私 は持ち主ではなくてバイクレンタルジャパンから借りています。</p>
                             
                             <p style="margin-bottom: 15px;"><strong>"Their contact details are: 4/10 Senrioka Shimo, Suita Shi, Osaka. ☎ 0648642081."</strong> 本社の連絡先は：565 0813 大阪府吹田市千里丘下 4/10 ☎ 0648642081</p>
                             

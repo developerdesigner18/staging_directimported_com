@@ -58,8 +58,8 @@
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Online Support</h4>
-                                <span><a href="https://m.me/bikerentaljapan">Facebook</a></span>
-                                <span><a href="mailto:rental@bikerentaljapan.com">rental@bikerentaljapan.com</a></span>
+                                <span><a href="https://m.me/carrentaljapan">Facebook</a></span>
+                                <span><a href="mailto:rental@carrentaljapan.com">rental@carrentaljapan.com</a></span>
                             </div>
                         </div>
                     </div>

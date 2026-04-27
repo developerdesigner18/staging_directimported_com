@@ -75,7 +75,7 @@
             font-weight: var(--font-weight-medium);
         }
 
-        .selected-bike-placeholder {
+        .selected-car-placeholder {
             background-color: #f8f9fa;
             border-radius: 8px;
             padding: 20px;
@@ -249,7 +249,7 @@
 
 @push('modals')
 
-    <div class="modal fade" id="bikeDetailsModal" tabindex="-1" aria-labelledby="bikeDetailsModalLabel"
+    <div class="modal fade" id="carDetailsModal" tabindex="-1" aria-labelledby="carDetailsModalLabel"
          data-bs-backdrop="static" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -261,7 +261,7 @@
                 <form method="POST" enctype="multipart/form-data" id="bookingProcessingForm" class="p-2">
                     @csrf
                     <!-- Modal Body -->
-                    <div class="modal-body p-0 bikeDetailsData">
+                    <div class="modal-body p-0 carDetailsData">
 
                     </div>
                     <!-- Modal Footer -->
@@ -287,9 +287,9 @@
         <div class="container">
             <div class="d-flex justify-content-between mt-3">
                 <h4 class="mb-0">Request a quote</h4>
-                {{--                <a href="{{ route('motorcycle') }}" class="btn btn-primary h-100">--}}
+                {{--                <a href="{{ route('car') }}" class="btn btn-primary h-100">--}}
                 {{--                    <i class="ri-add-circle-line fw-bold"></i> --}}
-                {{--                    Add New Bike--}}
+                {{--                    Add New Car--}}
                 {{--                </a>--}}
             </div>
 
@@ -297,17 +297,17 @@
                 <form method="POST" enctype="multipart/form-data" id="booking-form">
                     @csrf
 
-                    <!-- Bikes Section -->
+                    <!-- Cars Section -->
                     <div class="mb-4">
-                        {{--                        <h3 class="section-header">Selected Motorcycles</h3>--}}
-                        {{--                        <div class="selected-bike-placeholder">--}}
-                        {{--                            <p class="mb-0">No motorcycles selected yet. <a href="{{ route('motorcycle') }}">Add a bike</a> to get started.</p>--}}
+                        {{--                        <h3 class="section-header">Selected Cars</h3>--}}
+                        {{--                        <div class="selected-car-placeholder">--}}
+                        {{--                            <p class="mb-0">No cars selected yet. <a href="{{ route('car') }}">Add a car</a> to get started.</p>--}}
                         {{--                        </div>--}}
-                        <div class="row flex-column align-items-center justify-content-center selectedMotorcycles mt-3">
+                        <div class="row flex-column align-items-center justify-content-center selectedCars mt-3">
                         </div>
-                        <a href="{{ route('motorcycle') }}" class="btn btn-primary h-100" style="margin-left: 12%;">
+                        <a href="{{ route('car') }}" class="btn btn-primary h-100" style="margin-left: 12%;">
                             <i class="ri-add-circle-line fw-bold"></i>
-                            Add More Bikes
+                            Add More Cars
                         </a>
                     </div>
                     <!-- Booking Date & Time -->
@@ -500,18 +500,18 @@
 
         let old_items_details = JSON.parse(localStorage.getItem('lastRequestedQuoteDetail')) || {};
         if (Object.keys(old_items_details).length > 0) {
-            var myModal = new bootstrap.Modal(document.getElementById('bikeDetailsModal'));
+            var myModal = new bootstrap.Modal(document.getElementById('carDetailsModal'));
             myModal.show();
 
-            $(".bikeDetailsData").html(old_items_details.html);
+            $(".carDetailsData").html(old_items_details.html);
             $('.bookingProcessing').attr('data-booking_ids', old_items_details.booking_ids);
         }
 
-        let bike_items = JSON.parse(localStorage.getItem('requestQuoteBikes')) || [];
+        let car_items = JSON.parse(localStorage.getItem('requestQuoteCars')) || [];
 
-        function renderBikes() {
-            let items = JSON.parse(localStorage.getItem('requestQuoteBikes')) || [];
-            $('.selectedMotorcycles').html(''); // Clear old content
+        function renderCars() {
+            let items = JSON.parse(localStorage.getItem('requestQuoteCars')) || [];
+            $('.selectedCars').html(''); // Clear old content
 
             // SVGs
             // const mobileSvg=`<i class="ri-smartphone-line"></i>`;
@@ -571,8 +571,8 @@
 
 
 
-                    // Render Extra Accessories specific to this bike
-                    getBikeExtraAccessories(item.id, function (extraAccessories) {
+                    // Render Extra Accessories specific to this car
+                    getCarExtraAccessories(item.id, function (extraAccessories) {
                         let accHTML = '';
 
                         if (extraAccessories.length === 0) {
@@ -607,10 +607,10 @@
                                 }
 
                                 accHTML += `
-                            <label for="acc_bike_${acc.id}_${item.id}" class="accessory-card" onclick="toggleAccessory(this)">
+                            <label for="acc_car_${acc.id}_${item.id}" class="accessory-card" onclick="toggleAccessory(this)">
                                 <input type="checkbox" value="${acc.id}"
-                                       id="acc_bike_${acc.id}_${item.id}"
-                                       name="acc_bike_id[${item.id}][]"
+                                       id="acc_car_${acc.id}_${item.id}"
+                                       name="acc_car_id[${item.id}][]"
                                        class="form-check-input" ${isChecked} >
                                 <div class="accessory-icon-box">
                                     ${icon}
@@ -632,7 +632,7 @@
                             accHTML += '</div>';
                         }
 
-                        // Inject into the bike card
+                        // Inject into the car card
                         $(`#extra_acc_list_${item.id}`).html(accHTML);
 
                         $(`#extra_acc_list_${item.id} input:checked`).each(function () {
@@ -640,7 +640,7 @@
                         });
                     });
 
-                    // Render bike card
+                    // Render car card
                     let html = `
                 <div class="col-md-6 mb-3 w-80 bg-custom-light">
                     <div class="card p-2 bg-custom-light">
@@ -648,13 +648,13 @@
                             <div class="row align-items-start">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <button type="button" class="btn btn-danger btn-sm remove-bike" data-index="${index}">
-                                            Remove Bike
+                                        <button type="button" class="btn btn-danger btn-sm remove-car" data-index="${index}">
+                                            Remove Car
                                         </button>
                                         <h5 class="mb-0">${item.name}</h5>
                                     </div>
-                                    <img src="${item.image}" class="img-fluid mb-2" style="max-width: 100%; height:auto;border-radius: 20px;" alt="Bike Image" loading="lazy">
-                                    <input type="hidden" value="${item.id}" name="bike_ids[]">
+                                    <img src="${item.image}" class="img-fluid mb-2" style="max-width: 100%; height:auto;border-radius: 20px;" alt="Car Image" loading="lazy">
+                                    <input type="hidden" value="${item.id}" name="car_ids[]">
                                 </div>
                                 <div class="col-12">
                                     <h6 class="mb-2 mt-3 fw-bold">Included Accessories</h6>
@@ -682,24 +682,24 @@
                     </div>
                 </div>
             `;
-                    $('.selectedMotorcycles').append(html);
+                    $('.selectedCars').append(html);
                 });
             } else {
-                $('.selectedMotorcycles').append(`
-            <input type="hidden" value="" name="bike_ids">
-            <label id="bike_ids-error" class="text-danger error" for="bike_ids" style="display:none"></label>
+                $('.selectedCars').append(`
+            <input type="hidden" value="" name="car_ids">
+            <label id="car_ids-error" class="text-danger error" for="car_ids" style="display:none"></label>
         `);
             }
         }
 
 
         // AJAX to get Free Accessories
-        function getAccessoryData(bike_id, callback) {
+        function getAccessoryData(car_id, callback) {
             $.ajax({
-                url: "{{ route('my.bookings.quote.bike.accessories') }}",
+                url: "{{ route('my.bookings.quote.car.accessories') }}",
                 dataType: "JSON",
                 method: "POST",
-                data: {_token: "{{ csrf_token() }}", bike_id: bike_id},
+                data: {_token: "{{ csrf_token() }}", car_id: car_id},
                 success: function (response) {
                     callback(response.message || []);
                 },
@@ -709,12 +709,12 @@
             });
         }
 
-        // AJAX to get Extra Accessories specific to a bike
-        function getBikeExtraAccessories(bike_id, callback) {
+        // AJAX to get Extra Accessories specific to a car
+        function getCarExtraAccessories(car_id, callback) {
             $.ajax({
-                url: "{{ route('motorcycle.extra.accessories') }}",
+                url: "{{ route('car.extra.accessories') }}",
                 method: "POST",
-                data: {_token: "{{ csrf_token() }}", bike_id: bike_id},
+                data: {_token: "{{ csrf_token() }}", car_id: car_id},
                 success: function (response) {
                     callback(response.accessories || []);
                 },
@@ -724,18 +724,18 @@
             });
         }
 
-        // Remove bike
-        $(document).on('click', '.remove-bike', function () {
+        // Remove car
+        $(document).on('click', '.remove-car', function () {
             let index = $(this).data('index');
-            bike_items.splice(index, 1);
-            localStorage.setItem('requestQuoteBikes', JSON.stringify(bike_items));
-            renderBikes();
+            car_items.splice(index, 1);
+            localStorage.setItem('requestQuoteCars', JSON.stringify(car_items));
+            renderCars();
         });
 
         // Create Quote
         $(document).ready(function () {
 
-            renderBikes();
+            renderCars();
 
             // Check for dates in localStorage
             let bookingDates = JSON.parse(localStorage.getItem('bookingDates'));
@@ -755,7 +755,7 @@
         $(document).ready(function () {
             $("#booking-form").validate({
                 rules: {
-                    bike_ids: {required: true},
+                    car_ids: {required: true},
                     first_name: {required: true},
                     last_name: {required: true},
                     email: {required: true},
@@ -763,7 +763,7 @@
                     policy_status: {required: true},
                 },
                 messages: {
-                    bike_ids: {required: "The bike Selection is required."},
+                    car_ids: {required: "The car Selection is required."},
                     first_name: {required: "The first Name field is required."},
                     last_name: {required: "The last Name field is required."},
                     email: {required: "The email field is required, format: first.last@email.com"},
@@ -794,8 +794,8 @@
                             $(".progress-container").addClass("active");
                         },
                         success: function (result) {
-                            $("#bikeDetailsModal").modal('show');
-                            $(".bikeDetailsData").html(result.message.html);
+                            $("#carDetailsModal").modal('show');
+                            $(".carDetailsData").html(result.message.html);
                             $('.bookingProcessing').attr('data-booking_ids', result.message.booking_ids);
                             $("label.error").hide();
 
@@ -806,8 +806,8 @@
                             };
                             localStorage.setItem('lastRequestedQuoteDetail', JSON.stringify(last_items));
 
-                            // localStorage.removeItem('requestQuoteBikes');
-                            renderBikes();
+                            // localStorage.removeItem('requestQuoteCars');
+                            renderCars();
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
@@ -816,8 +816,8 @@
                                     $("#" + key + "-error").html(value).show();
                                 });
 
-                                if (data.error.hasOwnProperty('bike_ids')) {
-                                    sendError(data.error.bike_ids);
+                                if (data.error.hasOwnProperty('car_ids')) {
+                                    sendError(data.error.car_ids);
                                 }
                             } else if (data.hasOwnProperty('message')) {
                                 actionError(xhr, data.message);
@@ -841,7 +841,7 @@
             $(document).on('submit', '#bookingProcessingForm', function (e) {
                 e.preventDefault();
                 $.ajax({
-                    url: "{{ route('motorcycle.booking.processing') }}",
+                    url: "{{ route('car.booking.processing') }}",
                     method: "post",
                     dataType: "json",
                     data: new FormData(this),
@@ -882,7 +882,7 @@
             popup: 'no-extra-space-popup'
         }
     });            //*
-                        $("#bikeDetailsModal").modal('hide');
+                        $("#carDetailsModal").modal('hide');
                     },
                     error: function (xhr) {
                         let data = xhr.responseJSON;
@@ -908,15 +908,15 @@
                         // ✅ Hide AJAX loader
                         $(".progress-container").removeClass("active");
                         localStorage.removeItem('lastRequestedQuoteDetail');
-                        localStorage.removeItem('requestQuoteBikes');
-                        renderBikes();
+                        localStorage.removeItem('requestQuoteCars');
+                        renderCars();
                     }
                 });
             });
         });
 
         function bookingsQuoteDetails() {
-            $("#bikeDetailsModal").modal('show');
+            $("#carDetailsModal").modal('show');
             $.ajax({
                 url: "{{ route('my.bookings.quote.details') }}",
                 dataType: "JSON",
@@ -925,7 +925,7 @@
                     "_token": "{{csrf_token()}}",
                 },
                 success: function (data) {
-                    $(".bikeDetailsData").html(data.message);
+                    $(".carDetailsData").html(data.message);
                 },
                 error: function (xhr) {
                     let data = xhr.responseJSON;

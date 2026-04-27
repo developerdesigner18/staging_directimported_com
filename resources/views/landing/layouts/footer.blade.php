@@ -7,7 +7,7 @@
 <footer class="rid-footer-1">
     <section class="rid-filter-1">
         <div class="container">
-            <h2 class="visually-hidden">Rental Bike Search</h2>
+            <h2 class="visually-hidden">Rental Car Search</h2>
             <div class="filter-box cta-box top-0 mb-4">
                 <h3 class="cta-title text-dark">Check our Google reviews</h3>
                 <a href="{{ route('reviews') }}" class="cta-btn fs-5">
@@ -58,7 +58,7 @@
                     <h4 class="footer-title">Quick Links</h4>
                     <ul class="footer-list">
                         <li><a href="{{ route('landing') }}#auction">Auction</a></li>
-                        <li><a href="{{ route('motorcycle') }}">Example Cars</a></li>
+                        <li><a href="{{ route('car') }}">Example Cars</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="{{ route('faqs') }}">FAQs</a></li>
                         <li><a href="{{ route('landing') }}#about">About us</a></li>

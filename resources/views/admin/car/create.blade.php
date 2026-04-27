@@ -142,7 +142,7 @@
                                     <label class="form-label">Location</label>
                                     <select class="form-select select2" name="location">
                                         @foreach($locations ?? [] as $location)
-                                            <option value="{{ $location->id }}" {{ old('location_id', $bike->location_id ?? '') == $location->id ? 'selected' : '' }}>
+                                            <option value="{{ $location->id }}" {{ old('location_id', $car->location_id ?? '') == $location->id ? 'selected' : '' }}>
                                                 {{ $location->name }}
                                             </option>
                                         @endforeach
@@ -445,7 +445,7 @@
                     e.preventDefault();
 
                     $.ajax({
-                        url: "{{ route('admin.bike.store') }}", // Update with your route
+                        url: "{{ route('admin.car.store') }}", // Update with your route
                         method: "post",
                         dataType: "json",
                         data: new FormData(form),
@@ -465,7 +465,7 @@
                             }
                             // Reset TinyMCE editors
                             tinymce.get('description_editor').setContent('');
-                            window.location.href = "{{route('admin.bike.index')}}";
+                            window.location.href = "{{route('admin.car.index')}}";
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;

@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title', $bike->name)
+@section('title', $car->name)
 
 @push('style')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
             }
         }
 
-        .bike-detail-wrapper {
+        .car-detail-wrapper {
             padding: 50px 0;
         }
 
@@ -424,7 +424,7 @@
         }
 
         /* Accordion */
-        .bike-faq-container {
+        .car-faq-container {
             margin-top: 25px;
         }
 
@@ -533,9 +533,9 @@
             border-radius: 10px;
         }
 
-        /* Related Bikes Slider Arrows */
-        .related-bikes-slider .slick-prev,
-        .related-bikes-slider .slick-next {
+        /* Related Cars Slider Arrows */
+        .related-cars-slider .slick-prev,
+        .related-cars-slider .slick-next {
             width: 40px;
             height: 40px;
             background: #fff;
@@ -545,38 +545,38 @@
             transition: all 0.3s;
         }
 
-        .related-bikes-slider .slick-prev:hover,
-        .related-bikes-slider .slick-next:hover {
+        .related-cars-slider .slick-prev:hover,
+        .related-cars-slider .slick-next:hover {
             background: var(--primary-blue);
         }
 
-        .related-bikes-slider .slick-prev:before,
-        .related-bikes-slider .slick-next:before {
+        .related-cars-slider .slick-prev:before,
+        .related-cars-slider .slick-next:before {
             color: #111;
             font-family: 'boxicons';
             font-size: 24px;
             opacity: 1;
         }
 
-        .related-bikes-slider .slick-prev:hover:before,
-        .related-bikes-slider .slick-next:hover:before {
+        .related-cars-slider .slick-prev:hover:before,
+        .related-cars-slider .slick-next:hover:before {
             color: #fff;
         }
 
-        .related-bikes-slider .slick-prev {
+        .related-cars-slider .slick-prev {
             left: -20px;
         }
 
-        .related-bikes-slider .slick-next {
+        .related-cars-slider .slick-next {
             right: -20px;
         }
 
-        .related-bikes-slider .slick-prev:before {
+        .related-cars-slider .slick-prev:before {
             content: "\ea41";
         }
 
         /* bx-chevron-left */
-        .related-bikes-slider .slick-next:before {
+        .related-cars-slider .slick-next:before {
             content: "\ea42";
         }
 
@@ -585,7 +585,7 @@
 @endpush
 
 @section('main')
-    <div class="bike-detail-wrapper">
+    <div class="car-detail-wrapper">
         <div class="container">
             <div class="row">
                 <!-- LEFT CONTENT -->
@@ -593,7 +593,7 @@
                     <!-- Main Image container -->
                     <div class="main-image-container">
                         <span class="status-badge">Status: Available</span>
-                        <img id="bike-display-img" src="{{ asset(BIKE_PATH . $bike->images[0]) }}" alt="{{ $bike->name }}">
+                        <img id="car-display-img" src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}">
                         <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i
                                 class="bx bx-chevron-left"></i></button>
                         <button class="main-slider-btn next" onclick="moveMainImage('next')"><i
@@ -602,10 +602,10 @@
 
                     <!-- Thumbnails grid wrapper -->
                     <div class="gallery-thumbs-grid">
-                        @foreach($bike->images as $index => $image)
+                        @foreach($car->images as $index => $image)
                             <div class="thumb-box {{ $index === 0 ? 'active' : '' }}"
-                                onclick="changeMainImage('{{ asset(BIKE_PATH . $image) }}', this)">
-                                <img src="{{ asset(BIKE_PATH . $image) }}" alt="Bike thumbnail">
+                                onclick="changeMainImage('{{ asset(CAR_PATH . $image) }}', this)">
+                                <img src="{{ asset(CAR_PATH . $image) }}" alt="Car thumbnail">
                             </div>
                         @endforeach
                     </div>
@@ -631,28 +631,28 @@
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Make</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->make ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->make ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-palette"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Exterior Color</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->exterior_color ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->exterior_color ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-layer"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Body Type</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->body_type ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->body_type ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-gas-pump"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Fuel Type</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->fuel_type ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->fuel_type ?? '' }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -661,43 +661,43 @@
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Odometer</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->odometer ?? '' }} km</div>
+                                    <div class="spec-value-box">{{ $car->spec->odometer ?? '' }} km</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-calendar"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Model Year</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->model_year ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->model_year ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-select-multiple"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Interior colour</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->interior_color ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->interior_color ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-cog"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Engine</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->engine ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->engine ?? '' }}</div>
                                 </div>
                                 <div class="spec-grid-item">
                                     <div class="spec-icon-box"><i class="bx bx-reset"></i></div>
                                     <div class="spec-label-box">
                                         <span class="spec-label-main">Transmission</span>
                                     </div>
-                                    <div class="spec-value-box">{{ $bike->spec->transmission ?? '' }}</div>
+                                    <div class="spec-value-box">{{ $car->spec->transmission ?? '' }}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- FAQ Section -->
-                    <div class="bike-faq-container accordion" id="bikeFaqMain">
-                        @foreach($bikeConf as $index => $conf)
+                    <div class="car-faq-container accordion" id="carFaqMain">
+                        @foreach($carConf as $index => $conf)
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeading{{ $index }}">
                                     <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button"
@@ -708,7 +708,7 @@
                                 </h2>
                                 <div id="faqCollapse{{ $index }}"
                                     class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
-                                    data-bs-parent="#bikeFaqMain">
+                                    data-bs-parent="#carFaqMain">
                                     <div class="accordion-body">
                                         {!! $conf->description !!}
                                     </div>
@@ -723,16 +723,16 @@
                     <div class="sidebar-inner sticky-sidebar-wrapper">
 
                         <h1 class="vehicle-title-main">
-                            {{ $bike->name }}
+                            {{ $car->name }}
                         </h1>
 
                         <p class="vehicle-desc-small">
-                            {{ $bike->category->name ?? '' }}
+                            {{ $car->category->name ?? '' }}
                         </p>
 
                         <div class="price-info-card">
                             <div>FOB = Full on Board</div>
-                            <strong>¥{{ number_format($bike->max_price) }} FOB</strong>
+                            <strong>¥{{ number_format($car->max_price) }} FOB</strong>
                         </div>
 
                         <div class="sidebar-form-box">
@@ -763,7 +763,7 @@
 
                             <label class="vehicle-id-label">* Vehicle ID :</label>
                             <div class="vehicle-id-box">
-                                {{ $bike->name }}
+                                {{ $car->name }}
                             </div>
 
                             <div class="row-2">
@@ -799,21 +799,21 @@
     <section class="py-5 bg-white border-top mt-5">
         <div class="container">
             <h2 class="fw-bold mb-4" style="color: #111; font-size: 32px;">You Might Also Like</h2>
-            <div class="related-bikes-slider">
-                @foreach($relatedBikes as $relatedBike)
+            <div class="related-cars-slider">
+                @foreach($relatedCars as $relatedCar)
                     <div class="px-2">
                         <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
-                            <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}">
-                                <img src="{{ asset(BIKE_PATH . $relatedBike->images[0]) }}" class="card-img-top"
+                            <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
+                                <img src="{{ asset(CAR_PATH . $relatedCar->images[0]) }}" class="card-img-top"
                                     style="height: 240px; object-fit: cover;">
                             </a>
                             <div class="card-body p-4">
-                                <h5 class="fw-bold mb-3" style="font-size: 20px;">{{ $relatedBike->name }}</h5>
+                                <h5 class="fw-bold mb-3" style="font-size: 20px;">{{ $relatedCar->name }}</h5>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="fw-bold text-danger fs-5">From
-                                        ¥{{ number_format($relatedBike->less_four_days_price) }} <span
+                                        ¥{{ number_format($relatedCar->less_four_days_price) }} <span
                                             class="text-muted fw-normal fs-6">/ day</span></div>
-                                    <a href="{{ route('motorcycle.single', ['slug' => $relatedBike->slug]) }}"
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}"
                                         class="text-secondary fw-bold text-decoration-none">VIEW <i
                                             class="bx bx-right-arrow-alt"></i></a>
                                 </div>
@@ -829,8 +829,8 @@
 @section('script')
     <script>
         $(document).ready(function () {
-            // Initialize Related Bikes Slider
-            $('.related-bikes-slider').slick({
+            // Initialize Related Cars Slider
+            $('.related-cars-slider').slick({
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 arrows: true,
@@ -855,7 +855,7 @@
         });
 
         function changeMainImage(src, el) {
-            $('#bike-display-img').attr('src', src);
+            $('#car-display-img').attr('src', src);
             $('.thumb-box').removeClass('active');
             $(el).addClass('active');
 

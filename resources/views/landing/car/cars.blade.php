@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title', 'Bikes')
+@section('title', 'Cars')
 @push('style')
     <style>
         .rid-menubar ul li a {
@@ -8,7 +8,7 @@
         }
 
         /* Main Container */
-        .bikes-page-wrapper {
+        .cars-page-wrapper {
             background: #f8f9fa;
             padding: 0 0;
             min-height: 100vh;
@@ -114,9 +114,9 @@
             box-shadow: 0 4px 15px rgba(188, 33, 46, 0.3);
         }
 
-        /* Bikes Grid */
+        /* Cars Grid */
         /* ===== Card ===== */
-        .bike-card {
+        .car-card {
             background: #fff;
             border-radius: 18px;
             overflow: hidden;
@@ -125,32 +125,32 @@
             transition: all .3s ease;
         }
 
-        /*.bike-card:hover {*/
+        /*.car-card:hover {*/
         /*    box-shadow: 0 24px 40px rgba(0,0,0,.15);*/
         /*    transform: translateY(-6px);*/
         /*}*/
 
         /* ===== Image ===== */
-        .bike-card-img-wrapper {
+        .car-card-img-wrapper {
             position: relative;
             height: 260px;
             background: #e5e7eb;
             overflow: hidden;
         }
 
-        .bike-card-img-wrapper img {
+        .car-card-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform .5s ease;
         }
 
-        .bike-card:hover img {
+        .car-card:hover img {
             transform: scale(1.06);
         }
 
         /* ===== Tag ===== */
-        .bike-tag {
+        .car-tag {
             display: inline-block;
             margin-top: 6px;
 
@@ -167,18 +167,18 @@
         }
 
         /* ===== Body ===== */
-        .bike-card-body {
+        .car-card-body {
             padding: 26px 22px 28px;
             text-align: center;
         }
 
         /* REMOVE side-by-side layout */
-        .bike-info-row {
+        .car-info-row {
             display: block;
         }
 
         /* ===== Title ===== */
-        .bike-info-row h5 {
+        .car-info-row h5 {
             font-size: 24px;
             font-weight: 900;
             color: #1f2937;
@@ -186,14 +186,14 @@
             line-height: 1.2;
         }
 
-        .bike-info-row h5 a {
+        .car-info-row h5 a {
             text-decoration: none;
             color: inherit;
         }
 
 
         /* ===== Subtitle ===== */
-        .bike-subtitle {
+        .car-subtitle {
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 22px;
@@ -201,7 +201,7 @@
         }
 
         /* ===== Price (centered like image 1) ===== */
-        .bike-price-block {
+        .car-price-block {
             display: flex;
             align-items: baseline;
             /* matches flex items-baseline */
@@ -212,7 +212,7 @@
             gap: 4px;
         }
 
-        /*.bike-price-block::before {*/
+        /*.car-price-block::before {*/
         /*    !*content: "From";*!*/
         /*    display: block;*/
         /*    font-size: 13px;*/
@@ -222,7 +222,7 @@
         /*    margin-bottom: 2px;*/
         /*}*/
 
-        .bike-price-block .price {
+        .car-price-block .price {
             color: #053C7C;
             /* ASJ Racing Red */
             font-size: 30px;
@@ -232,7 +232,7 @@
             line-height: 1;
         }
 
-        .bike-price-block .period {
+        .car-price-block .period {
             color: #053C7C;
             /* ASJ Racing Red */
             font-size: 14px;
@@ -267,7 +267,7 @@
             box-shadow: 0 14px 28px rgba(188, 33, 46, .45);
         }
 
-        /* Bike Card design ends here */
+        /* Car Card design ends here */
 
         /* Loading */
         .loading-wrapper {
@@ -304,7 +304,7 @@
             left: 0px;
             right: 0px;
             height: 420px;
-            background: url('{{ isset($banner) && $banner->image ? asset(BIKE_PATH . $banner->image) : asset("assets/landing/images/hero-bike.png") }}') center center / cover no-repeat;
+            background: url('{{ isset($banner) && $banner->image ? asset(CAR_PATH . $banner->image) : asset("assets/landing/images/hero-car.png") }}') center center / cover no-repeat;
             overflow: hidden;
         }
 
@@ -435,7 +435,7 @@
         }
 
         /* ===== CARD ===== */
-        .bike-card {
+        .car-card {
             background: #fff;
             border-radius: 16px;
             overflow: hidden;
@@ -444,31 +444,31 @@
             transition: 0.3s ease;
         }
 
-        .bike-card:hover {
+        .car-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 18px 35px rgba(0, 0, 0, 0.12);
         }
 
         /* ===== IMAGE ===== */
-        .bike-card-img-wrapper {
+        .car-card-img-wrapper {
             height: 260px;
             overflow: hidden;
         }
 
-        .bike-card-img-wrapper img {
+        .car-card-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
         /* ===== BODY ===== */
-        .bike-card-body {
+        .car-card-body {
             padding: 26px 22px 28px;
             text-align: center;
         }
 
         /* ===== TITLE ===== */
-        .bike-title {
+        .car-title {
             font-size: 26px;
             font-weight: 900;
             color: #111827;
@@ -476,13 +476,13 @@
             line-height: 1.2;
         }
 
-        .bike-title a {
+        .car-title a {
             text-decoration: none;
             color: inherit;
         }
 
         /* ===== SUBTITLE ===== */
-        .bike-subtitle {
+        .car-subtitle {
             font-size: 14px;
             color: #6b7280;
             margin-bottom: 18px;
@@ -490,7 +490,7 @@
         }
 
         /* ===== EMBLEM ROW ===== */
-        .bike-emblem-row {
+        .car-emblem-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -512,7 +512,7 @@
         }
 
         /* ===== PRICE ===== */
-        .bike-price-block {
+        .car-price-block {
             display: flex;
             justify-content: center;
             align-items: baseline;
@@ -566,7 +566,7 @@
 @endpush
 
 @section('main')
-    <div class="bikes-page-wrapper">
+    <div class="cars-page-wrapper">
         <div class="hero-section"></div>
         <div class="container">
 
@@ -589,7 +589,7 @@
                         </div>
 
                         <div class="filter-search">
-                            <input type="text" class="search-bikes" placeholder="Search motorcycles by name...">
+                            <input type="text" class="search-cars" placeholder="Search cars by name...">
                             <i class="icofont-search search-icon"></i>
                         </div>
                     </div>
@@ -597,68 +597,68 @@
             </div>
 
 
-            <!-- Bikes Grid -->
-            <div class="bikes-grid">
-                <div class="row bikesData">
-                    @if(!$bikesList->isEmpty())
+            <!-- Cars Grid -->
+            <div class="cars-grid">
+                <div class="row carsData">
+                    @if(!$carsList->isEmpty())
                         @php
-                            // Group bikes by category for initial display
-                            $groupedBikes = $bikesList->groupBy('category_id');
+                            // Group cars by category for initial display
+                            $groupedCars = $carsList->groupBy('category_id');
                         @endphp
 
                         @foreach($ccRanges as $rangeName => $rangeData)
                             @php
-                                // Get bikes in this range
-                                //                                $bikesInRange = collect();
+                                // Get cars in this range
+                                //                                $carsInRange = collect();
                                 //                                foreach($rangeData['category_ids'] as $catId) {
-                                //                                    if(isset($groupedBikes[$catId])) {
-                                //                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
+                                //                                    if(isset($groupedCars[$catId])) {
+                                //                                        $carsInRange = $carsInRange->merge($groupedCars[$catId]);
                                 //                                    }
                                 //                                }
-                                $bikesInRange = collect();
+                                $carsInRange = collect();
                                 foreach ($rangeData['category_ids'] as $catId) {
-                                    if (isset($groupedBikes[$catId])) {
-                                        $bikesInRange = $bikesInRange->merge($groupedBikes[$catId]);
+                                    if (isset($groupedCars[$catId])) {
+                                        $carsInRange = $carsInRange->merge($groupedCars[$catId]);
                                     }
                                 }
-                                $bikesInRange = $bikesInRange->sortBy('sort_order')->values();
+                                $carsInRange = $carsInRange->sortBy('sort_order')->values();
                             @endphp
 
-                            @if($bikesInRange->count() > 0)
+                            @if($carsInRange->count() > 0)
                                 <!-- Category Section Header -->
                                 <div class="col-12 category-section-header" id="cc" data-range="{{ $rangeName }}">
                                     <span class="cc-range-title">{{ $rangeName }}</span>
                                 </div>
 
-                                <!-- Bikes in this range -->
-                                @foreach($bikesInRange as $bike)
+                                <!-- Cars in this range -->
+                                @foreach($carsInRange as $car)
                                     <div class="col-lg-4 col-md-6 mb-4">
-                                        <div class="bike-card">
+                                        <div class="car-card">
 
                                             <!-- Image -->
-                                            <div class="bike-card-img-wrapper">
-                                                <a href="{{route('motorcycle.single', ['slug' => $bike->slug])}}">
-                                                    <img src="{{asset(BIKE_PATH . $bike->images[0])}}" alt="{{$bike->name}}" loading="lazy">
+                                            <div class="car-card-img-wrapper">
+                                                <a href="{{route('car.single', ['slug' => $car->slug])}}">
+                                                    <img src="{{asset(CAR_PATH . $car->images[0])}}" alt="{{$car->name}}" loading="lazy">
                                                 </a>
                                             </div>
 
                                             <!-- Card Body -->
-                                            <div class="bike-card-body">
+                                            <div class="car-card-body">
 
                                                 <!-- Title -->
-                                                <h4 class="bike-title">
-                                                    <a href="{{route('motorcycle.single', ['slug' => $bike->slug])}}">
-                                                        {{$bike->card_header ?? $bike->name}}
+                                                <h4 class="car-title">
+                                                    <a href="{{route('car.single', ['slug' => $car->slug])}}">
+                                                        {{$car->card_header ?? $car->name}}
                                                     </a>
                                                 </h4>
 
                                                 <!-- Subtitle -->
-                                                <div class="bike-subtitle">
-                                                    {{$bike->card_subtitle ?? 'Premium Adventure Touring'}}
+                                                <div class="car-subtitle">
+                                                    {{$car->card_subtitle ?? 'Premium Adventure Touring'}}
                                                 </div>
 
                                                 <!-- Emblems Row -->
-                                                <div class="bike-emblem-row">
+                                                <div class="car-emblem-row">
                                                     <div class="emblem-item">
                                                         <i class='bx bx-helmet'></i>
                                                         <span>Geared Up</span>
@@ -672,22 +672,22 @@
                                                         <span>Adventure-Ready</span>
                                                     </div>
                                                 </div>
-                                                {{--@dd($bike);--}}
+                                                {{--@dd($car);--}}
                                                 <!-- Price -->
-                                                <div class="bike-price-block">
+                                                <div class="car-price-block">
                                                     <span class="price-from">From</span>
-                                                    <span class="price-amount">¥{{number_format($bike->month_price)}}</span>
+                                                    <span class="price-amount">¥{{number_format($car->month_price)}}</span>
                                                     <span class="price-per">/ Per Day</span>
                                                 </div>
 
                                                 <!-- Button -->
-                                                {{-- <button class="btn-adventure bikeRequestQuote" data-id="{{ $bike->id }}"
-                                                    data-name="{{ $bike->name }}" data-image="{{ asset(BIKE_PATH.$bike->images[0]) }}">
+                                                {{-- <button class="btn-adventure carRequestQuote" data-id="{{ $car->id }}"
+                                                    data-name="{{ $car->name }}" data-image="{{ asset(CAR_PATH.$car->images[0]) }}">
                                                     CHECK IT OUT
                                                 </button> --}}
-                                                <button class="btn-adventure btncheckout" data-slug="{{ $bike->slug }}"
-                                                    data-id="{{ $bike->id }}" data-name="{{ $bike->name }}"
-                                                    data-image="{{ asset(BIKE_PATH . $bike->images[0]) }}">
+                                                <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
+                                                    data-id="{{ $car->id }}" data-name="{{ $car->name }}"
+                                                    data-image="{{ asset(CAR_PATH . $car->images[0]) }}">
                                                     CHECK IT OUT
                                                 </button>
 
@@ -702,7 +702,7 @@
                     @else
                         <div class="col-12">
                             <div class="no-results">
-                                <h4>No bikes found</h4>
+                                <h4>No cars found</h4>
                                 <p>Try adjusting your search criteria</p>
                             </div>
                         </div>
@@ -710,8 +710,8 @@
                 </div>
             </div>
 
-            <div class="bikePaginationData">
-                {!! bikePagination($totalPages) !!}
+            <div class="carPaginationData">
+                {!! carPagination($totalPages) !!}
             </div>
         </div>
     </div>
@@ -730,10 +730,10 @@
         });
         $(document).on('click', '.btncheckout', function () {
             let slug = $(this).data('slug');
-            window.location.href = "/motorcycle/" + slug;
+            window.location.href = "/car/" + slug;
         });
         // Search functionality
-        $('.search-bikes').on('keyup', function (e) {
+        $('.search-cars').on('keyup', function (e) {
             loadPageData(1);
         });
 
@@ -821,12 +821,12 @@
         }
 
         function loadPageData(page = '1') {
-            var search = $('.search-bikes').val() || '';
+            var search = $('.search-cars').val() || '';
             var range = $('.search-range').val() || '0';
             var price = updateSlider();
 
             $.ajax({
-                url: "{{ route('motorcycle.pagination') }}",
+                url: "{{ route('car.pagination') }}",
                 dataType: "JSON",
                 method: "POST",
                 data: {
@@ -839,18 +839,18 @@
                     "_token": "{{csrf_token()}}",
                 },
                 beforeSend: function () {
-                    $('.bikesData').html('<div class="col-12"><div class="loading-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="width: 60px;"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#dc3545"></stop><stop offset=".3" stop-color="#dc3545" stop-opacity=".9"></stop><stop offset=".6" stop-color="#dc3545" stop-opacity=".6"></stop><stop offset=".8" stop-color="#dc3545" stop-opacity=".3"></stop><stop offset="1" stop-color="#dc3545" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="15" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#dc3545" stroke-width="15" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg></div></div>');
+                    $('.carsData').html('<div class="col-12"><div class="loading-wrapper"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="width: 60px;"><radialGradient id="a12" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#dc3545"></stop><stop offset=".3" stop-color="#dc3545" stop-opacity=".9"></stop><stop offset=".6" stop-color="#dc3545" stop-opacity=".6"></stop><stop offset=".8" stop-color="#dc3545" stop-opacity=".3"></stop><stop offset="1" stop-color="#dc3545" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a12)" stroke-width="15" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#dc3545" stroke-width="15" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg></div></div>');
                 },
                 success: function (result) {
-                    $('.bikesData').html(result.message.data);
-                    $('.bikePaginationData').html(result.message.pagination);
+                    $('.carsData').html(result.message.data);
+                    $('.carPaginationData').html(result.message.pagination);
 
                     // Hide pagination when an engine/range filter is active
                     var currentRange = $('.search-range').val() || '0';
                     if (currentRange !== '0') {
-                        $('.bikePaginationData').hide();
+                        $('.carPaginationData').hide();
                     } else {
-                        $('.bikePaginationData').show();
+                        $('.carPaginationData').show();
                     }
                 },
                 error: function (xhr) {

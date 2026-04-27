@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title','About Our Bikes')
+@section('title','About Our Cars')
 
 @push('style')
     <style>
@@ -7,7 +7,7 @@
             font-size: 15px !important;
             margin-right: 20px !important;
         }
-        .bikes-container {
+        .cars-container {
             background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
             min-height: 100vh;
             padding: 60px 0;
@@ -33,7 +33,7 @@
             border-radius: 2px;
         }
 
-        .bikes-card {
+        .cars-card {
             border: none;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(243, 54, 79, 0.1);
@@ -43,7 +43,7 @@
             background: white;
         }
 
-        .bikes-card:hover {
+        .cars-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(243, 54, 79, 0.15);
         }
@@ -92,7 +92,7 @@
             text-align: center;
         }
 
-        .bike-categories {
+        .car-categories {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
@@ -193,7 +193,7 @@
             margin: 0;
         }
 
-        .bike-image-placeholder {
+        .car-image-placeholder {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border-radius: 15px;
             height: 300px;
@@ -208,7 +208,7 @@
         }
 
         @media (max-width: 768px) {
-            .bikes-container {
+            .cars-container {
                 padding: 30px 0;
             }
 
@@ -221,7 +221,7 @@
                 padding: 1.5rem;
             }
 
-            .bike-categories {
+            .car-categories {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -242,60 +242,60 @@
 @endpush
 
 @section('main')
-    <div class="bikes-container">
+    <div class="cars-container">
         <div class="container">
-            <h2 class="main-title text-center">About Our Bikes</h2>
+            <h2 class="main-title text-center">About Our Cars</h2>
 
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10">
 
                     <!-- Main Content Card -->
-                    <div class="bikes-card">
+                    <div class="cars-card">
                         <div class="card-header-custom">
                             <h4 class="header-title">
-                                Bike Rental Japan is proud to offer Kansai's best selection of rental motorcycles.
+                                Car Rental Japan is proud to offer Kansai's best selection of rental cars.
                             </h4>
                         </div>
                         <div class="card-body-custom">
 
                             <!-- Introduction Text -->
                             <p class="intro-text">
-                                We offer a wide range of popular motorcycles including small 250s for shorter rides and offroad, 400s for longer, 750 or near for adventure touring and larger capacity sports touring bikes. For whatever you require, we have what you need, the best professionally maintained bikes, good quality gear, so that you can get on the road hassle free.
+                                We offer a wide range of popular cars including small 250s for shorter rides and offroad, 400s for longer, 750 or near for adventure touring and larger capacity sports touring cars. For whatever you require, we have what you need, the best professionally maintained cars, good quality gear, so that you can get on the road hassle free.
                             </p>
 
-                            <!-- Bike Categories -->
+                            <!-- Car Categories -->
                             <div class="features-section">
-                                <h5 class="features-title">Our Motorcycle Categories</h5>
-                                <div class="bike-categories">
+                                <h5 class="features-title">Our Car Categories</h5>
+                                <div class="car-categories">
                                     <div class="category-card">
-                                        <h6 class="category-title">250cc Bikes</h6>
+                                        <h6 class="category-title">250cc Cars</h6>
                                         <p class="category-description">Perfect for shorter rides and off-road adventures. Lightweight and easy to handle for city exploration.</p>
                                     </div>
                                     <div class="category-card">
-                                        <h6 class="category-title">400cc Bikes</h6>
+                                        <h6 class="category-title">400cc Cars</h6>
                                         <p class="category-description">Ideal for longer journeys with more power and comfort for extended touring.</p>
                                     </div>
                                     <div class="category-card">
-                                        <h6 class="category-title">750cc+ Bikes</h6>
-                                        <p class="category-description">Adventure touring and larger capacity sports touring bikes for serious riders.</p>
+                                        <h6 class="category-title">750cc+ Cars</h6>
+                                        <p class="category-description">Adventure touring and larger capacity sports touring cars for serious riders.</p>
                                     </div>
                                     <div class="category-card">
                                         <h6 class="category-title">Classic Models</h6>
-                                        <p class="category-description">Popular classic bikes alongside our modern fleet for a unique riding experience.</p>
+                                        <p class="category-description">Popular classic cars alongside our modern fleet for a unique riding experience.</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Bike Image Placeholder -->
-                            <div class="bike-image-placeholder">
-                                🏍️ Professional Quality Motorcycles
+                            <!-- Car Image Placeholder -->
+                            <div class="car-image-placeholder">
+                                🏍️ Professional Quality Cars
                             </div>
 
                             <!-- Included Features -->
                             <div class="included-features">
-                                <h5>What's Included with Every Bike</h5>
+                                <h5>What's Included with Every Car</h5>
                                 <p style="text-align: center; margin-bottom: 1.5rem;">
-                                    Bikes come with panniers, ETC readers (you need them for highway entry, please see our further information on the requirements) USB power outlets and smart phone holders.
+                                    Cars come with panniers, ETC readers (you need them for highway entry, please see our further information on the requirements) USB power outlets and smart phone holders.
                                 </p>
                                 <div class="features-grid">
                                     <div class="feature-item">
@@ -325,29 +325,29 @@
                             <div class="maintenance-highlight">
                                 <h5>Professional Maintenance Standards</h5>
                                 <p>
-                                    We pride ourselves on the high level maintenance of our bikes. Most of our bikes are late up to date models, however we do rent some more popular classic bikes. Every motorcycle in our fleet undergoes rigorous maintenance checks to ensure your safety and riding pleasure.
+                                    We pride ourselves on the high level maintenance of our cars. Most of our cars are late up to date models, however we do rent some more popular classic cars. Every car in our fleet undergoes rigorous maintenance checks to ensure your safety and riding pleasure.
                                 </p>
                             </div>
 
                             <!-- Additional Information -->
                             <div class="features-section">
-                                <h5 class="features-title">Why Choose Our Bikes?</h5>
-                                <div class="bike-categories">
+                                <h5 class="features-title">Why Choose Our Cars?</h5>
+                                <div class="car-categories">
                                     <div class="category-card">
                                         <h6 class="category-title">✅ Quality Assurance</h6>
-                                        <p class="category-description">Every bike is professionally maintained and regularly serviced to the highest standards.</p>
+                                        <p class="category-description">Every car is professionally maintained and regularly serviced to the highest standards.</p>
                                     </div>
                                     <div class="category-card">
                                         <h6 class="category-title">🛡️ Safety First</h6>
-                                        <p class="category-description">All motorcycles come with quality safety gear and are thoroughly inspected before each rental.</p>
+                                        <p class="category-description">All cars come with quality safety gear and are thoroughly inspected before each rental.</p>
                                     </div>
                                     <div class="category-card">
                                         <h6 class="category-title">🚀 Hassle-Free Experience</h6>
-                                        <p class="category-description">Get on the road quickly with our streamlined rental process and well-equipped bikes.</p>
+                                        <p class="category-description">Get on the road quickly with our streamlined rental process and well-equipped cars.</p>
                                     </div>
                                     <div class="category-card">
                                         <h6 class="category-title">🏆 Best Selection</h6>
-                                        <p class="category-description">Kansai's finest selection of rental motorcycles for every type of rider and journey.</p>
+                                        <p class="category-description">Kansai's finest selection of rental cars for every type of rider and journey.</p>
                                     </div>
                                 </div>
                             </div>

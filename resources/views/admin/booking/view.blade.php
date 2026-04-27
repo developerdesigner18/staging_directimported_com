@@ -351,12 +351,12 @@
 
 
                         <tr>
-                            <th>Selected Bikes</th>
+                            <th>Selected Cars</th>
                             <td>
-                                @if($bikes)
-                                    <select class="form-select" name="bike_id">
-                                        @foreach($bikes as $bike)
-                                            <option value="{{ $bike->id }}" {{ $rowData->bike_id==$bike->id?'selected':'' }}>{{ $bike->name }}</option>
+                                @if($cars)
+                                    <select class="form-select" name="car_id">
+                                        @foreach($cars as $car)
+                                            <option value="{{ $car->id }}" {{ $rowData->car_id==$car->id?'selected':'' }}>{{ $car->name }}</option>
                                         @endforeach
                                     </select>
                                 @endif
@@ -397,7 +397,7 @@
                             <th>Optional Insurance</th>
                             <td>
                                 <input type="hidden" name="insurance" value="{{ $rowData->insurance }}">
-                                <span id="insurance_amount_display" class="fw-bold text-dark">{{ ($rowData->insurance == 1) ? '¥' . number_format($rowData->bike->insurance_price * $rowData->totalDays()) : '' }}</span>
+                                <span id="insurance_amount_display" class="fw-bold text-dark">{{ ($rowData->insurance == 1) ? '¥' . number_format($rowData->car->insurance_price * $rowData->totalDays()) : '' }}</span>
                             </td>
                         </tr>
 
@@ -432,7 +432,7 @@
 {{--                                        --}}{{--                             data-status="{{ $rowData->status }}"--}}
 {{--                                        data-email="{{ $rowData->email }}"--}}
 {{--                                        data-id="{{ $rowData->id }}"--}}
-{{--                                        data-bike_id="{{ $rowData->bike_id }}">--}}
+{{--                                        data-car_id="{{ $rowData->car_id }}">--}}
 {{--                                    <i class="bx bx-loader spinner me-2" style="display: none" id="btnSendBookingDetailSpinner"></i>--}}
 {{--                                    Send Booking Details to Customer--}}
 {{--                                </button>--}}
@@ -893,7 +893,7 @@
                 // Get dynamic values from the Blade template and inject them into JavaScript variables
                 let id = "{{ $rowData->id }}"; // Booking ID
                 let bookingId = "{{ $rowData->booking_id }}"; // Booking ID
-                let bikeId = "{{ $rowData->bike_id }}"; // Bike ID
+                let carId = "{{ $rowData->car_id }}"; // Car ID
                 let email = "{{ $rowData->email }}"; // Email
                 let status = "{{ $rowData->status->value }}"; // Status of the booking
 
@@ -943,7 +943,7 @@
                                 data: {
                                     id: id,
                                     booking_id: bookingId,
-                                    bike_id: bikeId,
+                                    car_id: carId,
                                     email: email,
                                     status: status,
                                     _token: "{{ csrf_token() }}"
@@ -1225,7 +1225,7 @@
                                 previewModal.show();
                             });
 
-                            $('input[name="start_date"], input[name="end_date"], input[name="start_time"], input[name="end_time"], select[name="bike_id"], select[name="selected_accessories[]"]').on('change', function() {
+                            $('input[name="start_date"], input[name="end_date"], input[name="start_time"], input[name="end_time"], select[name="car_id"], select[name="selected_accessories[]"]').on('change', function() {
                                 calculateQuote();
                             });
 
@@ -1302,8 +1302,8 @@
                                                     $("#" + key + "-error").html(value).show();
                                                 });
 
-                                                if (data.error.hasOwnProperty('bike_ids')) {
-                                                    sendError(data.error.bike_ids);
+                                                if (data.error.hasOwnProperty('car_ids')) {
+                                                    sendError(data.error.car_ids);
                                                 }
                                             } else if (data.hasOwnProperty('message')) {
                                                 actionError(xhr, data.message);
@@ -1354,8 +1354,8 @@
                                                 $("#" + key + "-error").html(value).show();
                                             });
 
-                                            if (data.error.hasOwnProperty('bike_ids')) {
-                                                sendError(data.error.bike_ids);
+                                            if (data.error.hasOwnProperty('car_ids')) {
+                                                sendError(data.error.car_ids);
                                             }
                                         } else if (data.hasOwnProperty('message')) {
                                             actionError(xhr, data.message);
@@ -1375,7 +1375,7 @@
                             $(document).on('click', '.btnSendBookingDetail', function () {
                                 alert('dd');
                                 var bookingId = $(this).data('booking-id');
-                                var bikeId = $(this).data('bike_id'); // underscore, not hyphen
+                                var carId = $(this).data('car_id'); // underscore, not hyphen
                                 var id = $(this).data('id');
                                 var email = $(this).data('email');
                                 var status = $(this).data('status');
@@ -1387,7 +1387,7 @@
                                     data: {
                                         id: id,
                                         booking_id: bookingId,
-                                        bike_id: bikeId,
+                                        car_id: carId,
                                         email: email,
                                         status: status,
                                         "_token": "{{ csrf_token() }}",

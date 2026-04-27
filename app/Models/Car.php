@@ -8,7 +8,7 @@ use App\Enum\CategoryType;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enum\AccessoryType;
 
-class Bike extends Model
+class Car extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -55,7 +55,7 @@ class Bike extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id')
-            ->where('type', CategoryType::BIKE);
+            ->where('type', CategoryType::CAR);
     }
 
     //    public function freeAccessories()

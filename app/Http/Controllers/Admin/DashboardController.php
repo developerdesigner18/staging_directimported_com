@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
-use App\Models\Bike;
+use App\Models\Car;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,10 +17,10 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $totalBikes = Bike::all()->count();
+        $totalCars = Car::all()->count();
         $totalUsers = User::all()->count();
         $totalBooking = Booking::all()->count();
-        return view('admin.dashboard.index',compact('totalBikes','totalUsers', 'totalBooking'));
+        return view('admin.dashboard.index',compact('totalCars','totalUsers', 'totalBooking'));
     }
 
     public function uploadImage(Request $request)

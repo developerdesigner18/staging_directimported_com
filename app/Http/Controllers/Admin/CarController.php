@@ -6,9 +6,9 @@ use App\Enum\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Accessories;
-use App\Models\Bike;
+use App\Models\Car;
 use App\Models\Location;
-use App\Models\BikeConfiguration;
+use App\Models\CarConfiguration;
 use App\Models\Category;
 use App\Models\HeroSlider;
 use App\Models\CarSpec;
@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
-class BikeController extends Controller
+class CarController extends Controller
 {
     use ResponseTrait;
 
@@ -65,30 +65,30 @@ class BikeController extends Controller
     {
         // Handle search persistence in session
         if (!$request->ajax() && !$request->has('search_keyword') && !$request->has('range') && !$request->has('page') && !$request->has('search')) {
-            session()->forget(['bike_search', 'bike_range']);
+            session()->forget(['car_search', 'car_range']);
         }
 
         if ($request->has('search_keyword')) {
             $search = $request->search_keyword;
-            session(['bike_search' => $search]);
+            session(['car_search' => $search]);
         } else {
-            $search = session('bike_search', '');
+            $search = session('car_search', '');
         }
         if ($request->has('range')) {
             $range = $request->range;
-            session(['bike_range' => $range]);
+            session(['car_range' => $range]);
         } else {
-            $range = session('bike_range', '');
+            $range = session('car_range', '');
         }
-        $bikes = Bike::query()
+        $cars = Car::query()
             ->with('category')
             ->orderBy('sort_order', 'asc');
 
         if ($search) {
-            $bikes->where('name', 'LIKE', "%{$search}%");
+            $cars->where('name', 'LIKE', "%{$search}%");
         }
         if ($range == 'all') {
-            session()->forget('bike_range');
+            session()->forget('car_range');
             $range = '';
         }
 
@@ -98,7 +98,7 @@ class BikeController extends Controller
             $min = $ranges[$range]['min'];
             $max = $ranges[$range]['max'];
 
-            $bikes->whereHas('category', function ($q) use ($min, $max) {
+            $cars->whereHas('category', function ($q) use ($min, $max) {
                 $q->whereRaw("
             CAST(REGEXP_SUBSTR(name, '[0-9]+') AS UNSIGNED) BETWEEN ? AND ?
         ", [$min, $max]);
@@ -111,11 +111,11 @@ class BikeController extends Controller
         if ($request->ajax()) {
 
             if ($request->has('view_type') && $request->view_type == 'grid') {
-                $bikes = $bikes->get();
-                return view('admin.bike.grid_list', compact('bikes', 'ccRanges'))->render();
+                $cars = $cars->get();
+                return view('admin.car.grid_list', compact('cars', 'ccRanges'))->render();
             }
 
-            return DataTables::eloquent($bikes)
+            return DataTables::eloquent($cars)
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
 
@@ -129,27 +129,27 @@ class BikeController extends Controller
                 })
                 //                ->addColumn('image', function ($row) {
 //
-//                    return '<img src="' . BIKE_PATH.$row->images[0] . '" width="50px">';
+//                    return '<img src="' . CAR_PATH.$row->images[0] . '" width="50px">';
 //                })
                 ->addColumn('action', function ($row) {
                     // Action buttons
-                    $editUrl = route('admin.bike.edit', $row->id);
-                    $viewUrl = route('admin.bike.view', $row->id);
+                    $editUrl = route('admin.car.edit', $row->id);
+                    $viewUrl = route('admin.car.view', $row->id);
 
                     $buttons = '
                     <ul class="list-inline mb-0 d-flex justify-content-center text-center">
                         <li class="list-inline-item">
-                               <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Bike">
+                               <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Car">
                                 <i class="ri-eye-line"></i>
                             </a>
                         </li>
                         <li class="list-inline-item">
-                            <a href="' . $editUrl . '" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Edit Bike">
+                            <a href="' . $editUrl . '" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Edit Car">
                                 <i class="ri-pencil-line"></i>
                             </a>
                         </li>
                          <li class="list-inline-item">
-                                   <button class="btn btn-danger btn-sm" onclick="deleteBike(' . $row->id . ', this)" data-bs-toggle="tooltip" title="Delete Bike">
+                                   <button class="btn btn-danger btn-sm" onclick="deleteCar(' . $row->id . ', this)" data-bs-toggle="tooltip" title="Delete Car">
                                 <i class="ri-delete-bin-line"></i>
                             </button>
                         </li>
@@ -163,16 +163,16 @@ class BikeController extends Controller
                 ->make(true);
 
         }
-        $queryForGrid = clone $bikes;
-        $bikesForGrid = $queryForGrid->get();
-        // we still paginate $bikes so $bikes variable exists for other possible code dependencies (even though grid uses bikesForGrid and table uses datatables).
-        $bikes = $bikes->paginate(8);
+        $queryForGrid = clone $cars;
+        $carsForGrid = $queryForGrid->get();
+        // we still paginate $cars so $cars variable exists for other possible code dependencies (even though grid uses carsForGrid and table uses datatables).
+        $cars = $cars->paginate(8);
 
-        return view('admin.bike.index', compact('bikes', 'search', 'range', 'bikesForGrid', 'ccRanges'));
+        return view('admin.car.index', compact('cars', 'search', 'range', 'carsForGrid', 'ccRanges'));
     }
     public function create()
     {
-        $categories = Category::select('id', 'name')->where('type', CategoryType::BIKE->value)->get();
+        $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
 
         // Separate Free & Extra Accessories
         $freeAccessories = Accessories::where('type', 'FREE')->get();
@@ -180,14 +180,14 @@ class BikeController extends Controller
 
         $locations = Location::all();
 
-        return view('admin.bike.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations'));
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations'));
     }
     public function view(Request $request)
     {
-        $bike = Bike::with('map')->findOrFail($request->id);
-        $categories = Category::select('id', 'name')->where('type', CategoryType::BIKE->value)->get();
+        $car = Car::with('map')->findOrFail($request->id);
+        $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
         $accessories = Accessories::all();
-        return view('admin.bike.view', compact('bike', 'categories', 'accessories'));
+        return view('admin.car.view', compact('car', 'categories', 'accessories'));
 
     }
     public function store(Request $request)
@@ -198,7 +198,7 @@ class BikeController extends Controller
             'category_id' => [
                 'required',
                 Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->where('type', CategoryType::BIKE);
+                    $query->where('type', CategoryType::CAR);
                 })
             ],
             'less_four_days_price' => 'required|numeric|min:0',
@@ -228,48 +228,48 @@ class BikeController extends Controller
         try {
             DB::beginTransaction();
 
-            $lastid = Bike::select('sort_order')->orderBy('sort_order', 'desc')->first();
+            $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
             $sort_order = $lastid->sort_order ?? 0;
 
-            $bike = new Bike();
-            $bike->sort_order = $sort_order + 1;
-            $bike->name = $request->name;
-            $bike->slug = Str::slug($request->name);
-            $bike->category_id = $request->category_id;
-            $bike->less_four_days_price = $request->less_four_days_price;
-            $bike->five_six_days_price = $request->five_six_days_price;
-            $bike->week_price = $request->week_price;
-            $bike->month_price = $request->month_price;
-            $bike->max_price = $request->max_price;
-            $bike->insurance_price = $request->insurance_price ?? 0;
-            $bike->is_recommended = $request->is_recommended ?? 0;
-            $bike->location = $request->location ?? null;
-            $bike->location_id = $request->location ?? null;
-            $bike->free_accessory = $request->free_accessory ?? null;
-            $bike->extra_accessory = $request->extra_accessory ?? null;
-            $bike->number_plate = $request->number_plate;
+            $car = new Car();
+            $car->sort_order = $sort_order + 1;
+            $car->name = $request->name;
+            $car->slug = Str::slug($request->name);
+            $car->category_id = $request->category_id;
+            $car->less_four_days_price = $request->less_four_days_price;
+            $car->five_six_days_price = $request->five_six_days_price;
+            $car->week_price = $request->week_price;
+            $car->month_price = $request->month_price;
+            $car->max_price = $request->max_price;
+            $car->insurance_price = $request->insurance_price ?? 0;
+            $car->is_recommended = $request->is_recommended ?? 0;
+            $car->location = $request->location ?? null;
+            $car->location_id = $request->location ?? null;
+            $car->free_accessory = $request->free_accessory ?? null;
+            $car->extra_accessory = $request->extra_accessory ?? null;
+            $car->number_plate = $request->number_plate;
             if ($request->hasFile('banner')) {
-                $bike->banner = uploadFile($request->banner, BIKE_PATH, 'banner_');
+                $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
             }
 
             $images = [];
             if ($request->images) {
                 foreach ($request->images as $image) {
-                    $thumbnail = uploadFilepondEncodedFile($image, BIKE_PATH, 'bike_');
+                    $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
                     $images[] = $thumbnail;
                 }
             }
 
-            $bike->images = $images;
-            $bike->description = $request->description;
-            $bike->card_header = $request->card_header;
-            $bike->card_subtitle = $request->card_subtitle;
+            $car->images = $images;
+            $car->description = $request->description;
+            $car->card_header = $request->card_header;
+            $car->card_subtitle = $request->card_subtitle;
 
-            $bike->save();
+            $car->save();
 
             // Save Technical Specifications
             CarSpec::create([
-                'bike_id' => $bike->id,
+                'car_id' => $car->id,
                 'make' => $request->make,
                 'exterior_color' => $request->exterior_color,
                 'body_type' => $request->body_type,
@@ -282,7 +282,7 @@ class BikeController extends Controller
             ]);
 
             DB::commit();
-            return $this->sendSuccess(__('bike added successfully!'));
+            return $this->sendSuccess(__('car added successfully!'));
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -291,12 +291,12 @@ class BikeController extends Controller
 
     public function edit($id)
     {
-        $bike = Bike::with('spec')->findOrFail($id);
-        $categories = Category::select('id', 'name')->where('type', CategoryType::BIKE->value)->get();
+        $car = Car::with('spec')->findOrFail($id);
+        $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
         $freeAccessories = Accessories::where('type', 'FREE')->get();
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
         $locations = Location::all();
-        return view('admin.bike.edit', compact('bike', 'categories', 'freeAccessories', 'extraAccessories', 'locations'));
+        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations'));
     }
 
     public function update(Request $request, $id)
@@ -306,7 +306,7 @@ class BikeController extends Controller
             'category_id' => [
                 'required',
                 Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->where('type', CategoryType::BIKE);
+                    $query->where('type', CategoryType::CAR);
                 })
             ],
             'less_four_days_price' => 'required|numeric|min:0',
@@ -337,34 +337,34 @@ class BikeController extends Controller
         try {
             DB::beginTransaction();
 
-            $bike = Bike::findOrFail($id);
+            $car = Car::findOrFail($id);
 
             // Basic fields
-            $bike->name = $request->name;
-            $bike->slug = Str::slug($request->name);
-            $bike->category_id = $request->category_id;
-            $bike->less_four_days_price = $request->less_four_days_price;
-            $bike->five_six_days_price = $request->five_six_days_price;
-            $bike->week_price = $request->week_price;
-            $bike->month_price = $request->month_price;
-            $bike->max_price = $request->max_price;
-            $bike->insurance_price = $request->insurance_price ?? 0;
-            $bike->is_recommended = $request->is_recommended ?? 0;
-            $bike->location = $request->location ?? null;
-            $bike->location_id = $request->location ?? null;
-            $bike->free_accessory = $request->free_accessory ?? null;
-            $bike->extra_accessory = $request->extra_accessory ?? null;
+            $car->name = $request->name;
+            $car->slug = Str::slug($request->name);
+            $car->category_id = $request->category_id;
+            $car->less_four_days_price = $request->less_four_days_price;
+            $car->five_six_days_price = $request->five_six_days_price;
+            $car->week_price = $request->week_price;
+            $car->month_price = $request->month_price;
+            $car->max_price = $request->max_price;
+            $car->insurance_price = $request->insurance_price ?? 0;
+            $car->is_recommended = $request->is_recommended ?? 0;
+            $car->location = $request->location ?? null;
+            $car->location_id = $request->location ?? null;
+            $car->free_accessory = $request->free_accessory ?? null;
+            $car->extra_accessory = $request->extra_accessory ?? null;
 
-            $bike->number_plate = $request->number_plate;
-            $bike->card_header = $request->card_header;
-            $bike->card_subtitle = $request->card_subtitle;
+            $car->number_plate = $request->number_plate;
+            $car->card_header = $request->card_header;
+            $car->card_subtitle = $request->card_subtitle;
 
             // Banner upload
             if ($request->hasFile('banner')) {
-                if ($bike->banner) {
-                    deleteImage($bike->banner, BIKE_PATH);
+                if ($car->banner) {
+                    deleteImage($car->banner, CAR_PATH);
                 }
-                $bike->banner = uploadFile($request->banner, BIKE_PATH, 'banner_');
+                $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
             }
 
             /*
@@ -373,7 +373,7 @@ class BikeController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $currentImages = $bike->images ?? [];
+            $currentImages = $car->images ?? [];
 
             if ($request->filled('removed_images')) {
 
@@ -386,7 +386,7 @@ class BikeController extends Controller
                         unset($currentImages[$key]);
 
                         // Optional: delete from storage
-                        // deleteImage($removedImage, BIKE_PATH);
+                        // deleteImage($removedImage, CAR_PATH);
                     }
                 }
 
@@ -406,7 +406,7 @@ class BikeController extends Controller
 
                     } else {
                         // New uploaded image
-                        $thumbnail = uploadFilepondEncodedFile($image, BIKE_PATH, 'bike_');
+                        $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
                         $currentImages[] = $thumbnail;
                     }
                 }
@@ -429,19 +429,19 @@ class BikeController extends Controller
                     }
                 }
 
-                $bike->images = $orderedImages;
+                $car->images = $orderedImages;
 
             } else {
-                $bike->images = $currentImages;
+                $car->images = $currentImages;
             }
 
             // Description & specs
-            $bike->description = $request->description;
-            $bike->save();
+            $car->description = $request->description;
+            $car->save();
 
             // Update Technical Specifications
             CarSpec::updateOrCreate(
-                ['bike_id' => $bike->id],
+                ['car_id' => $car->id],
                 [
                     'make' => $request->make,
                     'exterior_color' => $request->exterior_color,
@@ -457,7 +457,7 @@ class BikeController extends Controller
 
             DB::commit();
 
-            return $this->sendSuccess(__('Bike updated successfully!'));
+            return $this->sendSuccess(__('Car updated successfully!'));
 
         } catch (\Exception $exception) {
 
@@ -470,7 +470,7 @@ class BikeController extends Controller
     public function delete(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => ['required', Rule::exists('bikes', 'id')],
+            'id' => ['required', Rule::exists('cars', 'id')],
         ]);
 
         if ($validator->fails()) {
@@ -480,10 +480,10 @@ class BikeController extends Controller
         try {
             DB::beginTransaction();
 
-            Bike::find($request->id)->delete();
+            Car::find($request->id)->delete();
 
             DB::commit();
-            return $this->sendSuccess('bike deleted successfully');
+            return $this->sendSuccess('car deleted successfully');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -493,8 +493,8 @@ class BikeController extends Controller
 
     public function configuration()
     {
-        $configuration = BikeConfiguration::whereIn('key', ['rate_details', 'what_to_expect', 'what_include', 'requirements', 'useful_links'])->get();
-        return view('admin.bike.configuration', compact('configuration'));
+        $configuration = CarConfiguration::whereIn('key', ['rate_details', 'what_to_expect', 'what_include', 'requirements', 'useful_links'])->get();
+        return view('admin.car.configuration', compact('configuration'));
     }
 
     public function updateConfiguration(Request $request)
@@ -523,7 +523,7 @@ class BikeController extends Controller
             ];
 
             foreach ($request->only(array_keys($titles)) as $key => $value) {
-                BikeConfiguration::updateOrCreate(
+                CarConfiguration::updateOrCreate(
                     ['key' => $key],
                     [
                         'title' => $titles[$key],
@@ -534,7 +534,7 @@ class BikeController extends Controller
             }
 
             DB::commit();
-            return $this->sendSuccess('Bike Configuration has been updated!');
+            return $this->sendSuccess('Car Configuration has been updated!');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -548,11 +548,11 @@ class BikeController extends Controller
             $order = $request->order;
 
             foreach ($order as $item) {
-                Bike::where('id', $item['id'])->update(['sort_order' => $item['position']]);
+                Car::where('id', $item['id'])->update(['sort_order' => $item['position']]);
             }
 
             DB::commit();
-            return $this->sendSuccess('Bike sorting updated!');
+            return $this->sendSuccess('Car sorting updated!');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -560,8 +560,8 @@ class BikeController extends Controller
     }
     public function specs($id)
     {
-        $bike = Bike::with('spec')->findOrFail($id);
-        return view('admin.bike.specs', compact('bike'));
+        $car = Car::with('spec')->findOrFail($id);
+        return view('admin.car.specs', compact('car'));
     }
 
     public function updateSpecs(Request $request, $id)
@@ -586,7 +586,7 @@ class BikeController extends Controller
             DB::beginTransaction();
 
             CarSpec::updateOrCreate(
-                ['bike_id' => $id],
+                ['car_id' => $id],
                 $request->only([
                     'make',
                     'exterior_color',

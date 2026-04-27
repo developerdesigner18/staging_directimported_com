@@ -6,5 +6,5 @@ enum CategoryType: string
 {
     case GALLERY = 'GALLERY';
     case TOUR = 'TOUR';
-    case BIKE = 'BIKE';
+    case CAR = 'CAR';
 }

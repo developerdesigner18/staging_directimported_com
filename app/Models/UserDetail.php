@@ -22,7 +22,7 @@ class UserDetail extends Model
         'regular_lic_back_status',
         'status',
         'experience',
-        'bike_ridden',
+        'car_ridden',
         'regular_lic_number',
         'idp_number',
     ];

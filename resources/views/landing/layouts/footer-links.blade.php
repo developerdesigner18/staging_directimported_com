@@ -115,24 +115,24 @@
 
     $(document).ready(function () {
 
-        $(document).delegate('.bikeRequestQuote','click',function (e){
+        $(document).delegate('.carRequestQuote','click',function (e){
             var id = $(this).attr('data-id');
             var name = $(this).attr('data-name');
             var image = $(this).attr('data-image');
             var insurance_price = $(this).attr('data-insurance');
 
-            // localStorage.removeItem('requestQuoteBikes');
-            let items = JSON.parse(localStorage.getItem('requestQuoteBikes')) || [];
+            // localStorage.removeItem('requestQuoteCars');
+            let items = JSON.parse(localStorage.getItem('requestQuoteCars')) || [];
 
             let exists = items.some(item => item.id === id);
             if (!exists) {
                 items.push({ id: id, name: name, image: image, insurance_price: insurance_price });
-                localStorage.setItem('requestQuoteBikes', JSON.stringify(items));
+                localStorage.setItem('requestQuoteCars', JSON.stringify(items));
             }
             window.location.href = "{{ route('my.bookings') }}"
         });
 
-        // New handler for single bike page
+        // New handler for single car page
         $(document).delegate('#checkAvailabilityBtn', 'click', function (e) {
             e.preventDefault();
 
@@ -143,12 +143,12 @@
             var endDate = $('#single_return_date').val();
             var insurance_price=$('#insurance_price').val();
 
-            let items = JSON.parse(localStorage.getItem('requestQuoteBikes')) || [];
+            let items = JSON.parse(localStorage.getItem('requestQuoteCars')) || [];
 
             let exists = items.some(item => item.id === id);
             if (!exists) {
                 items.push({ id: id, name: name, image: image,insurance_price:insurance_price });
-                localStorage.setItem('requestQuoteBikes', JSON.stringify(items));
+                localStorage.setItem('requestQuoteCars', JSON.stringify(items));
             }
 
             // Save dates to localStorage
