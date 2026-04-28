@@ -45,115 +45,43 @@
                                 style="display: none"></label>
                         </div>
 
-                        <!-- Pricing -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="less_four_days_price" class="form-label">1-4 Days Price</label>
-                                <input type="number" step="0.01" class="form-control" id="less_four_days_price"
-                                    name="less_four_days_price" placeholder="Enter price">
-                                <label id="less_four_days_price-error" class="text-danger error"
-                                    style="display: none"></label>
-                            </div>
 
-                            <div class="col-md-6">
-                                <label for="five_six_days_price" class="form-label">5-6 Days Price</label>
-                                <input type="number" step="0.01" class="form-control" id="five_six_days_price"
-                                    name="five_six_days_price" placeholder="Enter price">
-                                <label id="five_six_days_price-error" class="text-danger error"
-                                    style="display: none"></label>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="week_price" class="form-label">Weekly Price</label>
-                                <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
-                                    placeholder="Enter price">
-                                <label id="week_price-error" class="text-danger error" style="display: none"></label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="month_price" class="form-label">Monthly Price</label>
-                                <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
-                                    placeholder="Enter price">
-                                <label id="month_price-error" class="text-danger error" style="display: none"></label>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="max_price" class="form-label">Maximum Price</label>
-                                <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
-                                    placeholder="Enter maximum price">
-                                <label id="max_price-error" class="text-danger error" style="display: none"></label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="insurance_price" class="form-label">Insurance Price</label>
-                                <input type="number" step="0.01" class="form-control" id="insurance_price"
-                                    name="insurance_price" placeholder="Enter insurance price">
-                                <label id="insurance_price-error" class="text-danger error" style="display: none"></label>
-                            </div>
-                        </div>
-
-                        <!-- Accessories + Number Plate -->
+                        <!-- Vehicle ID -->
                         <div class="mb-3">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label class="form-label">Included (Free) Accessory</label>
-                                    <select class="form-select select2-multiple" name="free_accessory[]" multiple>
-                                        @foreach($freeAccessories as $acc)
-                                            <option value="{{ $acc->id }}">{{ $acc->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <label id="free_accessory-error" class="text-danger error"
-                                        style="display: none"></label>
-                                </div>
+                            <label for="vehicle_id" class="form-label">Vehicle ID</label>
+                            <input type="text" class="form-control" id="vehicle_id" name="vehicle_id"
+                                placeholder="Auto generated">
+                            <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
 
-                                <div class="col-lg-6">
-                                    <label class="form-label">Extra Accessory</label>
-                                    <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
-                                        @foreach($extraAccessories as $acc)
-                                            <option value="{{ $acc->id }}">{{ $acc->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <label id="extra_accessory-error" class="text-danger error"
-                                        style="display: none"></label>
-                                </div>
-
-
-                            </div>
                         </div>
 
-                        <!-- Number Plate + Location -->
                         <div class="mb-3">
-                            <div class="row">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" name="status">
+                                @foreach(\App\Enum\VehicleStatus::cases() as $status)
+                                    <option value="{{ $status->value }}">
+                                        {{ $status->label() }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label id="status-error" class="text-danger error" style="display: none"></label>
 
-                                <!-- Number Plate -->
-                                <div class="col-lg-6">
-                                    <label for="numberPlate" class="form-label">Number Plate</label>
-                                    <input type="text" class="form-control" id="numberPlate" name="number_plate"
-                                        placeholder="Enter number plate number">
-                                    <label id="number_plate-error" class="text-danger error" style="display: none"></label>
-                                </div>
-
-                                <!-- Location -->
-                                <div class="col-lg-6">
-                                    <label class="form-label">Location</label>
-                                    <select class="form-select select2" name="location">
-                                        @foreach($locations ?? [] as $location)
-                                            <option value="{{ $location->id }}" {{ old('location_id', $car->location_id ?? '') == $location->id ? 'selected' : '' }}>
-                                                {{ $location->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
                         </div>
+                        <div class="col-12">
+                            <label class="form-label">Auction Grade</label>
+                            <select class="form-select select2" name="auction_grade_id">
+                                <option value="">Select Auction Grade</option>
+                                @foreach($auctionGrades as $grade)
+                                    <option value="{{ $grade->id }}">
+                                        {{ $grade->grade }} {{ $grade->remarks }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
 
+                        </div>
                         <!-- Recommended -->
-                        <div class="mb-3">
+                        <div class=" mb-3">
                             <label class="form-label">Recommended Car</label>
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended"
@@ -203,7 +131,8 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Exterior Color</label>
-                                        <input type="text" name="exterior_color" class="form-control" placeholder="e.g. Pearl White">
+                                        <input type="text" name="exterior_color" class="form-control"
+                                            placeholder="e.g. Pearl White">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
@@ -233,12 +162,14 @@
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Interior Color</label>
-                                        <input type="text" name="interior_color" class="form-control" placeholder="e.g. Black Leather">
+                                        <input type="text" name="interior_color" class="form-control"
+                                            placeholder="e.g. Black Leather">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Transmission</label>
-                                        <input type="text" name="transmission" class="form-control" placeholder="e.g. Automatic / Manual">
+                                        <input type="text" name="transmission" class="form-control"
+                                            placeholder="e.g. Automatic / Manual">
                                     </div>
                                 </div>
                             </div>
@@ -385,14 +316,9 @@
 
             $("#addForm").validate({
                 rules: {
-
                     name: { required: true },
                     category_id: { required: true },
-                    less_four_days_price: { required: true, number: true, min: 0 },
-                    five_six_days_price: { required: true, number: true, min: 0 },
-                    week_price: { required: true, number: true, min: 0 },
-                    month_price: { required: true, number: true, min: 0 },
-                    max_price: { required: true, number: true, min: 0 },
+
                     'images[]': { required: true },
                     description: { required: true },
                     number_plate: { required: true },
@@ -400,41 +326,22 @@
                     card_subtitle: { required: true },
                     banner: { required: false },
 
-
+                    vehicle_id: { required: true },
+                    status: { required: true },
+                    auction_grade_id: { required: true },
                 },
                 messages: {
                     name: { required: "The car name is required." },
                     category_id: { required: "Please select a category." },
-                    less_four_days_price: {
-                        required: "Price for 1-3 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    five_six_days_price: {
-                        required: "Price for 4-6 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    week_price: {
-                        required: "Weekly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    month_price: {
-                        required: "Monthly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    max_price: {
-                        required: "Maximum price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
+
                     'images[]': { required: "Please upload at least one image." },
                     description: { required: "Description is required." },
                     number_plate: { required: "The number plate  is required." },
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
+                    vehicle_id: { required: "The vehical id is required." },
+                    status: { required: "Please select a status." },
+                    auction_grade_id: { required: "Please select an auction grade." },
 
                 },
                 errorClass: 'text-danger error',

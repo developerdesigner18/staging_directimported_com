@@ -44,7 +44,7 @@ class CarController extends Controller
         //            return $bCC <=> $aCC; // Decreasing order
         //        });
         $allCars = Car::with('category')
-            ->orderBy('sort_order', 'asc')
+            ->orderBy('id', 'desc')
             ->get();
 
         $carsGroupedByCategory = $allCars->groupBy('category_id');
@@ -95,7 +95,7 @@ class CarController extends Controller
             //                $bCC = isset($bMatches[1]) ? (int)$bMatches[1] : 0;
             //                return $bCC <=> $aCC; // Decreasing order
             //            });
-            $allcarsList = $query->orderBy('sort_order', 'asc')->get();
+            $allcarsList = $query->orderBy('id', 'desc')->get();
 
             $totalRows = count($allcarsList);
 
@@ -195,7 +195,7 @@ class CarController extends Controller
     public function singleCar($slug)
     {
 
-        $car = Car::with(['map', 'spec'])->where('slug', $slug)->firstOrFail();
+        $car = Car::with(['map', 'spec', 'auctionGrade'])->where('slug', $slug)->firstOrFail();
         $carConf = CarConfiguration::get();
         $banner = Banner::first();
 

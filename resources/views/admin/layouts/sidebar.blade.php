@@ -86,6 +86,11 @@
                                         data-key="t-level-1.1">Cars
                                         Configuration</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.auctiongrade.auction-grade')}}"
+                                        class="nav-link @if(request()->routeIs('admin.auctiongrade.auction-grade')) active @endif"
+                                        data-key="t-level-1.1">Auction Grade</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

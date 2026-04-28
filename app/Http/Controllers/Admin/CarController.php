@@ -6,6 +6,7 @@ use App\Enum\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Accessories;
+use App\Models\AuctionGrade;
 use App\Models\Car;
 use App\Models\Location;
 use App\Models\CarConfiguration;
@@ -33,6 +34,7 @@ class CarController extends Controller
             '0-125cc' => ['min' => 0, 'max' => 125],
         ];
     }
+
 
     private function mapCategoriesToRanges($categories)
     {
@@ -82,7 +84,7 @@ class CarController extends Controller
         }
         $cars = Car::query()
             ->with('category')
-            ->orderBy('sort_order', 'asc');
+            ->orderBy('id', 'desc');
 
         if ($search) {
             $cars->where('name', 'LIKE', "%{$search}%");
@@ -91,6 +93,7 @@ class CarController extends Controller
             session()->forget('car_range');
             $range = '';
         }
+
 
         $ranges = $this->getCCRanges();
 
@@ -177,14 +180,14 @@ class CarController extends Controller
         // Separate Free & Extra Accessories
         $freeAccessories = Accessories::where('type', 'FREE')->get();
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
-
+        $auctionGrades = AuctionGrade::all();
         $locations = Location::all();
 
-        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations'));
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades'));
     }
     public function view(Request $request)
     {
-        $car = Car::with('map')->findOrFail($request->id);
+        $car = Car::with(['map', 'spec', 'auctionGrade'])->findOrFail($request->id);
         $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
         $accessories = Accessories::all();
         return view('admin.car.view', compact('car', 'categories', 'accessories'));
@@ -201,23 +204,21 @@ class CarController extends Controller
                     $query->where('type', CategoryType::CAR);
                 })
             ],
-            'less_four_days_price' => 'required|numeric|min:0',
-            'five_six_days_price' => 'required|numeric|min:0',
-            'week_price' => 'required|numeric|min:0',
-            'month_price' => 'required|numeric|min:0',
-            'max_price' => 'required|numeric|min:0',
-            'insurance_price' => 'nullable',
+
+
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'required|array',
             'images.*' => 'required',
-            'description' => 'nullable|string',
+            'description' => 'required',
             'location' => 'nullable|string',
             'banner' => 'nullable|image',
-            'free_accessory' => 'nullable',
-            'extra_accessory' => 'nullable',
-            'number_plate' => 'required',
+
+
             'card_header' => 'required',
             'card_subtitle' => 'required',
+            'vehicle_id' => 'required',
+            'status' => 'required',
+            'auction_grade_id' => 'required',
 
         ]);
 
@@ -236,18 +237,12 @@ class CarController extends Controller
             $car->name = $request->name;
             $car->slug = Str::slug($request->name);
             $car->category_id = $request->category_id;
-            $car->less_four_days_price = $request->less_four_days_price;
-            $car->five_six_days_price = $request->five_six_days_price;
-            $car->week_price = $request->week_price;
-            $car->month_price = $request->month_price;
-            $car->max_price = $request->max_price;
-            $car->insurance_price = $request->insurance_price ?? 0;
+
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location = $request->location ?? null;
             $car->location_id = $request->location ?? null;
-            $car->free_accessory = $request->free_accessory ?? null;
-            $car->extra_accessory = $request->extra_accessory ?? null;
-            $car->number_plate = $request->number_plate;
+
+
             if ($request->hasFile('banner')) {
                 $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
             }
@@ -264,6 +259,9 @@ class CarController extends Controller
             $car->description = $request->description;
             $car->card_header = $request->card_header;
             $car->card_subtitle = $request->card_subtitle;
+            $car->vehicle_id = $request->vehicle_id;
+            $car->status = $request->status;
+            $car->auction_grade_id = $request->auction_grade_id;
 
             $car->save();
 
@@ -282,7 +280,7 @@ class CarController extends Controller
             ]);
 
             DB::commit();
-            return $this->sendSuccess(__('car added successfully!'));
+            return $this->sendSuccess('Car added successfully!');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -296,7 +294,8 @@ class CarController extends Controller
         $freeAccessories = Accessories::where('type', 'FREE')->get();
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
         $locations = Location::all();
-        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations'));
+        $auctionGrades = AuctionGrade::all();
+        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades'));
     }
 
     public function update(Request $request, $id)
@@ -309,25 +308,21 @@ class CarController extends Controller
                     $query->where('type', CategoryType::CAR);
                 })
             ],
-            'less_four_days_price' => 'required|numeric|min:0',
-            'five_six_days_price' => 'required|numeric|min:0',
-            'week_price' => 'required|numeric|min:0',
-            'month_price' => 'required|numeric|min:0',
-            'max_price' => 'required|numeric|min:0',
-            'insurance_price' => 'nullable',
+
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'sometimes|array',
             'images.*' => 'sometimes',
-            'removed_images' => 'nullable|string',
-            'image_order' => 'nullable|string',
-            'description' => 'nullable|string',
+            'description' => 'required',
             'location' => 'nullable|string',
             'banner' => 'nullable|image',
-            'free_accessory' => 'nullable',
-            'extra_accessory' => 'nullable',
-            'number_plate' => 'required',
+
             'card_header' => 'required',
             'card_subtitle' => 'required',
+            'vehicle_id' => 'required',
+            'status' => 'required',
+            'auction_grade_id' => 'required',
+            'removed_images' => 'nullable|string',
+            'image_order' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -343,21 +338,16 @@ class CarController extends Controller
             $car->name = $request->name;
             $car->slug = Str::slug($request->name);
             $car->category_id = $request->category_id;
-            $car->less_four_days_price = $request->less_four_days_price;
-            $car->five_six_days_price = $request->five_six_days_price;
-            $car->week_price = $request->week_price;
-            $car->month_price = $request->month_price;
-            $car->max_price = $request->max_price;
-            $car->insurance_price = $request->insurance_price ?? 0;
+
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location = $request->location ?? null;
             $car->location_id = $request->location ?? null;
-            $car->free_accessory = $request->free_accessory ?? null;
-            $car->extra_accessory = $request->extra_accessory ?? null;
 
-            $car->number_plate = $request->number_plate;
+
             $car->card_header = $request->card_header;
             $car->card_subtitle = $request->card_subtitle;
+            $car->vehicle_id = $request->vehicle_id;
+            $car->status = $request->status;
 
             // Banner upload
             if ($request->hasFile('banner')) {
@@ -437,6 +427,7 @@ class CarController extends Controller
 
             // Description & specs
             $car->description = $request->description;
+            $car->auction_grade_id = $request->auction_grade_id;
             $car->save();
 
             // Update Technical Specifications

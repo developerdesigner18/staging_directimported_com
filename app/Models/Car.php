@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\VehicleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enum\CategoryType;
@@ -32,7 +33,10 @@ class Car extends Model
         'location',
         'free_accessory',
         'extra_accessory',
-        'number_plate'
+        'number_plate',
+        'vehicle_id',
+        'status',
+        'auction_grade_id',
     ];
 
     protected $casts = [
@@ -47,7 +51,11 @@ class Car extends Model
         'tec_spec' => 'string',
         'free_accessory' => 'array',
         'extra_accessory' => 'array',
+
+        'status' => VehicleStatus::class,
     ];
+
+
     public function spec()
     {
         return $this->hasOne(CarSpec::class);
@@ -89,6 +97,11 @@ class Car extends Model
         } else {
             return (float) $this->month_price;
         }
+    }
+
+    public function auctionGrade()
+    {
+        return $this->belongsTo(AuctionGrade::class, 'auction_grade_id');
     }
 
 }

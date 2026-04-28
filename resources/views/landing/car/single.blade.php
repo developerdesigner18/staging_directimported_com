@@ -313,61 +313,71 @@
         }
 
         /* Details */
-        .car-details-section-title {
-            justify-content: space-between;
-            font-size: 24px;
-            font-weight: 800;
-            margin: 30px 0 15px;
+        .car-details-header {
             display: flex;
             align-items: center;
-            color: #111;
+            margin: 40px 0 25px;
         }
 
-        .car-details-section-title i {
-            margin-left: 15px;
-            color: #4B5563;
-            font-size: 22px;
-        }
-
-        .details-heading-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .details-heading-row h3 {
-            font-size: 20px;
-            font-weight: 800;
+        .car-details-header h2 {
             margin: 0;
+            font-size: 28px;
+            font-weight: 900;
+            color: #111;
+            text-transform: uppercase;
         }
 
-        .grade-badge-custom {
-            background: #F3F4F6;
-            padding: 5px 8px 5px 15px;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid #E5E7EB;
-        }
-
-        .grade-badge-custom span {
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        .grade-val-circle {
-            width: 30px;
-            height: 30px;
+        .status-box-blue {
             background: #1B447A;
             color: #fff;
+            padding: 12px 0;
+            flex: 1;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 900;
+            display: inline-block;
+            margin-left: 35px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .info-tabs-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: space-between;
+        }
+
+        .info-tab-item {
+            background: #B0B0B0;
+            color: #111;
+            padding: 12px 0;
+            width: 390px;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-transform: uppercase;
+        }
+
+        .info-tab-item.active {
+            background: #999;
+        }
+
+        .info-tab-item .circle-badge {
+            background: #fff;
+            color: #111;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 900;
         }
 
         .details-grid-card {
@@ -592,7 +602,7 @@
                 <div class="col-lg-7 col-xl-8">
                     <!-- Main Image container -->
                     <div class="main-image-container">
-                        <span class="status-badge">Status: Available</span>
+                        <span class="status-badge">Status: {{ ucfirst($car->status->value) }}</span>
                         <img id="car-display-img" src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}">
                         <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i
                                 class="bx bx-chevron-left"></i></button>
@@ -611,16 +621,27 @@
                     </div>
 
 
-                    <!-- Car Details Title -->
-                    <h2 class="car-details-section-title">Car Details <i class="bx bx-key"></i></h2>
-
-                    <!-- Vehicle Details Grid -->
-                    <div class="details-heading-row">
-                        <h3>Vehicle Details</h3>
-                        <div class="grade-badge-custom">
-                            <span>Auction Grade</span>
-                            <div class="grade-val-circle">2</div>
+                    <div class="car-details-header">
+                        <h2>Car Details</h2>
+                        <div class="status-box-blue">
+                            {{ strtoupper($car->status->value) }}
                         </div>
+                    </div>
+
+                    <div class="info-tabs-row">
+                        <div class="info-tab-item active">
+                            Overview
+                        </div>
+                        <div class="info-tab-item">
+                            Auction Grade
+                            <div class="circle-badge">
+                                {{ $car->auctionGrade->grade ?? 'N/A' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="details-heading-row" style="margin-bottom: 15px;">
+                        <h3 style="font-size: 20px; font-weight: 800; margin: 0;">Vehicle Details</h3>
                     </div>
 
                     <div class="details-grid-card">

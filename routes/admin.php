@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AucationController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -193,6 +194,15 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/specs/update/{id}', 'updateSpecs')->name('specs.update');
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
+
+        });
+        Route::controller(AucationController::class)->prefix('auction-grade')->name('auctiongrade.')->group(function () {
+            Route::get('/', 'auctionGrade')->name('auction-grade');
+            Route::post('/list', 'auctionGradeList')->name('list');
+            Route::post('/add', 'auctionGradeAdd')->name('add');
+            Route::post('/edit', 'auctionGradeEdit')->name('edit');
+            Route::post('/update', 'auctionGradeUpdate')->name('update');
+            Route::post('/delete', 'auctionGradeDelete')->name('delete');
         });
 
         Route::controller(ColorController::class)->prefix('color')->name('color.')->group(function () {
