@@ -49,32 +49,13 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('bookings'))
-
-                    <li class="nav-item">
-                        <a href="{{route('admin.booking.index')}}"
-                            class="nav-link menu-link  @if(request()->routeIs('admin.booking.*')) active @endif">
-                            <i class="bx bx-bookmark"></i> <span data-key="t-dashboards">Bookings</span>
-                        </a>
-                    </li>
-                @endif
-
-                @if($user->hasRole('admin') || $user->can('contact_requests'))
-                    <li class="nav-item">
-                        <a href="{{route('admin.contact_requests.index')}}"
-                           class="nav-link menu-link @if(request()->routeIs('admin.contact_requests.*')) active @endif">
-                            <i class="bx bx-message-detail"></i> <span data-key="t-contact-requests">Contact Requests</span>
-                        </a>
-                    </li>
-                @endif
-
                 @if($user->hasRole('admin') || $user->can('cars'))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*')) active @endif"
                             href="#sidebarCars" data-bs-toggle="collapse" role="button"
                             aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*')) ? 'true' : 'false' }}"
                             aria-controls="sidebarCars">
-                            <i class="ri-motorcar-line"></i> <span data-key="t-multi-level">Cars</span>
+                            <i class="bx bx-car"></i> <span data-key="t-multi-level">Cars</span>
                         </a>
                         <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*')) show @endif"
                             id="sidebarCars">
@@ -105,6 +86,25 @@
                     </li>
                 @endif
 
+                @if($user->hasRole('admin') || $user->can('bookings'))
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.booking.index')}}"
+                            class="nav-link menu-link  @if(request()->routeIs('admin.booking.*')) active @endif">
+                            <i class="bx bx-bookmark"></i> <span data-key="t-dashboards">Bookings</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if($user->hasRole('admin') || $user->can('contact_requests'))
+                    <li class="nav-item">
+                        <a href="{{route('admin.contact_requests.index')}}"
+                           class="nav-link menu-link @if(request()->routeIs('admin.contact_requests.*')) active @endif">
+                            <i class="bx bx-message-detail"></i> <span data-key="t-contact-requests">Contact Requests</span>
+                        </a>
+                    </li>
+                @endif
+
                 @if($user->hasRole('admin') || $user->can('services'))
                     <li class="nav-item">
                         <a href="{{route('admin.service.index')}}"
@@ -113,17 +113,6 @@
                         </a>
                     </li>
                 @endif
-
-                @if($user->hasRole('admin') || $user->can('about_us'))
-                    <li class="nav-item">
-                        <a href="{{route('admin.home_section.edit')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.home_section.*')) active @endif">
-                            <i class="ri-information-line"></i> <span data-key="t-dashboards">About Us</span>
-                        </a>
-                    </li>
-                @endif
-
-
 
                 @if($user->hasRole('admin') || $user->can('accessories_equipments'))
                     <li class="nav-item">
@@ -134,30 +123,14 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('location'))
+                <li class="menu-title"><span data-key="t-menu">Content Management</span></li>
+
+                @if($user->hasRole('admin') || $user->can('bookings'))
 
                     <li class="nav-item">
-                        <a href="{{route('admin.location.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.location.*')) active @endif">
-                            <i class="ri-map-pin-fill"></i><span data-key="t-dashboards">Location</span>
-                        </a>
-                    </li>
-                @endif
-
-                @if($user->hasRole('admin') || $user->can('users'))
-                    <li class="nav-item">
-                        <a href="{{route('admin.user.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.user.*')) active @endif">
-                            <i class="bx bx-group"></i> <span data-key="t-dashboards">Users</span>
-                        </a>
-                    </li>
-                @endif
-                @if($user->hasRole('admin') || $user->can('employee'))
-
-                    <li class="nav-item">
-                        <a href="{{route('admin.employee.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.employee.*')) active @endif">
-                            <i class="bx bx-user-pin"></i> <span data-key="t-dashboards">Employee</span>
+                        <a href="{{route('admin.slider.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.slider.*')) active @endif">
+                            <i class="bx bx-slideshow"></i> <span data-key="t-dashboards">Slider</span>
                         </a>
                     </li>
                 @endif
@@ -172,12 +145,11 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('bookings'))
-
+                @if($user->hasRole('admin') || $user->can('about_us'))
                     <li class="nav-item">
-                        <a href="{{route('admin.slider.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.slider.*')) active @endif">
-                            <i class="bx bx-slideshow"></i> <span data-key="t-dashboards">Slider</span>
+                        <a href="{{route('admin.home_section.edit')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.home_section.*')) active @endif">
+                            <i class="ri-information-line"></i> <span data-key="t-dashboards">About Us</span>
                         </a>
                     </li>
                 @endif
@@ -213,6 +185,36 @@
                     <li class="nav-item">
                         <a href="#" class="nav-link menu-link">
                             <i class="bx bx-mail-send"></i> <span data-key="t-dashboards">Newsletters</span>
+                        </a>
+                    </li>
+                @endif
+
+                <li class="menu-title"><span data-key="t-menu">Administration</span></li>
+
+                @if($user->hasRole('admin') || $user->can('location'))
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.location.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.location.*')) active @endif">
+                            <i class="ri-map-pin-fill"></i><span data-key="t-dashboards">Location</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if($user->hasRole('admin') || $user->can('users'))
+                    <li class="nav-item">
+                        <a href="{{route('admin.user.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.user.*')) active @endif">
+                            <i class="bx bx-group"></i> <span data-key="t-dashboards">Users</span>
+                        </a>
+                    </li>
+                @endif
+                @if($user->hasRole('admin') || $user->can('employee'))
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.employee.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.employee.*')) active @endif">
+                            <i class="bx bx-user-pin"></i> <span data-key="t-dashboards">Employee</span>
                         </a>
                     </li>
                 @endif
