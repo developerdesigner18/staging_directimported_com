@@ -59,6 +59,15 @@
                     </li>
                 @endif
 
+                @if($user->hasRole('admin') || $user->can('contact_requests'))
+                    <li class="nav-item">
+                        <a href="{{route('admin.contact_requests.index')}}"
+                           class="nav-link menu-link @if(request()->routeIs('admin.contact_requests.*')) active @endif">
+                            <i class="bx bx-message-detail"></i> <span data-key="t-contact-requests">Contact Requests</span>
+                        </a>
+                    </li>
+                @endif
+
                 @if($user->hasRole('admin') || $user->can('cars'))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*')) active @endif"

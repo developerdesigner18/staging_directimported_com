@@ -12,9 +12,9 @@
 
     // Success Swal
     function sendSuccess(message) {
-     return Swal.fire({
+        return Swal.fire({
             title: message,
-            text: "",   
+            text: "",
             icon: "success",
             confirmButtonClass: "btn btn-danger w-md mt-3",
             showCancelButton: false,
@@ -187,7 +187,7 @@
 
     // Format number with comma
     function formatNumberWithComma(number) {
-        return number.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        return number.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     // Remove comma from number
@@ -219,10 +219,10 @@
             position: position,
             className: "bg-" + className,
             stopOnFocus: !0,
-            offset: {x: 0, y: 0},
+            offset: { x: 0, y: 0 },
             duration: duration,
             close: "close" == close,
-            style: "style" == style ? {background: "linear-gradient(to right, #0AB39C, #053C7C)"} : ""
+            style: "style" == style ? { background: "linear-gradient(to right, #0AB39C, #053C7C)" } : ""
         }).showToast()
     }
 </script>

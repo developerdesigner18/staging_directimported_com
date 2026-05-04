@@ -244,10 +244,14 @@
 
         /* LABEL */
         .sidebar-form-box label {
-            font-size: 9px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 4px;
             display: block;
+        }
+
+        span.select2.select2-container.select2-container--default {
+            width: 100%;
         }
 
         /* INPUT */
@@ -599,10 +603,10 @@
         <div class="container">
             <div class="row">
                 <!-- LEFT CONTENT -->
-                <div class="col-lg-7 col-xl-8">
+                <div class="col-lg-7 col-xl-7">
                     <!-- Main Image container -->
                     <div class="main-image-container">
-                        <span class="status-badge">Status: {{ ucfirst($car->status->value) }}</span>
+                        {{-- <span class="status-badge">Status: {{ ucfirst($car->status->value) }}</span> --}}
                         <img id="car-display-img" src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}">
                         <button class="main-slider-btn prev" onclick="moveMainImage('prev')"><i
                                 class="bx bx-chevron-left"></i></button>
@@ -740,7 +744,7 @@
                 </div>
 
                 <!-- RIGHT SIDEBAR -->
-                <div class="col-lg-5 col-xl-4 mt-5 mt-lg-0">
+                <div class="col-lg-5 col-xl-5 mt-6 mt-lg-0">
                     <div class="sidebar-inner sticky-sidebar-wrapper">
 
                         <h1 class="vehicle-title-main">
@@ -760,54 +764,84 @@
 
                             <h4>Contact Us</h4>
 
-                            <label>Full Name</label>
-                            <input type="text">
+                            <form id="contactRequestForm" method="POST">
+                                @csrf
+                                <input type="hidden" name="vehicle_id" value="{{ $car->name }}">
 
-                            <label>Email</label>
-                            <input type="email">
-
-                            <div class="row-2">
-                                <div>
-                                    <label>Phone Number</label>
-                                    <input type="text">
+                                <div class="form-group mb-2">
+                                    <label>Full Name</label>
+                                    <input type="text" name="full_name" id="full_name">
+                                    <label id="full_name-error" class="text-danger error" for="full_name"
+                                        style="display: none"></label>
                                 </div>
-                                <div>
-                                    <label>Preferred Contact Method</label>
-                                    <select>
-                                        <option>Select...</option>
-                                        <option>Email</option>
-                                        <option>Phone</option>
-                                        <option>WhatsApp</option>
-                                    </select>
+
+                                <div class="form-group mb-2">
+                                    <label>Email</label>
+                                    <input type="email" name="email" id="email">
+                                    <label id="email-error" class="text-danger error" for="email"
+                                        style="display: none"></label>
                                 </div>
-                            </div>
 
-                            <label class="vehicle-id-label">* Vehicle ID :</label>
-                            <div class="vehicle-id-box">
-                                {{ $car->name }}
-                            </div>
-
-                            <div class="row-2">
-                                <div>
-                                    <label>Destination Country</label>
-                                    <select>
-                                        <option>🇺🇸 USA</option>
-                                        <option>🇬🇧 UK</option>
-                                        <option>🇦🇺 Australia</option>
-                                    </select>
+                                <div class="row-2">
+                                    <div class="form-group mb-2">
+                                        <label>Phone Number</label>
+                                        <input type="text" name="phone_number" id="phone_number">
+                                        <label id="phone_number-error" class="text-danger error" for="phone_number"
+                                            style="display: none"></label>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label>Preferred Contact Method</label>
+                                        <select name="preferred_contact_method" id="preferred_contact_method">
+                                            <option value="">Select...</option>
+                                            <option value="Email">Email</option>
+                                            <option value="Phone">Phone</option>
+                                            <option value="WhatsApp">WhatsApp</option>
+                                        </select>
+                                        <label id="preferred_contact_method-error" class="text-danger error"
+                                            for="preferred_contact_method" style="display: none"></label>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label>Nearest Major Port / Postal Code</label>
-                                    <input type="text">
+
+                                <label class="vehicle-id-label"> Vehicle ID :</label>
+                                <div class="vehicle-id-box">
+                                    {{ $car->vehicle_id ?? $car->name ?? '' }}
                                 </div>
-                            </div>
 
-                            <label>Message</label>
-                            <textarea></textarea>
+                                <div class="row-2">
+                                    <div class="form-group mb-2">
+                                        <label>Destination Country</label>
+                                        <select name="destination_country" id="destination_country">
+                                            <option value="">Select...</option>
+                                            <option value="USA">🇺🇸 USA</option>
+                                            <option value="UK">🇬🇧 UK</option>
+                                            <option value="Australia">🇦🇺 Australia</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                        <label id="destination_country-error" class="text-danger error"
+                                            for="destination_country" style="display: none"></label>
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label>Nearest Major Port / Postal Code</label>
+                                        <input type="text" name="nearest_port_or_postal_code"
+                                            id="nearest_port_or_postal_code">
+                                        <label id="nearest_port_or_postal_code-error" class="text-danger error"
+                                            for="nearest_port_or_postal_code" style="display: none"></label>
+                                    </div>
+                                </div>
 
-                            <button class="btn-submit">
-                                REQUEST VEHICLE DETAILS & QUOTE
-                            </button>
+                                <div class="form-group mb-2">
+                                    <label>Message</label>
+                                    <textarea name="message" id="message"></textarea>
+                                    <label id="message-error" class="text-danger error" for="message"
+                                        style="display: none"></label>
+                                </div>
+
+                                <button type="submit" class="btn-submit" id="submitRequestBtn">
+                                    <i class="bx bx-loader spinner me-2" style="display: none"
+                                        id="submitRequestBtnSpinner"></i>
+                                    REQUEST VEHICLE DETAILS & QUOTE
+                                </button>
+                            </form>
 
                         </div>
                     </div>
@@ -901,6 +935,58 @@
                 changeMainImage(newSrc, $target[0]);
             }
         }
+
+        $("#contactRequestForm").validate({
+            rules: {
+                full_name: { required: true, minlength: 2 },
+                email: { required: true, email: true },
+                phone_number: { required: true, minlength: 10 }
+            },
+            messages: {
+                full_name: { required: "Please enter your full name", minlength: "Name must be at least 2 characters" },
+                email: { required: "Please enter your email", email: "Please enter a valid email address" },
+                phone_number: { required: "Please enter your phone number", minlength: "Phone number must be at least 10 digits" }
+            },
+            errorClass: 'text-danger error',
+            errorPlacement: function (error, element) { element.after(error); },
+            submitHandler: function (form, e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ route('contact.request.store') }}",
+                    method: "POST",
+                    dataType: "json",
+                    data: new FormData(form),
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    beforeSend: function () {
+                        $('#submitRequestBtn').attr('disabled', true);
+                        $("#submitRequestBtnSpinner").show();
+                        $('.text-danger.error').hide().text('');
+                    },
+                    success: function (result) {
+                        sendSuccess(result.message);
+                        form.reset();
+                    },
+                    error: function (xhr) {
+                        let data = xhr.responseJSON;
+                        if (data.hasOwnProperty('error')) {
+                            $.each(data.error, function (key, value) {
+                                $("#" + key + "-error").html(value[0]).show();
+                            });
+                        } else if (data.hasOwnProperty('message')) {
+                            actionError(xhr, data.message);
+                        } else {
+                            actionError(xhr);
+                        }
+                    },
+                    complete: function () {
+                        $('#submitRequestBtn').attr('disabled', false);
+                        $("#submitRequestBtnSpinner").hide();
+                    },
+                });
+            }
+        });
 
     </script>
 @endsection

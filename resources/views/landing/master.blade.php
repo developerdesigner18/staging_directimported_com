@@ -193,27 +193,17 @@
 
         /* Loader animation */
         .loader {
-            width: 150px;
-            aspect-ratio: 1;
-            color: #053C7C;
-            /* New Theme Color */
-            --_c: no-repeat radial-gradient(farthest-side, currentColor 92%, #0000);
-            /*background:*/
-            /*    var(--_c) 50% 0   /12px 12px,*/
-            /*    var(--_c) 50% 100%/12px 12px,*/
-            /*    var(--_c) 100% 50%/12px 12px,*/
-            /*    var(--_c) 0    50%/12px 12px,*/
-            /*    var(--_c) 50%  50%/12px 12px,*/
-            /*    conic-gradient(from 90deg at 4px 4px,#0000 90deg,currentColor 0)*/
-            /*    -4px -4px/calc(50% + 2px) calc(50% + 2px);*/
-            animation: l8 3s infinite linear;
-            border: none !important;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #E0E0E0;
+            border-top: 5px solid #053C7C;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        @keyframes l8 {
-            100% {
-                transform: rotate(360deg);
-            }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Progress dots */
@@ -281,9 +271,7 @@
 <body>
     <!-- Full Page Loader -->
     <div class="loader-container">
-        <div class="loader">
-            <img src="{{asset('assets/logo/image (1).png')}}" alt="Logo" loading="lazy">
-        </div>
+        <div class="loader"></div>
     </div>
 
     <!-- AJAX Loader -->

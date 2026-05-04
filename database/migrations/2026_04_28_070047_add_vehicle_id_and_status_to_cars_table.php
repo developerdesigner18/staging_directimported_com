@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::table('cars', function (Blueprint $table) {
             $table->string('vehicle_id')->nullable();
             $table->string('status')->default('available');
-            $table->foreignId('auction_grade_id')->constrained('auction_grades')->nullable();
+            $table->foreignId('auction_grade_id')->nullable()->constrained('auction_grades');
 
         });
     }
@@ -24,7 +24,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('cars', function (Blueprint $table) {
-            $table->dropColumn(['vehicle_id', 'status']);
+            $table->dropColumn(['vehicle_id', 'status', 'auction_grade_id']);
         });
     }
 };

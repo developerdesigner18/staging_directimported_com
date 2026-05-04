@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\RentalPoliciesController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\Admin\HomeSectionController;
+use App\Http\Controllers\Admin\ContactRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -331,6 +332,14 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::post('/edit', 'editCategory')->name('edit');
         Route::post('/update', 'updateCategory')->name('update');
         Route::post('/delete', 'deleteCategory')->name('delete');
+    });
+
+    // Contact Requests
+    Route::controller(ContactRequestController::class)->prefix('contact-requests')->name('contact_requests.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/list', 'list')->name('list');
+        Route::post('/show', 'show')->name('show');
+        Route::post('/delete', 'delete')->name('delete');
     });
 
 });

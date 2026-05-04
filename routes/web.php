@@ -87,4 +87,6 @@ Route::group(['middleware' => 'auth:web'], function () {
     });
 });
 
+Route::post('contact-request', [\App\Http\Controllers\ContactRequestController::class, 'store'])->name('contact.request.store');
+
 
