@@ -1,35 +1,35 @@
 <script src="{{asset('assets/js/jquery-3.6.0.js')}}"></script>
 <script src="{{asset('assets/js/jquery.validate.js')}}"></script>
 <script src="{{asset('assets/landing/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/progresscircle.js')}}"></script>
-<script src="{{asset('assets/landing/js/select2.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/jquery.magnific-popup.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/jquery.waypoints.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/jquery.counterup.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/slick.min.js')}}"></script>
-<script src="{{asset('assets/landing/js/tooltip.js')}}"></script>
-<script src="{{asset('assets/landing/js/main.js')}}"></script>
-<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/toastify-js'></script>
-<script src="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.js')}}"></script>
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="{{asset('assets/landing/js/progresscircle.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/select2.min.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/jquery.magnific-popup.min.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/jquery.waypoints.min.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/jquery.counterup.min.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/slick.min.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/tooltip.js')}}" defer></script>
+<script src="{{asset('assets/landing/js/main.js')}}" defer></script>
+<script type='text/javascript' src='{{asset('assets/vendor/toastify/toastify.js')}}' defer></script>
+<script src="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.js')}}" defer></script>
+<script src="{{asset('assets/vendor/lottie-player/lottie-player.js')}}" defer></script>
 
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<script src="{{asset('assets/vendor/timepicker/jquery.timepicker.min.js')}}" defer></script>
+<link rel="stylesheet" href="{{asset('assets/vendor/timepicker/jquery.timepicker.min.css')}}">
 
 
-<script src="{{asset('assets/admin/libs/datatables/js/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/dataTables.bootstrap5.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('assets/admin/libs/datatables/js/jquery.dataTables.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/dataTables.bootstrap5.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/dataTables.responsive.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/dataTables.buttons.min.js')}}" defer></script>
 {{--<script src="https://cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js"></script>--}}
-<script src="{{asset('assets/admin/libs/datatables/js/buttons.print.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/buttons.html5.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/vfs_fonts.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/pdfmake.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/datatables/js/jszip.min.js')}}"></script>
+<script src="{{asset('assets/admin/libs/datatables/js/buttons.print.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/buttons.html5.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/vfs_fonts.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/pdfmake.min.js')}}" defer></script>
+<script src="{{asset('assets/admin/libs/datatables/js/jszip.min.js')}}" defer></script>
 <!-- jQuery UI JS -->
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="{{asset('assets/vendor/jquery-ui/jquery-ui.min.js')}}" defer></script>
 
 <script !src="">
         $( function() {

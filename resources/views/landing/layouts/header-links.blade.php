@@ -17,10 +17,10 @@
 <link href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- jQuery UI CSS -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="{{asset('assets/vendor/jquery-ui/jquery-ui.css')}}">
 
-<link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
-<link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
+<link href="{{asset('assets/vendor/boxicons/latest/boxicons-basic.min.css')}}" rel='stylesheet'>
+<link href="{{asset('assets/vendor/boxicons/latest/boxicons-brands.min.css')}}" rel='stylesheet'>
 
 <!--datatable css-->
 <link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/dataTables.bootstrap5.min.css')}}" />
