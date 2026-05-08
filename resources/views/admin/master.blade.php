@@ -61,7 +61,7 @@
                                 class="profile-img-file-input">
                             <label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
                                 <span class="avatar-title rounded-circle bg-light text-body material-shadow">
-                                    <i class="ri-camera-fill"></i>
+                                    <i class="bx bxs-camera"></i>
                                 </span>
                             </label>
                         </div>
@@ -164,7 +164,7 @@
 
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
-        <i class="ri-arrow-up-line"></i>
+        <i class="bx bx-up-arrow-alt"></i>
     </button>
     <!--end back-to-top-->
 

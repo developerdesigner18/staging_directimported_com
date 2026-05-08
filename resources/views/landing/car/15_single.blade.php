@@ -495,7 +495,7 @@
                             <div class="tab-pane fade show active" id="specsTab">
                                 <div class="tech-spec-box">
                                     <h4 class="tech-title">
-                                        {{-- <i class="ri-settings-3-line text-danger me-2"></i>--}}
+                                        {{-- <i class="bx bx-cog text-danger me-2"></i>--}}
                                         Technical Specifications
                                     </h4>
 
@@ -504,7 +504,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-speed-up-line"></i>
+                                                    <i class="bx bx-tachometer"></i>
                                                 </div>
                                                 <div>
                                                     <small>ENGINE</small>
@@ -516,7 +516,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-flashlight-line"></i>
+                                                    <i class="bx bxs-bolt"></i>
                                                 </div>
                                                 <div>
                                                     <small>POWER</small>
@@ -528,7 +528,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-ruler-line"></i>
+                                                    <i class="bx bx-ruler"></i>
                                                 </div>
                                                 <div>
                                                     <small>SEAT HEIGHT</small>
@@ -540,7 +540,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-scales-2-line"></i>
+                                                    <i class="bx bx-cube"></i>
                                                 </div>
                                                 <div>
                                                     <small>WEIGHT</small>
@@ -552,7 +552,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-gas-station-line"></i>
+                                                    <i class="bx bxs-gas-pump"></i>
                                                 </div>
                                                 <div>
                                                     <small>TANK CAPACITY</small>
@@ -564,7 +564,7 @@
                                         <div class="col-md-4 mb-4">
                                             <div class="spec-item">
                                                 <div class="spec-icon">
-                                                    <i class="ri-briefcase-4-line"></i>
+                                                    <i class="bx bx-briefcase"></i>
                                                 </div>
                                                 <div>
                                                     <small>LUGGAGE</small>
@@ -711,7 +711,7 @@
 
                                         <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}"
                                             class="related-car-view">
-                                            VIEW <i class="icofont-arrow-right"></i>
+                                            VIEW <i class="bx bx-right-arrow-alt"></i>
                                         </a>
                                     </div>
                                 </div>

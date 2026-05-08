@@ -259,7 +259,7 @@
                                 <button onclick="resetForm();" type="button" class="btn btn-primary"
                                         data-bs-toggle="modal" data-bs-target="#addAccessoryMD"
                                         aria-controls="addAccessoryMD">
-                                    <i class="ri-add-line align-bottom"></i>
+                                    <i class="bx bx-plus align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Add Accessory</span>
                                 </button>
                             </div>
@@ -288,9 +288,7 @@
                     option.className = 'icon-option';
                     option.dataset.icon = icon;
                     option.innerHTML = `
-
                         <i class="${icon}"></i>
-<!--                        <small>${icon.replace('ri-', '').replace('-line','')}</small>-->
                     `;
                     container.appendChild(option);
                 });
@@ -363,8 +361,8 @@
                 processing: processing,
                 emptyTable: emptyTable,
                 paginate: {
-                    next: '<i class="ri-arrow-right-s-line">',
-                    previous: '<i class="ri-arrow-left-s-line">',
+                    next: '<i class="bx bx-chevron-right">',
+                    previous: '<i class="bx bx-chevron-left">',
                 },
             },
             ajax: {
@@ -527,7 +525,7 @@
                 },
                 complete: function () {
                     $(element).attr('disabled', false);
-                    $(element).html('<i class="ri-pencil-fill fs-16"></i>');
+                    $(element).html('<i class="bx bx-edit fs-16"></i>');
                 }
             });
         }

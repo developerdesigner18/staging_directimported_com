@@ -77,8 +77,8 @@ class CarController extends Controller
             $allCategories = Category::all();
 
             // Build query
-            $query = Car::where('name', 'LIKE', "%$search%")
-                ->whereBetween('less_four_days_price', [$min_price, $max_price]);
+            $query = Car::where('name', 'LIKE', "%$search%");
+
 
             // Apply range filter if not "ALL"
             if ($range !== '0' && $range !== 0) {
@@ -135,7 +135,7 @@ class CarController extends Controller
                             $categoryName = $car->category->name ?? 'Top Rated';
                             $description = \Illuminate\Support\Str::limit(strip_tags($car->description), 40);
                             $imageUrl = asset(CAR_PATH . $car->images[0]);
-                            $singleRoute = route('motorcycle.single', ['slug' => $car->slug]);
+                            $singleRoute = route('car.single', ['slug' => $car->slug]);
 
                             $html .= '<div class="col-lg-4 col-md-6 mb-4">
                                 <div class="car-card">

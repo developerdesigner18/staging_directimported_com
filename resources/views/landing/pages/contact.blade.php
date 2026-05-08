@@ -29,7 +29,7 @@
                         <div class="phone">
                             <div class="rid-info-box-icon ">
                                 <div class="rid-info-box-icon position-relative">
-                                    <i class="flaticon-smartphone"></i>
+                                    <i class="bx bx-mobile"></i>
                                 </div>
                             </div>
                             <div class="rid-info-box-text">
@@ -41,7 +41,7 @@
                         <div class="address">
                             <div class="rid-info-box-icon ">
                                 <div class="rid-info-box-icon position-relative">
-                                    <i class="flaticon-pin"></i>
+                                    <i class="bx bx-map"></i>
                                 </div>
                             </div>
                             <div class="rid-info-box-text">
@@ -53,7 +53,7 @@
                         <div class="email">
                             <div class="rid-info-box-icon ">
                                 <div class="rid-info-box-icon position-relative">
-                                    <i class="flaticon-earth"></i>
+                                    <i class="bx bx-globe"></i>
                                 </div>
                             </div>
                             <div class="rid-info-box-text">

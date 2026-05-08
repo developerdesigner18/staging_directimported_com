@@ -288,7 +288,7 @@
             <div class="d-flex justify-content-between mt-3">
                 <h4 class="mb-0">Request a quote</h4>
                 {{--                <a href="{{ route('car') }}" class="btn btn-primary h-100">--}}
-                {{--                    <i class="ri-add-circle-line fw-bold"></i> --}}
+                {{--                    <i class="bx bx-plus-circle fw-bold"></i> --}}
                 {{--                    Add New Car--}}
                 {{--                </a>--}}
             </div>
@@ -306,7 +306,7 @@
                         <div class="row flex-column align-items-center justify-content-center selectedCars mt-3">
                         </div>
                         <a href="{{ route('car') }}" class="btn btn-primary h-100" style="margin-left: 12%;">
-                            <i class="ri-add-circle-line fw-bold"></i>
+                            <i class="bx bx-plus-circle fw-bold"></i>
                             Add More Cars
                         </a>
                     </div>
@@ -322,14 +322,14 @@
                             <div class="d-flex gap-2">
                                 <div class="col-md-6 mb-3 w-33">
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="ri-calendar-2-fill"></i></span>
+                                        <span class="input-group-text"><i class="bx bxs-calendar"></i></span>
                                         <input type="text" class="form-control datepicker b-round-10" id="from" name="start_date"
                                                value="{{ date('Y-m-d') }}" placeholder="Start Date">
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-3 w-33">
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="ri-time-fill"></i></span>
+                                        <span class="input-group-text"><i class="bx bxs-time"></i></span>
                                         <input type="text" class="form-control pickuptime b-round-10" id="pickupTime"
                                                name="start_time"
                                                placeholder="Pickup Time" autocomplete="off">
@@ -339,7 +339,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3 w-33">
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="ri-map-pin-2-fill"></i></span>
+                                        <span class="input-group-text"><i class="bx bxs-map"></i></span>
                                     <select class="form-select no-select2 b-round-10" id="location" name="location">
                                         <option>Osaka</option>
                                     </select>
@@ -358,7 +358,7 @@
                                 <div class="col-md-6 mb-3 w-33">
 {{--                                    <label for="to" class="form-label">End Date</label>--}}
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="ri-calendar-2-fill"></i></span>
+                                        <span class="input-group-text"><i class="bx bxs-calendar"></i></span>
                                         <input type="text" class="form-control datepicker b-round-10" id="to" name="end_date"
                                                value="{{ date('Y-m-d') }}" placeholder="End Date">
                                     </div>
@@ -366,7 +366,7 @@
                                 <div class="col-md-6 mb-3 w-33">
 {{--                                    <label for="dropoffTime" class="form-label">Drop Off Time</label>--}}
                                     <div class="input-group">
-                                        <span class="input-group-text"><i class="ri-time-fill"></i></span>
+                                        <span class="input-group-text"><i class="bx bxs-time"></i></span>
                                         <input type="text" class="form-control dropoffTime b-round-10" id="dropoffTime"
                                                name="end_time"
                                                placeholder="Drop Off Time" autocomplete="off">
@@ -378,7 +378,7 @@
                                 <div class="col-md-6 mb-3 w-33">
 {{--                                    <label for="location" class="form-label">Location</label>--}}
                                     <div class="input-group">
-                                    <span class="input-group-text"><i class="ri-map-pin-2-fill"></i></span>
+                                    <span class="input-group-text"><i class="bx bxs-map"></i></span>
                                     <select class="form-select no-select2 b-round-10" name="location">
                                         <option>Osaka</option>
                                     </select>
@@ -396,7 +396,7 @@
                             <div class="col-md-6 mb-3">
 {{--                                <label for="first_name" class="form-label">First Name</label>--}}
                                 <div class="input-group">
-{{--                                    <span class="input-group-text"><i class="ri-user-3-fill"></i></span>--}}
+{{--                                    <span class="input-group-text"><i class="bx bxs-user"></i></span>--}}
                                     <input type="text" class="form-control b-round-10" id="first_name" name="first_name"
                                            placeholder="Enter your first name" value="{{ $user->first_name??'' }}"
                                            required="">
@@ -407,7 +407,7 @@
                             <div class="col-md-6 mb-3">
 {{--                                <label for="last_name" class="form-label">Last Name</label>--}}
                                 <div class="input-group">
-{{--                                    <span class="input-group-text"><i class="ri-user-3-fill"></i></span>--}}
+{{--                                    <span class="input-group-text"><i class="bx bxs-user"></i></span>--}}
                                     <input type="text" class="form-control b-round-10" id="last_name" name="last_name"
                                            placeholder="Enter your last name" value="{{ $user->last_name??'' }}"
                                            required="">
@@ -418,7 +418,7 @@
                             <div class="col-md-6 mb-3">
 {{--                                <label for="email" class="form-label">Email Address</label>--}}
                                 <div class="input-group">
-{{--                                    <span class="input-group-text"><i class="ri-mail-fill"></i></span>--}}
+{{--                                    <span class="input-group-text"><i class="bx bxs-envelope"></i></span>--}}
                                     <input type="email" class="form-control b-round-10" id="email" name="email"
                                            placeholder="Enter a valid email"
                                            value="{{ $user->email??'' }}" required="">
@@ -430,7 +430,7 @@
                             <div class="col-md-6 mb-3">
 {{--                                <label for="mobile" class="form-label">Contact Number</label>--}}
                                 <div class="input-group">
-{{--                                    <span class="input-group-text rounded"><i class="ri-phone-fill"></i></span>--}}
+{{--                                    <span class="input-group-text rounded"><i class="bx bxs-phone"></i></span>--}}
                                     <input type="text" class="form-control b-round-10" id="mobile" name="mobile"
                                            value="{{ $user->mobile??'' }}"
                                            placeholder="Phone Number">
@@ -514,11 +514,11 @@
             $('.selectedCars').html(''); // Clear old content
 
             // SVGs
-            // const mobileSvg=`<i class="ri-smartphone-line"></i>`;
-            const bagSVG = `<i class="ri-briefcase-line"></i>`;
+            // const mobileSvg=`<i class="bx bx-mobile"></i>`;
+            const bagSVG = `<i class="bx bx-briefcase"></i>`;
             // const helmetSVG = `<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="#000000" d="M294.396 52.127c-17.944.066-35.777 1.834-52.886 4.746-86.727 14.76-135.612 53.467-161.99 107.824 31.215-2.434 62.002-5.024 91.966-4.838 24.114.15 47.696 2.097 70.54 7.37 15.15 3.5 24.652 16.647 27.607 31.735 2.954 15.088.858 32.92-5.055 51.553l-.287.904-.468.826c-7.762 13.64-24.263 24.498-45.295 35.994-21.032 11.497-46.695 22.693-72.27 32.428-25.574 9.735-51.012 17.98-71.575 23.437-7.254 1.925-13.85 3.48-19.735 4.657 2.275 31.13 6.562 63.38 12.008 95.98 140.118-38.25 273.5-79.888 403.51-123.254 25.935-44.457 29.927-86.448 16.967-126.734-22.393-69.605-60.9-107.048-105.215-126.168-27.696-11.95-57.913-16.57-87.82-16.46zM130.184 179.205c-9.06.51-18.265 1.156-27.532 1.836L59.31 329.386c3.384-.79 6.936-1.663 10.754-2.676 4.004-1.063 8.27-2.27 12.66-3.554 10.022-31.07 43.3-131.415 47.46-143.95zm-46.7 3.262c-10.868.826-21.824 1.654-32.908 2.37-.32.445-.714.947-1.318 2.267-1.58 3.45-3.375 9.418-4.912 16.724-3.075 14.612-5.37 34.727-6.705 54.877-1.333 20.15-1.73 40.438-1.193 55.582.268 7.572.79 13.905 1.442 17.96.048.306.078.312.13.59.46-.01 1.033-.044 1.546-.064l43.918-150.306zM224 183c-15.596 0-28.66 12.582-28.66 28.152s13.064 28.155 28.66 28.155 28.66-12.584 28.66-28.155c0-15.57-13.064-28.152-28.66-28.152zm0 18c6.12 0 10.66 4.567 10.66 10.152 0 5.586-4.54 10.155-10.66 10.155s-10.66-4.57-10.66-10.155c0-5.585 4.54-10.152 10.66-10.152zm230.19 144.865C330.383 386.852 203.285 426.23 70.054 462.56c.413 2.317.81 4.63 1.232 6.948 147.607-26.65 255.974-68.965 371.36-109.164 4.118-4.857 7.947-9.68 11.546-14.48z"></path></g></svg>`;
             const helmetSVG=`<i class='bx bx-helmet'></i>`;
-            const policySVG=`<i class="ri-file-list-line"></i>`;
+            const policySVG=`<i class="bx bx-file"></i>`;
             if (items.length > 0) {
                 items.forEach((item, index) => {
 
@@ -560,7 +560,7 @@
                                             <span class="accessory-name">${acc.name}</span>
                                             <span class="accessory-price">FREE</span>
                                         </div>
-                                        <div class="accessory-check"><i class="ri-check-line"></i></div>
+                                        <div class="accessory-check"><i class="bx bx-check"></i></div>
                                     </label>
                                 `;
                             });
@@ -625,7 +625,7 @@
                                         }
                                     </span>
                                 </div>
-                                <div class="accessory-check"><i class="ri-check-line"></i></div>
+                                <div class="accessory-check"><i class="bx bx-check"></i></div>
                             </label>
                         `;
                             });
@@ -673,7 +673,7 @@
                                                 <span class="accessory-name">Optional Insurance</span>
                                                 <span class="accessory-price">Add Extra Optional Insurance ${item.insurance_price ? '¥' + Number(item.insurance_price).toLocaleString() + ' /day' : ''}</span>
                                             </div>
-                                            <div class="accessory-check"><i class="ri-check-line"></i></div>
+                                            <div class="accessory-check"><i class="bx bx-check"></i></div>
                                         </label>
                                     </div>
                                 </div>

@@ -346,7 +346,7 @@
             {{-- </lottie-player>--}}
             {{--</div>--}}
     <div id="toTop">
-        <i class="icofont-simple-up"></i>
+        <i class="bx bx-chevron-up"></i>
     </div>
 
     <!-- Js files -->
@@ -403,7 +403,7 @@
                 document.getElementById('tokyo-time-desktop').textContent = fullDateTime;
 
                 // Update tooltip with just the time
-                const clockIcons = document.querySelectorAll('.flaticon-clock');
+                const clockIcons = document.querySelectorAll('.bx-time');
                 clockIcons.forEach(icon => {
                     icon.setAttribute('title', `Tokyo Time: ${tokyoTime}`);
                 });

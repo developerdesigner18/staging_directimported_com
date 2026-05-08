@@ -590,7 +590,7 @@
 
                         <div class="filter-search">
                             <input type="text" class="search-cars" placeholder="Search cars by name...">
-                            <i class="icofont-search search-icon"></i>
+                            <i class="bx bx-search search-icon"></i>
                         </div>
                     </div>
                 </div>

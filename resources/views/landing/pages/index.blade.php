@@ -852,13 +852,13 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="rid-info-box text-center">
-                        <i class="flaticon-magnifying-glass-search"></i>
+                        <i class="bx bx-search"></i>
                         <h4>Find the Right Car</h4>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="rid-info-box text-center">
-                        <i class="flaticon-booking"></i>
+                        <i class="bx bx-calendar-check"></i>
                         <h4>Buy it Online</h4>
                     </div>
                 </div>
@@ -1066,7 +1066,7 @@
                         <div class="col-md-6">
                             <div class="rid-info-box-2 d-flex align-items-center mb-3">
                                 {{-- <div class="rid-info-box-icon position-relative">--}}
-                                    {{-- <i class="flaticon-history"></i>--}}
+                                    {{-- <i class="bx bx-history"></i>--}}
                                     {{-- </div>--}}
                                 <div class="rid-info-box-text">
                                     <h4>Immediate Booking</h4>

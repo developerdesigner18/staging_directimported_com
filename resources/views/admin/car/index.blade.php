@@ -40,7 +40,7 @@
                             <!-- Delete button at bottom center -->
                             <button type="button" id="deleteBannerBtn" class="btn btn-danger position-absolute"
                                 style="bottom: 0; left: 50%; transform: translateX(-50%); border-radius:50%; padding:2px 6px; font-size:0.7rem;">
-                                <i class="ri-delete-bin-6-line"></i>
+                                <i class="bx bx-trash"></i>
                             </button>
                         </div>
 
@@ -76,10 +76,10 @@
         <div class="col-sm-auto">
             <div>
                 <a href="{{ route('admin.car.create') }}" class="btn btn-success">
-                    <i class="ri-add-line align-bottom me-1"></i> Add New
+                    <i class="bx bx-plus align-bottom me-1"></i> Add New
                 </a>
                 <button type="button" class="btn btn-success btn-label" data-bs-toggle="modal"
-                    data-bs-target="#bannerModal"><i class="ri-image-add-line label-icon align-middle fs-16 me-2"></i>Car
+                    data-bs-target="#bannerModal"><i class="bx bx-image-add label-icon align-middle fs-16 me-2"></i>Car
                     Banner</button>
             </div>
         </div>
@@ -92,7 +92,7 @@
                         <div class="search-box ms-2" id="txtSearch">
                             <input type="text" name="search" class="form-control" placeholder="Search..."
                                 value="{{ $search }}">
-                            <i class="ri-search-line search-icon"></i>
+                            <i class="bx bx-search search-icon"></i>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-info" id="btnSearch">Search</button>
@@ -341,8 +341,8 @@
                             processing: processing,
                             emptyTable: emptyTable,
                             paginate: {
-                                next: '<i class="ri-arrow-right-s-line">',
-                                previous: '<i class="ri-arrow-left-s-line">',
+                                next: '<i class="bx bx-chevron-right">',
+                                previous: '<i class="bx bx-chevron-left">',
                             },
                         },
                         columns: [

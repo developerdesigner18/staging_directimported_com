@@ -56,7 +56,7 @@
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon material-shadow-none"
                                                     type="button" id="password-addon"><i
-                                                        class="ri-eye-fill align-middle"></i></button>
+                                                        class="bx bx-show align-middle"></i></button>
                                             </div>
                                             @error('password')
                                                 <span class="text-danger">{{ $message }}</span>

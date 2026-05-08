@@ -2,8 +2,7 @@
 <link rel="icon" type="image/webp" href="{{asset('assets/logo/' . getSetting()->logo)}}">
 
 <!-- Inject:css -->
-<link rel="stylesheet" type="text/css" href="{{asset('assets/landing/fonts/icofont/icofont.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{asset('assets/landing/fonts/flaticon/flaticon.css')}}">
+
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/bootstrap.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/progresscircle.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/select2.min.css')}}">
@@ -13,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/car-card.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/responsive.css')}}">
 
-<link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+
 <link href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!-- jQuery UI CSS -->

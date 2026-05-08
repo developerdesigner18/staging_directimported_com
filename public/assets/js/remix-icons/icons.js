@@ -1,34 +1,32 @@
-const bikeAccessoryIcons = [
+const carAccessoryIcons = [
 
     // 🪖 Safety Gear
     "bx bx-helmet",
-    // "ri-helmet-line",
 
     // 🧤 Riding Gear
-    "ri-t-shirt-line",
-    "ri-shirt-line",
+    "bx bx-closet",
     "bx bx-hand",
 
     // 🎒 Storage / Luggage
-    "ri-suitcase-line",
-    "ri-archive-line",
-    "ri-box-3-line",
+    "bx bx-briefcase",
+    "bx bx-archive",
+    "bx bx-package",
 
     // 🔧 Utility / Tools
-    "ri-tools-line",
+    "bx bx-wrench",
     "bx bx-spanner",
-    "ri-hammer-line",
+    "bx bx-hammer",
 
     // 📱 Mount / GPS
-    "ri-smartphone-line",
-    "ri-device-line",
-    "ri-navigation-line",
-    "ri-gps-line",
-    "ri-map-pin-line",
+    "bx bx-mobile-alt",
+    "bx bx-devices",
+    "bx bx-navigation",
+    "bx bx-current-location",
+    "bx bx-map-pin",
 
     // 🔐 Security
-    "ri-alarm-warning-line",
+    "bx bx-error",
 
-    //policy
-    "ri-file-list-line"
+    // Policy
+    "bx bx-list-ul"
 ];

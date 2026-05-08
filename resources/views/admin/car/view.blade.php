@@ -180,15 +180,15 @@
                                 <div class="row">
                                     @php
                                         $specs = [
-                                            ['label' => 'MAKE', 'value' => $car->spec->make ?? '-', 'icon' => 'ri-car-fill', 'color' => 'text-primary'],
-                                            ['label' => 'MODEL YEAR', 'value' => $car->spec->model_year ?? '-', 'icon' => 'ri-calendar-line', 'color' => 'text-success'],
-                                            ['label' => 'ENGINE', 'value' => $car->spec->engine ?? '-', 'icon' => 'ri-speed-up-line', 'color' => 'text-danger'],
-                                            ['label' => 'ODOMETER', 'value' => ($car->spec->odometer ?? '-') . ' km', 'icon' => 'ri-dashboard-3-line', 'color' => 'text-warning'],
-                                            ['label' => 'FUEL TYPE', 'value' => $car->spec->fuel_type ?? '-', 'icon' => 'ri-gas-station-line', 'color' => 'text-info'],
-                                            ['label' => 'TRANSMISSION', 'value' => $car->spec->transmission ?? '-', 'icon' => 'ri-settings-3-line', 'color' => 'text-secondary'],
-                                            ['label' => 'BODY TYPE', 'value' => $car->spec->body_type ?? '-', 'icon' => 'ri-layout-grid-line', 'color' => 'text-dark'],
-                                            ['label' => 'EXTERIOR COLOR', 'value' => $car->spec->exterior_color ?? '-', 'icon' => 'ri-palette-line', 'color' => 'text-primary'],
-                                            ['label' => 'INTERIOR COLOR', 'value' => $car->spec->interior_color ?? '-', 'icon' => 'ri-brush-line', 'color' => 'text-info'],
+                                            ['label' => 'MAKE', 'value' => $car->spec->make ?? '-', 'icon' => 'bx bxs-car', 'color' => 'text-primary'],
+                                            ['label' => 'MODEL YEAR', 'value' => $car->spec->model_year ?? '-', 'icon' => 'bx bx-calendar', 'color' => 'text-success'],
+                                            ['label' => 'ENGINE', 'value' => $car->spec->engine ?? '-', 'icon' => 'bx bx-tachometer', 'color' => 'text-danger'],
+                                            ['label' => 'ODOMETER', 'value' => ($car->spec->odometer ?? '-') . ' km', 'icon' => 'bx bxs-dashboard', 'color' => 'text-warning'],
+                                            ['label' => 'FUEL TYPE', 'value' => $car->spec->fuel_type ?? '-', 'icon' => 'bx bxs-gas-pump', 'color' => 'text-info'],
+                                            ['label' => 'TRANSMISSION', 'value' => $car->spec->transmission ?? '-', 'icon' => 'bx bx-cog', 'color' => 'text-secondary'],
+                                            ['label' => 'BODY TYPE', 'value' => $car->spec->body_type ?? '-', 'icon' => 'bx bx-grid-alt', 'color' => 'text-dark'],
+                                            ['label' => 'EXTERIOR COLOR', 'value' => $car->spec->exterior_color ?? '-', 'icon' => 'bx bx-palette', 'color' => 'text-primary'],
+                                            ['label' => 'INTERIOR COLOR', 'value' => $car->spec->interior_color ?? '-', 'icon' => 'bx bx-brush', 'color' => 'text-info'],
                                         ];
                                     @endphp
 

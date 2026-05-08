@@ -28,7 +28,7 @@
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
             id="vertical-hover">
-            <i class="ri-record-circle-line"></i>
+            <i class="bx bx-radio-circle"></i>
         </button>
     </div>
 
@@ -118,7 +118,7 @@
                     <li class="nav-item">
                         <a href="{{route('admin.accessory.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.accessory.*')) active @endif">
-                            <i class="ri-tools-line"></i> <span data-key="t-dashboards">Accessories & Equipments</span>
+                            <i class="bx bx-wrench"></i> <span data-key="t-dashboards">Accessories & Equipments</span>
                         </a>
                     </li>
                 @endif
@@ -149,7 +149,7 @@
                     <li class="nav-item">
                         <a href="{{route('admin.home_section.edit')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.home_section.*')) active @endif">
-                            <i class="ri-information-line"></i> <span data-key="t-dashboards">About Us</span>
+                            <i class="bx bx-info-circle"></i> <span data-key="t-dashboards">About Us</span>
                         </a>
                     </li>
                 @endif
@@ -196,7 +196,7 @@
                     <li class="nav-item">
                         <a href="{{route('admin.location.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.location.*')) active @endif">
-                            <i class="ri-map-pin-fill"></i><span data-key="t-dashboards">Location</span>
+                            <i class="bx bxs-map-pin"></i><span data-key="t-dashboards">Location</span>
                         </a>
                     </li>
                 @endif

@@ -217,7 +217,7 @@
                                      class="img-fluid"
                                      style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
                             @else
-                                <i class="ri-motorcar-fill text-muted" style="font-size: 4rem;"></i>
+                                <i class="bx bxs-car text-muted" style="font-size: 4rem;"></i>
                             @endif
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                                     <ul class="accessory-list">
                                         @foreach($includedAccessories as $acc)
                                             <li class="accessory-item">
-                                                <i class="ri-checkbox-circle-fill"></i>
+                                                <i class="bx bxs-check-circle"></i>
                                                 {{ $acc->name }} (Free)
                                             </li>
                                         @endforeach
@@ -293,7 +293,7 @@
                                     <ul class="accessory-list">
                                         @foreach($selectedAccessories as $acc)
                                             <li class="accessory-item">
-                                                <i class="ri-add-circle-fill"></i>
+                                                <i class="bx bxs-plus-circle"></i>
                                                 {{ $acc->name }}
                                                 {{-- @if($acc->price > 0) (¥{{ number_format($acc->price) }}) @endif --}}
                                             </li>
@@ -306,7 +306,7 @@
                                 <div class="mb-3">
                                     <h6 class="text-dark fw-bold" style="font-size: 0.9rem; margin-bottom: 5px;">Included Accessories:</h6>
                                     <ul class="accessory-list">
-                                        <li class="accessory-item"><i class="ri-checkbox-circle-fill"></i> Standard Equipment</li>
+                                        <li class="accessory-item"><i class="bx bxs-check-circle"></i> Standard Equipment</li>
                                     </ul>
                                 </div>
                             @endif
@@ -353,7 +353,7 @@
                 <div class="col-md-6">
                     <div class="date-box">
                         <div class="date-header">
-                            <i class="ri-calendar-event-fill date-icon" style="color: #22c55e;"></i>
+                            <i class="bx bxs-calendar-event date-icon" style="color: #22c55e;"></i>
                             Pickup Details
                         </div>
                         <div class="date-display">
@@ -367,7 +367,7 @@
                 <div class="col-md-6">
                     <div class="date-box">
                         <div class="date-header">
-                            <i class="ri-calendar-event-fill date-icon" style="color: #b91c1c;"></i>
+                            <i class="bx bxs-calendar-event date-icon" style="color: #b91c1c;"></i>
                             Drop-off Details
                         </div>
                         <div class="date-display">

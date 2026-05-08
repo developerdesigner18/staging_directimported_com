@@ -51,8 +51,8 @@ $(document).ready(function () {
             processing: processing,
             emptyTable: emptyTable,
             paginate: {
-                next: '<i class="ri-arrow-right-s-line">',
-                previous: '<i class="ri-arrow-left-s-line">',
+                next: '<i class=\"bx bx-chevron-right\">',
+                previous: '<i class=\"bx bx-chevron-left\">',
             },
         },
         columns: [

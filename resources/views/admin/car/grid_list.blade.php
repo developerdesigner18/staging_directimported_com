@@ -35,13 +35,13 @@
                             <br>
                             <div class="action-btn text-end">
                                 <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}" data-bs-toggle="tooltip" title="Manage Specs">
-                                    <i class="ri-settings-4-line"></i>
+                                    <i class="bx bx-cog"></i>
                                 </a>
                                 <a class="btn btn-success btn-sm" href="{{ route('admin.car.edit', $car->id) }}" data-bs-toggle="tooltip" title="Edit Car">
-                                    <i class="ri-pencil-line"></i>
+                                    <i class="bx bx-edit"></i>
                                 </a>
                                 <button class="btn btn-danger btn-sm" onclick="deleteCar('{{$car->id}}',this)" data-bs-toggle="tooltip" title="Delete Car"><i
-                                            class="ri-delete-bin-line"></i>
+                                            class="bx bx-trash"></i>
                                 </button>
                             </div>
                         </div>

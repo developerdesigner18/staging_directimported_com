@@ -7,7 +7,7 @@
                     <div class="rid-contact">
                         {{-- <div class="business-contact">
                             <a href="tel:+81648642081" class="text-white">
-                                <i class="flaticon-telephone-call me-2"></i>
+                                <i class="bx bxs-phone me-2"></i>
                                 <span class="mr-40 d-none d-md-inline">
                                     +81 6 4864 2081
                                 </span>
@@ -15,13 +15,13 @@
                         </div> --}}
                         <div class="business-hour">
                             <div class="business-hour-mob">
-                                <i class="flaticon-clock me-2" data-bs-toggle="tooltip" title="Tokyo Time"
+                                <i class="bx bx-time me-2" data-bs-toggle="tooltip" title="Tokyo Time"
                                     data-bs-placement="bottom"></i>
                                 <span class="d-none" id="tokyo-time-mobile"></span>
                             </div>
 
                             <div class="business-hour-des">
-                                <i class="flaticon-clock me-2 d-none d-md-inline"></i>
+                                <i class="bx bx-time me-2 d-none d-md-inline"></i>
                                 <span class="d-none d-md-inline" id="tokyo-time-desktop"></span>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                     </div>
                     @if(Auth::guard('web')->check())
                         <a href="{{route('profile.settings')}}" class="text-white ms-3">
-                            <i class="flaticon-avatar"></i>
+                            <i class="bx bx-user"></i>
                         </a>
                     @else
                         <a href="{{ route('login') }}"

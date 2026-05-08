@@ -141,7 +141,7 @@
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
-                                    <i class="ri-user-star-fill"></i>
+                                    <i class="bx bxs-user-badge"></i>
                                     <span class="d-none d-sm-inline-block">Add Employee</span>
                                 </button>
                             </div>
@@ -176,8 +176,8 @@
                 processing: processing,
                 emptyTable: emptyTable,
                 paginate: {
-                    next: '<i class="ri-arrow-right-s-line">',
-                    previous: '<i class="ri-arrow-left-s-line">',
+                    next: '<i class="bx bx-chevron-right">',
+                    previous: '<i class="bx bx-chevron-left">',
                 },
             },
             columns: [

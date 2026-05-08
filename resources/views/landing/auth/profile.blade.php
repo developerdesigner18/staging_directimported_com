@@ -586,7 +586,7 @@
                                                        accept="image/*" class="d-none">
                                                 <div class="camera-icon"
                                                      onclick="document.getElementById('profileImageInput').click()">
-                                                    <i class="ri-camera-line"></i>
+                                                    <i class="bx bx-camera"></i>
                                                 </div>
                                             </div>
                                             <h5 class="mt-3 mb-1">{{$user->first_name}} {{$user->last_name}}</h5>
@@ -598,7 +598,7 @@
                                                 <div
                                                     class="alert alert-warning alert-border-left alert-dismissible fade show"
                                                     role="alert">
-                                                    <i class="ri-alert-line me-3 align-middle"></i>
+                                                    <i class="bx bx-error me-3 align-middle"></i>
                                                     {{ session('warning') }}
 
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
@@ -641,7 +641,7 @@
 
                                                     <div class="input-group">
                                                         <span class="input-group-text"><i
-                                                                class="ri-calendar-2-fill"></i></span>
+                                                                class="bx bxs-calendar"></i></span>
                                                         <input type="text" class="form-control datepicker"
                                                                id="dateOfBirth" name="date_of_birth"
                                                                 value="{{ $user->date_of_birth ? \Carbon\Carbon::parse($user->date_of_birth)->format('d - M- Y') : '' }}" placeholder="Select Date of Birth">
