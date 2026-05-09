@@ -97,7 +97,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/send-payment-mail', 'PaymentMail')->name('payment_link');
 
             Route::get('/contract-preview/{id}', 'contractPreview')->name('contract-preview');
-            Route::post('/send-verified-mail', 'sendDocumentVerifiedMail')->name('document-verified-mail');
+            Route::post('/send-verified-mail', 'sendDocumentVerifiedMail')->name('send-verified-mail');
             Route::post('/bulk-send', 'bulkSend')->name('bulk-send');
             Route::post('/update-customer-password', 'updateCustomerPassword')->name('update-customer-password');
 
