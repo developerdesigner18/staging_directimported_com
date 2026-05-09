@@ -219,7 +219,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::group([
             'prefix' => 'car/category/{type}',
             'where' => ['type' => 'car'],
-            'as' => 'category.',
+            'as' => 'category.car.',
             'controller' => CategoryController::class
         ], function () {
             Route::get('/', 'index')->name('index');

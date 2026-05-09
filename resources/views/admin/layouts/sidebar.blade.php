@@ -76,7 +76,7 @@
                                         data-key="t-level-1.1">Cars</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{route('admin.category.index', ['type' => 'car'])}}"
+                                    <a href="{{route('admin.category.car.index', ['type' => 'car'])}}"
                                         class="nav-link @if(request()->is('admin/car/category*')) active @endif"
                                         data-key="t-level-1.1">Cars Categories</a>
                                 </li>
