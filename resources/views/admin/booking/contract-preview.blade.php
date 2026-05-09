@@ -466,7 +466,7 @@
                             <div class="image-upload-wrapper">
                                 <img id="leftImagePreview" src="{{ asset('assets/landing/images/car-details/right.jpg')}}" alt="Left">
                                 <button class="camera-btn" id="leftImageButton" data-html2canvas-ignore="true">
-                                    <i class="bx bx-camera"></i>
+                                    <i class="ri-camera-fill"></i>
                                 </button>
                                 <input type="file" accept="image/*" id="leftImageInput" style="display:none;">
                             </div>
@@ -475,7 +475,7 @@
                             <div class="image-upload-wrapper">
                                 <img id="rightImagePreview" src="{{ asset('assets/landing/images/car-details/left.png')}}" alt="Right">
                                 <button class="camera-btn" id="rightImageButton" data-html2canvas-ignore="true">
-                                    <i class="bx bx-camera"></i>
+                                    <i class="ri-camera-fill"></i>
                                 </button>
                                 <input type="file" accept="image/*" id="rightImageInput" style="display:none;">
                             </div>
@@ -889,10 +889,10 @@
             <!-- ACTIONS -->
             <div class="text-center mt-3">
                 <button id="downloadBtn" class="btn btn-primary btn-lg px-5">
-                    <i class="bx bxs-file-pdf me-1"></i> Download PDF
+                    <i class="ri-file-pdf-line me-1"></i> Download PDF
                 </button>
                 <button id="printBtn" class="btn btn-secondary btn-lg px-5 ms-3">
-                    <i class="bx bx-printer me-1"></i> Print
+                    <i class="ri-printer-line me-1"></i> Print
                 </button>
             </div>
 
@@ -1020,7 +1020,7 @@
         }
 
         const originalContent = downloadBtn.innerHTML;
-        downloadBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin me-1"></i> Generating...';
+        downloadBtn.innerHTML = '<i class="ri-loader-4-line ri-spin me-1"></i> Generating...';
         downloadBtn.classList.add('btn-loading');
         downloadBtn.disabled = true;
 

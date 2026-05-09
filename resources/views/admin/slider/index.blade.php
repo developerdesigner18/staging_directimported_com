@@ -45,7 +45,7 @@
         <div class="col-sm-auto">
             <div>
                 <a href="{{route('admin.slider.create')}}" class="btn btn-success">
-                    <i class="bx bx-plus align-bottom me-1"></i>Add New
+                    <i class="ri-add-line align-bottom me-1"></i>Add New
                 </a>
        <!-- Button to open modal -->
        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#colorModal">
@@ -60,7 +60,7 @@
                     <div class="search-box ms-2">
                         <input type="text" name="search" class="form-control" placeholder="Search..."
                                value="{{ request('search') }}">
-                        <i class="bx bx-search search-icon"></i>
+                        <i class="ri-search-line search-icon"></i>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-secondary">Search</button>
@@ -81,7 +81,7 @@
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-light dropdown-toggle" type="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                    <i class="ri-more-2-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ route('admin.slider.edit', $slider->id) }}">Edit</a>

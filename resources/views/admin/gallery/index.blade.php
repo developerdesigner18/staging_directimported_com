@@ -21,7 +21,7 @@
                              class="img-fluid h-100 w-100 object-fit-cover" style="display: none;">
                         <div id="galleryImagePlaceholder"
                              class="h-100 d-flex flex-column justify-content-center align-items-center">
-                            <i class="bx bx-image" style="font-size: 48px; color: #adb5bd;"></i>
+                            <i class="ri-image-line" style="font-size: 48px; color: #adb5bd;"></i>
                             <span class="mt-2 text-muted">Click to upload image</span>
                         </div>
                         <input type="file" id="galleryImageInput" name="image" class="d-none" accept="image/*">
@@ -61,7 +61,7 @@
                         <div class="position-absolute top-0 end-0 m-2">
                             <button type="button" class="btn btn-sm btn-light"
                                     onclick="document.getElementById('editGalleryImageInput').click()">
-                                <i class="bx bx-edit-alt"></i>
+                                <i class="ri-edit-2-line"></i>
                             </button>
                         </div>
                         <input type="file" id="editGalleryImageInput" name="image" class="d-none" accept="image/*">
@@ -112,7 +112,7 @@
                     <div class="search-box ms-2">
                         <input type="text" name="search" class="form-control" placeholder="Search..."
                                value="{{ request('search') }}">
-                        <i class="bx bx-search search-icon"></i>
+                        <i class="ri-search-line search-icon"></i>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-secondary">Search</button>
@@ -135,13 +135,13 @@
                                         data-bs-toggle="dropdown"
                                         aria-expanded="false"
                                         style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                    <i class="ri-more-2-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
                                            onclick="editGallery({{$slider->id}},this)">
-                                            <i class="bx bx-edit me-2"></i>Edit
+                                            <i class="ri-edit-line me-2"></i>Edit
                                         </a>
                                     </li>
                                     <li>
@@ -150,7 +150,7 @@
                                     <li>
                                         <a class="dropdown-item text-danger" href="javascript:void(0)"
                                            onclick="deleteGallery('{{$slider->id}}',this)">
-                                            <i class="bx bx-trash me-2"></i>Delete
+                                            <i class="ri-delete-bin-line me-2"></i>Delete
                                         </a>
                                     </li>
                                 </ul>

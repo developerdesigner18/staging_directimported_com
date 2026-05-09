@@ -49,7 +49,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" placeholder="Search ..."
                                            aria-label="Recipient's username">
-                                    <button class="btn btn-primary" type="submit"><i class="bx bx-search"></i>
+                                    <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i>
                                     </button>
                                 </div>
                             </div>
@@ -90,18 +90,18 @@
                         @if(Auth::guard('admin')->check())
                         <h6 class="dropdown-header">Welcome {{Auth::guard('admin')->user()->name}}!</h6>
                         <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#changeNameCanvas">
-                            <i class="bx bx-edit text-muted fs-16 align-middle me-1"></i>
+                            <i class="mdi mdi-rename text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Change Profile</span>
                         </a>
                         <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#changePasswordCanvas">
-                            <i class="bx bx-key text-muted fs-16 align-middle me-1"></i>
+                            <i class="mdi mdi-key-change text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Change Password</span>
                         </a>
 
                         <div class="dropdown-divider"></div>
                         @endif
                         <a class="dropdown-item" href="{{route('admin.logout')}}"><i
-                                    class="bx bx-log-out text-muted fs-16 align-middle me-1"></i> <span
+                                    class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
                                     class="align-middle" data-key="t-logout">Logout</span></a>
                     </div>
                 </div>

@@ -99,15 +99,14 @@
         <div class="col-md-8">
             <div class="card shadow-sm mb-3">
                 <div class="card-body">
+
                     <h3 class="mb-1">{{ $car->name }}</h3>
-                    <div class="mb-3 mt-3">
-                        <span class="badge bg-primary me-2">{{ $car->category->name ?? 'No Category' }}</span>
-                        @if($car->is_recommended)
-                            <span class="badge bg-success me-2">Recommended</span>
-                        @endif
-                        <span class="badge bg-info me-2">ID: {{ $car->vehicle_id }}</span>
-                        <span class="badge bg-dark">{{ $car->status->label() }}</span>
-                    </div>
+           <div class="mb-3 mt-3">
+                                            <span class="badge bg-primary me-2 ">{{ $car->category->name ?? 'No Category' }}</span>
+                                            @if($car->is_recommended)
+                                                <span class="badge bg-success">Recommended</span>
+                                            @endif
+                                        </div>
 
                     <div class="mb-3">
                         @if($car->location_id && isset($car->map) && $car->map->google_map_link)
@@ -134,35 +133,18 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div>
                         <h6 class="text-muted">Included Accessories</h6>
                         @if($car->free_accessory && count($car->free_accessory))
                             @foreach($car->free_accessory as $acc)
                                 <span class="badge bg-light text-dark border me-1 mb-1">
                                     {{ $accessories->where('id',$acc)->first()->name ?? '' }}
-                                </span>
+                                </span><br>
                             @endforeach
                         @else
                             <p class="mb-0">No accessories included.</p>
                         @endif
                     </div>
-
-                    @if($car->auctionGrade)
-                    <div class="mb-3">
-                        <h6 class="text-muted">Auction Grade</h6>
-                        <div class="border rounded p-3 bg-light">
-                            <div class="d-flex align-items-center mb-2">
-                                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; font-weight: bold; font-size: 1.2rem;">
-                                    {{ $car->auctionGrade->grade }}
-                                </div>
-                                <h6 class="mb-0">{{ $car->auctionGrade->name }}</h6>
-                            </div>
-                            @if($car->auctionGrade->remarks)
-                                <p class="mb-0 text-muted small"><strong>Remarks:</strong> {{ $car->auctionGrade->remarks }}</p>
-                            @endif
-                        </div>
-                    </div>
-                    @endif
                 </div>
             </div>
 
@@ -178,33 +160,85 @@
                                 <h5 class="mb-4">Technical Specifications</h5>
 
                                 <div class="row">
-                                    @php
-                                        $specs = [
-                                            ['label' => 'MAKE', 'value' => $car->spec->make ?? '-', 'icon' => 'bx bxs-car', 'color' => 'text-primary'],
-                                            ['label' => 'MODEL YEAR', 'value' => $car->spec->model_year ?? '-', 'icon' => 'bx bx-calendar', 'color' => 'text-success'],
-                                            ['label' => 'ENGINE', 'value' => $car->spec->engine ?? '-', 'icon' => 'bx bx-tachometer', 'color' => 'text-danger'],
-                                            ['label' => 'ODOMETER', 'value' => ($car->spec->odometer ?? '-') . ' km', 'icon' => 'bx bxs-dashboard', 'color' => 'text-warning'],
-                                            ['label' => 'FUEL TYPE', 'value' => $car->spec->fuel_type ?? '-', 'icon' => 'bx bxs-gas-pump', 'color' => 'text-info'],
-                                            ['label' => 'TRANSMISSION', 'value' => $car->spec->transmission ?? '-', 'icon' => 'bx bx-cog', 'color' => 'text-secondary'],
-                                            ['label' => 'BODY TYPE', 'value' => $car->spec->body_type ?? '-', 'icon' => 'bx bx-grid-alt', 'color' => 'text-dark'],
-                                            ['label' => 'EXTERIOR COLOR', 'value' => $car->spec->exterior_color ?? '-', 'icon' => 'bx bx-palette', 'color' => 'text-primary'],
-                                            ['label' => 'INTERIOR COLOR', 'value' => $car->spec->interior_color ?? '-', 'icon' => 'bx bx-brush', 'color' => 'text-info'],
-                                        ];
-                                    @endphp
 
-                                    @foreach($specs as $spec)
+                                    <!-- Engine -->
                                     <div class="col-md-4 mb-4">
-                                        <div class="border rounded p-3 h-100 d-flex align-items-center shadow-sm hover-shadow transition">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
                                             <div class="me-3">
-                                                <i class="{{ $spec['icon'] }} fs-3 {{ $spec['color'] }}"></i>
+                                                <i class="ri-speed-up-line fs-3 text-danger"></i>
                                             </div>
                                             <div>
-                                                <small class="text-muted fw-bold">{{ $spec['label'] }}</small>
-                                                <h6 class="mb-0">{{ $spec['value'] }}</h6>
+                                                <small class="text-muted">ENGINE</small>
+                                                <h6 class="mb-0">{{ $car->engine ?? '-' }}</h6>
                                             </div>
                                         </div>
                                     </div>
-                                    @endforeach
+
+                                    <!-- Power -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
+                                            <div class="me-3">
+                                                <i class="ri-flashlight-line fs-3 text-warning"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">POWER</small>
+                                                <h6 class="mb-0">{{ $car->power ?? '-' }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Seat Height -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
+                                            <div class="me-3">
+                                                <i class="ri-ruler-line fs-3 text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">SEAT HEIGHT</small>
+                                                <h6 class="mb-0">{{ $car->seat_height ?? '-' }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Weight -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
+                                            <div class="me-3">
+                                                <i class="ri-scales-2-line fs-3 text-success"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">WEIGHT</small>
+                                                <h6 class="mb-0">{{ $car->weight ?? '-' }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tank Capacity -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
+                                            <div class="me-3">
+                                                <i class="ri-gas-station-line fs-3 text-info"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">TANK CAPACITY</small>
+                                                <h6 class="mb-0">{{ $car->tank_capacity ?? '-' }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Luggage -->
+                                    <div class="col-md-4 mb-4">
+                                        <div class="border rounded p-3 h-100 d-flex align-items-center">
+                                            <div class="me-3">
+                                                <i class="ri-briefcase-4-line fs-3 text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <small class="text-muted">LUGGAGE</small>
+                                                <h6 class="mb-0">{{ $car->luggage ?? '-' }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

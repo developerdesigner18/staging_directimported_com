@@ -1,6 +1,8 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="{{asset('assets/logo/' . getSetting()->favicon)}}">
 
+<!-- jsvectormap css -->
+<link href="{{asset('assets/admin/libs/jsvectormap/css/jsvectormap.min.css')}}" rel="stylesheet" type="text/css" />
 
 <!--Swiper slider css-->
 <link href="{{asset('assets/admin/libs/swiper/swiper-bundle.min.css')}}" rel="stylesheet" type="text/css" />
@@ -9,6 +11,8 @@
 <script src="{{asset('assets/admin/js/layout.js')}}"></script>
 <!-- Bootstrap Css -->
 <link href="{{asset('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+<!-- Icons Css -->
+<link href="{{asset('assets/admin/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- App Css-->
 <link href="{{asset('assets/admin/css/app.min.css')}}" rel="stylesheet" type="text/css" />
 <!-- custom Css-->
@@ -28,6 +32,6 @@
     href="{{asset('assets/admin/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css')}}">
 
 {{-- select2 min css --}}
-<link href="{{asset('assets/vendor/select2/select2.min.css')}}" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <!-- Basic Icons -->
-<link href="{{asset('assets/vendor/boxicons/3.0.8/boxicons.min.css')}}" rel="stylesheet">
+<link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
