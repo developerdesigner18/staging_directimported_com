@@ -17,7 +17,9 @@ yarn-error.log
 /.fleet
 /.idea
 /.nova
-/.vscode
 /.zed
 /public/uploads
 config.bat
+.env
+.vscode
+
