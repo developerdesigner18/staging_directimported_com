@@ -13,6 +13,7 @@ use App\Models\CarConfiguration;
 use App\Models\Category;
 use App\Models\HeroSlider;
 use App\Models\CarSpec;
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -87,7 +88,13 @@ class CarController extends Controller
             ->orderBy('id', 'desc');
 
         if ($search) {
-            $cars->where('name', 'LIKE', "%{$search}%");
+            $cars->where(function ($query) use ($search) {
+                $query->where('model', 'LIKE', "%{$search}%")
+                    ->orWhere('year', 'LIKE', "%{$search}%")
+                    ->orWhereHas('manufacturer', function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%");
+                    });
+            });
         }
         if ($range == 'all') {
             session()->forget('car_range');
@@ -121,11 +128,16 @@ class CarController extends Controller
             return DataTables::eloquent($cars)
                 ->addIndexColumn()
                 ->addColumn('name', function ($row) {
-
                     return $row->name;
                 })
                 ->filterColumn('name', function ($query, $keyword) {
-                    $query->where('name', 'LIKE', "%{$keyword}%");
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('model', 'LIKE', "%{$keyword}%")
+                            ->orWhere('year', 'LIKE', "%{$keyword}%")
+                            ->orWhereHas('manufacturer', function ($m) use ($keyword) {
+                                $m->where('name', 'LIKE', "%{$keyword}%");
+                            });
+                    });
                 })
                 ->addColumn('created_at', function ($row) {
                     return $row->created_at ? $row->created_at->format('d M Y') : '-';
@@ -182,8 +194,9 @@ class CarController extends Controller
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
         $auctionGrades = AuctionGrade::all();
         $locations = Location::all();
+        $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
 
-        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades'));
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers'));
     }
     public function view(Request $request)
     {
@@ -197,7 +210,9 @@ class CarController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'manufacturer_id' => 'required|exists:manufacturers,id',
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer',
             'category_id' => [
                 'required',
                 Rule::exists('categories', 'id')->where(function ($query) {
@@ -232,10 +247,16 @@ class CarController extends Controller
             $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
             $sort_order = $lastid->sort_order ?? 0;
 
+            $manufacturer = Manufacturer::findOrFail($request->manufacturer_id);
+            $fullName = $manufacturer->name . ' ' . $request->model . ' ' . $request->year;
+
             $car = new Car();
             $car->sort_order = $sort_order + 1;
-            $car->name = $request->name;
-            $car->slug = Str::slug($request->name);
+            $car->manufacturer_id = $request->manufacturer_id;
+            $car->model = $request->model;
+            $car->year = $request->year;
+            $car->slug = Str::slug($fullName);
+            $car->name = $fullName;
             $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
@@ -268,13 +289,13 @@ class CarController extends Controller
             // Save Technical Specifications
             CarSpec::create([
                 'car_id' => $car->id,
-                'make' => $request->make,
+                'make' => $manufacturer->name,
                 'exterior_color' => $request->exterior_color,
                 'body_type' => $request->body_type,
                 'fuel_type' => $request->fuel_type,
                 'engine' => $request->engine,
                 'odometer' => $request->odometer,
-                'model_year' => $request->model_year,
+                'model_year' => $request->year,
                 'interior_color' => $request->interior_color,
                 'transmission' => $request->transmission,
             ]);
@@ -295,13 +316,16 @@ class CarController extends Controller
         $extraAccessories = Accessories::where('type', 'EXTRA')->get();
         $locations = Location::all();
         $auctionGrades = AuctionGrade::all();
-        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades'));
+        $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
+        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers'));
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'manufacturer_id' => 'required|exists:manufacturers,id',
+            'model' => 'required|string|max:255',
+            'year' => 'required|integer',
             'category_id' => [
                 'required',
                 Rule::exists('categories', 'id')->where(function ($query) {
@@ -335,8 +359,14 @@ class CarController extends Controller
             $car = Car::findOrFail($id);
 
             // Basic fields
-            $car->name = $request->name;
-            $car->slug = Str::slug($request->name);
+            $manufacturer = Manufacturer::findOrFail($request->manufacturer_id);
+            $fullName = $manufacturer->name . ' ' . $request->model . ' ' . $request->year;
+
+            $car->manufacturer_id = $request->manufacturer_id;
+            $car->model = $request->model;
+            $car->year = $request->year;
+            $car->slug = Str::slug($fullName);
+            $car->name = $fullName;
             $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
@@ -434,13 +464,13 @@ class CarController extends Controller
             CarSpec::updateOrCreate(
                 ['car_id' => $car->id],
                 [
-                    'make' => $request->make,
+                    'make' => $manufacturer->name,
                     'exterior_color' => $request->exterior_color,
                     'body_type' => $request->body_type,
                     'fuel_type' => $request->fuel_type,
                     'engine' => $request->engine,
                     'odometer' => $request->odometer,
-                    'model_year' => $request->model_year,
+                    'model_year' => $request->year,
                     'interior_color' => $request->interior_color,
                     'transmission' => $request->transmission,
                 ]

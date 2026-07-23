@@ -15,7 +15,9 @@ class Car extends Model
 
     protected $fillable = [
         'sort_order',
-        'name',
+        'manufacturer_id',
+        'model',
+        'year',
         'location_id',
         'slug',
         'category_id',
@@ -38,6 +40,12 @@ class Car extends Model
         'status',
         'auction_grade_id',
     ];
+
+    public function getNameAttribute()
+    {
+        $dynamicName = trim(($this->manufacturer->name ?? '') . ' ' . $this->model . ' ' . $this->year);
+        return $dynamicName ?: ($this->attributes['name'] ?? '');
+    }
 
     protected $casts = [
         'less_four_days_price' => 'float',
@@ -102,6 +110,11 @@ class Car extends Model
     public function auctionGrade()
     {
         return $this->belongsTo(AuctionGrade::class, 'auction_grade_id');
+    }
+
+    public function manufacturer()
+    {
+        return $this->belongsTo(Manufacturer::class);
     }
 
 }

@@ -77,7 +77,16 @@ class CarController extends Controller
             $allCategories = Category::all();
 
             // Build query
-            $query = Car::where('name', 'LIKE', "%$search%");
+            $query = Car::query();
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('model', 'LIKE', "%{$search}%")
+                        ->orWhere('year', 'LIKE', "%{$search}%")
+                        ->orWhereHas('manufacturer', function ($m) use ($search) {
+                            $m->where('name', 'LIKE', "%{$search}%");
+                        });
+                });
+            }
 
 
             // Apply range filter if not "ALL"

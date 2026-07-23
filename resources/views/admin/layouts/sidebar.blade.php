@@ -61,13 +61,13 @@
 
                 @if($user->hasRole('admin') || $user->can('cars'))
                     <li class="nav-item">
-                        <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*')) active @endif"
+                        <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) active @endif"
                             href="#sidebarCars" data-bs-toggle="collapse" role="button"
-                            aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*')) ? 'true' : 'false' }}"
+                            aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) ? 'true' : 'false' }}"
                             aria-controls="sidebarCars">
                             <i class="ri-motorcar-line"></i> <span data-key="t-multi-level">Cars</span>
                         </a>
-                        <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*')) show @endif"
+                        <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) show @endif"
                             id="sidebarCars">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
@@ -79,6 +79,11 @@
                                     <a href="{{route('admin.category.car.index', ['type' => 'car'])}}"
                                         class="nav-link @if(request()->is('admin/car/category*')) active @endif"
                                         data-key="t-level-1.1">Cars Categories</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.manufacturer.index')}}"
+                                        class="nav-link @if(request()->routeIs('admin.manufacturer.index')) active @endif"
+                                        data-key="t-level-1.1">Manage Manufacturers</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.car.configuration')}}"

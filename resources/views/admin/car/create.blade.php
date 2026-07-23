@@ -25,11 +25,40 @@
                     <form id="addForm" enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Car Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter car name">
-                            <label id="name-error" class="text-danger error" for="name" style="display: none"></label>
+                        <!-- Make + Model + Year -->
+                        <div class="row mb-3">
+                            <!-- Make -->
+                            <div class="col-md-4">
+                                <label for="manufacturer_id" class="form-label">Make</label>
+                                <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
+                                    <option value="">Select Make</option>
+                                    @foreach($manufacturers ?? [] as $manufacturer)
+                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id"
+                                    style="display: none"></label>
+                            </div>
+
+                            <!-- Model -->
+                            <div class="col-md-4">
+                                <label for="model" class="form-label">Model</label>
+                                <input type="text" class="form-control" id="model" name="model"
+                                    placeholder="Enter model name">
+                                <label id="model-error" class="text-danger error" for="model" style="display: none"></label>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="col-md-4">
+                                <label for="year" class="form-label">Year</label>
+                                <select class="form-select select2" id="year" name="year">
+                                    <option value="">Select Year</option>
+                                    @for($y = date('Y') + 1; $y >= 1970; $y--)
+                                        <option value="{{ $y }}">{{ $y }}</option>
+                                    @endfor
+                                </select>
+                                <label id="year-error" class="text-danger error" for="year" style="display: none"></label>
+                            </div>
                         </div>
 
                         <!-- Category -->
@@ -152,6 +181,48 @@
                             </div>
                         </div>
 
+                        <!-- Vehicle ID + Status + Auction Grade -->
+                        <div class="mb-3">
+                            <div class="row">
+                                <!-- Vehicle ID -->
+                                <div class="col-lg-4">
+                                    <label for="vehicle_id" class="form-label">Vehicle ID / Chassis No</label>
+                                    <input type="text" class="form-control" id="vehicle_id" name="vehicle_id"
+                                        placeholder="Enter Vehicle ID">
+                                    <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-lg-4">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select select2" id="status" name="status">
+                                        <option value="">Select Status</option>
+                                        @foreach(\App\Enum\VehicleStatus::cases() as $status)
+                                            <option value="{{ $status->value }}">
+                                                {{ $status->label() }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="status-error" class="text-danger error" style="display: none"></label>
+                                </div>
+
+                                <!-- Auction Grade -->
+                                <div class="col-lg-4">
+                                    <label for="auction_grade_id" class="form-label">Auction Grade</label>
+                                    <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
+                                        <option value="">Select Auction Grade</option>
+                                        @foreach($auctionGrades ?? [] as $grade)
+                                            <option value="{{ $grade->id }}">
+                                                {{ $grade->grade }} {{ $grade->remarks }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="auction_grade_id-error" class="text-danger error"
+                                        style="display: none"></label>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Recommended -->
                         <div class="mb-3">
                             <label class="form-label">Recommended Car</label>
@@ -196,14 +267,12 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Make</label>
-                                        <input type="text" name="make" class="form-control" placeholder="e.g. Toyota">
-                                    </div>
+
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Exterior Color</label>
-                                        <input type="text" name="exterior_color" class="form-control" placeholder="e.g. Pearl White">
+                                        <input type="text" name="exterior_color" class="form-control"
+                                            placeholder="e.g. Pearl White">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
@@ -226,19 +295,18 @@
                                         <input type="number" name="odometer" class="form-control" placeholder="e.g. 50000">
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Model Year</label>
-                                        <input type="number" name="model_year" class="form-control" placeholder="e.g. 2022">
-                                    </div>
+
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Interior Color</label>
-                                        <input type="text" name="interior_color" class="form-control" placeholder="e.g. Black Leather">
+                                        <input type="text" name="interior_color" class="form-control"
+                                            placeholder="e.g. Black Leather">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Transmission</label>
-                                        <input type="text" name="transmission" class="form-control" placeholder="e.g. Automatic / Manual">
+                                        <input type="text" name="transmission" class="form-control"
+                                            placeholder="e.g. Automatic / Manual">
                                     </div>
                                 </div>
                             </div>
@@ -379,6 +447,26 @@
         }
 
         $(document).ready(function () {
+            $('#manufacturer_id').select2({
+                width: '100%',
+                placeholder: 'Select Make',
+                allowClear: true
+            });
+            $('#year').select2({
+                width: '100%',
+                placeholder: 'Select Year',
+                allowClear: true
+            });
+            $('#status').select2({
+                width: '100%',
+                placeholder: 'Select Status',
+                allowClear: true
+            });
+            $('#auction_grade_id').select2({
+                width: '100%',
+                placeholder: 'Select Auction Grade',
+                allowClear: true
+            });
             initFilepond();
 
 
@@ -386,13 +474,18 @@
             $("#addForm").validate({
                 rules: {
 
-                    name: { required: true },
+                    manufacturer_id: { required: true },
+                    model: { required: true },
+                    year: { required: true },
                     category_id: { required: true },
                     less_four_days_price: { required: true, number: true, min: 0 },
                     five_six_days_price: { required: true, number: true, min: 0 },
                     week_price: { required: true, number: true, min: 0 },
                     month_price: { required: true, number: true, min: 0 },
                     max_price: { required: true, number: true, min: 0 },
+                    vehicle_id: { required: true },
+                    status: { required: true },
+                    auction_grade_id: { required: true },
                     'images[]': { required: true },
                     description: { required: true },
                     number_plate: { required: true },
@@ -403,7 +496,9 @@
 
                 },
                 messages: {
-                    name: { required: "The car name is required." },
+                    manufacturer_id: { required: "Please select a make." },
+                    model: { required: "The model field is required." },
+                    year: { required: "Please select a year." },
                     category_id: { required: "Please select a category." },
                     less_four_days_price: {
                         required: "Price for 1-3 days is required.",
@@ -430,6 +525,9 @@
                         number: "Please enter a valid number.",
                         min: "Price must be a positive number."
                     },
+                    vehicle_id: { required: "The Vehicle ID field is required." },
+                    status: { required: "Please select a status." },
+                    auction_grade_id: { required: "Please select an auction grade." },
                     'images[]': { required: "Please upload at least one image." },
                     description: { required: "Description is required." },
                     number_plate: { required: "The number plate  is required." },
@@ -439,7 +537,11 @@
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
-                    element.after(error);
+                    if (element.hasClass('select2') && element.next('.select2-container').length) {
+                        error.insertAfter(element.next('.select2-container'));
+                    } else {
+                        element.after(error);
+                    }
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
@@ -469,7 +571,13 @@
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data && data.hasOwnProperty('errors')) {
+                            if (data && data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + errorKey + "-error").html(errorMessage).show();
+                                });
+                            } else if (data && data.hasOwnProperty('errors')) {
                                 $.each(data.errors, function (key, value) {
                                     let errorKey = key.includes('.') ? key.split('.')[0] : key;
                                     let errorMessage = Array.isArray(value) ? value[0] : value;

@@ -5,7 +5,8 @@
 <script src="{{asset('assets/js/jquery-ui.min.js')}}"></script>
 
 <!-- jQuery UI CSS (for drag placeholder style) -->
-{{--<link rel="stylesheet" href="{{asset('assets/css/jquery-ui.css')}}">--}}
+{{--
+<link rel="stylesheet" href="{{asset('assets/css/jquery-ui.css')}}">--}}
 
 <script src="{{asset('assets/admin/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('assets/admin/libs/simplebar/simplebar.min.js')}}"></script>
@@ -56,7 +57,8 @@
 <!-- ✅ RowReorder JS and CSS -->
 <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.4.1/css/rowReorder.dataTables.min.css">
 <script src="https://cdn.datatables.net/rowreorder/1.4.1/js/dataTables.rowReorder.min.js"></script>
-{{--<script src="https://cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js"></script>--}}
+{{--
+<script src="https://cdn.datatables.net/select/3.0.0/js/dataTables.select.min.js"></script>--}}
 <script src="{{asset('assets/admin/libs/datatables/js/buttons.print.min.js')}}"></script>
 <script src="{{asset('assets/admin/libs/datatables/js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('assets/admin/libs/datatables/js/vfs_fonts.js')}}"></script>
@@ -66,17 +68,21 @@
 <script src="{{asset('assets/js/tinymce/tinymce.min.js')}}"></script>
 
 <script src="{{asset('assets/admin/libs/filepond/filepond.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')}}"></script>
-<script src="{{asset('assets/admin/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')}}"></script>
+<script
+    src="{{asset('assets/admin/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js')}}"></script>
+<script
+    src="{{asset('assets/admin/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')}}"></script>
+<script
+    src="{{asset('assets/admin/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')}}"></script>
 <script src="{{asset('assets/admin/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')}}"></script>
-<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="{{asset('assets/vendor/filepond/filepond-plugin-file-validate-type.js')}}"></script>
 
-{{-- select2 min js --}}
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{{asset('assets/vendor/select2/select2.min.js')}}"></script>
 
 <script>
     $(document).ready(function () {
-        $('.select2-multiple').select2();
+        $('.select2-multiple, .select2').select2({
+            width: '100%'
+        });
     });
 </script>

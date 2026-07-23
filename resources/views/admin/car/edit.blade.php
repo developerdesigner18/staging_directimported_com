@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Edit Car')
+@section('title', 'Edit Car')
 
 @section('main')
     <div class="row">
@@ -8,12 +8,40 @@
                 <div class="card-body">
                     <form id="editForm" enctype="multipart/form-data">
                         @csrf
-                        <!-- Car Name -->
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Car Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                   value="{{ $car->name }}" placeholder="Enter car name">
-                            <label id="name-error" class="text-danger error" style="display:none"></label>
+                        <!-- Make + Model + Year -->
+                        <div class="row mb-3">
+                            <!-- Make -->
+                            <div class="col-md-4">
+                                <label for="manufacturer_id" class="form-label">Make</label>
+                                <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
+                                    <option value="">Select Make</option>
+                                    @foreach($manufacturers ?? [] as $manufacturer)
+                                        <option value="{{ $manufacturer->id }}" {{ $car->manufacturer_id == $manufacturer->id ? 'selected' : '' }}>{{ $manufacturer->name }}</option>
+                                    @endforeach
+                                </select>
+                                <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id"
+                                    style="display: none"></label>
+                            </div>
+
+                            <!-- Model -->
+                            <div class="col-md-4">
+                                <label for="model" class="form-label">Model</label>
+                                <input type="text" class="form-control" id="model" name="model" value="{{ $car->model }}"
+                                    placeholder="Enter model name">
+                                <label id="model-error" class="text-danger error" for="model" style="display: none"></label>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="col-md-4">
+                                <label for="year" class="form-label">Year</label>
+                                <select class="form-select select2" id="year" name="year">
+                                    <option value="">Select Year</option>
+                                    @for($y = date('Y') + 1; $y >= 1970; $y--)
+                                        <option value="{{ $y }}" {{ $car->year == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                    @endfor
+                                </select>
+                                <label id="year-error" class="text-danger error" for="year" style="display: none"></label>
+                            </div>
                         </div>
 
                         <!-- Category -->
@@ -22,8 +50,7 @@
                             <select class="form-select" id="category_id" name="category_id">
                                 <option value="">Select Category</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                            {{ $car->category_id == $category->id ? 'selected' : '' }}>
+                                    <option value="{{ $category->id }}" {{ $car->category_id == $category->id ? 'selected' : '' }}>
                                         {{ $category->name }}
                                     </option>
                                 @endforeach
@@ -36,15 +63,17 @@
                             <div class="col-md-6">
                                 <label for="less_four_days_price" class="form-label">1-4 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="less_four_days_price"
-                                       name="less_four_days_price" value="{{ $car->less_four_days_price }}">
-                                <label id="less_four_days_price-error" class="text-danger error" style="display:none"></label>
+                                    name="less_four_days_price" value="{{ $car->less_four_days_price }}">
+                                <label id="less_four_days_price-error" class="text-danger error"
+                                    style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="five_six_days_price" class="form-label">5-6 Days Price</label>
                                 <input type="number" step="0.01" class="form-control" id="five_six_days_price"
-                                       name="five_six_days_price" value="{{ $car->five_six_days_price }}">
-                                <label id="five_six_days_price-error" class="text-danger error" style="display:none"></label>
+                                    name="five_six_days_price" value="{{ $car->five_six_days_price }}">
+                                <label id="five_six_days_price-error" class="text-danger error"
+                                    style="display:none"></label>
                             </div>
                         </div>
 
@@ -52,14 +81,14 @@
                             <div class="col-md-6">
                                 <label for="week_price" class="form-label">Weekly Price</label>
                                 <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
-                                       value="{{ $car->week_price }}">
+                                    value="{{ $car->week_price }}">
                                 <label id="week_price-error" class="text-danger error" style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="month_price" class="form-label">Monthly Price</label>
                                 <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
-                                       value="{{ $car->month_price }}">
+                                    value="{{ $car->month_price }}">
                                 <label id="month_price-error" class="text-danger error" style="display:none"></label>
                             </div>
                         </div>
@@ -68,14 +97,14 @@
                             <div class="col-md-6">
                                 <label for="max_price" class="form-label">Maximum Price</label>
                                 <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
-                                       value="{{ $car->max_price }}">
+                                    value="{{ $car->max_price }}">
                                 <label id="max_price-error" class="text-danger error" style="display:none"></label>
                             </div>
 
                             <div class="col-md-6">
                                 <label for="insurance_price" class="form-label">Insurance Price</label>
                                 <input type="number" step="0.01" class="form-control" id="insurance_price"
-                                       name="insurance_price" value="{{ $car->insurance_price }}">
+                                    name="insurance_price" value="{{ $car->insurance_price }}">
                                 <label id="insurance_price-error" class="text-danger error" style="display:none"></label>
                             </div>
                         </div>
@@ -88,8 +117,7 @@
                                 <label class="form-label">Included Accessory</label>
                                 <select class="form-select select2-multiple" name="free_accessory[]" multiple>
                                     @foreach($freeAccessories as $accessory)
-                                        <option value="{{ $accessory['id'] }}"
-                                                {{ isset($car->free_accessory) && in_array($accessory['id'], $car->free_accessory) ? 'selected' : '' }}>
+                                        <option value="{{ $accessory['id'] }}" {{ isset($car->free_accessory) && in_array($accessory['id'], $car->free_accessory) ? 'selected' : '' }}>
                                             {{ $accessory['name'] }}
                                         </option>
                                     @endforeach
@@ -102,8 +130,7 @@
                                 <label class="form-label">Extra Accessory</label>
                                 <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
                                     @foreach($extraAccessories as $accessory)
-                                        <option value="{{ $accessory['id'] }}"
-                                                {{ isset($car->extra_accessory) && in_array($accessory['id'], $car->extra_accessory) ? 'selected' : '' }}>
+                                        <option value="{{ $accessory['id'] }}" {{ isset($car->extra_accessory) && in_array($accessory['id'], $car->extra_accessory) ? 'selected' : '' }}>
                                             {{ $accessory['name'] }}
                                         </option>
                                     @endforeach
@@ -118,8 +145,8 @@
 
                             <div class="col-lg-6 mb-3">
                                 <label for="numberPlate" class="form-label">Number Plate</label>
-                                <input type="text" class="form-control" id="numberPlate"
-                                       value="{{ $car->number_plate }}" name="number_plate">
+                                <input type="text" class="form-control" id="numberPlate" value="{{ $car->number_plate }}"
+                                    name="number_plate">
                                 <label id="number_plate-error" class="text-danger error" style="display:none"></label>
                             </div>
 
@@ -128,8 +155,7 @@
                                 <select class="form-select select2" name="location">
                                     <option value="">-- Select Location --</option>
                                     @foreach($locations as $location)
-                                        <option value="{{ $location->id }}"
-                                                {{ $car->location_id == $location->id ? 'selected' : '' }}>
+                                        <option value="{{ $location->id }}" {{ $car->location_id == $location->id ? 'selected' : '' }}>
                                             {{ $location->name }}
                                         </option>
                                     @endforeach
@@ -139,13 +165,52 @@
 
                         </div>
 
+                        <!-- Vehicle ID + Status + Auction Grade -->
+                        <div class="mb-3">
+                            <div class="row">
+                                <!-- Vehicle ID -->
+                                <div class="col-lg-4">
+                                    <label for="vehicle_id" class="form-label">Vehicle ID / Chassis No</label>
+                                    <input type="text" class="form-control" id="vehicle_id" name="vehicle_id" value="{{ old('vehicle_id', $car->vehicle_id ?? '') }}" placeholder="Enter Vehicle ID">
+                                    <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-lg-4">
+                                    <label for="status" class="form-label">Status</label>
+                                    <select class="form-select select2" id="status" name="status">
+                                        <option value="">Select Status</option>
+                                        @foreach(\App\Enum\VehicleStatus::cases() as $status)
+                                            <option value="{{ $status->value }}" {{ (isset($car->status) && $car->status->value == $status->value) ? 'selected' : '' }}>
+                                                {{ $status->label() }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="status-error" class="text-danger error" style="display: none"></label>
+                                </div>
+
+                                <!-- Auction Grade -->
+                                <div class="col-lg-4">
+                                    <label for="auction_grade_id" class="form-label">Auction Grade</label>
+                                    <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
+                                        <option value="">Select Auction Grade</option>
+                                        @foreach($auctionGrades ?? [] as $grade)
+                                            <option value="{{ $grade->id }}" {{ ($car->auction_grade_id ?? '') == $grade->id ? 'selected' : '' }}>
+                                                {{ $grade->grade }} {{ $grade->remarks }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Recommended Switch -->
                         <div class="mb-3">
                             <label class="form-label">Recommended Car</label>
                             <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" id="is_recommended"
-                                       name="is_recommended" value="1"
-                                        {{ $car->is_recommended ? 'checked' : '' }}>
+                                <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended"
+                                    value="1" {{ $car->is_recommended ? 'checked' : '' }}>
                                 <label class="form-check-label" for="is_recommended">
                                     Mark as recommended
                                 </label>
@@ -156,11 +221,13 @@
                         <div class="col-md-12 mb-2">
                             <label for="banner" class="form-label">Banner</label>
                             <label for="banner" class="custom-file-label w-100">
-                                <input type="file" id="banner" class="form-control file-preview" name="banner" accept="image/*">
+                                <input type="file" id="banner" class="form-control file-preview" name="banner"
+                                    accept="image/*">
                                 <label id="banner-error" class="text-danger error" style="display:none"></label>
                                 <div class="uploaded-preview mt-2" style="width: 240px;">
                                     @if($car->banner)
-                                        <img src="{{ asset(CAR_PATH.$car->banner) }}" alt="" class="imgupload w-100 h-100 object-contain" id="product-img"/>
+                                        <img src="{{ asset(CAR_PATH . $car->banner) }}" alt=""
+                                            class="imgupload w-100 h-100 object-contain" id="product-img" />
                                     @endif
                                 </div>
                             </label>
@@ -174,18 +241,14 @@
                             @if($car->images)
                                 <div id="sortable-images" class="d-flex flex-wrap">
                                     @foreach($car->images as $image)
-                                        <div class="image-preview-container me-2 mb-2"
-                                             data-image="{{ $image }}"
-                                             style="cursor: grab;">
+                                        <div class="image-preview-container me-2 mb-2" data-image="{{ $image }}"
+                                            style="cursor: grab;">
 
-                                            <img src="{{ asset(CAR_PATH.$image) }}"
-                                                 class="img-thumbnail"
-                                                 style="height:100px;"
-                                                 draggable="false">
+                                            <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
+                                                draggable="false">
 
-                                            <button type="button"
-                                                    class="btn btn-danger btn-sm remove-image"
-                                                    data-image="{{ $image }}">×</button>
+                                            <button type="button" class="btn btn-danger btn-sm remove-image"
+                                                data-image="{{ $image }}">×</button>
                                         </div>
                                     @endforeach
                                 </div>
@@ -200,7 +263,8 @@
                         <!-- Description -->
                         <div class="mb-3">
                             <label for="description_editor" class="form-label">Description</label>
-                            <textarea class="form-control" id="description_editor" rows="5">{{ $car->description }}</textarea>
+                            <textarea class="form-control" id="description_editor"
+                                rows="5">{{ $car->description }}</textarea>
                             <input type="hidden" id="description" name="description" value="{{ $car->description }}">
                         </div>
 
@@ -211,11 +275,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Make</label>
-                                        <input type="text" name="make" class="form-control"
-                                            value="{{ $car->spec->make ?? '' }}" placeholder="e.g. Toyota">
-                                    </div>
+
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Exterior Color</label>
@@ -247,11 +307,7 @@
                                             value="{{ $car->spec->odometer ?? '' }}" placeholder="e.g. 50000">
                                     </div>
 
-                                    <div class="col-md-6 mb-3">
-                                        <label class="form-label">Model Year</label>
-                                        <input type="number" name="model_year" class="form-control"
-                                            value="{{ $car->spec->model_year ?? '' }}" placeholder="e.g. 2022">
-                                    </div>
+
 
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Interior Color</label>
@@ -262,7 +318,8 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Transmission</label>
                                         <input type="text" name="transmission" class="form-control"
-                                            value="{{ $car->spec->transmission ?? '' }}" placeholder="e.g. Automatic / Manual">
+                                            value="{{ $car->spec->transmission ?? '' }}"
+                                            placeholder="e.g. Automatic / Manual">
                                     </div>
                                 </div>
                             </div>
@@ -280,7 +337,7 @@
                                 <div class="mb-3">
                                     <label for="card_header" class="form-label">Card Header</label>
                                     <input type="text" class="form-control" id="card_header" name="card_header"
-                                           placeholder="Enter card title (Frontend)" value="{{ $car->card_header ?? '' }}">
+                                        placeholder="Enter card title (Frontend)" value="{{ $car->card_header ?? '' }}">
                                     <label id="card_header-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -288,7 +345,8 @@
                                 <div class="mb-3">
                                     <label for="card_subtitle" class="form-label">Card Subtitle</label>
                                     <input type="text" class="form-control" id="card_subtitle" name="card_subtitle"
-                                           placeholder="Enter card subtitle (Frontend)" value="{{ $car->card_subtitle ?? '' }}">
+                                        placeholder="Enter card subtitle (Frontend)"
+                                        value="{{ $car->card_subtitle ?? '' }}">
                                     <label id="card_subtitle-error" class="text-danger error" style="display: none"></label>
                                 </div>
 
@@ -304,236 +362,276 @@
     </div>
 @endsection
 
-        @section('script')
-            <script>
-                tinymce.init({
-                    selector: '#description_editor, #tec_spec_editor',
-                    height: 300,
-                    menubar: true,
-                    plugins: 'lists link image help wordcount code media table',
-                    toolbar: 'code | formatselect fontsizeselect | insertfile a11ycheck | numlist bullist | bold italic | forecolor backcolor | template codesample | alignleft aligncenter alignright alignjustify | bullist numlist | link image media tinydrive | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
-                    file_picker_types: 'file image media',
-                    images_upload_url: "{{route('admin.tinymce.image.upload')}}",
-                    images_upload_handler: function (blobInfo, success, failure) {
-                        uploadFilePond(blobInfo.blob(), 'image').then(function (url) {
-                            success(url);
-                        }).catch(function (error) {
-                            failure('Image upload failed: ' + error);
-                        });
-                    },
-                    file_picker_callback: function (callback, value, meta) {
-                        const input = document.createElement('input');
-                        input.setAttribute('type', 'file');
-
-                        if (meta.filetype === 'image') {
-                            input.setAttribute('accept', 'image/*');
-                        } else if (meta.filetype === 'media') {
-                            input.setAttribute('accept', 'video/*,audio/*');
-                        } else {
-                            input.setAttribute('accept', '*');
-                        }
-
-                        input.onchange = function () {
-                            const file = this.files[0];
-                            uploadFilePond(file, meta.filetype).then(function (url) {
-                                callback(url);
-                            }).catch(function (error) {
-                                alert('File upload failed: ' + error);
-                            });
-                        };
-                        input.click();
-                    },
-                    media_live_embeds: true,
-                    media_url_resolver: function (data, resolve) {
-                        if (data.url.match(/youtube\.com|youtu\.be/)) {
-                            let videoId = '';
-                            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-                            const match = data.url.match(regExp);
-
-                            if (match && match[2].length === 11) {
-                                videoId = match[2];
-                            } else if (data.url.includes('youtu.be/')) {
-                                videoId = data.url.split('youtu.be/')[1].split(/[?&]/)[0];
-                            }
-
-                            if (videoId) {
-                                const embedUrl = 'https://www.youtube.com/embed/' + videoId;
-                                const embedHtml = '<iframe src="' + embedUrl +
-                                    '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                                resolve({html: embedHtml});
-                            } else {
-                                resolve({html: ''});
-                            }
-                        } else {
-                            resolve({html: ''});
-                        }
-                    },
-                    setup: function (editor) {
-                        editor.on('init', function () {
-                            var textareaId = editor.id.replace('_editor', '');
-                            editor.setContent(document.getElementById(textareaId).value);
-                        });
-                        editor.on('change', function () {
-                            var textareaId = editor.id.replace('_editor', '');
-                            document.getElementById(textareaId).value = editor.getContent();
-                        });
-                    }
+@section('script')
+    <script>
+        tinymce.init({
+            selector: '#description_editor, #tec_spec_editor',
+            height: 300,
+            menubar: true,
+            plugins: 'lists link image help wordcount code media table',
+            toolbar: 'code | formatselect fontsizeselect | insertfile a11ycheck | numlist bullist | bold italic | forecolor backcolor | template codesample | alignleft aligncenter alignright alignjustify | bullist numlist | link image media tinydrive | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol',
+            file_picker_types: 'file image media',
+            images_upload_url: "{{route('admin.tinymce.image.upload')}}",
+            images_upload_handler: function (blobInfo, success, failure) {
+                uploadFilePond(blobInfo.blob(), 'image').then(function (url) {
+                    success(url);
+                }).catch(function (error) {
+                    failure('Image upload failed: ' + error);
                 });
+            },
+            file_picker_callback: function (callback, value, meta) {
+                const input = document.createElement('input');
+                input.setAttribute('type', 'file');
 
-                function initFilepond() {
-                    FilePond.registerPlugin(
-                        FilePondPluginFileEncode,
-                        FilePondPluginFileValidateSize,
-                        FilePondPluginImageExifOrientation,
-                        FilePondPluginImagePreview,
-                        FilePondPluginFileValidateType
-                    );
-
-                    const inputElement = document.querySelector('input.filepond');
-                    if (inputElement) {
-                        FilePond.create(inputElement, {
-                            allowMultiple: true,
-                            maxFiles: 60,
-                        });
-                    }
+                if (meta.filetype === 'image') {
+                    input.setAttribute('accept', 'image/*');
+                } else if (meta.filetype === 'media') {
+                    input.setAttribute('accept', 'video/*,audio/*');
+                } else {
+                    input.setAttribute('accept', '*');
                 }
 
-                $(document).ready(function () {
-                    const sortableContainer = document.getElementById('sortable-images');
-
-                    if (sortableContainer) {
-                        new Sortable(sortableContainer, {
-                            animation: 150,
-                            ghostClass: 'sortable-ghost',
-
-                            onEnd: function () {
-                                let order = [];
-
-                                document.querySelectorAll('#sortable-images .image-preview-container')
-                                    .forEach(function (el) {
-                                        order.push(el.getAttribute('data-image'));
-                                    });
-
-                                document.getElementById('image_order').value = order.join(',');
-                            }
-                        });
-                    }
-                    initFilepond();
-
-                    $(document).on('click', '.remove-image', function () {
-
-                        const imagePath = $(this).data('image');
-                        $(this).closest('.image-preview-container').remove();
-
-                        // Track removed images
-                        let removedImages = $('#removed_images').val();
-                        removedImages = removedImages ? removedImages.split(',') : [];
-                        removedImages.push(imagePath);
-                        $('#removed_images').val(removedImages.join(','));
-
-                        // Refresh order after removal
-                        let order = [];
-                        $('#sortable-images .image-preview-container').each(function () {
-                            order.push($(this).data('image'));
-                        });
-                        $('#image_order').val(order.join(','));
+                input.onchange = function () {
+                    const file = this.files[0];
+                    uploadFilePond(file, meta.filetype).then(function (url) {
+                        callback(url);
+                    }).catch(function (error) {
+                        alert('File upload failed: ' + error);
                     });
+                };
+                input.click();
+            },
+            media_live_embeds: true,
+            media_url_resolver: function (data, resolve) {
+                if (data.url.match(/youtube\.com|youtu\.be/)) {
+                    let videoId = '';
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                    const match = data.url.match(regExp);
 
+                    if (match && match[2].length === 11) {
+                        videoId = match[2];
+                    } else if (data.url.includes('youtu.be/')) {
+                        videoId = data.url.split('youtu.be/')[1].split(/[?&]/)[0];
+                    }
 
+                    if (videoId) {
+                        const embedUrl = 'https://www.youtube.com/embed/' + videoId;
+                        const embedHtml = '<iframe src="' + embedUrl +
+                            '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
+                        resolve({ html: embedHtml });
+                    } else {
+                        resolve({ html: '' });
+                    }
+                } else {
+                    resolve({ html: '' });
+                }
+            },
+            setup: function (editor) {
+                editor.on('init', function () {
+                    var textareaId = editor.id.replace('_editor', '');
+                    editor.setContent(document.getElementById(textareaId).value);
+                });
+                editor.on('change', function () {
+                    var textareaId = editor.id.replace('_editor', '');
+                    document.getElementById(textareaId).value = editor.getContent();
+                });
+            }
+        });
 
-                    $("#editForm").validate({
-                        rules: {
-                            name: {required: true},
-                            category_id: {required: true},
-                            less_four_days_price: {required: true, number: true, min: 0},
-                            five_six_days_price: {required: true, number: true, min: 0},
-                            week_price: {required: true, number: true, min: 0},
-                            month_price: {required: true, number: true, min: 0},
-                            max_price: {required: true, number: true, min: 0},
-                            description: {required: true},
-                            number_plate: {required: true},
-                            card_header: { required: true },
-                            card_subtitle: { required: true },
-                            banner: {required: false},
-                        },
-                        messages: {
-                            name: {required: "The car name is required."},
-                            category_id: {required: "Please select a category."},
-                            less_four_days_price: {
-                                required: "Price for 1-3 days is required.",
-                                number: "Please enter a valid number.",
-                                min: "Price must be a positive number."
-                            },
-                            five_six_days_price: {
-                                required: "Price for 4-6 days is required.",
-                                number: "Please enter a valid number.",
-                                min: "Price must be a positive number."
-                            },
-                            week_price: {
-                                required: "Weekly price is required.",
-                                number: "Please enter a valid number.",
-                                min: "Price must be a positive number."
-                            },
-                            month_price: {
-                                required: "Monthly price is required.",
-                                number: "Please enter a valid number.",
-                                min: "Price must be a positive number."
-                            },
-                            max_price: {
-                                required: "Maximum price is required.",
-                                number: "Please enter a valid number.",
-                                min: "Price must be a positive number."
-                            },
-                            description: {required: "Description is required."},
-                            number_plate: {required: "The number plate  is required."},
-                            card_header: { required: "Card header is required." },
-                            card_subtitle: { required: "Card subtitle is required." },
+        function initFilepond() {
+            FilePond.registerPlugin(
+                FilePondPluginFileEncode,
+                FilePondPluginFileValidateSize,
+                FilePondPluginImageExifOrientation,
+                FilePondPluginImagePreview,
+                FilePondPluginFileValidateType
+            );
 
-                        },
-                        errorClass: 'text-danger error',
-                        errorPlacement: function (error, element) {
-                            element.after(error);
-                        },
-                        submitHandler: function (form, e) {
-                            e.preventDefault();
+            const inputElement = document.querySelector('input.filepond');
+            if (inputElement) {
+                FilePond.create(inputElement, {
+                    allowMultiple: true,
+                    maxFiles: 60,
+                });
+            }
+        }
 
-                            $.ajax({
-                                url: "{{ route('admin.car.update', $car->id) }}",
-                                method: "POST",
-                                dataType: "json",
-                                data: new FormData(form),
-                                processData: false,
-                                contentType: false,
-                                cache: false,
-                                beforeSend: function () {
-                                    $('button[type="submit"]').attr('disabled', true);
-                                    $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
-                                },
-                                success: function (result) {
-                                    sendSuccess(result.message || 'Car updated successfully!');
-                                    window.location.href = "{{ route('admin.car.index') }}";
-                                },
-                                error: function (xhr) {
-                                    let data = xhr.responseJSON;
-                                    if (data && data.hasOwnProperty('errors')) {
-                                        $.each(data.errors, function (key, value) {
-                                            let errorKey = key.includes('.') ? key.split('.')[0] : key;
-                                            let errorMessage = Array.isArray(value) ? value[0] : value;
-                                            $("#" + errorKey + "-error").html(errorMessage).show();
-                                        });
-                                    } else if (data && data.hasOwnProperty('message')) {
-                                        sendError(data.message);
-                                    } else {
-                                        sendError("An error occurred. Please check file sizes or try again.");
-                                    }
-                                },
-                                complete: function () {
-                                    $('button[type="submit"]').attr('disabled', false);
-                                    $('button[type="submit"]').html('Update');
-                                }
+        $(document).ready(function () {
+            $('#manufacturer_id').select2({
+                width: '100%',
+                placeholder: 'Select Make',
+                allowClear: true
+            });
+            $('#year').select2({
+                width: '100%',
+                placeholder: 'Select Year',
+                allowClear: true
+            });
+            $('#status').select2({
+                width: '100%',
+                placeholder: 'Select Status',
+                allowClear: true
+            });
+            $('#auction_grade_id').select2({
+                width: '100%',
+                placeholder: 'Select Auction Grade',
+                allowClear: true
+            });
+            const sortableContainer = document.getElementById('sortable-images');
+
+            if (sortableContainer) {
+                new Sortable(sortableContainer, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+
+                    onEnd: function () {
+                        let order = [];
+
+                        document.querySelectorAll('#sortable-images .image-preview-container')
+                            .forEach(function (el) {
+                                order.push(el.getAttribute('data-image'));
                             });
+
+                        document.getElementById('image_order').value = order.join(',');
+                    }
+                });
+            }
+            initFilepond();
+
+            $(document).on('click', '.remove-image', function () {
+
+                const imagePath = $(this).data('image');
+                $(this).closest('.image-preview-container').remove();
+
+                // Track removed images
+                let removedImages = $('#removed_images').val();
+                removedImages = removedImages ? removedImages.split(',') : [];
+                removedImages.push(imagePath);
+                $('#removed_images').val(removedImages.join(','));
+
+                // Refresh order after removal
+                let order = [];
+                $('#sortable-images .image-preview-container').each(function () {
+                    order.push($(this).data('image'));
+                });
+                $('#image_order').val(order.join(','));
+            });
+
+
+
+            $("#editForm").validate({
+                rules: {
+                    manufacturer_id: { required: true },
+                    model: { required: true },
+                    year: { required: true },
+                    category_id: { required: true },
+                    less_four_days_price: { required: true, number: true, min: 0 },
+                    five_six_days_price: { required: true, number: true, min: 0 },
+                    week_price: { required: true, number: true, min: 0 },
+                    month_price: { required: true, number: true, min: 0 },
+                    max_price: { required: true, number: true, min: 0 },
+                    vehicle_id: { required: true },
+                    status: { required: true },
+                    auction_grade_id: { required: true },
+                    description: { required: true },
+                    number_plate: { required: true },
+                    card_header: { required: true },
+                    card_subtitle: { required: true },
+                    banner: { required: false },
+                },
+                messages: {
+                    manufacturer_id: { required: "Please select a make." },
+                    model: { required: "The model field is required." },
+                    year: { required: "Please select a year." },
+                    category_id: { required: "Please select a category." },
+                    less_four_days_price: {
+                        required: "Price for 1-3 days is required.",
+                        number: "Please enter a valid number.",
+                        min: "Price must be a positive number."
+                    },
+                    five_six_days_price: {
+                        required: "Price for 4-6 days is required.",
+                        number: "Please enter a valid number.",
+                        min: "Price must be a positive number."
+                    },
+                    week_price: {
+                        required: "Weekly price is required.",
+                        number: "Please enter a valid number.",
+                        min: "Price must be a positive number."
+                    },
+                    month_price: {
+                        required: "Monthly price is required.",
+                        number: "Please enter a valid number.",
+                        min: "Price must be a positive number."
+                    },
+                    max_price: {
+                        required: "Maximum price is required.",
+                        number: "Please enter a valid number.",
+                        min: "Price must be a positive number."
+                    },
+                    vehicle_id: { required: "The Vehicle ID field is required." },
+                    status: { required: "Please select a status." },
+                    auction_grade_id: { required: "Please select an auction grade." },
+                    description: { required: "Description is required." },
+                    number_plate: { required: "The number plate  is required." },
+                    card_header: { required: "Card header is required." },
+                    card_subtitle: { required: "Card subtitle is required." },
+
+                },
+                errorClass: 'text-danger error',
+                errorPlacement: function (error, element) {
+                    if (element.hasClass('select2') && element.next('.select2-container').length) {
+                        error.insertAfter(element.next('.select2-container'));
+                    } else {
+                        element.after(error);
+                    }
+                },
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "{{ route('admin.car.update', $car->id) }}",
+                        method: "POST",
+                        dataType: "json",
+                        data: new FormData(form),
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        beforeSend: function () {
+                            $('button[type="submit"]').attr('disabled', true);
+                            $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
+                        },
+                        success: function (result) {
+                            sendSuccess(result.message || 'Car updated successfully!');
+                            window.location.href = "{{ route('admin.car.index') }}";
+                        },
+                        error: function (xhr) {
+                            let data = xhr.responseJSON;
+                            if (data && data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + errorKey + "-error").html(errorMessage).show();
+                                });
+                            } else if (data && data.hasOwnProperty('errors')) {
+                                $.each(data.errors, function (key, value) {
+                                    let errorKey = key.includes('.') ? key.split('.')[0] : key;
+                                    let errorMessage = Array.isArray(value) ? value[0] : value;
+                                    $("#" + errorKey + "-error").html(errorMessage).show();
+                                });
+                            } else if (data && data.hasOwnProperty('message')) {
+                                sendError(data.message);
+                            } else {
+                                sendError("An error occurred. Please check file sizes or try again.");
+                            }
+                        },
+                        complete: function () {
+                            $('button[type="submit"]').attr('disabled', false);
+                            $('button[type="submit"]').html('Update');
                         }
                     });
-                });
-            </script>
+                }
+            });
+        });
+    </script>
 @endsection

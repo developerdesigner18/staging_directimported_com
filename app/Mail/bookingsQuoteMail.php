@@ -22,9 +22,9 @@ class bookingsQuoteMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($user_id,$bookings)
+    public function __construct($user_id, $bookings = [])
     {
-        $this->user_id = Auth::guard('web')->user()->id??null;
+        $this->user_id = Auth::guard('web')->user()->id ?? null;
         $this->bookings = $bookings;
     }
 
@@ -34,7 +34,7 @@ class bookingsQuoteMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: ($this->user_id?Auth::guard('web')->user()->first_name:'guest').' Bookings Quote Mail',
+            subject: ($this->user_id ? Auth::guard('web')->user()->first_name : 'guest') . ' Bookings Quote Mail',
         );
     }
 

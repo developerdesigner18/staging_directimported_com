@@ -18,6 +18,118 @@
             background-color: #405189 !important;
         }
 
+        /* Select2 Style Overrides to make it look exactly like Velzon theme inputs */
+        .select2-container {
+            display: block;
+            width: 100% !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            background-color: var(--vz-input-bg, #fff) !important;
+            border: 1px solid var(--vz-input-border, #ced4da) !important;
+            border-radius: 0.25rem !important;
+            height: 37.5px !important;
+            padding: 0.25rem 0.6rem !important;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .select2-container--default .select2-selection--single:focus,
+        .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: #a2accd !important;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(64, 81, 137, 0.25) !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: var(--vz-body-color, #212529) !important;
+            padding-left: 0 !important;
+            padding-right: 20px !important;
+            font-size: 13px !important;
+            line-height: 1.5 !important;
+            width: 100%;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__placeholder {
+            color: #878a99 !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+            top: 0 !important;
+            right: 8px !important;
+            width: 20px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: #878a99 transparent transparent transparent !important;
+            border-width: 5px 4px 0 4px !important;
+            margin-left: 0 !important;
+            margin-top: 0 !important;
+            position: relative !important;
+        }
+
+        .select2-container--default.select2-container--open .select2-selection--arrow b {
+            border-color: transparent transparent #878a99 transparent !important;
+            border-width: 0 4px 5px 4px !important;
+        }
+
+        /* Clear button alignment (the 'x' icon) */
+        .select2-container--default .select2-selection--single .select2-selection__clear {
+            position: absolute !important;
+            right: 25px !important;
+            /* Keep it on the right side next to the arrow */
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            float: none !important;
+            margin-right: 0 !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            color: #878a99 !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__clear:hover {
+            color: #f06548 !important;
+        }
+
+        /* Dropdown Styling */
+        .select2-dropdown {
+            background-color: var(--vz-input-bg, #fff) !important;
+            border: 1px solid var(--vz-input-border, #ced4da) !important;
+            border-radius: 0.25rem !important;
+            box-shadow: 0 5px 10px rgba(30, 32, 37, 0.12) !important;
+            font-size: 13px !important;
+            z-index: 1056 !important;
+        }
+
+        .select2-container--default .select2-search--dropdown .select2-search__field {
+            border: 1px solid var(--vz-input-border, #ced4da) !important;
+            background-color: var(--vz-input-bg, #fff) !important;
+            color: var(--vz-body-color, #212529) !important;
+            border-radius: 0.25rem !important;
+            padding: 5px 10px !important;
+            font-size: 13px !important;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected] {
+            padding: 6px 12px !important;
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #405189 !important;
+            color: #fff !important;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected="true"] {
+            background-color: rgba(64, 81, 137, 0.1) !important;
+            color: #405189 !important;
+        }
+
         label.error {
             display: block;
             width: 100%;

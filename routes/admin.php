@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\ContactRequestController;
+use App\Http\Controllers\Admin\ManufacturerController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -228,6 +230,15 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/edit', 'editCategory')->name('edit');
             Route::post('/update', 'updateCategory')->name('update');
             Route::post('/delete', 'deleteCategory')->name('delete');
+        });
+
+        Route::controller(ManufacturerController::class)->prefix('car/manufacturer')->name('manufacturer.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/list', 'list')->name('list');
+            Route::post('/add', 'add')->name('add');
+            Route::post('/edit', 'edit')->name('edit');
+            Route::post('/update', 'update')->name('update');
+            Route::post('/delete', 'delete')->name('delete');
         });
     });
 

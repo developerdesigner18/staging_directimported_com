@@ -1,73 +1,35 @@
 @extends('admin.master')
-@section('title', 'Categories')
+@section('title', 'Manufacturers')
 
 @push('modal')
-    <div class="modal fade" id="addCategoryMD" tabindex="-1" aria-labelledby="addCategoryMDLabel" aria-modal="true"
+    <div class="modal fade" id="manufacturerMD" tabindex="-1" aria-labelledby="manufacturerMDLabel" aria-modal="true"
         data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Category</h5>
+                    <h5 class="modal-title" id="modalTitle">Add Manufacturer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="javascript:void(0);" id="addCategoryForm">
+                    <form action="javascript:void(0);" id="manufacturerForm">
                         @csrf
+                        <input type="hidden" name="id" id="manufacturer_id">
                         <div class="row g-3">
                             <div class="col-12">
                                 <div>
-                                    <label for="addCategoryName" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="addCategoryName" name="title"
-                                        placeholder="Enter category name">
-                                    <label id="addCategoryName-error" class="text-danger error" for="addCategoryName"
+                                    <label for="manufacturerName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="manufacturerName" name="name"
+                                        placeholder="Enter manufacturer name">
+                                    <label id="name-error" class="text-danger error" for="manufacturerName"
                                         style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-lg-12 mt-4">
                                 <div class="hstack gap-2 justify-content-end">
                                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary" id="addCategoryBtn">
+                                    <button type="submit" class="btn btn-primary" id="manufacturerBtn">
                                         <i class="bx bx-loader spinner me-2" style="display: none"
-                                            id="addCategoryBtnSpinner"></i>Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Category Modal -->
-    <div class="modal fade" id="editCategoryMD" tabindex="-1" aria-labelledby="editCategoryMDLabel" aria-modal="true"
-        data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Category</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="javascript:void(0);" id="editCategoryForm">
-                        @csrf
-                        <input type="hidden" name="id" id="category_id">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <div>
-                                    <label for="editCategoryName" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="edit_title" name="title"
-                                        placeholder="Enter category name">
-                                    <label id="edit_title-error" class="text-danger error" for="edit_title"
-                                        style="display: none"></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 mt-4">
-                                <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-warning" id="editCategoryBtn">
-                                        <i class="bx bx-loader spinner me-2" style="display: none"
-                                            id="editCategoryBtnSpinner"></i>Save Changes
+                                            id="manufacturerBtnSpinner"></i>Submit
                                     </button>
                                 </div>
                             </div>
@@ -84,12 +46,12 @@
     <div class="row">
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
-                <h4 class="mb-sm-0">Category Management</h4>
+                <h4 class="mb-sm-0">Manufacturer Management</h4>
 
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Categories</a></li>
-                        <li class="breadcrumb-item active">Category Management</li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Cars</a></li>
+                        <li class="breadcrumb-item active">Manufacturer Management</li>
                     </ol>
                 </div>
             </div>
@@ -103,22 +65,21 @@
                 <div class="card-header rounded-0">
                     <div class="row align-items-center gy-3">
                         <div class="col-sm">
-                            <h5 class="card-title mb-0">Category List</h5>
+                            <h5 class="card-title mb-0">Manufacturer List</h5>
                         </div>
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
-                                <button onclick="resetForm();" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addCategoryMD" aria-controls="addCategoryMD">
+                                <button onclick="openAddModal();" type="button" class="btn btn-primary">
                                     <i class="ri-add-line align-bottom"></i>
-                                    <span class="d-none d-sm-inline-block">Add Category</span>
+                                    <span class="d-none d-sm-inline-block">Add Manufacturer</span>
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="categoryDT" class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer">
-                    </table>
+                    <table id="manufacturerDT"
+                        class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer"></table>
                 </div>
             </div>
         </div>
@@ -127,7 +88,7 @@
 
 @section('script')
     <script>
-        var dataTable = $('#categoryDT').DataTable({
+        var dataTable = $('#manufacturerDT').DataTable({
             processing: true,
             serverSide: true,
             info: true,
@@ -151,19 +112,18 @@
             },
             columns: [
                 { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
-                { data: 'title', name: 'title', title: 'Title', class: 'text-center' },
+                { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
                 { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
-                { data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false },
+                { data: 'action', name: 'action', title: 'Action', class: 'text-center', orderable: false, searchable: false },
             ],
             ajax: {
-                url: '{{ route("admin.category.{$type}.list", ['type' => $type]) }}',
+                url: '{{ route("admin.manufacturer.list") }}',
                 type: "POST",
                 dataType: "JSON",
                 data: function (f) {
                     f._token = "{{csrf_token()}}";
                 },
                 error: function (xhr) {
-                    dataTableError("openCallTable", xhr.responseJSON.message);
                     actionError(xhr);
                 },
             },
@@ -178,26 +138,34 @@
         });
 
         function resetForm() {
-            $("#addCategoryForm").trigger('reset');
-            $("#editCategoryForm").trigger('reset');
+            $("#manufacturerForm").trigger('reset');
+            $("#manufacturer_id").val('');
             $("label.error").hide();
+            $("#modalTitle").text("Add Manufacturer");
+            $("#manufacturerBtn").html('<i class="bx bx-loader spinner me-2" style="display: none" id="manufacturerBtnSpinner"></i>Submit');
+            $("#manufacturerBtn").removeClass('btn-warning').addClass('btn-primary');
         }
 
-        function removeCategory(id, element) {
+        function openAddModal() {
+            resetForm();
+            $("#manufacturerMD").modal('show');
+        }
+
+        function removeManufacturer(id, element) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "Are you sure you want to remove this category?",
+                text: "Are you sure you want to remove this manufacturer?",
                 icon: "warning",
-                showCancelButton: !0,
+                showCancelButton: true,
                 confirmButtonText: "Yes, remove",
                 cancelButtonText: "No, cancel!",
                 confirmButtonClass: "btn btn-danger mt-2 text-white rounded px-4 fs-16",
                 cancelButtonClass: "btn btn-light ms-2 mt-2 border rounded px-4 fs-16",
-                buttonsStyling: !1,
+                buttonsStyling: false,
             }).then(function (t) {
-                if (t.value) {
+                if (t.isConfirmed) {
                     $.ajax({
-                        url: "{{route("admin.category.{$type}.delete", ['type' => $type])}}",
+                        url: "{{ route('admin.manufacturer.delete') }}",
                         dataType: "JSON",
                         method: "POST",
                         data: {
@@ -232,9 +200,9 @@
             });
         }
 
-        function getCategory(id, element) {
+        function getManufacturer(id, element) {
             $.ajax({
-                url: "{{route("admin.category.{$type}.edit", ['type' => $type])}}",
+                url: "{{ route('admin.manufacturer.edit') }}",
                 dataType: "JSON",
                 method: "POST",
                 data: {
@@ -247,9 +215,12 @@
                 },
                 success: function (data) {
                     resetForm();
-                    $("#category_id").val(id);
-                    $('#edit_title').val(data.data.name);
-                    $("#editCategoryMD").modal('show');
+                    $("#manufacturer_id").val(id);
+                    $('#manufacturerName').val(data.data.name);
+                    $("#modalTitle").text("Edit Manufacturer");
+                    $("#manufacturerBtn").removeClass('btn-primary').addClass('btn-warning');
+                    $("#manufacturerBtn").html('<i class="bx bx-loader spinner me-2" style="display: none" id="manufacturerBtnSpinner"></i>Save Changes');
+                    $("#manufacturerMD").modal('show');
                 },
                 error: function (xhr) {
                     let data = xhr.responseJSON;
@@ -271,13 +242,12 @@
         }
 
         $(document).ready(function () {
-            // Add Category Form
-            $("#addCategoryForm").validate({
+            $("#manufacturerForm").validate({
                 rules: {
-                    title: { required: true }
+                    name: { required: true }
                 },
                 messages: {
-                    title: { required: "The title field is required." }
+                    name: { required: "The name field is required." }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -285,60 +255,12 @@
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
-                    $.ajax({
-                        url: "{{route("admin.category.{$type}.add", ['type' => $type])}}",
-                        method: "post",
-                        dataType: "json",
-                        data: new FormData(form),
-                        processData: false,
-                        contentType: false,
-                        cache: false,
-                        beforeSend: function () {
-                            $('#addCategoryBtn').attr('disabled', true);
-                            $("#addCategoryBtnSpinner").show();
-                        },
-                        success: function (result) {
-                            sendSuccess(result.message);
-                            dataTable.ajax.reload();
-                            $("#addCategoryMD").modal('hide');
-                            resetForm();
-                        },
-                        error: function (xhr) {
-                            let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('error')) {
-                                $.each(data.error, function (key, value) {
-                                    $("#" + key + "-error").html(value).show();
-                                });
-                            } else if (data.hasOwnProperty('message')) {
-                                actionError(xhr, data.message);
-                            } else {
-                                actionError(xhr);
-                            }
-                        },
-                        complete: function () {
-                            $('#addCategoryBtn').attr('disabled', false);
-                            $("#addCategoryBtnSpinner").hide();
-                        },
-                    });
-                }
-            });
 
-            // Update Category
-            $("#editCategoryForm").validate({
-                rules: {
-                    title: { required: true }
-                },
-                messages: {
-                    title: { required: "The title field is required." }
-                },
-                errorClass: 'text-danger error',
-                errorPlacement: function (error, element) {
-                    element.after(error);
-                },
-                submitHandler: function (form, e) {
-                    e.preventDefault();
+                    let id = $("#manufacturer_id").val();
+                    let url = id ? "{{ route('admin.manufacturer.update') }}" : "{{ route('admin.manufacturer.add') }}";
+
                     $.ajax({
-                        url: "{{route("admin.category.{$type}.update", ['type' => $type])}}",
+                        url: url,
                         method: "post",
                         dataType: "json",
                         data: new FormData(form),
@@ -346,34 +268,39 @@
                         contentType: false,
                         cache: false,
                         beforeSend: function () {
-                            $('#editCategoryBtn').attr('disabled', true);
-                            $("#editCategoryBtnSpinner").show();
+                            $('#manufacturerBtn').attr('disabled', true);
+                            $("#manufacturerBtnSpinner").show();
                         },
                         success: function (result) {
                             sendSuccess(result.message);
                             dataTable.ajax.reload();
-                            $("#editCategoryMD").modal('hide');
+                            $("#manufacturerMD").modal('hide');
                             resetForm();
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('error')) {
+                            if (data && data.hasOwnProperty('error')) {
                                 $.each(data.error, function (key, value) {
-                                    $("#" + key + "-error").html(value).show();
+                                    let errorLabel = $("#" + key + "-error");
+                                    if (errorLabel.length) {
+                                        errorLabel.html(value).show();
+                                    } else {
+                                        sendError(value);
+                                    }
                                 });
-                            } else if (data.hasOwnProperty('message')) {
+                            } else if (data && data.hasOwnProperty('message')) {
                                 actionError(xhr, data.message);
                             } else {
                                 actionError(xhr);
                             }
                         },
                         complete: function () {
-                            $('#editCategoryBtn').attr('disabled', false);
-                            $("#editCategoryBtnSpinner").hide();
+                            $('#manufacturerBtn').attr('disabled', false);
+                            $("#manufacturerBtnSpinner").hide();
                         },
                     });
                 }
             });
-        })
+        });
     </script>
 @endsection

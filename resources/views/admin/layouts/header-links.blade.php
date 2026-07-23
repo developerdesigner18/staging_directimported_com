@@ -32,6 +32,6 @@
     href="{{asset('assets/admin/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css')}}">
 
 {{-- select2 min css --}}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="{{asset('assets/vendor/select2/select2.min.css')}}" rel="stylesheet" />
 <!-- Basic Icons -->
 <link href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css" rel="stylesheet">
