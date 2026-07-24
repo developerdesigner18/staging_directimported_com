@@ -33,7 +33,8 @@
                                 <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
                                     <option value="">Select Make</option>
                                     @foreach($manufacturers ?? [] as $manufacturer)
-                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                        <option value="{{ optional($manufacturer)->id }}">{{ optional($manufacturer)->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id"
@@ -171,8 +172,8 @@
                                     <label class="form-label">Location</label>
                                     <select class="form-select select2" name="location">
                                         @foreach($locations ?? [] as $location)
-                                            <option value="{{ $location->id }}" {{ old('location_id', $car->location_id ?? '') == $location->id ? 'selected' : '' }}>
-                                                {{ $location->name }}
+                                            <option value="{{ optional($location)->id }}" {{ old('location') == optional($location)->id ? 'selected' : '' }}>
+                                                {{ optional($location)->name }}
                                             </option>
                                         @endforeach
                                     </select>

@@ -72,6 +72,9 @@
             margin-left: 0 !important;
             margin-top: 0 !important;
             position: relative !important;
+            top: 1px;
+            left: -3px;
+
         }
 
         .select2-container--default.select2-container--open .select2-selection--arrow b {

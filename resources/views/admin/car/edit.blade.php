@@ -16,7 +16,7 @@
                                 <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
                                     <option value="">Select Make</option>
                                     @foreach($manufacturers ?? [] as $manufacturer)
-                                        <option value="{{ $manufacturer->id }}" {{ $car->manufacturer_id == $manufacturer->id ? 'selected' : '' }}>{{ $manufacturer->name }}</option>
+                                        <option value="{{ optional($manufacturer)->id }}" {{ optional($car)->manufacturer_id == optional($manufacturer)->id ? 'selected' : '' }}>{{ optional($manufacturer)->name }}</option>
                                     @endforeach
                                 </select>
                                 <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id"
@@ -195,8 +195,8 @@
                                     <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
                                         <option value="">Select Auction Grade</option>
                                         @foreach($auctionGrades ?? [] as $grade)
-                                            <option value="{{ $grade->id }}" {{ ($car->auction_grade_id ?? '') == $grade->id ? 'selected' : '' }}>
-                                                {{ $grade->grade }} {{ $grade->remarks }}
+                                            <option value="{{ optional($grade)->id }}" {{ (optional($car)->auction_grade_id ?? '') == optional($grade)->id ? 'selected' : '' }}>
+                                                {{ optional($grade)->grade }} {{ optional($grade)->remarks }}
                                             </option>
                                         @endforeach
                                     </select>
