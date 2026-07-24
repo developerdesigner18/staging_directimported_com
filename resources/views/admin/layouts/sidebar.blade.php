@@ -254,6 +254,13 @@
                             <i class="bx bx-cog"></i> <span data-key="t-dashboards">System Settings</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{route('admin.labels.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.labels.*')) active @endif">
+                            <i class="bx bx-tag"></i> <span>Manage Labels</span>
+                        </a>
+                    </li>
                 @endif
             </ul>
 

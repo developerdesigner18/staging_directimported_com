@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\ManufacturerController;
+use App\Http\Controllers\Admin\LabelController;
 
 
 /*
@@ -130,7 +131,12 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/', 'update')->name('settings.update');
         });
 
-
+        Route::controller(LabelController::class)->prefix('labels')->name('labels.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/list', 'list')->name('list');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::post('/update', 'update')->name('update');
+        });
     });
     Route::controller(SiteSettingsController::class)->prefix('site-settings')->name('site.')->group(function () {
         // Route::get('/', 'index')->name('settings');

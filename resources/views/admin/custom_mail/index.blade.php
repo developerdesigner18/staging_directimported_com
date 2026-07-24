@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Email')
+@section('title', 'Email')
 @push('modal')
     <div class="modal fade" id="sendMailModal" tabindex="-1" aria-labelledby="sendMailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -15,24 +15,27 @@
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="to" class="form-label">To Email</label>
-                            <input type="email" class="form-control" id="to" name="to"
-                                   placeholder="recipient@example.com" required>
+                            <label for="to"
+                                class="form-label">{{ admin_label('custom_mail_form', 'to_email', 'To Email') }}</label>
+                            <input type="email" class="form-control" id="to" name="to" placeholder="recipient@example.com"
+                                required>
                             <span class="text-sm text-danger" id="to-error"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label for="subject" class="form-label">Subject</label>
-                            <input type="text" class="form-control" id="subject" name="subject"
-                                   placeholder="Enter subject" required>
+                            <label for="subject"
+                                class="form-label">{{ admin_label('custom_mail_form', 'subject', 'Subject') }}</label>
+                            <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject"
+                                required>
                             <span class="text-sm text-danger" id="subject-error"></span>
 
                         </div>
 
                         <div class="mb-3">
-                            <label for="body" class="form-label">Message</label>
+                            <label for="body"
+                                class="form-label">{{ admin_label('custom_mail_form', 'message', 'Message') }}</label>
                             <textarea class="form-control" id="body" name="body" rows="6"
-                                      placeholder="Write your message..." required></textarea>
+                                placeholder="Write your message..." required></textarea>
                             <span class="text-sm text-danger" id="body-error"></span>
 
                         </div>
@@ -70,15 +73,15 @@
 
 
 
-    {{--    <div class="row">--}}
-    {{--        <div class="col-12">--}}
-    {{--            <div class="card">--}}
-    {{--                <div class="card-body">--}}
-    {{--                    <table id="databaseTable" class="table w-100 pt-2 datatable dataTable no-footer"></table>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
+    {{-- <div class="row">--}}
+        {{-- <div class="col-12">--}}
+            {{-- <div class="card">--}}
+                {{-- <div class="card-body">--}}
+                    {{-- <table id="databaseTable" class="table w-100 pt-2 datatable dataTable no-footer"></table>--}}
+                    {{-- </div>--}}
+                {{-- </div>--}}
+            {{-- </div>--}}
+        {{-- </div>--}}
 
     <div class="row">
         <div class="col-12">
@@ -91,7 +94,7 @@
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#sendMailModal">
+                                    data-bs-target="#sendMailModal">
                                     <i class="ri-mail-send-line align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Send Mail</span>
                                 </button>
@@ -112,9 +115,9 @@
         $(document).ready(function () {
             $("#sendMailForm").validate({
                 rules: {
-                    to: {required: true},
-                    body: {required: true},
-                    subject: {required: true},
+                    to: { required: true },
+                    body: { required: true },
+                    subject: { required: true },
 
                 },
 
@@ -183,11 +186,11 @@
                     },
                 },
                 columns: [
-                    {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center'},
-                    {data: 'to', name: 'to', title: 'To', class: 'text-center'},
-                    {data: 'subject', name: 'subject', title: 'subject', class: 'text-center'},
-                    {data: 'body', name: 'body', title: 'body', class: 'text-center'},
-                    {data: 'sent_at', name: 'sent_at', title: 'Sent At', class: 'text-center'},
+                    { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
+                    { data: 'to', name: 'to', title: 'To', class: 'text-center' },
+                    { data: 'subject', name: 'subject', title: 'subject', class: 'text-center' },
+                    { data: 'body', name: 'body', title: 'body', class: 'text-center' },
+                    { data: 'sent_at', name: 'sent_at', title: 'Sent At', class: 'text-center' },
                     // {data: 'updated_at', name: 'updated_at', title: 'Updated At', class: 'text-center'},
                     // {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
                 ],
@@ -205,10 +208,10 @@
                 },
                 responsive: {
                     breakpoints: [
-                        {name: "desktop", width: Infinity},
-                        {name: "tablet", width: 1024},
-                        {name: "fablet", width: 768},
-                        {name: "phone", width: 480},
+                        { name: "desktop", width: Infinity },
+                        { name: "tablet", width: 1024 },
+                        { name: "fablet", width: 768 },
+                        { name: "phone", width: 480 },
                     ],
                 },
             });
@@ -219,7 +222,7 @@
                     url: "{{ route('admin.email.view') }}", // Your route
                     method: "GET",
                     dataType: "json",
-                    data: {id: emailId},
+                    data: { id: emailId },
                     success: function (result) {
                         if (result.data) {
                             // Populate modal fields

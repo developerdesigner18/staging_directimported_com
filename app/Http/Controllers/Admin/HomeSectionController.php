@@ -17,8 +17,10 @@ class HomeSectionController extends Controller
     {
         $homeSection = HomeSection::with('points')->first();
         if (!$homeSection) {
-            // If for some reason the seeder hasn't run or is deleted
-            return redirect()->route('admin.dashboard')->with('error', 'Home Section not found.');
+            $homeSection = HomeSection::create([
+                'title' => 'About Us',
+                'short_description' => 'Welcome to our website. We are dedicated to providing the best service possible.'
+            ]);
         }
         return view('admin.home_section.edit', compact('homeSection'));
     }

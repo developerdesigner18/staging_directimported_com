@@ -1,10 +1,10 @@
 @extends('admin.master')
-@section('title','Booking')
+@section('title', 'Booking')
 
 @push('modal')
-{{--Add modal--}}
+    {{--Add modal--}}
     <div class="modal fade" id="addLocationMD" tabindex="-1" aria-labelledby="addAccessoryMDLabel" aria-modal="true"
-         data-bs-backdrop="static">
+        data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,29 +17,30 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div>
-                                    <label for="addLocationName" class="form-label">Name</label>
+                                    <label for="addLocationName"
+                                        class="form-label">{{ admin_label('location_form', 'name', 'Name') }}</label>
                                     <input type="text" class="form-control" id="addLocationName" name="name"
-                                           placeholder="Enter location name">
+                                        placeholder="Enter location name">
                                     <label id="name-error" class="text-danger error" for="name"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="addLocationLink" class="form-label">Location Embeded code</label>
-                                    <input type="text"  class="form-control" id="addLocationLink" name="locationcode"
-                                           placeholder="Enter location embeded code">
+                                    <label for="addLocationLink"
+                                        class="form-label">{{ admin_label('location_form', 'location_embed_code', 'Location Embeded code') }}</label>
+                                    <input type="text" class="form-control" id="addLocationLink" name="locationcode"
+                                        placeholder="Enter location embeded code">
                                     <label id="locationcode-error" class="text-danger error" for="addLocationLink"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-lg-12 mt-4">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary" id="addLocationBtn">
                                         <i class="bx bx-loader spinner me-2" style="display: none"
-                                           id="addLocationBtnSpinner"></i>Submit
+                                            id="addLocationBtnSpinner"></i>Submit
                                     </button>
                                 </div>
                             </div>
@@ -49,44 +50,45 @@
             </div>
         </div>
     </div>
-{{--Add edit--}}
-<div class="modal fade" id="editLocationMD" tabindex="-1" aria-labelledby="editLocationLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Location</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editLocationForm">
-                    @csrf
-                    <input type="hidden" id="editLocationId" name="id">
-                    <div class="mb-3">
-                        <label for="editLocationName" class="form-label">Name</label>
-                        <input type="text" id="editLocationName" name="edit_name" class="form-control">
-                        <label id="edit_name-error" class="text-danger error" for="name"
-                               style="display: none"></label>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editLocationCode" class="form-label">Embed Code</label>
-                        <input type="text" id="editLocationCode" name="edit_locationcode" class="form-control">
-                        <label id="edit_locationcode-error" class="text-danger error" for="name"
-                               style="display: none"></label>
-                    </div>
-                    <div class="col-lg-12 mt-4">
-                        <div class="hstack gap-2 justify-content-end">
-                            <button type="button" class="btn btn-light"
-                                    data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="editLocationBtn">
-                                <i class="bx bx-loader spinner me-2" style="display: none"
-                                   id="editLocationBtnSpinner"></i>Submit
-                            </button>
+    {{--Add edit--}}
+    <div class="modal fade" id="editLocationMD" tabindex="-1" aria-labelledby="editLocationLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Location</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editLocationForm">
+                        @csrf
+                        <input type="hidden" id="editLocationId" name="id">
+                        <div class="mb-3">
+                            <label for="editLocationName"
+                                class="form-label">{{ admin_label('location_form', 'name', 'Name') }}</label>
+                            <input type="text" id="editLocationName" name="edit_name" class="form-control">
+                            <label id="edit_name-error" class="text-danger error" for="name" style="display: none"></label>
                         </div>
-                    </div>                </form>
+                        <div class="mb-3">
+                            <label for="editLocationCode"
+                                class="form-label">{{ admin_label('location_form', 'location_embed_code', 'Embed Code') }}</label>
+                            <input type="text" id="editLocationCode" name="edit_locationcode" class="form-control">
+                            <label id="edit_locationcode-error" class="text-danger error" for="name"
+                                style="display: none"></label>
+                        </div>
+                        <div class="col-lg-12 mt-4">
+                            <div class="hstack gap-2 justify-content-end">
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" id="editLocationBtn">
+                                    <i class="bx bx-loader spinner me-2" style="display: none"
+                                        id="editLocationBtnSpinner"></i>Submit
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 @endpush
 
@@ -118,7 +120,8 @@
                         </div>
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addLocationMD">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addLocationMD">
                                     <i class="ri-map-pin-add-line"></i>
                                     <span class="d-none d-sm-inline-block">Add Location</span>
                                 </button>
@@ -162,10 +165,10 @@
                     },
                 },
                 columns: [
-                    {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center'},
-                    {data: 'name', name: 'name', title: 'Name', class: 'text-center'},
-                    {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
-                    {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
+                    { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
+                    { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
+                    { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
+                    { data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false },
                 ],
                 ajax: {
                     url: '{{ route("admin.location.list") }}',
@@ -181,22 +184,22 @@
                 },
                 responsive: {
                     breakpoints: [
-                        {name: "desktop", width: Infinity},
-                        {name: "tablet", width: 1024},
-                        {name: "fablet", width: 768},
-                        {name: "phone", width: 480},
+                        { name: "desktop", width: Infinity },
+                        { name: "tablet", width: 1024 },
+                        { name: "fablet", width: 768 },
+                        { name: "phone", width: 480 },
                     ],
                 },
             });
 
             $("#addLocationForm").validate({
                 rules: {
-                    name: {required: true},
-                    locationcode: {required: true}
+                    name: { required: true },
+                    locationcode: { required: true }
                 },
                 messages: {
-                    name: {required: "The name field is required."},
-                    locationcode: {required: "The location code field is required."},
+                    name: { required: "The name field is required." },
+                    locationcode: { required: "The location code field is required." },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -219,7 +222,7 @@
                             // Show success message
                             sendSuccess(result.message);
 
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload();
                             }, 2500);
 
@@ -310,7 +313,7 @@
             $.ajax({
                 url: edit.replace(':id', id),
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     // Fill the form fields
                     $('#editLocationId').val(response.data.id);
                     $('#editLocationName').val(response.data.name);
@@ -319,9 +322,9 @@
                     // Open the modal
                     $('#editLocationMD').modal('show');
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let data = xhr.responseJSON;
-                  if (data.hasOwnProperty('message')) {
+                    if (data.hasOwnProperty('message')) {
                         actionError(xhr, data.message)
                     } else {
                         actionError(xhr);
@@ -357,7 +360,7 @@
                         },
                         success: function (data) {
                             sendSuccess(data.message);
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload();
                             }, 2500);
 

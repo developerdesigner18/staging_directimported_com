@@ -17,7 +17,8 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div>
-                                    <label for="manufacturerName" class="form-label">Name</label>
+                                    <label for="manufacturerName"
+                                        class="form-label">{{ admin_label('manufacturer_form', 'name', 'Name') }}</label>
                                     <input type="text" class="form-control" id="manufacturerName" name="name"
                                         placeholder="Enter manufacturer name">
                                     <label id="name-error" class="text-danger error" for="manufacturerName"

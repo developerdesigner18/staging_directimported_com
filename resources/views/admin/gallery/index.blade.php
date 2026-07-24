@@ -1,10 +1,10 @@
 @extends('admin.master')
-@section('title','Gallery')
+@section('title', 'Gallery')
 @push('offcanvas')
     <!-- Add Gallery Canvas -->
     <!-- Add Gallery Canvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="galleryCanvas" aria-labelledby="galleryCanvasLabel"
-         style="width: 50%;">
+        style="width: 50%;">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="galleryCanvasLabel">Add New Gallery</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -14,13 +14,13 @@
                 @csrf
                 <div class="text-center mb-4">
                     <div class="gallery-image-container mx-auto mb-3"
-                         style="width: 300px; height: 300px; border: 2px dashed #dee2e6; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer;"
-                         onclick="document.getElementById('galleryImageInput').click()">
+                        style="width: 300px; height: 300px; border: 2px dashed #dee2e6; border-radius: 8px; overflow: hidden; position: relative; cursor: pointer;"
+                        onclick="document.getElementById('galleryImageInput').click()">
                         <img id="galleryImagePreview" src="{{ asset('assets/images/placeholder.jpg') }}"
-                             alt="Gallery Image Preview"
-                             class="img-fluid h-100 w-100 object-fit-cover" style="display: none;">
+                            alt="Gallery Image Preview" class="img-fluid h-100 w-100 object-fit-cover"
+                            style="display: none;">
                         <div id="galleryImagePlaceholder"
-                             class="h-100 d-flex flex-column justify-content-center align-items-center">
+                            class="h-100 d-flex flex-column justify-content-center align-items-center">
                             <i class="ri-image-line" style="font-size: 48px; color: #adb5bd;"></i>
                             <span class="mt-2 text-muted">Click to upload image</span>
                         </div>
@@ -30,7 +30,8 @@
                     <div id="galleryImageError" class="invalid-feedback d-block"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="galleryTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                    <label for="galleryTitle" class="form-label">{{ admin_label('gallery_form', 'title', 'Title') }} <span
+                            class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="galleryTitle" name="title" required>
                     <div id="galleryTitleError" class="invalid-feedback"></div>
                 </div>
@@ -44,7 +45,7 @@
 
     <!-- Edit Gallery Canvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="editGalleryCanvas" aria-labelledby="editGalleryCanvasLabel"
-         style="width: 50%;">
+        style="width: 50%;">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="editGalleryCanvasLabel">Edit Gallery</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -55,12 +56,12 @@
                 <input type="hidden" id="editGalleryId" name="id">
                 <div class="text-center mb-4">
                     <div class="gallery-image-container mx-auto mb-3"
-                         style="width: 300px; height: 300px; border: 2px dashed #dee2e6; border-radius: 8px; overflow: hidden; position: relative;">
+                        style="width: 300px; height: 300px; border: 2px dashed #dee2e6; border-radius: 8px; overflow: hidden; position: relative;">
                         <img id="editGalleryImagePreview" src="" alt="Gallery Image Preview"
-                             class="img-fluid h-100 w-100 object-fit-cover">
+                            class="img-fluid h-100 w-100 object-fit-cover">
                         <div class="position-absolute top-0 end-0 m-2">
                             <button type="button" class="btn btn-sm btn-light"
-                                    onclick="document.getElementById('editGalleryImageInput').click()">
+                                onclick="document.getElementById('editGalleryImageInput').click()">
                                 <i class="ri-edit-2-line"></i>
                             </button>
                         </div>
@@ -70,7 +71,8 @@
                     <div id="editGalleryImageError" class="invalid-feedback d-block"></div>
                 </div>
                 <div class="mb-3">
-                    <label for="editGalleryTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                    <label for="editGalleryTitle" class="form-label">{{ admin_label('gallery_form', 'title', 'Title') }}
+                        <span class="text-danger">*</span></label>
                     <input type="text" class="form-control" id="editGalleryTitle" name="title" required>
                     <div id="editGalleryTitleError" class="invalid-feedback"></div>
                 </div>
@@ -102,7 +104,7 @@
         <div class="col-sm-auto">
             <div>
                 <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#galleryCanvas"
-                        aria-controls="galleryCanvas">Add New
+                    aria-controls="galleryCanvas">Add New
                 </button>
             </div>
         </div>
@@ -111,7 +113,7 @@
                 <div class="d-flex justify-content-sm-end gap-2">
                     <div class="search-box ms-2">
                         <input type="text" name="search" class="form-control" placeholder="Search..."
-                               value="{{ request('search') }}">
+                            value="{{ request('search') }}">
                         <i class="ri-search-line search-icon"></i>
                     </div>
                     <div>
@@ -128,19 +130,18 @@
                 <div class="card overflow-hidden blog-grid-card">
                     <div class="position-relative overflow-hidden" style="height: 300px; background-color: #f8f9fa;">
                         <img src="{{ $slider->image }}" alt="{{ $slider->title }}"
-                             class="img-fluid h-100 w-100 object-fit-cover">
+                            class="img-fluid h-100 w-100 object-fit-cover">
                         <div class="position-absolute top-0 end-0 p-2">
                             <div class="dropdown">
-                                <button class="btn btn-sm btn-light rounded-circle" type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                        style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                <button class="btn btn-sm btn-light rounded-circle" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
                                     <i class="ri-more-2-fill"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
                                         <a class="dropdown-item" href="javascript:void(0)"
-                                           onclick="editGallery({{$slider->id}},this)">
+                                            onclick="editGallery({{$slider->id}},this)">
                                             <i class="ri-edit-line me-2"></i>Edit
                                         </a>
                                     </li>
@@ -149,7 +150,7 @@
                                     </li>
                                     <li>
                                         <a class="dropdown-item text-danger" href="javascript:void(0)"
-                                           onclick="deleteGallery('{{$slider->id}}',this)">
+                                            onclick="deleteGallery('{{$slider->id}}',this)">
                                             <i class="ri-delete-bin-line me-2"></i>Delete
                                         </a>
                                     </li>
@@ -222,13 +223,13 @@
             // Add Gallery Form Validation and Submission
             $("#addGalleryForm").validate({
                 rules: {
-                    title: {required: true},
+                    title: { required: true },
                     image: {
                         required: true,
                     }
                 },
                 messages: {
-                    title: {required: "The title field is required."},
+                    title: { required: "The title field is required." },
                     image: {
                         required: "Please upload an image for the gallery.",
                     }
@@ -245,7 +246,7 @@
                 unhighlight: function (element) {
                     $(element).removeClass('is-invalid');
                 },
-                submitHandler: function (form,e) {
+                submitHandler: function (form, e) {
                     const formData = new FormData(form);
                     $.ajax({
                         url: "{{ route('admin.gallery.store') }}",
@@ -291,13 +292,13 @@
             // Edit Gallery Form Validation and Submission
             $("#editGalleryForm").validate({
                 rules: {
-                    title: {required: true},
+                    title: { required: true },
                     image: {
                         required: false
                     }
                 },
                 messages: {
-                    title: {required: "The title field is required."},
+                    title: { required: "The title field is required." },
                     image: {
                         required: false
                     }

@@ -1,9 +1,8 @@
 @extends('admin.master')
-@section('title','Booking')
+@section('title', 'Booking')
 
 @push('modal')
-    <div class="modal fade" id="addPoliciesModal" tabindex="-1" aria-labelledby="accessoriesModalLabel"
-         aria-modal="true">
+    <div class="modal fade" id="addPoliciesModal" tabindex="-1" aria-labelledby="accessoriesModalLabel" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-xl"> <!-- Increased Size -->
             <div class="modal-content">
 
@@ -18,16 +17,18 @@
 
                         <!-- Policy Title -->
                         <div class="mb-3">
-                            <label for="policyTitle" class="form-label">Policy Title</label>
+                            <label for="policyTitle"
+                                class="form-label">{{ admin_label('rental_policies_form', 'policy_title', 'Policy Title') }}</label>
                             <input type="text" class="form-control" id="policyTitle" name="policyTitle"
-                                   placeholder="Enter rental policy title">
+                                placeholder="Enter rental policy title">
                             <label id="policyTitle-error" class="text-danger error" style="display: none"></label>
 
                         </div>
 
                         <!-- Description (TinyMCE Editor) -->
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description"
+                                class="form-label">{{ admin_label('rental_policies_form', 'description', 'Description') }}</label>
 
                             <!-- IMPORTANT: hidden textarea to store value -->
                             <textarea id="description" name="description" style="display:none;"></textarea>
@@ -45,10 +46,11 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
                         <button type="submit" class="btn btn-primary" id="btnAddRentalPolicies">
-    <span class="d-flex align-items-center">
-        <span class="d-none spinner-border spinner-border-sm flex-shrink-0 me-2" id="rentalPoliciesSpinner" role="status"></span>
-        <span class="flex-grow-1" id="btnText">Submit</span>
-    </span>
+                            <span class="d-flex align-items-center">
+                                <span class="d-none spinner-border spinner-border-sm flex-shrink-0 me-2"
+                                    id="rentalPoliciesSpinner" role="status"></span>
+                                <span class="flex-grow-1" id="btnText">Submit</span>
+                            </span>
                         </button>
                     </div>
 
@@ -73,13 +75,15 @@
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label class="form-label">Policy Title</label>
+                            <label
+                                class="form-label">{{ admin_label('rental_policies_form', 'policy_title', 'Policy Title') }}</label>
                             <input type="text" class="form-control" id="editPolicyTitle" name="editPolicyTitle">
                             <label id="editPolicyTitle-error" class="text-danger error" style="display:none;"></label>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label
+                                class="form-label">{{ admin_label('rental_policies_form', 'description', 'Description') }}</label>
 
                             <textarea id="edit_description" name="editDescription" style="display:none;"></textarea>
 
@@ -94,10 +98,10 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
                         <button type="submit" class="btn btn-primary" id="btnEditRentalPolicies">
-                        <span class="d-flex align-items-center">
-                            <span class="d-none spinner-border spinner-border-sm me-2" id="editPoliciesSpinner"></span>
-                            <span>Update</span>
-                        </span>
+                            <span class="d-flex align-items-center">
+                                <span class="d-none spinner-border spinner-border-sm me-2" id="editPoliciesSpinner"></span>
+                                <span>Update</span>
+                            </span>
                         </button>
 
                     </div>
@@ -138,7 +142,7 @@
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addPoliciesModal">
+                                    data-bs-target="#addPoliciesModal">
                                     <i class="ri-add-fill align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Add Policies</span>
                                 </button>
@@ -212,12 +216,12 @@
                         const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                         const embedHtml = '<iframe src="' + embedUrl +
                             '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                        resolve({html: embedHtml});
+                        resolve({ html: embedHtml });
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 } else {
-                    resolve({html: ''});
+                    resolve({ html: '' });
                 }
             },
             setup: function (editor) {
@@ -284,34 +288,34 @@
 
         $(document).ready(function () {
 
-                $("#rentalPoliciesForm").validate({
-                    rules: {
-                        policyTitle: {required: true},
-                        description: {required: true},
-                    },
-                    messages: {
-                        policyTitle: {required: "The PolicyTitle field is required."},
-                        description: {required: "The Descriptions field is required."},
+            $("#rentalPoliciesForm").validate({
+                rules: {
+                    policyTitle: { required: true },
+                    description: { required: true },
+                },
+                messages: {
+                    policyTitle: { required: "The PolicyTitle field is required." },
+                    description: { required: "The Descriptions field is required." },
 
-                    },
-                    errorClass: 'text-danger error',
-                    errorPlacement: function (error, element) {
-                        element.after(error);
-                    },
-                    submitHandler: function (form, e) {
-                        e.preventDefault();
-                        $('#description').val(tinymce.get('description_editor').getContent());
+                },
+                errorClass: 'text-danger error',
+                errorPlacement: function (error, element) {
+                    element.after(error);
+                },
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+                    $('#description').val(tinymce.get('description_editor').getContent());
 
-                        $.ajax({
-                            url: "{{ route('admin.rental-policies.create') }}",
-                            method: "post",
-                            dataType: "json",
-                            data: new FormData(form),
-                            processData: false,
-                            contentType: false,
-                            cache: false,
-                            beforeSend: function () {
-                                $('#btnAddRentalPolicies').attr('disabled', true);
+                    $.ajax({
+                        url: "{{ route('admin.rental-policies.create') }}",
+                        method: "post",
+                        dataType: "json",
+                        data: new FormData(form),
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        beforeSend: function () {
+                            $('#btnAddRentalPolicies').attr('disabled', true);
                             $("#rentalPoliciesSpinner").removeClass('d-none');
                         },
                         success: function (result) {
@@ -322,7 +326,7 @@
 
                                 $('#addPoliciesModal').modal('hide');
 
-                                });
+                            });
 
 
                         },
@@ -348,12 +352,12 @@
             });
             $("#editPoliciesForm").validate({
                 rules: {
-                    editPolicyTitle: {required: true},
-                    editDescription: {required: true},
+                    editPolicyTitle: { required: true },
+                    editDescription: { required: true },
                 },
                 messages: {
-                    editPolicyTitle: {required: "The PolicyTitle field is required."},
-                    editDescription: {required: "The Descriptions field is required."},
+                    editPolicyTitle: { required: "The PolicyTitle field is required." },
+                    editDescription: { required: "The Descriptions field is required." },
 
                 },
                 errorClass: 'text-danger error',
@@ -412,7 +416,7 @@
             $.ajax({
                 url: edit.replace(':id', id),
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // Fill the form fields
                     $('#editPolicyId').val(response.data.id);
@@ -424,7 +428,7 @@
                     // Open the modal
                     $('#editPoliciesModal').modal('show');
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let data = xhr.responseJSON;
                     if (data.hasOwnProperty('message')) {
                         actionError(xhr, data.message)

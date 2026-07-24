@@ -74,7 +74,8 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-4">
-                                            <label for="title" class="form-label fw-bold">Section Title</label>
+                                            <label for="title"
+                                                class="form-label fw-bold">{{ admin_label('home_section_form', 'section_title', 'Section Title') }}</label>
                                             <input type="text" class="form-control form-control-lg bg-light border-light"
                                                 id="title" name="title" value="{{ $homeSection->title }}"
                                                 placeholder="Enter title">
@@ -82,8 +83,8 @@
                                         </div>
 
                                         <div class="mb-0">
-                                            <label for="short_description_editor" class="form-label fw-bold">Short
-                                                Description</label>
+                                            <label for="short_description_editor"
+                                                class="form-label fw-bold">{{ admin_label('home_section_form', 'short_description', 'Short Description') }}</label>
                                             <textarea class="form-control" id="short_description_editor"
                                                 rows="10">{{ $homeSection->short_description }}</textarea>
                                             <input type="hidden" id="short_description" name="short_description"
@@ -191,21 +192,21 @@
             $('#addMorePoint').click(function () {
                 $('.no-points-msg').hide();
                 let pointHtml = `
-                        <div class="point-row mb-3 p-3 bg-light rounded border border-dashed position-relative animate__animated animate__fadeInUp">
-                            <div class="d-flex align-items-start gap-3">
-                                <div class="flex-grow-1">
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white text-primary"><i class="ri-checkbox-circle-line"></i></span>
-                                        <textarea name="points[]" class="form-control" rows="2" placeholder="Enter point text..."></textarea>
+                            <div class="point-row mb-3 p-3 bg-light rounded border border-dashed position-relative animate__animated animate__fadeInUp">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="flex-grow-1">
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-white text-primary"><i class="ri-checkbox-circle-line"></i></span>
+                                            <textarea name="points[]" class="form-control" rows="2" placeholder="Enter point text..."></textarea>
+                                        </div>
+                                        <label class="text-danger error point-error mt-1 fs-12" style="display:none"></label>
                                     </div>
-                                    <label class="text-danger error point-error mt-1 fs-12" style="display:none"></label>
+                                    <button type="button" class="btn btn-soft-danger btn-icon waves-effect waves-light remove-point mt-1" title="Remove">
+                                        <i class="ri-close-line"></i>
+                                    </button>
                                 </div>
-                                <button type="button" class="btn btn-soft-danger btn-icon waves-effect waves-light remove-point mt-1" title="Remove">
-                                    <i class="ri-close-line"></i>
-                                </button>
                             </div>
-                        </div>
-                    `;
+                        `;
                 $('#pointsContainer').append(pointHtml);
             });
 

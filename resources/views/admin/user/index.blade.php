@@ -63,7 +63,7 @@
                             <input type="hidden" name="field">
 
                             <div class="mb-2">
-                                <label for="rejectionReason" class="form-label">Rejection Reason</label>
+                                <label for="rejectionReason" class="form-label">{{ admin_label('user_form', 'rejection_reason', 'Rejection Reason') }}</label>
                                 <textarea rows="3" class="form-control" name="message" placeholder="Enter Your Reason"></textarea>
                                 <label id="reason-error" class="text-danger error" for="reason" style="display: none"></label>
                             </div>

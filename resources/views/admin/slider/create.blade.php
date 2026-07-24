@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Slider')
+@section('title', 'Slider')
 
 @section('main')
     <div class="row">
@@ -25,47 +25,45 @@
                         @csrf
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" name="title"
-                                   placeholder="Enter title">
-                            <label id="title-error" class="text-danger error" for="title"
-                                   style="display: none"></label>
+                            <label for="title" class="form-label">{{ admin_label('slider_form', 'title', 'Title') }}</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter title">
+                            <label id="title-error" class="text-danger error" for="title" style="display: none"></label>
                         </div>
 
                         <!-- Image Upload -->
                         <div class="mb-3">
-                            <label for="image" class="form-label">Slider Image</label>
-                            <input type="file" class="filepond" id="image" name="image"
-                                   data-allow-reorder="true">
-                            <label id="image-error" class="text-danger error" for="image"
-                                   style="display: none"></label>
+                            <label for="image"
+                                class="form-label">{{ admin_label('slider_form', 'slider_image', 'Slider Image') }}</label>
+                            <input type="file" class="filepond" id="image" name="image" data-allow-reorder="true">
+                            <label id="image-error" class="text-danger error" for="image" style="display: none"></label>
                         </div>
 
                         <!-- Description -->
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description"
-                                      rows="5" placeholder="Enter description"></textarea>
+                            <label for="description"
+                                class="form-label">{{ admin_label('slider_form', 'description', 'Description') }}</label>
+                            <textarea class="form-control" id="description" name="description" rows="5"
+                                placeholder="Enter description"></textarea>
                             <label id="description-error" class="text-danger error" for="description"
-                                   style="display: none"></label>
+                                style="display: none"></label>
                         </div>
 
                         <!-- Link/Href -->
                         <div class="mb-3">
-                            <label for="link" class="form-label">Link</label>
+                            <label for="link" class="form-label">{{ admin_label('slider_form', 'link', 'Link') }}</label>
                             <input type="text" class="form-control" id="link" name="link"
-                                   placeholder="Enter link (e.g., https://example.com)">
-                            <label id="link-error" class="text-danger error" for="link"
-                                   style="display: none"></label>
+                                placeholder="Enter link (e.g., https://example.com)">
+                            <label id="link-error" class="text-danger error" for="link" style="display: none"></label>
                         </div>
 
                         <!-- Button Text -->
                         <div class="mb-3">
-                            <label for="button_text" class="form-label">Button Text</label>
+                            <label for="button_text"
+                                class="form-label">{{ admin_label('slider_form', 'button_text', 'Button Text') }}</label>
                             <input type="text" class="form-control" id="button_text" name="button_text"
-                                   placeholder="Enter button text (e.g., Shop Now)">
+                                placeholder="Enter button text (e.g., Shop Now)">
                             <label id="button_text-error" class="text-danger error" for="button_text"
-                                   style="display: none"></label>
+                                style="display: none"></label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -100,24 +98,24 @@
 
             $("#addForm").validate({
                 rules: {
-                    title: {required: false},
-                    image: {required: true},
-                    description: {required: false},
+                    title: { required: false },
+                    image: { required: true },
+                    description: { required: false },
                     link: {
                         required: false,
                         url: true
                     },
-                    button_text: {required: false}
+                    button_text: { required: false }
                 },
                 messages: {
-                    title: {required: "The title field is required."},
-                    image: {required: "Please upload an image for the slider."},
-                    description: {required: "The description field is required."},
+                    title: { required: "The title field is required." },
+                    image: { required: "Please upload an image for the slider." },
+                    description: { required: "The description field is required." },
                     link: {
                         required: "The link field is required.",
                         url: "Please enter a valid URL (e.g., https://example.com)"
                     },
-                    button_text: {required: "The button text field is required."}
+                    button_text: { required: "The button text field is required." }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {

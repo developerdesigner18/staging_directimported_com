@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Create Service')
+@section('title', 'Create Service')
 
 @section('main')
     <div class="row">
@@ -27,21 +27,26 @@
 
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title" class="form-label">Service Title</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="Enter service title">
+                            <label for="title"
+                                class="form-label">{{ admin_label('service_form', 'service_title', 'Service Title') }}</label>
+                            <input type="text" class="form-control" id="title" name="title"
+                                placeholder="Enter service title">
                             <label id="title-error" class="text-danger error" for="title" style="display: none"></label>
                         </div>
 
                         <!-- Images -->
                         <div class="mb-3">
-                            <label for="images" class="form-label">Service Images</label>
-                            <input type="file" class="filepond" id="images" name="images[]" multiple data-allow-reorder="true">
+                            <label for="images"
+                                class="form-label">{{ admin_label('service_form', 'service_images', 'Service Images') }}</label>
+                            <input type="file" class="filepond" id="images" name="images[]" multiple
+                                data-allow-reorder="true">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
 
                         <!-- Description -->
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label
+                                class="form-label">{{ admin_label('service_form', 'description', 'Description') }}</label>
                             <textarea class="form-control" id="description_editor" rows="5"></textarea>
                             <input type="hidden" id="description" name="description">
                             <label id="description-error" class="text-danger error" style="display: none"></label>
@@ -115,12 +120,12 @@
                         const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                         const embedHtml = '<iframe src="' + embedUrl +
                             '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                        resolve({html: embedHtml});
+                        resolve({ html: embedHtml });
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 } else {
-                    resolve({html: ''});
+                    resolve({ html: '' });
                 }
             },
             setup: function (editor) {
@@ -158,14 +163,14 @@
 
             $("#addForm").validate({
                 rules: {
-                    title: {required: true},
-                    'images[]': {required: true},
-                    description: {required: true},
+                    title: { required: true },
+                    'images[]': { required: true },
+                    description: { required: true },
                 },
                 messages: {
-                    title: {required: "The service title is required."},
-                    'images[]': {required: "Please upload at least one image."},
-                    description: {required: "Description is required."},
+                    title: { required: "The service title is required." },
+                    'images[]': { required: "Please upload at least one image." },
+                    description: { required: "Description is required." },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {

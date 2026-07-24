@@ -16,7 +16,8 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div>
-                                    <label for="addCategoryName" class="form-label">Title</label>
+                                    <label for="addCategoryName"
+                                        class="form-label">{{ admin_label('category_form', 'title', 'Title') }}</label>
                                     <input type="text" class="form-control" id="addCategoryName" name="title"
                                         placeholder="Enter category name">
                                     <label id="addCategoryName-error" class="text-danger error" for="addCategoryName"
@@ -55,7 +56,8 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <div>
-                                    <label for="editCategoryName" class="form-label">Title</label>
+                                    <label for="editCategoryName"
+                                        class="form-label">{{ admin_label('category_form', 'title', 'Title') }}</label>
                                     <input type="text" class="form-control" id="edit_title" name="title"
                                         placeholder="Enter category name">
                                     <label id="edit_title-error" class="text-danger error" for="edit_title"

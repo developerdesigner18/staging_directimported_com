@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Edit Service')
+@section('title', 'Edit Service')
 
 @section('main')
     <div class="row">
@@ -24,32 +24,30 @@
                         @csrf
                         <!-- Title -->
                         <div class="mb-3">
-                            <label for="title" class="form-label">Service Title</label>
-                            <input type="text" class="form-control" id="title" name="title"
-                                   value="{{ $service->title }}" placeholder="Enter service title">
+                            <label for="title"
+                                class="form-label">{{ admin_label('service_form', 'service_title', 'Service Title') }}</label>
+                            <input type="text" class="form-control" id="title" name="title" value="{{ $service->title }}"
+                                placeholder="Enter service title">
                             <label id="title-error" class="text-danger error" style="display:none"></label>
                         </div>
 
                         <!-- Images -->
                         <div class="mb-3">
-                            <label for="images" class="form-label">Service Images</label>
+                            <label for="images"
+                                class="form-label">{{ admin_label('service_form', 'service_images', 'Service Images') }}</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple>
 
                             @if($service->images)
                                 <div id="sortable-images" class="d-flex flex-wrap">
                                     @foreach($service->images as $image)
-                                        <div class="image-preview-container me-2 mb-2"
-                                             data-image="{{ $image }}"
-                                             style="cursor: grab;">
+                                        <div class="image-preview-container me-2 mb-2" data-image="{{ $image }}"
+                                            style="cursor: grab;">
 
-                                            <img src="{{ asset(SERVICE_PATH.$image) }}"
-                                                 class="img-thumbnail"
-                                                 style="height:100px;"
-                                                 draggable="false">
+                                            <img src="{{ asset(SERVICE_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
+                                                draggable="false">
 
-                                            <button type="button"
-                                                    class="btn btn-danger btn-sm remove-image"
-                                                    data-image="{{ $image }}">×</button>
+                                            <button type="button" class="btn btn-danger btn-sm remove-image"
+                                                data-image="{{ $image }}">×</button>
                                         </div>
                                     @endforeach
                                 </div>
@@ -63,8 +61,10 @@
 
                         <!-- Description -->
                         <div class="mb-3">
-                            <label for="description_editor" class="form-label">Description</label>
-                            <textarea class="form-control" id="description_editor" rows="5">{{ $service->description }}</textarea>
+                            <label for="description_editor"
+                                class="form-label">{{ admin_label('service_form', 'description', 'Description') }}</label>
+                            <textarea class="form-control" id="description_editor"
+                                rows="5">{{ $service->description }}</textarea>
                             <input type="hidden" id="description" name="description" value="{{ $service->description }}">
                             <label id="description-error" class="text-danger error" style="display:none"></label>
                         </div>
@@ -134,12 +134,12 @@
                         const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                         const embedHtml = '<iframe src="' + embedUrl +
                             '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                        resolve({html: embedHtml});
+                        resolve({ html: embedHtml });
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 } else {
-                    resolve({html: ''});
+                    resolve({ html: '' });
                 }
             },
             setup: function (editor) {
@@ -210,12 +210,12 @@
 
             $("#editForm").validate({
                 rules: {
-                    title: {required: true},
-                    description: {required: true},
+                    title: { required: true },
+                    description: { required: true },
                 },
                 messages: {
-                    title: {required: "The service title is required."},
-                    description: {required: "Description is required."},
+                    title: { required: "The service title is required." },
+                    description: { required: "Description is required." },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {

@@ -26,7 +26,8 @@
 
                         <!-- MAIL_HOST -->
                         <div class="mb-3">
-                            <label for="RECEIVER_MAIL" class="form-label">System Receiver Mail</label>
+                            <label for="RECEIVER_MAIL"
+                                class="form-label">{{ admin_label('settings_form', 'receiver_mail', 'System Receiver Mail') }}</label>
                             <input type="text" class="form-control" id="RECEIVER_MAIL" name="RECEIVER_MAIL"
                                 placeholder="Enter reciver email of system" value="{{ env('RECEIVER_MAIL') }}">
                             <label id="RECEIVER_MAIL-error" class="text-danger error" for="RECEIVER_MAIL"
@@ -35,7 +36,8 @@
 
                         <!-- MAIL_HOST -->
                         <div class="mb-3">
-                            <label for="MAIL_HOST" class="form-label">Mail Host</label>
+                            <label for="MAIL_HOST"
+                                class="form-label">{{ admin_label('settings_form', 'mail_host', 'Mail Host') }}</label>
                             <input type="text" class="form-control" id="MAIL_HOST" name="MAIL_HOST"
                                 placeholder="Enter mail host (e.g., smtp.mailtrap.io)" value="{{ env('MAIL_HOST') }}">
                             <label id="MAIL_HOST-error" class="text-danger error" for="MAIL_HOST"
@@ -44,7 +46,8 @@
 
                         <!-- MAIL_PORT -->
                         <div class="mb-3">
-                            <label for="MAIL_PORT" class="form-label">Mail Port</label>
+                            <label for="MAIL_PORT"
+                                class="form-label">{{ admin_label('settings_form', 'mail_port', 'Mail Port') }}</label>
                             <input type="number" class="form-control" id="MAIL_PORT" name="MAIL_PORT"
                                 placeholder="Enter mail port (e.g., 2525)" value="{{ env('MAIL_PORT') }}">
                             <label id="MAIL_PORT-error" class="text-danger error" for="MAIL_PORT"
@@ -53,7 +56,8 @@
 
                         <!-- MAIL_USERNAME -->
                         <div class="mb-3">
-                            <label for="MAIL_USERNAME" class="form-label">Mail Username</label>
+                            <label for="MAIL_USERNAME"
+                                class="form-label">{{ admin_label('settings_form', 'mail_username', 'Mail Username') }}</label>
                             <input type="text" class="form-control" id="MAIL_USERNAME" name="MAIL_USERNAME"
                                 placeholder="Enter mail username" value="{{ env('MAIL_USERNAME') }}">
                             <label id="MAIL_USERNAME-error" class="text-danger error" for="MAIL_USERNAME"
@@ -62,7 +66,8 @@
 
                         <!-- MAIL_PASSWORD -->
                         <div class="mb-3">
-                            <label for="MAIL_PASSWORD" class="form-label">Mail Password</label>
+                            <label for="MAIL_PASSWORD"
+                                class="form-label">{{ admin_label('settings_form', 'mail_password', 'Mail Password') }}</label>
                             <input type="password" class="form-control" id="MAIL_PASSWORD" name="MAIL_PASSWORD"
                                 placeholder="Enter mail password" value="{{ env('MAIL_PASSWORD') }}">
                             <label id="MAIL_PASSWORD-error" class="text-danger error" for="MAIL_PASSWORD"
@@ -71,7 +76,8 @@
 
                         <!-- MAIL_ENCRYPTION -->
                         <div class="mb-3">
-                            <label for="MAIL_ENCRYPTION" class="form-label">Mail Encryption</label>
+                            <label for="MAIL_ENCRYPTION"
+                                class="form-label">{{ admin_label('settings_form', 'mail_encryption', 'Mail Encryption') }}</label>
                             <select class="form-control" id="MAIL_ENCRYPTION" name="MAIL_ENCRYPTION">
                                 <option value="tls" {{ env('MAIL_ENCRYPTION') == 'tls' ? 'selected' : '' }}>TLS</option>
                                 <option value="ssl" {{ env('MAIL_ENCRYPTION') == 'ssl' ? 'selected' : '' }}>SSL</option>
@@ -83,7 +89,8 @@
 
                         <!-- MAIL_FROM_ADDRESS -->
                         <div class="mb-3">
-                            <label for="MAIL_FROM_ADDRESS" class="form-label">From Address</label>
+                            <label for="MAIL_FROM_ADDRESS"
+                                class="form-label">{{ admin_label('settings_form', 'from_address', 'From Address') }}</label>
                             <input type="email" class="form-control" id="MAIL_FROM_ADDRESS" name="MAIL_FROM_ADDRESS"
                                 placeholder="Enter from address (e.g., no-reply@example.com)"
                                 value="{{ env('MAIL_FROM_ADDRESS') }}">
@@ -93,7 +100,8 @@
 
                         <!-- MAIL_FROM_NAME -->
                         <div class="mb-3">
-                            <label for="MAIL_FROM_NAME" class="form-label">From Name</label>
+                            <label for="MAIL_FROM_NAME"
+                                class="form-label">{{ admin_label('settings_form', 'from_name', 'From Name') }}</label>
                             <input type="text" class="form-control" id="MAIL_FROM_NAME" name="MAIL_FROM_NAME"
                                 placeholder="Enter from name (e.g., Your App Name)" value="{{ env('MAIL_FROM_NAME') }}">
                             <label id="MAIL_FROM_NAME-error" class="text-danger error" for="MAIL_FROM_NAME"
@@ -121,28 +129,32 @@
 
                             <!-- Facebook -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Facebook URL</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'facebook_url', 'Facebook URL') }}</label>
                                 <input type="text" name="facebook_url" class="form-control"
                                     value="{{ $settings->facebook_url ?? '' }}">
                             </div>
 
                             <!-- Instagram -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Instagram URL</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'instagram_url', 'Instagram URL') }}</label>
                                 <input type="text" name="instagram_url" class="form-control"
                                     value="{{ $settings->instagram_url ?? '' }}">
                             </div>
 
                             <!-- Twitter -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Twitter URL</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'twitter_url', 'Twitter URL') }}</label>
                                 <input type="text" name="twitter_url" class="form-control"
                                     value="{{ $settings->twitter_url ?? '' }}">
                             </div>
 
                             <!-- YouTube -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">YouTube URL</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'youtube_url', 'YouTube URL') }}</label>
                                 <input type="text" name="youtube_url" class="form-control"
                                     value="{{ $settings->youtube_url ?? '' }}">
                             </div>
@@ -153,7 +165,8 @@
 
                             <!-- Logo -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Main Logo</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'main_logo', 'Main Logo') }}</label>
                                 <input type="file" name="logo" class="form-control" accept="image/*">
                                 <p id="logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->logo))
@@ -166,7 +179,8 @@
 
                             <!-- Admin Logo -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Admin Logo</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'admin_logo', 'Admin Logo') }}</label>
                                 <input type="file" name="admin_logo" class="form-control" accept="image/*">
                                 <p id="admin_logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->admin_logo))
@@ -179,7 +193,8 @@
 
                             <!-- Footer Logo -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Footer Logo</label>
+                                <label
+                                    class="form-label">{{ admin_label('settings_form', 'footer_logo', 'Footer Logo') }}</label>
                                 <input type="file" name="footer_logo" class="form-control" accept="image/*">
                                 <p id="footer_logo-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->footer_logo))
@@ -192,7 +207,7 @@
 
                             <!-- Favicon -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Favicon</label>
+                                <label class="form-label">{{ admin_label('settings_form', 'favicon', 'Favicon') }}</label>
                                 <input type="file" name="favicon" class="form-control" accept="image/*">
                                 <p id="favicon-error" class="text-danger mt-1" style="display: none"></p>
                                 @if(!empty($settings->favicon))

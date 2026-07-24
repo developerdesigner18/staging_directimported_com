@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Employee Management')
+@section('title', 'Employee Management')
 
 @push('modal')
 
@@ -17,24 +17,29 @@
                     <div class="modal-body">
                         <!--First Name -->
                         <div class="mb-3">
-                            <label for="employee_name" class="form-label">First Name</label>
+                            <label for="employee_name"
+                                class="form-label">{{ admin_label('employee_form', 'first_name', 'First Name') }}</label>
                             <input type="text" class="form-control" id="employee_first_name" name="first_name">
                         </div>
                         <!--Last Name -->
                         <div class="mb-3">
-                            <label for="employee_name" class="form-label">Last Name</label>
+                            <label for="employee_name"
+                                class="form-label">{{ admin_label('employee_form', 'last_name', 'Last Name') }}</label>
                             <input type="text" class="form-control" id="employee_last_name" name="last_name">
                         </div>
                         <!-- Email -->
                         <div class="mb-3">
-                            <label for="employee_email" class="form-label">Email</label>
+                            <label for="employee_email"
+                                class="form-label">{{ admin_label('employee_form', 'email', 'Email') }}</label>
                             <input type="email" class="form-control" id="employee_email" name="email">
                         </div>
 
                         <!-- Role/Department Select -->
                         <div class="mb-3">
-                            <label for="employee_permissions" class="form-label">Permissions</label>
-                            <select class="form-select select2-multiple" id="employee_permissions" name="permission[]" multiple>
+                            <label for="employee_permissions"
+                                class="form-label">{{ admin_label('employee_form', 'permissions', 'Permissions') }}</label>
+                            <select class="form-select select2-multiple" id="employee_permissions" name="permission[]"
+                                multiple>
                                 @foreach($AllPermissions as $acc)
                                     <option value="{{ $acc->id }}">{{ $acc->name }}</option>
                                 @endforeach
@@ -45,10 +50,10 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
                         <button type="submit" class="btn btn-primary" id="btnAddEmp">
-                        <span class="d-flex align-items-center">
-                            <span class="d-none spinner-border spinner-border-sm me-2" id="btnAddEmpSpinner"></span>
-                            <span>Add</span>
-                        </span>
+                            <span class="d-flex align-items-center">
+                                <span class="d-none spinner-border spinner-border-sm me-2" id="btnAddEmpSpinner"></span>
+                                <span>Add</span>
+                            </span>
                         </button>
 
                     </div>
@@ -56,60 +61,66 @@
             </form>
         </div>
     </div>
-<!-- Modal: Edit Employee -->
-<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <form method="POST" id="frmEditEmp">
-            @csrf
-            <input type="hidden" name="employee_id" id="edit_employee_id">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    <!-- Modal: Edit Employee -->
+    <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" id="frmEditEmp">
+                @csrf
+                <input type="hidden" name="employee_id" id="edit_employee_id">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editEmployeeModalLabel">Edit Employee</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <!-- First Name -->
+                        <div class="mb-3">
+                            <label for="edit_employee_first_name"
+                                class="form-label">{{ admin_label('employee_form', 'first_name', 'First Name') }}</label>
+                            <input type="text" class="form-control" id="edit_employee_first_name" name="edit_first_name">
+                        </div>
+                        <!-- Last Name -->
+                        <div class="mb-3">
+                            <label for="edit_employee_last_name"
+                                class="form-label">{{ admin_label('employee_form', 'last_name', 'Last Name') }}</label>
+                            <input type="text" class="form-control" id="edit_employee_last_name" name="edit_last_name">
+                        </div>
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="edit_employee_email"
+                                class="form-label">{{ admin_label('employee_form', 'email', 'Email') }}</label>
+                            <input type="email" class="form-control" id="edit_employee_email" name="edit_email">
+                        </div>
+
+                        <!-- Permissions -->
+                        <div class="mb-3">
+                            <label for="edit_employee_permissions"
+                                class="form-label">{{ admin_label('employee_form', 'permissions', 'Permissions') }}</label>
+                            <select class="form-select select2-multiple" name="edit_permission[]"
+                                id="edit_employee_permissions" multiple>
+                                @foreach($AllPermissions as $acc)
+                                    <option value="{{ $acc->id }}">{{ $acc->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                        <button type="submit" class="btn btn-primary" id="btnEditEmp">
+                            <span class="d-flex align-items-center">
+                                <span class="d-none spinner-border spinner-border-sm me-2" id="btnEditEmpSpinner"></span>
+                                <span>Update</span>
+                            </span>
+                        </button>
+                    </div>
                 </div>
-
-                <div class="modal-body">
-                    <!-- First Name -->
-                    <div class="mb-3">
-                        <label for="edit_employee_first_name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="edit_employee_first_name" name="edit_first_name">
-                    </div>
-                    <!-- Last Name -->
-                    <div class="mb-3">
-                        <label for="edit_employee_last_name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="edit_employee_last_name" name="edit_last_name">
-                    </div>
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label for="edit_employee_email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="edit_employee_email" name="edit_email">
-                    </div>
-
-                    <!-- Permissions -->
-                    <div class="mb-3">
-                        <label for="edit_employee_permissions" class="form-label">Permissions</label>
-                        <select class="form-select select2-multiple" name="edit_permission[]" id="edit_employee_permissions" multiple>
-                            @foreach($AllPermissions as $acc)
-                                <option value="{{ $acc->id }}">{{ $acc->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-
-                    <button type="submit" class="btn btn-primary" id="btnEditEmp">
-                        <span class="d-flex align-items-center">
-                            <span class="d-none spinner-border spinner-border-sm me-2" id="btnEditEmpSpinner"></span>
-                            <span>Update</span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
 @endpush
 @section('main')
@@ -140,7 +151,8 @@
                         </div>
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addEmployeeModal">
                                     <i class="ri-user-star-fill"></i>
                                     <span class="d-none d-sm-inline-block">Add Employee</span>
                                 </button>
@@ -149,7 +161,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="employeeDT" class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer"></table>
+                    <table id="employeeDT" class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer">
+                    </table>
                 </div>
             </div>
         </div>
@@ -181,12 +194,12 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center'},
-                {data: 'first_name', name: 'first_name', title: 'First name', class: 'text-center'},
-                {data: 'last_name', name: 'last_name', title: 'Last name', class: 'text-center'},
-                {data: 'email', name: 'email', title: 'Email', class: 'text-center'},
-                {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
-                {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
+                { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
+                { data: 'first_name', name: 'first_name', title: 'First name', class: 'text-center' },
+                { data: 'last_name', name: 'last_name', title: 'Last name', class: 'text-center' },
+                { data: 'email', name: 'email', title: 'Email', class: 'text-center' },
+                { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
+                { data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false },
             ],
             ajax: {
                 url: '{{ route("admin.employee.list") }}',
@@ -202,10 +215,10 @@
             },
             responsive: {
                 breakpoints: [
-                    {name: "desktop", width: Infinity},
-                    {name: "tablet", width: 1024},
-                    {name: "fablet", width: 768},
-                    {name: "phone", width: 480},
+                    { name: "desktop", width: Infinity },
+                    { name: "tablet", width: 1024 },
+                    { name: "fablet", width: 768 },
+                    { name: "phone", width: 480 },
                 ],
             },
         });
@@ -240,15 +253,15 @@
 
             $("#frmAddEmp").validate({
                 rules: {
-                    first_name: {required: true},
-                    last_name: {required: true},
-                    permission: {required: true},
+                    first_name: { required: true },
+                    last_name: { required: true },
+                    permission: { required: true },
 
                 },
                 messages: {
-                    first_name: {required: "The name field is required."},
-                    last_name: {required: "The email field is required."},
-                    permission: {required: "Please select the permission"},
+                    first_name: { required: "The name field is required." },
+                    last_name: { required: "The email field is required." },
+                    permission: { required: "Please select the permission" },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -300,17 +313,17 @@
             $("#frmEditEmp").validate({
 
                 rules: {
-                    edit_first_name: {required: true},
-                    edit_last_name: {required: true},
-                    edit_email: {required: true},
-                    edit_permission: {required: true},
+                    edit_first_name: { required: true },
+                    edit_last_name: { required: true },
+                    edit_email: { required: true },
+                    edit_permission: { required: true },
 
                 },
                 messages: {
-                    edit_first_name: {required: "The name field is required."},
-                    edit_last_name: {required: "The email field is required."},
-                    edit_email: {required: "The email field is required."},
-                    edit_permission: {required: "Please select the permission"},
+                    edit_first_name: { required: "The name field is required." },
+                    edit_last_name: { required: "The email field is required." },
+                    edit_email: { required: "The email field is required." },
+                    edit_permission: { required: "Please select the permission" },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -371,7 +384,7 @@
             $.ajax({
                 url: edit.replace(':id', id),
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     // Fill the form fields
                     $('#edit_employee_id').val(response.data.id);
                     $('#edit_employee_first_name').val(response.data.first_name);
@@ -383,7 +396,7 @@
                     // Open the modal
                     $('#editEmployeeModal').modal('show');
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let data = xhr.responseJSON;
                     if (data.hasOwnProperty('message')) {
                         actionError(xhr, data.message)
@@ -421,7 +434,7 @@
                         },
                         success: function (data) {
                             sendSuccess(data.message);
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload();
                             }, 2500);
 

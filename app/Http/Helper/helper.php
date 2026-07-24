@@ -217,3 +217,40 @@ function getSetting()
 {
     return SiteSettings::first() ?? new SiteSettings();
 }
+
+function admin_label($page, $key, $default = null)
+{
+    static $staticLabels = null;
+    if ($staticLabels === null) {
+        try {
+            $staticLabels = \App\Models\AdminLabel::get()->groupBy('page')->map(function ($items) {
+                return $items->pluck('value', 'key');
+            })->toArray();
+        } catch (\Exception $e) {
+            $staticLabels = [];
+        }
+    }
+
+    if (isset($staticLabels[$page][$key])) {
+        return $staticLabels[$page][$key];
+    }
+
+    $val = $default ?? $key;
+    try {
+        $dbLabel = \App\Models\AdminLabel::where('page', $page)->where('key', $key)->first();
+        if (!$dbLabel) {
+            \App\Models\AdminLabel::create([
+                'page' => $page,
+                'key' => $key,
+                'value' => $val
+            ]);
+        } else {
+            $val = $dbLabel->value;
+        }
+        $staticLabels[$page][$key] = $val;
+    } catch (\Exception $e) {
+        // Fallback
+    }
+
+    return $val;
+}

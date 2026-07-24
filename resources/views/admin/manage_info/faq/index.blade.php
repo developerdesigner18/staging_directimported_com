@@ -1,9 +1,8 @@
 @extends('admin.master')
-@section('title','Booking')
+@section('title', 'Booking')
 
 @push('modal')
-    <div class="modal fade" id="addFaqModal" tabindex="-1" aria-labelledby="faqModalLabel"
-         aria-modal="true">
+    <div class="modal fade" id="addFaqModal" tabindex="-1" aria-labelledby="faqModalLabel" aria-modal="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
 
@@ -18,15 +17,17 @@
 
                         <!-- FAQ Title -->
                         <div class="mb-3">
-                            <label for="faqTitle" class="form-label">FAQ Title</label>
+                            <label for="faqTitle"
+                                class="form-label">{{ admin_label('faq_form', 'faq_title', 'FAQ Title') }}</label>
                             <input type="text" class="form-control" id="faqTitle" name="faqTitle"
-                                   placeholder="Enter FAQ title">
+                                placeholder="Enter FAQ title">
                             <label id="faqTitle-error" class="text-danger error" style="display: none"></label>
                         </div>
 
                         <!-- Description (TinyMCE Editor) -->
                         <div class="mb-3">
-                            <label for="faqDescription" class="form-label">Description</label>
+                            <label for="faqDescription"
+                                class="form-label">{{ admin_label('faq_form', 'description', 'Description') }}</label>
 
                             <textarea id="faqDescription" name="faqDescription" style="display:none;"></textarea>
 
@@ -43,7 +44,8 @@
 
                         <button type="submit" class="btn btn-primary" id="btnAddFaq">
                             <span class="d-flex align-items-center">
-                                <span class="d-none spinner-border spinner-border-sm flex-shrink-0 me-2" id="faqSpinner" role="status"></span>
+                                <span class="d-none spinner-border spinner-border-sm flex-shrink-0 me-2" id="faqSpinner"
+                                    role="status"></span>
                                 <span class="flex-grow-1" id="btnText">Submit</span>
                             </span>
                         </button>
@@ -71,13 +73,13 @@
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label class="form-label">FAQ Title</label>
+                            <label class="form-label">{{ admin_label('faq_form', 'faq_title', 'FAQ Title') }}</label>
                             <input type="text" class="form-control" id="editFaqTitle" name="editFaqTitle">
                             <label id="editFaqTitle-error" class="text-danger error" style="display:none;"></label>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label class="form-label">{{ admin_label('faq_form', 'description', 'Description') }}</label>
 
                             <textarea id="edit_faqDescription" name="editFaqDescription" style="display:none;"></textarea>
 
@@ -136,7 +138,7 @@
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addFaqModal">
+                                    data-bs-target="#addFaqModal">
                                     <i class="ri-add-fill align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Add FAQ</span>
                                 </button>
@@ -210,12 +212,12 @@
                         const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                         const embedHtml = '<iframe src="' + embedUrl +
                             '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                        resolve({html: embedHtml});
+                        resolve({ html: embedHtml });
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 } else {
-                    resolve({html: ''});
+                    resolve({ html: '' });
                 }
             },
             setup: function (editor) {
@@ -284,10 +286,10 @@
 
             $("#faqForm").validate({
                 rules: {
-                    faqTitle: {required: true},
+                    faqTitle: { required: true },
                 },
                 messages: {
-                    faqTitle: {required: "The title field is required."},
+                    faqTitle: { required: "The title field is required." },
 
                 },
                 errorClass: 'text-danger error',
@@ -344,10 +346,10 @@
             });
             $("#editFaqForm").validate({
                 rules: {
-                    editFaqTitle: {required: true},
+                    editFaqTitle: { required: true },
                 },
                 messages: {
-                    editFaqTitle: {required: "The Title field is required."},
+                    editFaqTitle: { required: "The Title field is required." },
 
                 },
                 errorClass: 'text-danger error',
@@ -406,7 +408,7 @@
             $.ajax({
                 url: edit.replace(':id', id),
                 type: 'GET',
-                success: function(response) {
+                success: function (response) {
                     console.log(response);
                     // Fill the form fields
                     $('#editFaqId').val(response.data.id);
@@ -418,7 +420,7 @@
                     // Open the modal
                     $('#editFaqModal').modal('show');
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     let data = xhr.responseJSON;
                     if (data.hasOwnProperty('message')) {
                         actionError(xhr, data.message)

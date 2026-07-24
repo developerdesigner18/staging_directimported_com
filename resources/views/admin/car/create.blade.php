@@ -29,7 +29,8 @@
                         <div class="row mb-3">
                             <!-- Make -->
                             <div class="col-md-4">
-                                <label for="manufacturer_id" class="form-label">Make</label>
+                                <label for="manufacturer_id"
+                                    class="form-label">{{ admin_label('car_form', 'make', 'Make') }}</label>
                                 <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
                                     <option value="">Select Make</option>
                                     @foreach($manufacturers ?? [] as $manufacturer)
@@ -43,7 +44,8 @@
 
                             <!-- Model -->
                             <div class="col-md-4">
-                                <label for="model" class="form-label">Model</label>
+                                <label for="model"
+                                    class="form-label">{{ admin_label('car_form', 'model', 'Model') }}</label>
                                 <input type="text" class="form-control" id="model" name="model"
                                     placeholder="Enter model name">
                                 <label id="model-error" class="text-danger error" for="model" style="display: none"></label>
@@ -51,7 +53,7 @@
 
                             <!-- Year -->
                             <div class="col-md-4">
-                                <label for="year" class="form-label">Year</label>
+                                <label for="year" class="form-label">{{ admin_label('car_form', 'year', 'Year') }}</label>
                                 <select class="form-select select2" id="year" name="year">
                                     <option value="">Select Year</option>
                                     @for($y = date('Y') + 1; $y >= 1970; $y--)
@@ -64,7 +66,8 @@
 
                         <!-- Category -->
                         <div class="mb-3">
-                            <label for="category_id" class="form-label">Category</label>
+                            <label for="category_id"
+                                class="form-label">{{ admin_label('car_form', 'category', 'Category') }}</label>
                             <select class="form-select" id="category_id" name="category_id">
                                 <option value="">Select Category</option>
                                 @foreach($categories as $category)
@@ -78,7 +81,8 @@
                         <!-- Pricing -->
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="less_four_days_price" class="form-label">1-4 Days Price</label>
+                                <label for="less_four_days_price"
+                                    class="form-label">{{ admin_label('car_form', '1_4_days_price', '1-4 Days Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="less_four_days_price"
                                     name="less_four_days_price" placeholder="Enter price">
                                 <label id="less_four_days_price-error" class="text-danger error"
@@ -86,7 +90,8 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="five_six_days_price" class="form-label">5-6 Days Price</label>
+                                <label for="five_six_days_price"
+                                    class="form-label">{{ admin_label('car_form', '5_6_days_price', '5-6 Days Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="five_six_days_price"
                                     name="five_six_days_price" placeholder="Enter price">
                                 <label id="five_six_days_price-error" class="text-danger error"
@@ -96,14 +101,16 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="week_price" class="form-label">Weekly Price</label>
+                                <label for="week_price"
+                                    class="form-label">{{ admin_label('car_form', 'weekly_price', 'Weekly Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
                                     placeholder="Enter price">
                                 <label id="week_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="month_price" class="form-label">Monthly Price</label>
+                                <label for="month_price"
+                                    class="form-label">{{ admin_label('car_form', 'monthly_price', 'Monthly Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
                                     placeholder="Enter price">
                                 <label id="month_price-error" class="text-danger error" style="display: none"></label>
@@ -112,14 +119,16 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="max_price" class="form-label">Maximum Price</label>
+                                <label for="max_price"
+                                    class="form-label">{{ admin_label('car_form', 'maximum_price', 'Maximum Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
                                     placeholder="Enter maximum price">
                                 <label id="max_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="insurance_price" class="form-label">Insurance Price</label>
+                                <label for="insurance_price"
+                                    class="form-label">{{ admin_label('car_form', 'insurance_price', 'Insurance Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="insurance_price"
                                     name="insurance_price" placeholder="Enter insurance price">
                                 <label id="insurance_price-error" class="text-danger error" style="display: none"></label>
@@ -130,7 +139,8 @@
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label class="form-label">Included (Free) Accessory</label>
+                                    <label
+                                        class="form-label">{{ admin_label('car_form', 'included_accessory', 'Included Accessory') }}</label>
                                     <select class="form-select select2-multiple" name="free_accessory[]" multiple>
                                         @foreach($freeAccessories as $acc)
                                             <option value="{{ $acc->id }}">{{ $acc->name }}</option>
@@ -141,7 +151,8 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <label class="form-label">Extra Accessory</label>
+                                    <label
+                                        class="form-label">{{ admin_label('car_form', 'extra_accessory', 'Extra Accessory') }}</label>
                                     <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
                                         @foreach($extraAccessories as $acc)
                                             <option value="{{ $acc->id }}">{{ $acc->name }}</option>
@@ -161,7 +172,8 @@
 
                                 <!-- Number Plate -->
                                 <div class="col-lg-6">
-                                    <label for="numberPlate" class="form-label">Number Plate</label>
+                                    <label for="numberPlate"
+                                        class="form-label">{{ admin_label('car_form', 'number_plate', 'Number Plate') }}</label>
                                     <input type="text" class="form-control" id="numberPlate" name="number_plate"
                                         placeholder="Enter number plate number">
                                     <label id="number_plate-error" class="text-danger error" style="display: none"></label>
@@ -169,7 +181,7 @@
 
                                 <!-- Location -->
                                 <div class="col-lg-6">
-                                    <label class="form-label">Location</label>
+                                    <label class="form-label">{{ admin_label('car_form', 'location', 'Location') }}</label>
                                     <select class="form-select select2" name="location">
                                         @foreach($locations ?? [] as $location)
                                             <option value="{{ optional($location)->id }}" {{ old('location') == optional($location)->id ? 'selected' : '' }}>
@@ -187,7 +199,8 @@
                             <div class="row">
                                 <!-- Vehicle ID -->
                                 <div class="col-lg-4">
-                                    <label for="vehicle_id" class="form-label">Vehicle ID / Chassis No</label>
+                                    <label for="vehicle_id"
+                                        class="form-label">{{ admin_label('car_form', 'vehicle_id', 'Vehicle ID / Chassis No') }}</label>
                                     <input type="text" class="form-control" id="vehicle_id" name="vehicle_id"
                                         placeholder="Enter Vehicle ID">
                                     <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
@@ -195,7 +208,8 @@
 
                                 <!-- Status -->
                                 <div class="col-lg-4">
-                                    <label for="status" class="form-label">Status</label>
+                                    <label for="status"
+                                        class="form-label">{{ admin_label('car_form', 'status', 'Status') }}</label>
                                     <select class="form-select select2" id="status" name="status">
                                         <option value="">Select Status</option>
                                         @foreach(\App\Enum\VehicleStatus::cases() as $status)
@@ -209,7 +223,8 @@
 
                                 <!-- Auction Grade -->
                                 <div class="col-lg-4">
-                                    <label for="auction_grade_id" class="form-label">Auction Grade</label>
+                                    <label for="auction_grade_id"
+                                        class="form-label">{{ admin_label('car_form', 'auction_grade', 'Auction Grade') }}</label>
                                     <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
                                         <option value="">Select Auction Grade</option>
                                         @foreach($auctionGrades ?? [] as $grade)
@@ -226,7 +241,8 @@
 
                         <!-- Recommended -->
                         <div class="mb-3">
-                            <label class="form-label">Recommended Car</label>
+                            <label
+                                class="form-label">{{ admin_label('car_form', 'recommended_car', 'Recommended Car') }}</label>
                             <div class="form-check form-switch">
                                 <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended"
                                     value="1">
@@ -236,7 +252,7 @@
 
                         <!-- Banner -->
                         <div class="col-md-12 mb-2">
-                            <label for="banner" class="form-label">Banner</label>
+                            <label for="banner" class="form-label">{{ admin_label('car_form', 'banner', 'Banner') }}</label>
                             <label for="banner" class="custom-file-label w-100">
                                 <input type="file" id="banner" class="form-control file-preview" name="banner"
                                     accept="image/*">
@@ -247,7 +263,8 @@
 
                         <!-- Images -->
                         <div class="mb-3">
-                            <label for="images" class="form-label">Car Images</label>
+                            <label for="images"
+                                class="form-label">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple
                                 data-allow-reorder="true">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
@@ -255,7 +272,7 @@
 
                         <!-- Description -->
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
+                            <label class="form-label">{{ admin_label('car_form', 'description', 'Description') }}</label>
                             <textarea class="form-control" id="description_editor" rows="5"></textarea>
                             <input type="hidden" id="description" name="description">
                             <label id="description-error" class="text-danger error" style="display: none"></label>
@@ -271,41 +288,47 @@
 
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Exterior Color</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'exterior_color', 'Exterior Color') }}</label>
                                         <input type="text" name="exterior_color" class="form-control"
                                             placeholder="e.g. Pearl White">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Body Type</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'body_type', 'Body Type') }}</label>
                                         <input type="text" name="body_type" class="form-control" placeholder="e.g. SUV">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Fuel Type</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
                                         <input type="text" name="fuel_type" class="form-control" placeholder="e.g. Hybrid">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Engine</label>
+                                        <label class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
                                         <input type="text" name="engine" class="form-control" placeholder="e.g. 2.0L Turbo">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Odometer (km)</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
                                         <input type="number" name="odometer" class="form-control" placeholder="e.g. 50000">
                                     </div>
 
 
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Interior Color</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'interior_color', 'Interior Color') }}</label>
                                         <input type="text" name="interior_color" class="form-control"
                                             placeholder="e.g. Black Leather">
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <label class="form-label">Transmission</label>
+                                        <label
+                                            class="form-label">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
                                         <input type="text" name="transmission" class="form-control"
                                             placeholder="e.g. Automatic / Manual">
                                     </div>
@@ -323,7 +346,8 @@
 
                                 <!-- Card Header -->
                                 <div class="mb-3">
-                                    <label for="card_header" class="form-label">Card Header</label>
+                                    <label for="card_header"
+                                        class="form-label">{{ admin_label('car_form', 'card_header', 'Card Header') }}</label>
                                     <input type="text" class="form-control" id="card_header" name="card_header"
                                         placeholder="Enter card title (Frontend)">
                                     <label id="card_header-error" class="text-danger error" style="display: none"></label>
@@ -331,7 +355,8 @@
 
                                 <!-- Card Subtitle -->
                                 <div class="mb-3">
-                                    <label for="card_subtitle" class="form-label">Card Subtitle</label>
+                                    <label for="card_subtitle"
+                                        class="form-label">{{ admin_label('car_form', 'card_subtitle', 'Card Subtitle') }}</label>
                                     <input type="text" class="form-control" id="card_subtitle" name="card_subtitle"
                                         placeholder="Enter card subtitle (Frontend)">
                                     <label id="card_subtitle-error" class="text-danger error" style="display: none"></label>

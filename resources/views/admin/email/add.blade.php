@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Accessories')
+@section('title', 'Accessories')
 
 
 @section('main')
@@ -20,47 +20,48 @@
 
 
     <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form id="addForm" enctype="multipart/form-data">
-                            @csrf
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="addForm" enctype="multipart/form-data">
+                        @csrf
 
-                            <!-- Description -->
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                             <textarea class="form-control" id="description_editor" rows="5"  aria-hidden="true"></textarea>
-                            </div>
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description"
+                                class="form-label">{{ admin_label('email_form', 'description', 'Description') }}</label>
+                            <textarea class="form-control" id="description_editor" rows="5" aria-hidden="true"></textarea>
+                        </div>
 
 
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 @endsection
 
 @section('script')
-<script>
-tinymce.init({
-    selector: '#description_editor',
-    height: 250,
-    menubar: false, // hide top menu
-    plugins: 'lists link', // only basic features
-    toolbar: 'undo redo | bold italic underline | forecolor backcolor | fontsizeselect | bullist numlist | link | removeformat',
-    branding: false, // remove "Powered by TinyMCE"
-    setup: function (editor) {
-        editor.on('init', function () {
-            const textareaId = editor.id.replace('_editor', '');
-            editor.setContent(document.getElementById(textareaId).value);
+    <script>
+        tinymce.init({
+            selector: '#description_editor',
+            height: 250,
+            menubar: false, // hide top menu
+            plugins: 'lists link', // only basic features
+            toolbar: 'undo redo | bold italic underline | forecolor backcolor | fontsizeselect | bullist numlist | link | removeformat',
+            branding: false, // remove "Powered by TinyMCE"
+            setup: function (editor) {
+                editor.on('init', function () {
+                    const textareaId = editor.id.replace('_editor', '');
+                    editor.setContent(document.getElementById(textareaId).value);
+                });
+                editor.on('change', function () {
+                    const textareaId = editor.id.replace('_editor', '');
+                    document.getElementById(textareaId).value = editor.getContent();
+                });
+            }
         });
-        editor.on('change', function () {
-            const textareaId = editor.id.replace('_editor', '');
-            document.getElementById(textareaId).value = editor.getContent();
-        });
-    }
-});
-</script>
+    </script>
 @endsection

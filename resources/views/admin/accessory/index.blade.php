@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Accessories')
+@section('title', 'Accessories')
 <style>
     .icon-picker {
         display: grid;
@@ -41,7 +41,7 @@
 </style>
 @push('modal')
     <div class="modal fade" id="addAccessoryMD" tabindex="-1" aria-labelledby="addAccessoryMDLabel" aria-modal="true"
-         data-bs-backdrop="static">
+        data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -57,57 +57,58 @@
                             @endphp
 
                             <div class="col-12 mt-3">
-                                <label class="form-label">Accessory Type</label>
+                                <label
+                                    class="form-label">{{ admin_label('accessory_form', 'accessory_type', 'Accessory Type') }}</label>
                                 <select class="form-control" id="addAccessoryType" name="type">
                                     @foreach(AccessoryType::cases() as $type)
 
-                                        <option value="{{ $type->value }}"
-                                                {{ $type->value === 'EXTRA' ? 'selected' : '' }}>
+                                        <option value="{{ $type->value }}" {{ $type->value === 'EXTRA' ? 'selected' : '' }}>
                                             {{ ucfirst($type->value) }}
                                         </option>
                                     @endforeach
 
                                 </select>
-                                <label id="type-error" class="text-danger error"
-                                       style="display: none"></label>
+                                <label id="type-error" class="text-danger error" style="display: none"></label>
                             </div>
                             <div class="col-12">
                                 <div>
-                                    <label for="addAccessoryName" class="form-label">Name</label>
+                                    <label for="addAccessoryName"
+                                        class="form-label">{{ admin_label('accessory_form', 'name', 'Name') }}</label>
                                     <input type="text" class="form-control" id="addAccessoryName" name="name"
-                                           placeholder="Enter accessory name">
+                                        placeholder="Enter accessory name">
                                     <label id="name-error" class="text-danger error" for="addAccessoryName"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="addAccessoryPrice" class="form-label">Price</label>
-                                    <input type="number" step="0.01" min="0" class="form-control" id="addAccessoryPrice" name="price"
-                                           placeholder="Enter price">
+                                    <label for="addAccessoryPrice"
+                                        class="form-label">{{ admin_label('accessory_form', 'price', 'Price') }}</label>
+                                    <input type="number" step="0.01" min="0" class="form-control" id="addAccessoryPrice"
+                                        name="price" placeholder="Enter price">
                                     <label id="price-error" class="text-danger error" for="addAccessoryPrice"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
 
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="addAccessoryAdditionalPrice" class="form-label">Following day price</label>
-                                    <input type="number" min="0" class="form-control" id="addAccessoryAdditionalPrice" name="additional_day_price"
-                                           placeholder="Enter Additional price ">
+                                    <label for="addAccessoryAdditionalPrice"
+                                        class="form-label">{{ admin_label('accessory_form', 'following_day_price', 'Following day price') }}</label>
+                                    <input type="number" min="0" class="form-control" id="addAccessoryAdditionalPrice"
+                                        name="additional_day_price" placeholder="Enter Additional price ">
                                     <label id="price-error" class="text-danger error" for="addAccessoryAdditionalPrice"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
 
-{{--                            Icon Select --}}
+                            {{-- Icon Select --}}
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="iconSearch" class="form-label">Select Icon</label>
-                                    <input type="text" class="form-control" id="iconSearch"
-                                           placeholder="Search Icon ...">
-                                    <label  class="text-danger error" for="iconSearch"
-                                           style="display: none"></label>
+                                    <label for="iconSearch"
+                                        class="form-label">{{ admin_label('accessory_form', 'select_icon', 'Select Icon') }}</label>
+                                    <input type="text" class="form-control" id="iconSearch" placeholder="Search Icon ...">
+                                    <label class="text-danger error" for="iconSearch" style="display: none"></label>
 
                                     <div class="icon-picker border rounded p-2"></div>
 
@@ -117,11 +118,10 @@
                             </div>
                             <div class="col-lg-12 mt-4">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary" id="addAccessoryBtn">
                                         <i class="bx bx-loader spinner me-2" style="display: none"
-                                           id="addAccessoryBtnSpinner"></i>Submit
+                                            id="addAccessoryBtnSpinner"></i>Submit
                                     </button>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@
 
     <!-- Edit Accessory Modal -->
     <div class="modal fade" id="editAccessoryMD" tabindex="-1" aria-labelledby="editAccessoryMDLabel" aria-modal="true"
-         data-bs-backdrop="static">
+        data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -147,53 +147,55 @@
                         <input type="hidden" name="id" id="accessory_id">
                         <div class="row g-3">
                             <div class="col-12 mt-3">
-                                <label class="form-label">Accessory Type</label>
+                                <label
+                                    class="form-label">{{ admin_label('accessory_form', 'accessory_type', 'Accessory Type') }}</label>
                                 <select class="form-control" id="editAccessoryType" name="editType">
                                     @foreach(AccessoryType::cases() as $type)
 
-                                        <option value="{{ $type->value }}"
-                                                {{ $type->value }}>
+                                        <option value="{{ $type->value }}" {{ $type->value }}>
                                             {{ ucfirst($type->value) }}
                                         </option>
                                     @endforeach
                                 </select>
-                                <label id="editType-error" class="text-danger error"
-                                       style="display: none"></label>
+                                <label id="editType-error" class="text-danger error" style="display: none"></label>
                             </div>
                             <div class="col-12">
                                 <div>
-                                    <label for="editAccessoryName" class="form-label">Name</label>
+                                    <label for="editAccessoryName"
+                                        class="form-label">{{ admin_label('accessory_form', 'name', 'Name') }}</label>
                                     <input type="text" class="form-control" id="edit_name" name="name"
-                                           placeholder="Enter accessory name">
+                                        placeholder="Enter accessory name">
                                     <label id="edit_name-error" class="text-danger error" for="edit_name"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="editAccessoryPrice" class="form-label">Price</label>
-                                    <input type="number" step="0.01" min="0" class="form-control" id="edit_price" name="price"
-                                           placeholder="Enter price">
+                                    <label for="editAccessoryPrice"
+                                        class="form-label">{{ admin_label('accessory_form', 'price', 'Price') }}</label>
+                                    <input type="number" step="0.01" min="0" class="form-control" id="edit_price"
+                                        name="price" placeholder="Enter price">
                                     <label id="edit_price-error" class="text-danger error" for="edit_price"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="editAccessoryAdditionalPrice" class="form-label">Following day price</label>
-                                    <input type="number" step="0.01" min="0" class="form-control" id="editAccessoryAdditionalPrice" name="additional_day_price"
-                                           placeholder="Enter Additional price">
-                                    <label id="edit_price-error" class="text-danger error" for="editAccessoryAdditionalPrice"
-                                           style="display: none"></label>
+                                    <label for="editAccessoryAdditionalPrice"
+                                        class="form-label">{{ admin_label('accessory_form', 'following_day_price', 'Following day price') }}</label>
+                                    <input type="number" step="0.01" min="0" class="form-control"
+                                        id="editAccessoryAdditionalPrice" name="additional_day_price"
+                                        placeholder="Enter Additional price">
+                                    <label id="edit_price-error" class="text-danger error"
+                                        for="editAccessoryAdditionalPrice" style="display: none"></label>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div>
-                                    <label for="iconSearch" class="form-label">Select Icon</label>
-                                    <input type="text"  class="form-control" id="iconSearch"
-                                           placeholder="Search Icon ...">
-                                    <label  class="text-danger error" for="iconSearch"
-                                            style="display: none"></label>
+                                    <label for="iconSearch"
+                                        class="form-label">{{ admin_label('accessory_form', 'select_icon', 'Select Icon') }}</label>
+                                    <input type="text" class="form-control" id="iconSearch" placeholder="Search Icon ...">
+                                    <label class="text-danger error" for="iconSearch" style="display: none"></label>
 
                                     <div class="icon-picker border rounded p-2"></div>
 
@@ -203,11 +205,10 @@
                             </div>
                             <div class="col-lg-12 mt-4">
                                 <div class="hstack gap-2 justify-content-end">
-                                    <button type="button" class="btn btn-light"
-                                            data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-warning" id="editAccessoryBtn">
                                         <i class="bx bx-loader spinner me-2" style="display: none"
-                                           id="editAccessoryBtnSpinner"></i>Save Changes
+                                            id="editAccessoryBtnSpinner"></i>Save Changes
                                     </button>
                                 </div>
                             </div>
@@ -248,7 +249,8 @@
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         Accessory Type
                                     </button>
                                     <div class="dropdown-menu dropdownmenu-success">
@@ -256,9 +258,8 @@
                                         <a class="dropdown-item" href="javascript:void(0)" id="extraAccessory">Extra</a>
                                     </div>
                                 </div>
-                                <button onclick="resetForm();" type="button" class="btn btn-primary"
-                                        data-bs-toggle="modal" data-bs-target="#addAccessoryMD"
-                                        aria-controls="addAccessoryMD">
+                                <button onclick="resetForm();" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addAccessoryMD" aria-controls="addAccessoryMD">
                                     <i class="ri-add-line align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Add Accessory</span>
                                 </button>
@@ -267,8 +268,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table id="accessoryDT"
-                           class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer"></table>
+                    <table id="accessoryDT" class="listDatatable tableview table w-100 pt-2 datatable dataTable no-footer">
+                    </table>
                 </div>
             </div>
         </div>
@@ -289,9 +290,9 @@
                     option.dataset.icon = icon;
                     option.innerHTML = `
 
-                        <i class="${icon}"></i>
-<!--                        <small>${icon.replace('ri-', '').replace('-line','')}</small>-->
-                    `;
+                            <i class="${icon}"></i>
+    <!--                        <small>${icon.replace('ri-', '').replace('-line' ,'')}</small>-->
+                        `;
                     container.appendChild(option);
                 });
         }
@@ -382,10 +383,10 @@
 
             columns: [
                 // {data: 'id', name: 'id', title: 'ID', visible: true}, // hidden for reordering reference
-                {data: 'name', name: 'name', title: 'Name', class: 'text-center'},
-                {data: 'price', name: 'price', title: 'Price', class: 'text-center'},
-                {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
-                {data: 'action', name: 'action', title: 'Action', class: 'text-center', orderable: false, searchable: false},
+                { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
+                { data: 'price', name: 'price', title: 'Price', class: 'text-center' },
+                { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
+                { data: 'action', name: 'action', title: 'Action', class: 'text-center', orderable: false, searchable: false },
             ],
 
             // ✅ Enable row reordering
@@ -551,16 +552,16 @@
             // Add Accessory Form Validation & Submit
             $("#addAccessoryForm").validate({
                 rules: {
-                    name: {required: true},
-                    price: {required: true, number: true, min: 0},
-                    type:{required:true},
+                    name: { required: true },
+                    price: { required: true, number: true, min: 0 },
+                    type: { required: true },
                     icon: { required: true }
                 },
                 messages: {
-                    name: {required: "The name field is required."},
-                    price: {required: "The price field is required.", number: "Please enter a valid number", min: "Price must be positive"},
-                    additional_day_price: {required: "The additional price field is required.", number: "Please enter a valid number", min: "Price must be positive"},
-                    type:{required:"Please select the type."},
+                    name: { required: "The name field is required." },
+                    price: { required: "The price field is required.", number: "Please enter a valid number", min: "Price must be positive" },
+                    additional_day_price: { required: "The additional price field is required.", number: "Please enter a valid number", min: "Price must be positive" },
+                    type: { required: "Please select the type." },
                     icon: { required: "Please select an icon." }
                 },
                 errorClass: 'text-danger error',
@@ -610,17 +611,17 @@
             // Update Accessory Form Validation & Submit
             $("#editAccessoryForm").validate({
                 rules: {
-                    name: {required: true},
-                    price: {required: true, number: true, min: 0},
-                    editType: {required: true},
+                    name: { required: true },
+                    price: { required: true, number: true, min: 0 },
+                    editType: { required: true },
                     icon: { required: true }
                 },
                 messages: {
-                    name: {required: "The name field is required."},
-                    price: {required: "The price field is required.", number: "Please enter a valid number", min: "Price must be positive"},
-                    additional_day_price: {required: "The additional price field is required.", number: "Please enter a valid number", min: "Price must be positive"},
-                    editType: {required: "The Type field is required."},
-                    icon: {required:"Please select an icon."}
+                    name: { required: "The name field is required." },
+                    price: { required: "The price field is required.", number: "Please enter a valid number", min: "Price must be positive" },
+                    additional_day_price: { required: "The additional price field is required.", number: "Please enter a valid number", min: "Price must be positive" },
+                    editType: { required: "The Type field is required." },
+                    icon: { required: "Please select an icon." }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
