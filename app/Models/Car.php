@@ -96,15 +96,35 @@ class Car extends Model
 
     public function getTieredPrice($totalDays): float
     {
-        if ($totalDays <= 4) {
-            return (float) $this->less_four_days_price;
-        } elseif ($totalDays <= 7) {
-            return (float) $this->five_six_days_price;
-        } elseif ($totalDays <= 29) {
-            return (float) $this->week_price;
-        } else {
-            return (float) $this->month_price;
+        // Hidden based on client request.
+        // Fallback check: find the first non-zero/non-null price among the tiered pricing fields
+        $prices = [
+            (float) $this->less_four_days_price,
+            (float) $this->five_six_days_price,
+            (float) $this->week_price,
+            (float) $this->month_price,
+            (float) $this->max_price
+        ];
+
+        $fallbackPrice = 0.0;
+        foreach ($prices as $p) {
+            if ($p > 0) {
+                $fallbackPrice = $p;
+                break;
+            }
         }
+
+        if ($totalDays <= 4) {
+            $price = (float) $this->less_four_days_price;
+        } elseif ($totalDays <= 7) {
+            $price = (float) $this->five_six_days_price;
+        } elseif ($totalDays <= 29) {
+            $price = (float) $this->week_price;
+        } else {
+            $price = (float) $this->month_price;
+        }
+
+        return $price > 0 ? $price : $fallbackPrice;
     }
 
     public function auctionGrade()

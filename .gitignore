@@ -22,4 +22,5 @@ yarn-error.log
 config.bat
 .env
 .vscode
-
+/public/uploads
+/public/assets/

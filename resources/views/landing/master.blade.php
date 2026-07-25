@@ -137,6 +137,111 @@
             box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
         }
 
+        /* Header Responsiveness Fixes for Small to Medium Screens */
+        @media (max-width: 991px) {
+            .rid-header-top {
+                display: none !important;
+            }
+
+            .rid-header-style-1 .rid-header-bottom [class*="col-"] {
+                width: auto !important;
+                flex: 1 !important;
+            }
+
+            .rid-header-bottom .col-lg-2 {
+                max-width: 60% !important;
+                flex: 0 0 60% !important;
+                text-align: left !important;
+            }
+
+            .rid-header-bottom .col-lg-10 {
+                max-width: 40% !important;
+                flex: 0 0 40% !important;
+                display: flex !important;
+                justify-content: flex-end !important;
+                align-items: center !important;
+            }
+
+            .rid-header-bottom [class*="col-8"] {
+                margin-top: 0 !important;
+            }
+
+            .rid-header-style-1 .rid-header-bottom {
+                padding: 10px 15px !important;
+            }
+
+            .logo {
+                margin-left: 0 !important;
+                margin-right: auto !important;
+                max-width: 156px !important;
+                padding: 5px !important;
+            }
+
+            .rid-header-bottom .rid-offcanvas-btn {
+                display: block !important;
+                margin: 0 !important;
+            }
+
+            .rid-header-bottom .rid-offcanvas-btn span {
+                background-color: #050b20 !important;
+            }
+        }
+
+        /* Mobile Offcanvas Menu Design Fixes */
+        .rid-offcanvas-sidebar {
+            background-color: #121418 !important;
+        }
+
+        .rid-offcanvas-sidebar .rid-menu ul li a {
+            color: rgba(255, 255, 255, 0.75) !important;
+            font-size: 20px !important;
+            font-weight: 500 !important;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+        }
+
+        .rid-offcanvas-sidebar .rid-menu ul li a:hover,
+        .rid-offcanvas-sidebar .rid-menu ul li a.active {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            opacity: 1 !important;
+        }
+
+        .rid-offcanvas-sidebar .rid-menu ul li {
+            padding: 12px 10px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rid-offcanvas-sidebar .rid-social-links .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff !important;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            padding: 0px 0px 5px 0px;
+        }
+
+        .rid-offcanvas-sidebar .rid-social-links .social-icon.facebook {
+            background-color: #3b5998;
+        }
+
+        .rid-offcanvas-sidebar .rid-social-links .social-icon.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .rid-offcanvas-sidebar .rid-social-links .social-icon.youtube {
+            background-color: #ff0000;
+        }
+
+        .rid-offcanvas-sidebar .rid-social-links .list-inline-item:not(:last-child) {
+            margin-right: 15px;
+        }
+
 
         /* Full Page Loader */
         .loader-container {
@@ -342,6 +447,26 @@
 
                     <li><a href="{{route('logout')}}">Logout</a></li>
                 @endif
+            </ul>
+        </div>
+        <!-- Social Icons inside offcanvas menu for mobile/small screen -->
+        <div class="rid-social-links d-flex justify-content-center mt-4">
+            <ul class="list-inline d-flex mb-0">
+                <li class="list-inline-item mx-1">
+                    <a href="{{ getSetting()->facebook_url }}" target="_blank" class="social-icon facebook">
+                        <i class="bxl bx-facebook"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item mx-1">
+                    <a href="{{ getSetting()->instagram_url }}" target="_blank" class="social-icon instagram">
+                        <i class="bxl bx-instagram"></i>
+                    </a>
+                </li>
+                <li class="list-inline-item mx-1">
+                    <a href="{{ getSetting()->youtube_url }}" target="_blank" class="social-icon youtube">
+                        <i class="bxl bx-youtube"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

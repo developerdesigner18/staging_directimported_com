@@ -629,11 +629,14 @@
                             {{$car->card_subtitle ?? ""}}
                         </p>
 
+                        <!-- Hidden based on client request. -->
+                        {{--
                         <div class="client-price-box">
                             <small>STARTING FROM</small>
                             <h4>{{ number_format($car->month_price) }}</h4>
                             <span>/ Per Day</span>
                         </div>
+                        --}}
 
                         <div class="mb-3">
                             <label class="form-label">PICK-UP DATE</label>
@@ -653,21 +656,24 @@
                             CHECK AVAILABILITY
                         </button>
 
+                        <!-- Hidden based on client request. -->
+                        {{--
                         <div class="rates-section">
                             <h6>Rental Rates Per Day</h6>
                             <ul class="list-unstyled">
-                                <li><span>1 - 4 Days</span> <span>�{{ number_format($car->less_four_days_price) }} Per
+                                <li><span>1 - 4 Days</span> <span>{{ number_format($car->less_four_days_price) }} Per
                                         Day</span></li>
-                                <li><span>5 - 7 Days</span> <span>�{{ number_format($car->five_six_days_price) }} Per
+                                <li><span>5 - 7 Days</span> <span>{{ number_format($car->five_six_days_price) }} Per
                                         Day</span></li>
-                                <li><span>8 - 29 Days</span> <span>�{{ number_format($car->week_price) }} Per Day</span>
+                                <li><span>8 - 29 Days</span> <span>{{ number_format($car->week_price) }} Per Day</span>
                                 </li>
                                 <li><span>30+ Days</span> <span
-                                        class="highlight-rate">�{{ number_format($car->month_price) }} Per Day</span></li>
-                                <li><span>Optional Insurance </span> <span>�{{ number_format($car->insurance_price) }} Per
+                                        class="highlight-rate">{{ number_format($car->month_price) }} Per Day</span></li>
+                                <li><span>Optional Insurance </span> <span>{{ number_format($car->insurance_price) }} Per
                                         Day</span></li>
                             </ul>
                         </div>
+                        --}}
 
                         <div class="whatsapp-line">
                             Questions ask us on WhatsApp or call
@@ -704,10 +710,13 @@
                                     </div>
 
                                     <div class="related-car-bottom">
+                                        <!-- Hidden based on client request. -->
+                                        {{--
                                         <div class="related-car-price">
-                                            From �{{ number_format($relatedCar->less_four_days_price) }}
+                                            From {{ number_format($relatedCar->less_four_days_price) }}
                                             <span>/per day</span>
                                         </div>
+                                        --}}
 
                                         <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}"
                                             class="related-car-view">

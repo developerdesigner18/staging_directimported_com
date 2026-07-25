@@ -5,8 +5,8 @@
 @foreach($ccRanges as $rangeName => $rangeData)
     @php
         $carsInRange = collect();
-        foreach($rangeData['category_ids'] as $catId) {
-            if(isset($groupedCars[$catId])) {
+        foreach ($rangeData['category_ids'] as $catId) {
+            if (isset($groupedCars[$catId])) {
                 $carsInRange = $carsInRange->merge($groupedCars[$catId]);
             }
         }
@@ -22,11 +22,9 @@
                 <div class="col-xxl-3 col-lg-6 col-md-6 sortable-item" data-id="{{ $car->id }}" id="slider-card-{{$car->id}}">
                     <div class="card overflow-hidden blog-grid-card list-group-item nested-1">
                         <div class="position-relative overflow-hidden">
-                            <a href="{{ route('admin.car.view',[$car->id])}}">
-                                <img src="{{ asset(CAR_PATH.$car->images[0]) }}"
-                                     alt="{{ $car->name }}"
-                                     class="blog-img object-fit-cover w-100"
-                                     style="height: 200px;">
+                            <a href="{{ route('admin.car.view', [$car->id])}}">
+                                <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}"
+                                    class="blog-img object-fit-cover w-100" style="height: 200px;">
                             </a>
                         </div>
                         <div class="card-body">
@@ -34,14 +32,16 @@
                             <span class="text-muted">{{ dateToHuman($car->created_at) }}</span>
                             <br>
                             <div class="action-btn text-end">
-                                <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}" data-bs-toggle="tooltip" title="Manage Specs">
+                                <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}"
+                                    data-bs-toggle="tooltip" title="Manage Specs">
                                     <i class="ri-settings-4-line"></i>
                                 </a>
-                                <a class="btn btn-success btn-sm" href="{{ route('admin.car.edit', $car->id) }}" data-bs-toggle="tooltip" title="Edit Car">
+                                <a class="btn btn-success btn-sm" href="{{ route('admin.car.edit', $car->id) }}"
+                                    data-bs-toggle="tooltip" title="Edit Car">
                                     <i class="ri-pencil-line"></i>
                                 </a>
-                                <button class="btn btn-danger btn-sm" onclick="deleteCar('{{$car->id}}',this)" data-bs-toggle="tooltip" title="Delete Car"><i
-                                            class="ri-delete-bin-line"></i>
+                                <button class="btn btn-danger btn-sm" onclick="deleteCar('{{$car->id}}',this)"
+                                    data-bs-toggle="tooltip" title="Delete Car"><i class="ri-delete-bin-line"></i>
                                 </button>
                             </div>
                         </div>

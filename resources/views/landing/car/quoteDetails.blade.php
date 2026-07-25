@@ -1,4 +1,4 @@
-<input type="hidden" name="user_id" value="{{ $user_id??'' }}">
+<input type="hidden" name="user_id" value="{{ $user_id ?? '' }}">
 <input type="hidden" name="first_name" value="{{ $request->first_name }}">
 <input type="hidden" name="last_name" value="{{ $request->last_name }}">
 <input type="hidden" name="email" value="{{ $request->email }}">
@@ -9,7 +9,7 @@
 <input type="hidden" name="end_time" value="{{ $request->end_time }}">
 <input type="hidden" name="location" value="{{ $request->location }}">
 <input type="hidden" name="comment" value="{{ $request->comment }}">
-<input type="hidden" name="acc_car_id" value="{{ json_encode($request->acc_car_id)??'' }}">
+<input type="hidden" name="acc_car_id" value="{{ json_encode($request->acc_car_id) ?? '' }}">
 @foreach($bookings as $key => $booking)
     @php
         $carData = \App\Models\Car::find($booking['car_id']);
@@ -18,22 +18,22 @@
 
         $pricePerDay = $carData->getTieredPrice($totalDays);
         $price = $pricePerDay * $totalDays;
-        $insurance_price = $booking['insurance'] ? $carData->insurance_price * ($totalDays): 0;
+        $insurance_price = $booking['insurance'] ? $carData->insurance_price * ($totalDays) : 0;
 
         $subtotal = $price + $insurance_price;
     @endphp
     <input type="hidden" name="booking_id[]" value="{{ $booking['booking_id'] }}">
     <input type="hidden" name="car_id[]" value="{{ $booking['car_id'] }}">
     <input type="hidden" name="car_name[]" value="{{ $carData->name }}">
-    <input type="hidden" name="included_accessories[]" value="{{ json_encode($carData->free_accessory)??'' }}">
+    <input type="hidden" name="included_accessories[]" value="{{ json_encode($carData->free_accessory) ?? '' }}">
     <input type="hidden" name="price[]" value="{{ $price }}">
-    <input type="hidden" name="insurance_price[]" value="{{ ($insurance_price>0) ? $insurance_price : 0 }}">
-    <input type="hidden" name="insurance[]" value="{{ $booking['insurance']??0 }}">
+    <input type="hidden" name="insurance_price[]" value="{{ ($insurance_price > 0) ? $insurance_price : 0 }}">
+    <input type="hidden" name="insurance[]" value="{{ $booking['insurance'] ?? 0 }}">
     <input type="hidden" name="total_days[]" value="{{ $totalDays }}">
     <table border="1" cellpadding="8" cellspacing="0" width="100%"
-           style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #000;margin-bottom: 20px;margin-top: 5px;">
+        style="border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; border: 1px solid #000;margin-bottom: 20px;margin-top: 5px;">
         <tr style="border-bottom: 2px solid #000;border-top: 2px solid #000;">
-            <td colspan="2" style="text-align: center;" class="h4 fw-bold">BOOKING QUOTE #{{ $key+1 }}</td>
+            <td colspan="2" style="text-align: center;" class="h4 fw-bold">BOOKING QUOTE #{{ $key + 1 }}</td>
         </tr>
         <tr style="border-bottom: 1px solid #000;">
             <td class="d-flex justify-content-between">Full Name <span class="fw-bold">:</span></td>
@@ -69,6 +69,8 @@
             <td class="d-flex justify-content-between">Total Car Price <span class="fw-bold">:</span></td>
             <td>¥{{ $price }}</td>
         </tr>
+        <!-- Hidden based on client request. -->
+        {{--
         <tr style="border-top: 2px solid #000;border-bottom: 1px solid #000;">
             <td colspan="2" class="h5 fw-bold">Accessories & Insurance</td>
         </tr>
@@ -76,32 +78,36 @@
             <td class="d-flex justify-content-between">Insurance <span class="fw-bold">:</span></td>
             <td>{{ ($booking['insurance']==1) ? '¥'.$insurance_price : 'NA' }}</td>
         </tr>
+        --}}
 
-@if($accessories)
-    @foreach($accessories as $acc_id)
-        @php
-            $accData = \App\Models\Accessories::find($acc_id);
-            $accPrice = $accData->price * ($totalDays > 0 ? $totalDays : 1);
+        @if($accessories)
+            @foreach($accessories as $acc_id)
+                @php
+                    $accData = \App\Models\Accessories::find($acc_id);
+                    $accPrice = $accData->price * ($totalDays > 0 ? $totalDays : 1);
 
-            if($totalDays>1 && $accData->additional_day_price){
-                $oneDayPrice=$accData->price;
-                $oneDayLaterPrice=$accData->additional_day_price;
-                $accPrice=$oneDayPrice + ($oneDayLaterPrice * ($totalDays - 1));
-            }else{
-                $accPrice=$accData->price*$totalDays;
-            }
+                    if ($totalDays > 1 && $accData->additional_day_price) {
+                        $oneDayPrice = $accData->price;
+                        $oneDayLaterPrice = $accData->additional_day_price;
+                        $accPrice = $oneDayPrice + ($oneDayLaterPrice * ($totalDays - 1));
+                    } else {
+                        $accPrice = $accData->price * $totalDays;
+                    }
 
-            if(\Illuminate\Support\Str::contains(strtolower($accData->name),'helmet') && $accPrice >= 6500){
-                $accPrice = 6500;
-            }
-            $subtotal += $accPrice;
-        @endphp
-        <tr style="border-bottom: 1px solid #000;">
-            <td class="d-flex justify-content-between">{{ $accData->name }} <span class="fw-bold">:</span></td>
-            <td>¥{{ $accPrice }}</td>
-        </tr>
-    @endforeach
-@endif
+                    if (\Illuminate\Support\Str::contains(strtolower($accData->name), 'helmet') && $accPrice >= 6500) {
+                        $accPrice = 6500;
+                    }
+                    $subtotal += $accPrice;
+                @endphp
+                <!-- Hidden based on client request. -->
+                {{--
+                <tr style="border-bottom: 1px solid #000;">
+                    <td class="d-flex justify-content-between">{{ $accData->name }} <span class="fw-bold">:</span></td>
+                    <td>¥{{ $accPrice }}</td>
+                </tr>
+                --}}
+            @endforeach
+        @endif
 
         @php
             // Calculate TAX (10%) and Card Fee (3.65%) with consistent rounding for Yen
@@ -126,4 +132,3 @@
     </table>
     <input type="hidden" name="totalPrice[]" value="{{ $totalPrice }}">
 @endforeach
-

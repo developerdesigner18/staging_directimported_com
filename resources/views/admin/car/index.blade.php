@@ -106,7 +106,9 @@
                             <div class="dropdown-menu dropdownmenu-danger">
                                 <a class="dropdown-item filter-range cursor-pointer" data-range="all">All</a>
                                 <a class="dropdown-item filter-range cursor-pointer" data-range="750-1300cc">750-1300cc</a>
-                                <a class="dropdown-item filter-range cursor-pointer" data-range="400-700cc">400-700cc</a>
+                                <!-- Hidden based on client request. -->
+                                {{-- <a class="dropdown-item filter-range cursor-pointer"
+                                    data-range="400-700cc">400-700cc</a> --}}
                                 <a class="dropdown-item filter-range cursor-pointer" data-range="150-350cc">150-350cc</a>
                                 <a class="dropdown-item filter-range cursor-pointer" data-range="0-125cc">0-125cc</a>
                             </div>

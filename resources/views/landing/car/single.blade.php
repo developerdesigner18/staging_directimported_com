@@ -21,13 +21,13 @@
             color: var(--text-dark);
         }
 
-        .rid-header-bottom {
-            padding: 22px;
-
+        .rid-menubar ul li a {
+            font-size: 15px !important;
+            margin-right: 20px !important;
         }
 
         .car-detail-wrapper {
-            padding: 36px 0 20px;
+            padding: 15px 0 10px;
             background-color: var(--bg-color);
             position: relative;
         }
@@ -150,7 +150,7 @@
             color: var(--primary-blue) !important;
             font-weight: 700;
             font-size: 14px;
-            padding: 12px 16px;
+            padding: 0px 16px;
             border: none;
             box-shadow: none !important;
         }
@@ -342,12 +342,6 @@
             }
         }
 
-        /* Limit logo height to avoid stretching navigation header */
-        .rid-header-bottom img.logo {
-            max-height: 45px !important;
-            width: auto !important;
-        }
-
         /* Reset margins on sticky column and title */
         .details-right-column {
             margin-top: 0 !important;
@@ -359,8 +353,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                               MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                               ------------------------------------------------------------- */
+                                                                                                                               MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                               ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -540,7 +534,6 @@
             font-weight: 900;
             margin-bottom: 20px;
             color: var(--primary-blue);
-            text-transform: uppercase;
         }
 
         .specs-container {
@@ -584,17 +577,16 @@
             font-weight: 900;
             margin-top: 40px;
             color: var(--primary-blue);
-            text-transform: uppercase;
         }
 
         /* Sidebar Title, Status & Pricing section style elements */
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
+        /* .sidebar-header {
+                                display: flex;
+                                align-items: center;
+                                gap: 12px;
+                                margin-bottom: 8px;
+                                flex-wrap: wrap;
+                            } */
 
         .sidebar-title {
             font-size: 24px;
@@ -603,6 +595,10 @@
             letter-spacing: -0.5px;
             color: var(--primary-blue);
             text-transform: uppercase;
+        }
+
+        .details-right-column h1 {
+            line-height: 34px;
         }
 
         .status-badge {
@@ -619,12 +615,13 @@
         }
 
         .pricing-section {
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             background-color: #ffffff;
             padding: 12px 16px;
             border-radius: 12px;
             box-shadow: 0 6px 15px rgba(10, 42, 94, 0.06);
             border: 1px solid #cbd5e1;
+            margin-top: 12px;
         }
 
         .pricing-label {
@@ -1036,11 +1033,11 @@
                     <h1 class="sidebar-title">
                         {{ $car->name }}
                     </h1>
-                    <span class="status-badge">
-                        {{ strtoupper($car->status->value) }}
-                    </span>
-                </div>
 
+                </div>
+                <span class="status-badge">
+                    {{ strtoupper($car->status->value) }}
+                </span>
                 <!-- Pricing Section matching reference -->
                 <div class="pricing-section">
                     <span class="pricing-label">FOB Price</span>
@@ -1060,143 +1057,147 @@
                         class="form-input form-readonly-input">
 
                     <label>Full Name <span class="required-asterisk">*</span></label>
-                        <input type="text" name="full_name" id="full_name" required placeholder="Full Name" class="form-input">
+                    <input type="text" name="full_name" id="full_name" required placeholder="Full Name" class="form-input">
 
-                        <label>Email Address <span class="required-asterisk">*</span></label>
-                        <input type="email" name="email" id="email" required placeholder="Email Address" class="form-input">
+                    <label>Email Address <span class="required-asterisk">*</span></label>
+                    <input type="email" name="email" id="email" required placeholder="Email Address" class="form-input">
 
-                        <div class="form-row-2 row-2">
-                            <div class="form-col">
-                                <label>Phone <span class="required-asterisk">*</span></label>
-                                <input type="tel" name="phone_number" id="phone_number" required placeholder="Phone Number"
-                                    class="form-input">
-                            </div>
-                            <div class="form-col">
-                                <label>Contact Method <span class="required-asterisk">*</span></label>
-                                <select name="preferred_contact_method" id="preferred_contact_method" required
-                                    class="form-input form-select-white">
-                                    <option value="">Select...</option>
-                                    <option value="Email">Email</option>
-                                    <option value="Phone">Phone</option>
-                                    <option value="WhatsApp">WhatsApp</option>
-                                </select>
-                            </div>
+                    <div class="form-row-2 row-2">
+                        <div class="form-col">
+                            <label>Phone <span class="required-asterisk">*</span></label>
+                            <input type="tel" name="phone_number" id="phone_number" required placeholder="Phone Number"
+                                class="form-input">
                         </div>
-
-                        <!-- Searchable Destination Country Datalist & Nearest Port -->
-                        <div class="form-row-2 row-2">
-                            <div class="form-col">
-                                <label>Country <span class="required-asterisk">*</span></label>
-                                <input list="countryList" name="destination_country" id="destination_country" required
-                                    placeholder="Select Country..." class="form-input">
-                                <datalist id="countryList">
-                                    <option value="USA"></option>
-                                    <option value="UK"></option>
-                                    <option value="Australia"></option>
-                                    <option value="Bahamas"></option>
-                                    <option value="Canada"></option>
-                                    <option value="New Zealand"></option>
-                                    <option value="Ireland"></option>
-                                    <option value="Pakistan"></option>
-                                    <option value="India"></option>
-                                    <option value="Japan"></option>
-                                    <option value="Singapore"></option>
-                                    <option value="South Africa"></option>
-                                </datalist>
-                            </div>
-
-                            <div class="form-col">
-                                <label>Nearest Port <span class="required-asterisk">*</span></label>
-                                <input type="text" name="nearest_port_or_postal_code" id="nearest_port_or_postal_code" required
-                                    placeholder="Port / Post Code" class="form-input">
-                            </div>
+                        <div class="form-col">
+                            <label>Contact Method <span class="required-asterisk">*</span></label>
+                            <select name="preferred_contact_method" id="preferred_contact_method" required
+                                class="form-input form-select-white">
+                                <option value="">Select...</option>
+                                <option value="Email">Email</option>
+                                <option value="Phone">Phone</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                            </select>
                         </div>
-
-                        <label>Message <span class="required-asterisk">*</span></label>
-                        <textarea name="message" id="message" required rows="3" placeholder="Your Message"
-                            class="form-input textarea-message"></textarea>
-
-                        <!-- Popping Red Gradient Button -->
-                        <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
-                            <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
-                            Request Details & Quote
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- FULL WIDTH RED SEPARATOR LINE matching reference -->
-        <div class="red-separator-line"></div>
-
-        <!-- LIGHTBOX / PHOTO VIEWER MODAL matching reference style -->
-        <div id="photoModal" class="photo-modal-overlay">
-            <div class="photo-modal-header">
-                <div class="photo-modal-counter"><span id="currentPhotoNum">1</span> / <span
-                        id="totalPhotoNum">{{ count($car->images) }}</span></div>
-                <button onclick="closeGallery()" class="photo-modal-close-btn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-
-            <div class="photo-modal-content-area">
-                <button onclick="prevPhoto()" class="photo-modal-arrow-btn photo-modal-arrow-left">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-
-                <img id="modalMainImg" src="" alt="High Quality Vehicle Image" class="photo-modal-main-img">
-
-                <button onclick="nextPhoto()" class="photo-modal-arrow-btn photo-modal-arrow-right">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-            </div>
-
-            <div id="modalThumbStrip" class="photo-modal-thumb-strip"></div>
-        </div>
-
-        <!-- RELATED SECTION -->
-        <section class="py-5 bg-white border-top">
-            <div class="container gallery-inner-container">
-                <h2 class="fw-bold mb-4 related-section-title">You Might Also Like</h2>
-                <div class="related-cars-slider">
-                    @foreach($relatedCars as $relatedCar)
-                        <div class="px-2">
-                            <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
-                                <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
-                                    <img src="{{ asset(CAR_PATH . $relatedCar->images[0]) }}" class="card-img-top related-card-img">
-                                </a>
-                                <div class="card-body p-4">
-                                    <h5 class="fw-bold mb-3related-card-title">
-                                                <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="card-title-link">
-                                                    {{ $relatedCar->name }}
-                                                </a>
-                                            </h5>
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <div class="price-label">
-                                                    From ¥{{ number_format($relatedCar->max_price ?? $relatedCar->less_four_days_price) }}
-                                                    <span class="text-muted fw-normal price-unit">{{ isset($relatedCar->max_price) ? 'FOB' : '/ day' }}</span>
-                                                </div>
-                                                <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="view-btn">
-                                                    VIEW <i class="bx bx-right-arrow-alt"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                    @endforeach
                     </div>
-                </div>
-            </section>
+
+                    <!-- Searchable Destination Country Datalist & Nearest Port -->
+                    <div class="form-row-2 row-2">
+                        <div class="form-col">
+                            <label>Country <span class="required-asterisk">*</span></label>
+                            <input list="countryList" name="destination_country" id="destination_country" required
+                                placeholder="Select Country..." class="form-input">
+                            <datalist id="countryList">
+                                <option value="USA"></option>
+                                <option value="UK"></option>
+                                <option value="Australia"></option>
+                                <option value="Bahamas"></option>
+                                <option value="Canada"></option>
+                                <option value="New Zealand"></option>
+                                <option value="Ireland"></option>
+                                <option value="Pakistan"></option>
+                                <option value="India"></option>
+                                <option value="Japan"></option>
+                                <option value="Singapore"></option>
+                                <option value="South Africa"></option>
+                            </datalist>
+                        </div>
+
+                        <div class="form-col">
+                            <label>Nearest Port <span class="required-asterisk">*</span></label>
+                            <input type="text" name="nearest_port_or_postal_code" id="nearest_port_or_postal_code" required
+                                placeholder="Port / Post Code" class="form-input">
+                        </div>
+                    </div>
+
+                    <label>Message <span class="required-asterisk">*</span></label>
+                    <textarea name="message" id="message" required rows="3" placeholder="Your Message"
+                        class="form-input textarea-message"></textarea>
+
+                    <!-- Popping Red Gradient Button -->
+                    <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
+                        <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
+                        Request Details & Quote
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FULL WIDTH RED SEPARATOR LINE matching reference -->
+    <div class="red-separator-line"></div>
+
+    <!-- LIGHTBOX / PHOTO VIEWER MODAL matching reference style -->
+    <div id="photoModal" class="photo-modal-overlay">
+        <div class="photo-modal-header">
+            <div class="photo-modal-counter"><span id="currentPhotoNum">1</span> / <span
+                    id="totalPhotoNum">{{ count($car->images) }}</span></div>
+            <button onclick="closeGallery()" class="photo-modal-close-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="photo-modal-content-area">
+            <button onclick="prevPhoto()" class="photo-modal-arrow-btn photo-modal-arrow-left">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <img id="modalMainImg" src="" alt="High Quality Vehicle Image" class="photo-modal-main-img">
+
+            <button onclick="nextPhoto()" class="photo-modal-arrow-btn photo-modal-arrow-right">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <div id="modalThumbStrip" class="photo-modal-thumb-strip"></div>
+    </div>
+
+    <!-- RELATED SECTION -->
+    <section class="py-3 bg-white border-top">
+        <div class="container gallery-inner-container">
+            <h2 class="fw-bold mb-4 related-section-title">You Might Also Like</h2>
+            <div class="related-cars-slider">
+                @foreach($relatedCars as $relatedCar)
+                    <div class="px-2">
+                        <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+                            <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
+                                <img src="{{ asset(CAR_PATH . $relatedCar->images[0]) }}" class="card-img-top related-card-img">
+                            </a>
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold mb-3related-card-title">
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="card-title-link">
+                                        {{ $relatedCar->name }}
+                                    </a>
+                                </h5>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- Hidden based on client request. -->
+                                    {{--
+                                    <div class="price-label">
+                                        From ¥{{ number_format($relatedCar->max_price ?? $relatedCar->less_four_days_price) }}
+                                        <span class="text-muted fw-normal price-unit">{{ isset($relatedCar->max_price) ? 'FOB' :
+                                            '/ day' }}</span>
+                                    </div>
+                                    --}}
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="view-btn">
+                                        VIEW <i class="bx bx-right-arrow-alt"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
 @endsection
 
 @section('script')
@@ -1207,7 +1208,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                        ];
+                                                                                                                        ];
 
         let currentIndex = 0;
         let gridExpanded = false;

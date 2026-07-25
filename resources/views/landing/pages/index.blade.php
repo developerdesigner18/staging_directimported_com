@@ -860,11 +860,14 @@
                                     </div>
 
                                     <div style="margin-top: auto;">
+                                        <!-- Hidden based on client request. -->
+                                        {{--
                                         <!-- Price -->
                                         <div class="car-price-block">
                                             <span class="price-amount">¥{{ number_format($car->month_price) }}</span>
                                             <span class="price-per">fob</span>
                                         </div>
+                                        --}}
 
 
                                         <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"

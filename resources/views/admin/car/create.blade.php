@@ -78,11 +78,13 @@
                                 style="display: none"></label>
                         </div>
 
+                        <!-- Hidden based on client request. -->
+                        {{--
                         <!-- Pricing -->
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="less_four_days_price"
-                                    class="form-label">{{ admin_label('car_form', '1_4_days_price', '1-4 Days Price') }}</label>
+                                <label for="less_four_days_price" class="form-label">{{ admin_label('car_form',
+                                    '1_4_days_price', '1-4 Days Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="less_four_days_price"
                                     name="less_four_days_price" placeholder="Enter price">
                                 <label id="less_four_days_price-error" class="text-danger error"
@@ -90,8 +92,8 @@
                             </div>
 
                             <div class="col-md-6">
-                                <label for="five_six_days_price"
-                                    class="form-label">{{ admin_label('car_form', '5_6_days_price', '5-6 Days Price') }}</label>
+                                <label for="five_six_days_price" class="form-label">{{ admin_label('car_form',
+                                    '5_6_days_price', '5-6 Days Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="five_six_days_price"
                                     name="five_six_days_price" placeholder="Enter price">
                                 <label id="five_six_days_price-error" class="text-danger error"
@@ -101,16 +103,16 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="week_price"
-                                    class="form-label">{{ admin_label('car_form', 'weekly_price', 'Weekly Price') }}</label>
+                                <label for="week_price" class="form-label">{{ admin_label('car_form', 'weekly_price',
+                                    'Weekly Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
                                     placeholder="Enter price">
                                 <label id="week_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="month_price"
-                                    class="form-label">{{ admin_label('car_form', 'monthly_price', 'Monthly Price') }}</label>
+                                <label for="month_price" class="form-label">{{ admin_label('car_form', 'monthly_price',
+                                    'Monthly Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
                                     placeholder="Enter price">
                                 <label id="month_price-error" class="text-danger error" style="display: none"></label>
@@ -119,16 +121,16 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="max_price"
-                                    class="form-label">{{ admin_label('car_form', 'maximum_price', 'Maximum Price') }}</label>
+                                <label for="max_price" class="form-label">{{ admin_label('car_form', 'maximum_price',
+                                    'Maximum Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
                                     placeholder="Enter maximum price">
                                 <label id="max_price-error" class="text-danger error" style="display: none"></label>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="insurance_price"
-                                    class="form-label">{{ admin_label('car_form', 'insurance_price', 'Insurance Price') }}</label>
+                                <label for="insurance_price" class="form-label">{{ admin_label('car_form',
+                                    'insurance_price', 'Insurance Price') }}</label>
                                 <input type="number" step="0.01" class="form-control" id="insurance_price"
                                     name="insurance_price" placeholder="Enter insurance price">
                                 <label id="insurance_price-error" class="text-danger error" style="display: none"></label>
@@ -139,11 +141,11 @@
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <label
-                                        class="form-label">{{ admin_label('car_form', 'included_accessory', 'Included Accessory') }}</label>
+                                    <label class="form-label">{{ admin_label('car_form', 'included_accessory', 'Included
+                                        Accessory') }}</label>
                                     <select class="form-select select2-multiple" name="free_accessory[]" multiple>
                                         @foreach($freeAccessories as $acc)
-                                            <option value="{{ $acc->id }}">{{ $acc->name }}</option>
+                                        <option value="{{ $acc->id }}">{{ $acc->name }}</option>
                                         @endforeach
                                     </select>
                                     <label id="free_accessory-error" class="text-danger error"
@@ -151,11 +153,11 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <label
-                                        class="form-label">{{ admin_label('car_form', 'extra_accessory', 'Extra Accessory') }}</label>
+                                    <label class="form-label">{{ admin_label('car_form', 'extra_accessory', 'Extra
+                                        Accessory') }}</label>
                                     <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
                                         @foreach($extraAccessories as $acc)
-                                            <option value="{{ $acc->id }}">{{ $acc->name }}</option>
+                                        <option value="{{ $acc->id }}">{{ $acc->name }}</option>
                                         @endforeach
                                     </select>
                                     <label id="extra_accessory-error" class="text-danger error"
@@ -165,31 +167,26 @@
 
                             </div>
                         </div>
+                        --}}
 
                         <!-- Number Plate + Location -->
                         <div class="mb-3">
                             <div class="row">
 
+                                <!-- Hidden based on client request. -->
+                                {{--
                                 <!-- Number Plate -->
                                 <div class="col-lg-6">
-                                    <label for="numberPlate"
-                                        class="form-label">{{ admin_label('car_form', 'number_plate', 'Number Plate') }}</label>
+                                    <label for="numberPlate" class="form-label">{{ admin_label('car_form', 'number_plate',
+                                        'Number Plate') }}</label>
                                     <input type="text" class="form-control" id="numberPlate" name="number_plate"
                                         placeholder="Enter number plate number">
                                     <label id="number_plate-error" class="text-danger error" style="display: none"></label>
                                 </div>
+                                --}}
 
                                 <!-- Location -->
-                                <div class="col-lg-6">
-                                    <label class="form-label">{{ admin_label('car_form', 'location', 'Location') }}</label>
-                                    <select class="form-select select2" name="location">
-                                        @foreach($locations ?? [] as $location)
-                                            <option value="{{ optional($location)->id }}" {{ old('location') == optional($location)->id ? 'selected' : '' }}>
-                                                {{ optional($location)->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+
 
                             </div>
                         </div>
@@ -198,7 +195,7 @@
                         <div class="mb-3">
                             <div class="row">
                                 <!-- Vehicle ID -->
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <label for="vehicle_id"
                                         class="form-label">{{ admin_label('car_form', 'vehicle_id', 'Vehicle ID / Chassis No') }}</label>
                                     <input type="text" class="form-control" id="vehicle_id" name="vehicle_id"
@@ -207,7 +204,7 @@
                                 </div>
 
                                 <!-- Status -->
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <label for="status"
                                         class="form-label">{{ admin_label('car_form', 'status', 'Status') }}</label>
                                     <select class="form-select select2" id="status" name="status">
@@ -222,7 +219,7 @@
                                 </div>
 
                                 <!-- Auction Grade -->
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <label for="auction_grade_id"
                                         class="form-label">{{ admin_label('car_form', 'auction_grade', 'Auction Grade') }}</label>
                                     <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
@@ -235,6 +232,16 @@
                                     </select>
                                     <label id="auction_grade_id-error" class="text-danger error"
                                         style="display: none"></label>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label class="form-label">{{ admin_label('car_form', 'location', 'Location') }}</label>
+                                    <select class="form-select select2" name="location">
+                                        @foreach($locations ?? [] as $location)
+                                            <option value="{{ optional($location)->id }}" {{ old('location') == optional($location)->id ? 'selected' : '' }}>
+                                                {{ optional($location)->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -504,17 +511,19 @@
                     model: { required: true },
                     year: { required: true },
                     category_id: { required: true },
-                    less_four_days_price: { required: true, number: true, min: 0 },
-                    five_six_days_price: { required: true, number: true, min: 0 },
-                    week_price: { required: true, number: true, min: 0 },
-                    month_price: { required: true, number: true, min: 0 },
-                    max_price: { required: true, number: true, min: 0 },
+                    // Hidden based on client request.
+                    // less_four_days_price: { required: true, number: true, min: 0 },
+                    // five_six_days_price: { required: true, number: true, min: 0 },
+                    // week_price: { required: true, number: true, min: 0 },
+                    // month_price: { required: true, number: true, min: 0 },
+                    // max_price: { required: true, number: true, min: 0 },
                     vehicle_id: { required: true },
                     status: { required: true },
                     auction_grade_id: { required: true },
                     'images[]': { required: true },
                     description: { required: true },
-                    number_plate: { required: true },
+                    // Hidden based on client request.
+                    // number_plate: { required: true },
                     card_header: { required: true },
                     card_subtitle: { required: true },
                     banner: { required: false },
@@ -526,37 +535,39 @@
                     model: { required: "The model field is required." },
                     year: { required: "Please select a year." },
                     category_id: { required: "Please select a category." },
-                    less_four_days_price: {
-                        required: "Price for 1-3 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    five_six_days_price: {
-                        required: "Price for 4-6 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    week_price: {
-                        required: "Weekly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    month_price: {
-                        required: "Monthly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    max_price: {
-                        required: "Maximum price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
+                    // Hidden based on client request.
+                    // less_four_days_price: {
+                    //     required: "Price for 1-3 days is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // five_six_days_price: {
+                    //     required: "Price for 4-6 days is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // week_price: {
+                    //     required: "Weekly price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // month_price: {
+                    //     required: "Monthly price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // max_price: {
+                    //     required: "Maximum price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
                     vehicle_id: { required: "The Vehicle ID field is required." },
                     status: { required: "Please select a status." },
                     auction_grade_id: { required: "Please select an auction grade." },
                     'images[]': { required: "Please upload at least one image." },
                     description: { required: "Description is required." },
-                    number_plate: { required: "The number plate  is required." },
+                    // Hidden based on client request.
+                    // number_plate: { required: "The number plate  is required." },
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
 

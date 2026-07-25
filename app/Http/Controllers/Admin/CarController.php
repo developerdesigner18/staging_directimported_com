@@ -30,7 +30,8 @@ class CarController extends Controller
     {
         return [
             '750-1300cc' => ['min' => 750, 'max' => 1300],
-            '400-700cc' => ['min' => 400, 'max' => 700],
+            // Hidden based on client request.
+            // '400-700cc' => ['min' => 400, 'max' => 700],
             '150-350cc' => ['min' => 150, 'max' => 350],
             '0-125cc' => ['min' => 0, 'max' => 125],
         ];

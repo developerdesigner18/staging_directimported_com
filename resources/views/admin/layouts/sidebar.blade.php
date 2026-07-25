@@ -59,13 +59,22 @@
                     </li>
                 @endif
 
+                @if($user->hasRole('admin') || $user->can('emails'))
+                    <li class="nav-item">
+                        <a href="{{route('admin.contact_requests.index')}}"
+                            class="nav-link menu-link @if(request()->routeIs('admin.contact_requests.*')) active @endif">
+                            <i class="ri-question-answer-line"></i> <span>Contact Requests</span>
+                        </a>
+                    </li>
+                @endif
+
                 @if($user->hasRole('admin') || $user->can('cars'))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) active @endif"
                             href="#sidebarCars" data-bs-toggle="collapse" role="button"
                             aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) ? 'true' : 'false' }}"
                             aria-controls="sidebarCars">
-                            <i class="ri-motorcar-line"></i> <span data-key="t-multi-level">Cars</span>
+                            <i class="ri-car-line"></i> <span data-key="t-multi-level">Cars</span>
                         </a>
                         <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*')) show @endif"
                             id="sidebarCars">

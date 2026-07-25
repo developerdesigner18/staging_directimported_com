@@ -49,14 +49,14 @@ class BookingController extends Controller
                     $firstName = $row->user->first_name ?? $row->first_name;
                     $lastName = $row->user->last_name ?? $row->last_name;
 
-                    return trim($firstName.' '.$lastName);
+                    return trim($firstName . ' ' . $lastName);
                 })
-              ->addColumn('status', function ($row) {
-    $value = $row->status?->value ?? $row->status;
-    $label = $row->status?->label() ?? '';
+                ->addColumn('status', function ($row) {
+                    $value = $row->status?->value ?? $row->status;
+                    $label = $row->status?->label() ?? '';
 
-    return "{$value} ({$label})";
-})
+                    return "{$value} ({$label})";
+                })
 
                 ->filterColumn('start_date', function ($query, $keyword) {
                     $query->whereRaw("DATE_FORMAT(start_date, '%d %M %Y') LIKE ?", ["%{$keyword}%"]);
@@ -71,10 +71,10 @@ class BookingController extends Controller
                     $query->where('end_time', 'LIKE', "%{$keyword}%");
                 })
                 ->addColumn('start_date', function ($row) {
-                    return $row->start_date->format('d M Y').' '.$row->start_time->format('H:i A');
+                    return $row->start_date->format('d M Y') . ' ' . $row->start_time->format('H:i A');
                 })
                 ->addColumn('end_date', function ($row) {
-                    return $row->end_date->format('d M Y').' '.$row->end_time->format('H:i A');
+                    return $row->end_date->format('d M Y') . ' ' . $row->end_time->format('H:i A');
                 })
                 ->addColumn('price', function ($row) {
                     return number_format($row->price);
@@ -86,7 +86,7 @@ class BookingController extends Controller
                     return '<ul class="list-inline mb-0 d-flex justify-content-center text-center">
 
                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                            <button type="button" data-id="'.$row->id.'" class="btn btn-outline-danger btn-icon btn-md waves-effect waves-light material-shadow-none deleteBtn">
+                            <button type="button" data-id="' . $row->id . '" class="btn btn-outline-danger btn-icon btn-md waves-effect waves-light material-shadow-none deleteBtn">
                                 <i class="ri-delete-bin-5-fill fs-16"></i>
                             </button>
                         </li>
@@ -138,7 +138,7 @@ class BookingController extends Controller
                     $firstName = $row->user->first_name ?? $row->first_name;
                     $lastName = $row->user->last_name ?? $row->last_name;
 
-                    return trim($firstName.' '.$lastName);
+                    return trim($firstName . ' ' . $lastName);
                 })
                 ->addColumn('status', function ($row) {
                     return $row->status?->label() ?? '';
@@ -157,10 +157,10 @@ class BookingController extends Controller
                     $query->where('end_time', 'LIKE', "%{$keyword}%");
                 })
                 ->addColumn('start_date', function ($row) {
-                    return $row->start_date->format('d M Y').' '.$row->start_time->format('H:i A');
+                    return $row->start_date->format('d M Y') . ' ' . $row->start_time->format('H:i A');
                 })
                 ->addColumn('end_date', function ($row) {
-                    return $row->end_date->format('d M Y').' '.$row->end_time->format('H:i A');
+                    return $row->end_date->format('d M Y') . ' ' . $row->end_time->format('H:i A');
                 })
                 ->addColumn('price', function ($row) {
                     return number_format($row->price);
@@ -171,22 +171,22 @@ class BookingController extends Controller
                 ->addColumn('action', function ($row) {
                     return '<ul class="list-inline mb-0 d-flex justify-content-center text-center">
                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Accessories">
-                            <button type="button" onclick="getAccessories('.$row->id.', this)" class="btn btn-success btn-md waves-effect waves-light material-shadow-none text-black">
+                            <button type="button" onclick="getAccessories(' . $row->id . ', this)" class="btn btn-success btn-md waves-effect waves-light material-shadow-none text-black">
                                 Accessories
                             </button>
                         </li>
                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Table">
-                            <button type="button" onclick="getTable('.$row->id.', this)" class="btn btn-warning btn-md waves-effect waves-light material-shadow-none text-black">
+                            <button type="button" onclick="getTable(' . $row->id . ', this)" class="btn btn-warning btn-md waves-effect waves-light material-shadow-none text-black">
                                 Quote
                             </button>
                         </li>
                         <li class="list-inline-item">
-                            <a href="'.route('admin.booking.view', $row->id).'" class="btn btn-info btn-md waves-effect waves-light material-shadow-none text-black">
+                            <a href="' . route('admin.booking.view', $row->id) . '" class="btn btn-info btn-md waves-effect waves-light material-shadow-none text-black">
                                 View
                             </a>
                         </li>
                         <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                            <button type="button" data-id="'.$row->id.'" class="btn btn-outline-danger btn-icon btn-md waves-effect waves-light material-shadow-none deleteBtn">
+                            <button type="button" data-id="' . $row->id . '" class="btn btn-outline-danger btn-icon btn-md waves-effect waves-light material-shadow-none deleteBtn">
                                 <i class="ri-delete-bin-5-fill fs-16"></i>
                             </button>
                         </li>
@@ -204,7 +204,7 @@ class BookingController extends Controller
     {
         try {
             $car = Car::find($request->car_id);
-            if (! $car) {
+            if (!$car) {
                 return $this->sendError('Car not found', 404);
             }
 
@@ -221,7 +221,7 @@ class BookingController extends Controller
             if ($request->selected_accessories) {
                 foreach ($request->selected_accessories as $acc_id) {
                     $accData = Accessories::find($acc_id);
-                    if (! $accData) {
+                    if (!$accData) {
                         continue;
                     }
 
@@ -276,7 +276,7 @@ class BookingController extends Controller
     {
         try {
             $booking = Booking::find($request->id);
-            if (! $booking) {
+            if (!$booking) {
                 return $this->sendError('Booking not found!', 404);
             }
 
@@ -297,9 +297,9 @@ class BookingController extends Controller
                         <tbody>';
                 foreach ($accessories as $key => $acc) {
                     $html .= '<tr>
-                                <td>'.($key + 1).'</td>
-                                <td>'.$acc->name.'</td>
-                                <td class="text-end">¥'.number_format($acc->computed_price).'</td>
+                                <td>' . ($key + 1) . '</td>
+                                <td>' . $acc->name . '</td>
+                                <td class="text-end">¥' . number_format($acc->computed_price) . '</td>
                             </tr>';
                     $totalAccessoriesPrice += $acc->computed_price;
                 }
@@ -310,7 +310,7 @@ class BookingController extends Controller
                     $html .= '<tr class="text-muted">
                                 <td>-</td>
                                 <td>Optional Insurance</td>
-                                <td class="text-end">¥'.number_format($insPrice).'</td>
+                                <td class="text-end">¥' . number_format($insPrice) . '</td>
                             </tr>';
                     $totalAccessoriesPrice += $insPrice;
                 }
@@ -319,7 +319,7 @@ class BookingController extends Controller
                         <tfoot>
                             <tr class="fw-bold fs-5">
                                 <td colspan="2" class="text-end">Total</td>
-                                <td class="text-end">¥'.number_format($totalAccessoriesPrice).'</td>
+                                <td class="text-end">¥' . number_format($totalAccessoriesPrice) . '</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -338,7 +338,7 @@ class BookingController extends Controller
     {
         try {
             $booking = Booking::with('user')->find($request->id);
-            if (! $booking) {
+            if (!$booking) {
                 return $this->sendError('Booking not found', 404);
             }
 
@@ -347,7 +347,7 @@ class BookingController extends Controller
             if ($booking->status === BookingStatus::APPROVED) {
                 $user = User::where('email', $booking->email)->first();
 
-                if (! $user) {
+                if (!$user) {
                     $user = new User;
                     $user->first_name = $booking->first_name ?? '';
                     $user->last_name = $booking->last_name ?? '';
@@ -408,7 +408,7 @@ class BookingController extends Controller
             $booking = Booking::where('booking_id', $request->booking_id)->first();
 
             // If booking is not found, return error
-            if (! $booking) {
+            if (!$booking) {
                 return $this->sendError('Booking not found', 404);
             }
 
@@ -422,7 +422,7 @@ class BookingController extends Controller
             // Generate temporary password using helper
             $tempPassword = generateTemporaryPassword($booking->first_name, $booking->last_name, $booking->booking_id);
 
-            if (! $user) {
+            if (!$user) {
                 // If the user doesn't exist, create a new one
                 $user = new User;
                 $user->first_name = $booking->first_name ?? '';
@@ -493,13 +493,13 @@ class BookingController extends Controller
 
             $booking = Booking::where('booking_id', $request->booking_id)->first();
 
-            if (! $booking) {
+            if (!$booking) {
                 return $this->sendError('Booking not found.', 404);
             }
 
             $user = User::where('email', $booking->email)->first();
 
-            if (! $user) {
+            if (!$user) {
                 return $this->sendError('User not found for this booking.', 404);
             }
 
@@ -527,13 +527,13 @@ class BookingController extends Controller
 
             $booking = Booking::where('booking_id', $request->booking_id)->first();
 
-            if (! $booking) {
+            if (!$booking) {
                 return $this->sendError('Booking not found.', 404);
             }
 
             $user = User::where('email', $booking->email)->first();
 
-            if (! $user) {
+            if (!$user) {
                 return $this->sendError('User not found for this booking.', 404);
             }
 
@@ -573,9 +573,12 @@ class BookingController extends Controller
         $extraList = Accessories::where('type', 'EXTRA')->get();
 
         return view('admin.booking.view', compact(
-            'rowData', 'cars',
-            'freeList', 'extraList',
-            'freeAccessoryIds', 'extraAccessoryIds'
+            'rowData',
+            'cars',
+            'freeList',
+            'extraList',
+            'freeAccessoryIds',
+            'extraAccessoryIds'
         ));
     }
 
@@ -628,35 +631,35 @@ class BookingController extends Controller
                     <tbody>
                         <tr>
                             <td>Full name</td>
-                            <td>'.trim(($booking->first_name ?? '').' '.($booking->last_name ?? '')).'</td>
+                            <td>' . trim(($booking->first_name ?? '') . ' ' . ($booking->last_name ?? '')) . '</td>
                         </tr>
                         <tr>
                             <td>E-mail</td>
-                            <td>'.($booking->email ?? '').'</td>
+                            <td>' . ($booking->email ?? '') . '</td>
                         </tr>
                         <tr>
                             <td>Mobile</td>
-                            <td>'.(isset($booking->user) ? $booking->user->mobile : '').'</td>
+                            <td>' . (isset($booking->user) ? $booking->user->mobile : '') . '</td>
                         </tr>
                         <tr>
                             <td>Car Name</td>
-                            <td>'.$car->name.'</td>
+                            <td>' . $car->name . '</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
-                            <td>'.$totalDays.'</td>
+                            <td>' . $totalDays . '</td>
                         </tr>
                         <tr>
                             <td>Start Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->start_date)).' Pickup '.date('h:i A', strtotime($request->start_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->start_date)) . ' Pickup ' . date('h:i A', strtotime($request->start_time)) . '</td>
                         </tr>
                         <tr>
                             <td>End Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('h:i A', strtotime($request->end_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->end_date)) . ' Drop off ' . date('h:i A', strtotime($request->end_time)) . '</td>
                         </tr>
                         <tr>
                             <td>Total Car Price</td>
-                            <td>¥'.$price.'</td>
+                            <td>¥' . $price . '</td>
                         </tr>
                     </tbody>
                     <tr>
@@ -665,12 +668,12 @@ class BookingController extends Controller
                     <tbody>
                         <tr>
                             <td>Insurance</td>
-                            <td>'.(($insurance_price > 0) ? '¥'.$insurance_price : 'NA').'</td>
+                            <td>' . (($insurance_price > 0) ? '¥' . $insurance_price : 'NA') . '</td>
                         </tr>';
             if ($request->selected_accessories) {
                 foreach ($request->selected_accessories as $acc_id) {
                     $accData = Accessories::find($acc_id);
-                    if (! $accData) {
+                    if (!$accData) {
                         continue;
                     }
 
@@ -689,8 +692,8 @@ class BookingController extends Controller
                     $subtotal += $accPrice;
                     $details .= '
                                             <tr class="">
-                                                <td>'.$accData->name.'</td>
-                                                <td>¥'.$accPrice.'</td>
+                                                <td>' . $accData->name . '</td>
+                                                <td>¥' . $accPrice . '</td>
                                             </tr>';
                 }
             }
@@ -701,15 +704,15 @@ class BookingController extends Controller
             $details .= '
                             <tr>
                                 <td>TAX 10%</td>
-                                <td>¥'.number_format($tax).'</td>
+                                <td>¥' . number_format($tax) . '</td>
                             </tr>
                             <tr>
                                 <td>Card Fee 3.65%</td>
-                                <td>¥'.number_format($cardFee).'</td>
+                                <td>¥' . number_format($cardFee) . '</td>
                             </tr>
                            <tr class="fw-bold fs-5">
                                 <td>Total Price</td>
-                                <td>¥'.number_format((float) $request->price).'</td>
+                                <td>¥' . number_format((float) $request->price) . '</td>
                            </tr>
                         </tbody>
                     </table>';
@@ -742,11 +745,11 @@ class BookingController extends Controller
 
             //                $booking->user->email
             // if (!empty($request->bookingMail)) {
-                sendDynamicEmail($booking->email, 'BookingConfirmationMail', [
-                    'name' => $booking->first_name,
-                    'email_comment' => $booking->email_comment,
-                    'booking_details' => $booking->table_data,
-                ]);
+            sendDynamicEmail($booking->email, 'BookingConfirmationMail', [
+                'name' => $booking->first_name,
+                'email_comment' => $booking->email_comment,
+                'booking_details' => $booking->table_data,
+            ]);
             // }
             if (!empty($request->invoice)) {
                 sendDynamicEmail($booking->email, 'PaymentRequestMail', [
@@ -887,16 +890,8 @@ class BookingController extends Controller
 
             $totalDays = totalBookingDays($booking->start_date, $booking->end_date, $booking->end_time);
 
-            $price = $car->max_price;
-            if ($totalDays <= 4) {
-                $price = $car->less_four_days_price;
-            } elseif ($totalDays >= 5 && $totalDays <= 6) {
-                $price = $car->five_six_days_price;
-            } elseif ($totalDays == 7) {
-                $price = $car->week_price;
-            } elseif ($totalDays >= 8 && $totalDays <= 30) {
-                $price = $car->month_price;
-            }
+            // Hidden based on client request.
+            $price = $car->getTieredPrice($totalDays);
 
             $details = '<table class="table table-bordered mb-4 border-0">
                     <tr>
@@ -905,35 +900,35 @@ class BookingController extends Controller
                     <tbody>
                         <tr>
                             <td>Full name</td>
-                            <td>'.($booking->first_name ?? ''.' '.($booking->last_name ?? '')).'</td>
+                            <td>' . ($booking->first_name ?? '' . ' ' . ($booking->last_name ?? '')) . '</td>
                         </tr>
                         <tr>
                             <td>E-mail</td>
-                            <td>'.$booking->email ?? ''.'</td>
+                            <td>' . $booking->email ?? '' . '</td>
                         </tr>
                         <tr>
                             <td>Mobile</td>
-                            <td>'.$booking->user->mobile.'</td>
+                            <td>' . $booking->user->mobile . '</td>
                         </tr>
                         <tr>
                             <td>Car Name</td>
-                            <td>'.$car->name.'</td>
+                            <td>' . $car->name . '</td>
                         </tr>
                         <tr>
                             <td>Total Days</td>
-                            <td>'.$totalDays.'</td>
+                            <td>' . $totalDays . '</td>
                         </tr>
                         <tr>
                             <td>Start Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->start_date)).' Pickup '.date('H:i A', strtotime($request->start_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->start_date)) . ' Pickup ' . date('H:i A', strtotime($request->start_time)) . '</td>
                         </tr>
                         <tr>
                             <td>End Date</td>
-                            <td>'.date('d/m/Y', strtotime($request->end_date)).' Drop off '.date('H:i A', strtotime($request->end_time)).'</td>
+                            <td>' . date('d/m/Y', strtotime($request->end_date)) . ' Drop off ' . date('H:i A', strtotime($request->end_time)) . '</td>
                         </tr>
                         <tr>
                             <td>Total Car Price</td>
-                            <td>¥'.$price.'</td>
+                            <td>¥' . $price . '</td>
                         </tr>
                     </tbody>
                     <tr>
@@ -950,15 +945,15 @@ class BookingController extends Controller
                     $accPrice = ($accData->price > 0 ? $accData->price * ($totalDays > 0 ? $totalDays : 1) : 0);
                     $details .= '
                                             <tr class="">
-                                                <td>'.$accData->name.'</td>
-                                                <td>¥'.$accPrice.'</td>
+                                                <td>' . $accData->name . '</td>
+                                                <td>¥' . $accPrice . '</td>
                                             </tr>';
                 }
             }
             $details .= '
                            <tr class="fw-bold fs-5">
                                 <td>Total Price</td>
-                                <td>¥'.$request->price.'</td>
+                                <td>¥' . $request->price . '</td>
                            </tr>
                         </tbody>
                     </table>';

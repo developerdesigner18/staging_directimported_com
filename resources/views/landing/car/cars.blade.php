@@ -673,12 +673,15 @@
                                                     </div>
                                                 </div>
                                                 {{--@dd($car);--}}
+                                                <!-- Hidden based on client request. -->
+                                                {{--
                                                 <!-- Price -->
                                                 <div class="car-price-block">
                                                     <span class="price-from">From</span>
                                                     <span class="price-amount">¥{{number_format($car->month_price)}}</span>
                                                     <span class="price-per">/ Per Day</span>
                                                 </div>
+                                                --}}
 
                                                 <!-- Button -->
                                                 {{-- <button class="btn-adventure carRequestQuote" data-id="{{ $car->id }}"

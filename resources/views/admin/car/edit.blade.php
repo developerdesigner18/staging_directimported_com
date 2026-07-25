@@ -58,6 +58,8 @@
                             <label id="category_id-error" class="text-danger error" style="display:none"></label>
                         </div>
 
+                        <!-- Hidden based on client request. -->
+                        {{--
                         <!-- Pricing Rows -->
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -112,7 +114,7 @@
                         <!-- Free & Extra Accessories -->
                         <div class="row">
 
-                            <!-- Free Accessory -->
+                             <!-- Free Accessory -->
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'included_accessory', 'Included Accessory') }}</label>
                                 <select class="form-select select2-multiple" name="free_accessory[]" multiple>
@@ -125,7 +127,7 @@
                                 <label id="free_accessory-error" class="text-danger error" style="display:none"></label>
                             </div>
 
-                            <!-- Extra Accessory -->
+                             <!-- Extra Accessory -->
                             <div class="col-lg-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'extra_accessory', 'Extra Accessory') }}</label>
                                 <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
@@ -139,16 +141,20 @@
                             </div>
 
                         </div>
+                        --}}
 
                         <!-- Number Plate & Location -->
                         <div class="row">
 
+                            <!-- Hidden based on client request. -->
+                            {{--
                             <div class="col-lg-6 mb-3">
                                 <label for="numberPlate" class="form-label">{{ admin_label('car_form', 'number_plate', 'Number Plate') }}</label>
                                 <input type="text" class="form-control" id="numberPlate" value="{{ $car->number_plate }}"
                                     name="number_plate">
                                 <label id="number_plate-error" class="text-danger error" style="display:none"></label>
                             </div>
+                            --}}
 
                             <div class="col-lg-6 mb-3">
                                 <label for="location" class="form-label">{{ admin_label('car_form', 'location', 'Location') }}</label>
@@ -525,16 +531,18 @@
                     model: { required: true },
                     year: { required: true },
                     category_id: { required: true },
-                    less_four_days_price: { required: true, number: true, min: 0 },
-                    five_six_days_price: { required: true, number: true, min: 0 },
-                    week_price: { required: true, number: true, min: 0 },
-                    month_price: { required: true, number: true, min: 0 },
-                    max_price: { required: true, number: true, min: 0 },
+                    // Hidden based on client request.
+                    // less_four_days_price: { required: true, number: true, min: 0 },
+                    // five_six_days_price: { required: true, number: true, min: 0 },
+                    // week_price: { required: true, number: true, min: 0 },
+                    // month_price: { required: true, number: true, min: 0 },
+                    // max_price: { required: true, number: true, min: 0 },
                     vehicle_id: { required: true },
                     status: { required: true },
                     auction_grade_id: { required: true },
                     description: { required: true },
-                    number_plate: { required: true },
+                    // Hidden based on client request.
+                    // number_plate: { required: true },
                     card_header: { required: true },
                     card_subtitle: { required: true },
                     banner: { required: false },
@@ -544,36 +552,38 @@
                     model: { required: "The model field is required." },
                     year: { required: "Please select a year." },
                     category_id: { required: "Please select a category." },
-                    less_four_days_price: {
-                        required: "Price for 1-3 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    five_six_days_price: {
-                        required: "Price for 4-6 days is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    week_price: {
-                        required: "Weekly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    month_price: {
-                        required: "Monthly price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
-                    max_price: {
-                        required: "Maximum price is required.",
-                        number: "Please enter a valid number.",
-                        min: "Price must be a positive number."
-                    },
+                    // Hidden based on client request.
+                    // less_four_days_price: {
+                    //     required: "Price for 1-3 days is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // five_six_days_price: {
+                    //     required: "Price for 4-6 days is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // week_price: {
+                    //     required: "Weekly price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // month_price: {
+                    //     required: "Monthly price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
+                    // max_price: {
+                    //     required: "Maximum price is required.",
+                    //     number: "Please enter a valid number.",
+                    //     min: "Price must be a positive number."
+                    // },
                     vehicle_id: { required: "The Vehicle ID field is required." },
                     status: { required: "Please select a status." },
                     auction_grade_id: { required: "Please select an auction grade." },
                     description: { required: "Description is required." },
-                    number_plate: { required: "The number plate  is required." },
+                    // Hidden based on client request.
+                    // number_plate: { required: "The number plate  is required." },
                     card_header: { required: "Card header is required." },
                     card_subtitle: { required: "Card subtitle is required." },
 
