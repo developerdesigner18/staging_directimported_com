@@ -394,66 +394,60 @@ class CarController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $currentImages = $car->images ?? [];
+            $currentImages = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img))) : [];
 
             if ($request->filled('removed_images')) {
-
-                $removedImages = explode(',', $request->removed_images);
+                $removedImages = array_filter(explode(',', $request->removed_images));
 
                 foreach ($removedImages as $removedImage) {
-
                     if (($key = array_search($removedImage, $currentImages)) !== false) {
-
                         unset($currentImages[$key]);
-
-                        // Optional: delete from storage
-                        // deleteImage($removedImage, CAR_PATH);
+                        deleteImage($removedImage, CAR_PATH);
                     }
                 }
 
-                $currentImages = array_values($currentImages);
+                $currentImages = array_values(array_filter($currentImages, fn($img) => !empty($img)));
             }
 
-            if ($request->has('images')) {
-
+            if ($request->has('images') && is_array($request->images)) {
                 foreach ($request->images as $image) {
+                    if (empty($image))
+                        continue;
 
                     // Existing image string (from FilePond)
                     if (is_string($image) && !Str::isJson($image)) {
-
                         if (!in_array($image, $currentImages)) {
                             $currentImages[] = $image;
                         }
-
                     } else {
                         // New uploaded image
                         $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
-                        $currentImages[] = $thumbnail;
+                        if ($thumbnail) {
+                            $currentImages[] = $thumbnail;
+                        }
                     }
                 }
             }
 
             // 3️⃣ Apply new order
             if ($request->filled('image_order')) {
-
-                $orderedImages = explode(',', $request->image_order);
+                $orderedImages = array_filter(explode(',', $request->image_order));
 
                 // Keep only images that still exist
                 $orderedImages = array_values(array_filter($orderedImages, function ($img) use ($currentImages) {
-                    return in_array($img, $currentImages);
+                    return !empty($img) && in_array($img, $currentImages);
                 }));
 
                 // Add any images not included in order list
                 foreach ($currentImages as $img) {
-                    if (!in_array($img, $orderedImages)) {
+                    if (!empty($img) && !in_array($img, $orderedImages)) {
                         $orderedImages[] = $img;
                     }
                 }
 
-                $car->images = $orderedImages;
-
+                $car->images = array_values(array_filter($orderedImages, fn($img) => !empty($img)));
             } else {
-                $car->images = $currentImages;
+                $car->images = array_values(array_filter($currentImages, fn($img) => !empty($img)));
             }
 
             // Description & specs

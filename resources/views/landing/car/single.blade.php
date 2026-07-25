@@ -33,38 +33,100 @@
         }
 
         /* Form Inputs from reference style */
-        .form-input {
-            width: 100%;
-            padding: 12px 14px;
-            height: 48px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 14px;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 14px;
-            outline: none;
-            transition: all 0.2s ease-in-out;
-            background-color: #ffffff;
-            color: var(--text-dark);
+        .form-input,
+        #contactRequestForm input.form-input,
+        #contactRequestForm select.form-input {
+            width: 100% !important;
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            padding: 0 14px !important;
+            line-height: 44px !important;
+            border: 2px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            margin-bottom: 14px !important;
+            box-sizing: border-box !important;
+            font-family: inherit !important;
+            font-size: 14px !important;
+            outline: none !important;
+            transition: all 0.2s ease-in-out !important;
+            background-color: #ffffff !important;
+            color: var(--text-dark) !important;
+            display: block !important;
         }
 
-        select.form-input {
-            appearance: none;
+        #contactRequestForm select.form-input {
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23334155' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
             background-repeat: no-repeat !important;
             background-position: right 14px center !important;
             background-size: 12px 12px !important;
-            padding-right: 36px !important;
+            padding: 0 36px 0 14px !important;
+            cursor: pointer !important;
+            box-shadow: none !important;
         }
 
-        textarea.form-input {
-            height: auto;
-            min-height: 80px;
+        #contactRequestForm select.form-input::-ms-expand {
+            display: none !important;
+        }
+
+        #contactRequestForm textarea.form-input {
+            height: auto !important;
+            min-height: 80px !important;
+            max-height: none !important;
+            padding: 12px 14px !important;
+            line-height: 1.5 !important;
         }
 
         .form-input:focus {
-            border-color: var(--primary-blue);
+            border-color: var(--primary-blue) !important;
+        }
+
+        /* Select2 Container Overrides for Contact Form */
+        #contactRequestForm .select2-container {
+            width: 100% !important;
+            display: block !important;
+            margin-bottom: 14px !important;
+        }
+
+        #contactRequestForm .select2-container .select2-selection--single {
+            height: 48px !important;
+            min-height: 48px !important;
+            max-height: 48px !important;
+            border: 2px solid var(--border-color) !important;
+            border-radius: 8px !important;
+            background-color: #ffffff !important;
+            display: flex !important;
+            align-items: center !important;
+            box-sizing: border-box !important;
+            outline: none !important;
+            transition: all 0.2s ease-in-out !important;
+        }
+
+        #contactRequestForm .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 44px !important;
+            color: var(--text-dark) !important;
+            font-size: 14px !important;
+            padding-left: 14px !important;
+            padding-right: 36px !important;
+        }
+
+        #contactRequestForm .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 44px !important;
+            position: absolute !important;
+            top: 0 !important;
+            right: 10px !important;
+            width: 20px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        #contactRequestForm .select2-container--focus .select2-selection--single,
+        #contactRequestForm .select2-container--open .select2-selection--single {
+            border-color: var(--primary-blue) !important;
         }
 
         #contactRequestForm label:not(.error) {
@@ -353,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                               MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                               ------------------------------------------------------------- */
+                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                   ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -581,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                display: flex;
-                                align-items: center;
-                                gap: 12px;
-                                margin-bottom: 8px;
-                                flex-wrap: wrap;
-                            } */
+                                                    display: flex;
+                                                    align-items: center;
+                                                    gap: 12px;
+                                                    margin-bottom: 8px;
+                                                    flex-wrap: wrap;
+                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -942,11 +1004,12 @@
                     <div class="tab-overview">OVERVIEW</div>
 
                     <div class="tab-grade">
-                        Grade <span class="grade-badge">{{ $car->auctionGrade->grade ?? 'N/A' }}</span>
+                        Grade <span
+                            class="grade-badge">{{ (!empty($car->auctionGrade->grade) && strtoupper(trim($car->auctionGrade->grade)) !== 'N/A') ? $car->auctionGrade->grade : '-' }}</span>
                     </div>
 
                     <div class="tab-stock">
-                        STOCK # <span class="stock-badge">{{ $car->vehicle_id ?? $car->name ?? '' }}</span>
+                        STOCK # <span class="stock-badge">{{ $car->vehicle_id ?? $car->name ?? '-' }}</span>
                     </div>
                 </div>
 
@@ -957,47 +1020,56 @@
 
                         <div class="specs-item">
                             <span class="specs-label">🚘 Make</span>
-                            <span class="specs-value">{{ $car->spec->make ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->make) && strtoupper(trim($car->spec->make)) !== 'N/A') ? $car->spec->make : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">⏱️ Odometer</span>
-                            <span class="specs-value">{{ number_format($car->spec->odometer ?? 0) }} km</span>
+                            <span
+                                class="specs-value">{{ !empty($car->spec->odometer) ? number_format($car->spec->odometer) . ' km' : '0 km' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">🎨 Exterior Color</span>
-                            <span class="specs-value">{{ $car->spec->exterior_color ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->exterior_color) && strtoupper(trim($car->spec->exterior_color)) !== 'N/A') ? $car->spec->exterior_color : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">📅 Model Year</span>
-                            <span class="specs-value">{{ $car->spec->model_year ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->model_year) && strtoupper(trim($car->spec->model_year)) !== 'N/A') ? $car->spec->model_year : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">🚗 Body Type</span>
-                            <span class="specs-value">{{ $car->spec->body_type ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->body_type) && strtoupper(trim($car->spec->body_type)) !== 'N/A') ? $car->spec->body_type : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">⚙️ Engine</span>
-                            <span class="specs-value">{{ $car->spec->engine ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->engine) && strtoupper(trim($car->spec->engine)) !== 'N/A') ? $car->spec->engine : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">🔌 Fuel Type</span>
-                            <span class="specs-value">{{ $car->spec->fuel_type ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->fuel_type) && strtoupper(trim($car->spec->fuel_type)) !== 'N/A') ? $car->spec->fuel_type : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">🎛️ Transmission</span>
-                            <span class="specs-value">{{ $car->spec->transmission ?? '' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->transmission) && strtoupper(trim($car->spec->transmission)) !== 'N/A') ? $car->spec->transmission : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">💺 Interior Color</span>
-                            <span class="specs-value">{{ $car->spec->interior_color ?? 'N/A' }}</span>
+                            <span
+                                class="specs-value">{{ (!empty($car->spec->interior_color) && strtoupper(trim($car->spec->interior_color)) !== 'N/A') ? $car->spec->interior_color : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -1170,7 +1242,11 @@
                     <div class="px-2">
                         <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
                             <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
-                                <img src="{{ asset(CAR_PATH . $relatedCar->images[0]) }}" class="card-img-top related-card-img">
+                                @php
+                                    $relImg = (!empty($relatedCar->images) && is_array($relatedCar->images) && isset($relatedCar->images[0]) && !empty($relatedCar->images[0])) ? $relatedCar->images[0] : null;
+                                @endphp
+                                <img src="{{ $relImg ? asset(CAR_PATH . $relImg) : asset('uploads/user_documents/default.jpg') }}"
+                                    class="card-img-top related-card-img">
                             </a>
                             <div class="card-body p-4">
                                 <h5 class="fw-bold mb-3related-card-title">
@@ -1208,7 +1284,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                        ];
+                                                                                                                                            ];
 
         let currentIndex = 0;
         let gridExpanded = false;

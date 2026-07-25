@@ -244,18 +244,20 @@
                             <label for="images" class="form-label">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple>
 
-                            @if($car->images)
+                            @if($car->images && count(array_filter($car->images)))
                                 <div id="sortable-images" class="d-flex flex-wrap">
                                     @foreach($car->images as $image)
-                                        <div class="image-preview-container me-2 mb-2" data-image="{{ $image }}"
-                                            style="cursor: grab;">
+                                        @if(!empty($image))
+                                            <div class="image-preview-container me-2 mb-2" data-image="{{ $image }}"
+                                                style="cursor: grab;">
 
-                                            <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
-                                                draggable="false">
+                                                <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
+                                                    draggable="false">
 
-                                            <button type="button" class="btn btn-danger btn-sm remove-image"
-                                                data-image="{{ $image }}">×</button>
-                                        </div>
+                                                <button type="button" class="btn btn-danger btn-sm remove-image"
+                                                    data-image="{{ $image }}">×</button>
+                                            </div>
+                                        @endif
                                     @endforeach
                                 </div>
 

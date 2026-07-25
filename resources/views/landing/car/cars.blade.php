@@ -638,7 +638,11 @@
                                             <!-- Image -->
                                             <div class="car-card-img-wrapper">
                                                 <a href="{{route('car.single', ['slug' => $car->slug])}}">
-                                                    <img src="{{asset(CAR_PATH . $car->images[0])}}" alt="{{$car->name}}" loading="lazy">
+                                                    @php
+                                                        $cImg = (!empty($car->images) && is_array($car->images) && isset($car->images[0]) && !empty($car->images[0])) ? $car->images[0] : null;
+                                                    @endphp
+                                                    <img src="{{ $cImg ? asset(CAR_PATH . $cImg) : asset('uploads/user_documents/default.jpg') }}"
+                                                        alt="{{$car->name}}" loading="lazy">
                                                 </a>
                                             </div>
 
@@ -672,25 +676,11 @@
                                                         <span>Adventure-Ready</span>
                                                     </div>
                                                 </div>
-                                                {{--@dd($car);--}}
-                                                <!-- Hidden based on client request. -->
-                                                {{--
-                                                <!-- Price -->
-                                                <div class="car-price-block">
-                                                    <span class="price-from">From</span>
-                                                    <span class="price-amount">¥{{number_format($car->month_price)}}</span>
-                                                    <span class="price-per">/ Per Day</span>
-                                                </div>
-                                                --}}
 
                                                 <!-- Button -->
-                                                {{-- <button class="btn-adventure carRequestQuote" data-id="{{ $car->id }}"
-                                                    data-name="{{ $car->name }}" data-image="{{ asset(CAR_PATH.$car->images[0]) }}">
-                                                    CHECK IT OUT
-                                                </button> --}}
                                                 <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
                                                     data-id="{{ $car->id }}" data-name="{{ $car->name }}"
-                                                    data-image="{{ asset(CAR_PATH . $car->images[0]) }}">
+                                                    data-image="{{ $cImg ? asset(CAR_PATH . $cImg) : '' }}">
                                                     CHECK IT OUT
                                                 </button>
 

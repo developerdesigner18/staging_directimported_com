@@ -23,7 +23,10 @@
                     <div class="card overflow-hidden blog-grid-card list-group-item nested-1">
                         <div class="position-relative overflow-hidden">
                             <a href="{{ route('admin.car.view', [$car->id])}}">
-                                <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}"
+                                @php
+                                    $firstImg = (!empty($car->images) && is_array($car->images) && isset($car->images[0]) && !empty($car->images[0])) ? $car->images[0] : null;
+                                @endphp
+                                <img src="{{ $firstImg ? asset(CAR_PATH . $firstImg) : asset('uploads/user_documents/default.jpg') }}" alt="{{ $car->name }}"
                                     class="blog-img object-fit-cover w-100" style="height: 200px;">
                             </a>
                         </div>
