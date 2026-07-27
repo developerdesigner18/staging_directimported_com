@@ -286,13 +286,13 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a href="{{route('admin.labels.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.labels.*')) active @endif">
                             <i class="bx bx-tag"></i>
                             <span>{{ admin_label('sidebar', 'manage_labels', 'Manage Labels') }}</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endif
             </ul>
 
