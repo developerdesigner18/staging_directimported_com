@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('title','Car Configuration')
+@section('title', 'Car Configuration')
 
 @section('main')
     <div class="row">
@@ -26,62 +26,72 @@
 
                         <!-- Rate Details -->
                         <div class="mb-3">
-                            <label class="form-label">Rate Details</label>
+                            <label
+                                class="form-label">{{ admin_label('car_configuration_form', 'rate_details', 'Rate Details') }}</label>
                             <textarea id="rate_details" name="rate_details" class="form-control d-none">
-                                {{ $configuration->firstWhere('key', 'rate_details')->description ?? '' }}
-                            </textarea>
+                                    {{ $configuration->firstWhere('key', 'rate_details')->description ?? '' }}
+                                </textarea>
                             <div id="rate_details_editor" class="tinymce-editor">
                                 {!! $configuration->firstWhere('key', 'rate_details')->description ?? '' !!}
                             </div>
-                            <label id="rate_details-error" class="text-danger error" for="rate_details" style="display: none"></label>
+                            <label id="rate_details-error" class="text-danger error" for="rate_details"
+                                style="display: none"></label>
                         </div>
 
                         <!-- What to Expect -->
                         <div class="mb-3">
-                            <label class="form-label">What to Expect</label>
+                            <label
+                                class="form-label">{{ admin_label('car_configuration_form', 'what_to_expect', 'What to Expect') }}</label>
                             <textarea id="what_to_expect" name="what_to_expect" class="form-control d-none">
-                                {{ $configuration->firstWhere('key', 'what_to_expect')->description ?? '' }}
-                            </textarea>
+                                    {{ $configuration->firstWhere('key', 'what_to_expect')->description ?? '' }}
+                                </textarea>
                             <div id="what_to_expect_editor" class="tinymce-editor">
                                 {!! $configuration->firstWhere('key', 'what_to_expect')->description ?? '' !!}
                             </div>
-                            <label id="what_to_expect-error" class="text-danger error" for="what_to_expect" style="display: none"></label>
+                            <label id="what_to_expect-error" class="text-danger error" for="what_to_expect"
+                                style="display: none"></label>
                         </div>
 
                         <!-- What's Included -->
                         <div class="mb-3">
-                            <label class="form-label">What's Included</label>
+                            <label
+                                class="form-label">{{ admin_label('car_configuration_form', 'what_include', "What's Included") }}</label>
                             <textarea id="what_include" name="what_include" class="form-control d-none">
-                                {{ $configuration->firstWhere('key', 'what_include')->description ?? '' }}
-                            </textarea>
+                                    {{ $configuration->firstWhere('key', 'what_include')->description ?? '' }}
+                                </textarea>
                             <div id="what_include_editor" class="tinymce-editor">
                                 {!! $configuration->firstWhere('key', 'what_include')->description ?? '' !!}
                             </div>
-                            <label id="what_include-error" class="text-danger error" for="what_include" style="display: none"></label>
+                            <label id="what_include-error" class="text-danger error" for="what_include"
+                                style="display: none"></label>
                         </div>
 
                         <!-- Requirements -->
                         <div class="mb-3">
-                            <label class="form-label">Requirements</label>
+                            <label
+                                class="form-label">{{ admin_label('car_configuration_form', 'requirements', 'Requirements') }}</label>
                             <textarea id="requirements" name="requirements" class="form-control d-none">
-                                {{ $configuration->firstWhere('key', 'requirements')->description ?? '' }}
-                            </textarea>
+                                    {{ $configuration->firstWhere('key', 'requirements')->description ?? '' }}
+                                </textarea>
                             <div id="requirements_editor" class="tinymce-editor">
                                 {!! $configuration->firstWhere('key', 'requirements')->description ?? '' !!}
                             </div>
-                            <label id="requirements-error" class="text-danger error" for="requirements" style="display: none"></label>
+                            <label id="requirements-error" class="text-danger error" for="requirements"
+                                style="display: none"></label>
                         </div>
 
                         <!-- Useful Links -->
                         <div class="mb-3">
-                            <label class="form-label">Useful Links</label>
+                            <label
+                                class="form-label">{{ admin_label('car_configuration_form', 'useful_links', 'Useful Links') }}</label>
                             <textarea id="useful_links" name="useful_links" class="form-control d-none">
-                                {{ $configuration->firstWhere('key', 'useful_links')->description ?? '' }}
-                            </textarea>
+                                    {{ $configuration->firstWhere('key', 'useful_links')->description ?? '' }}
+                                </textarea>
                             <div id="useful_links_editor" class="tinymce-editor">
                                 {!! $configuration->firstWhere('key', 'useful_links')->description ?? '' !!}
                             </div>
-                            <label id="useful_links-error" class="text-danger error" for="useful_links" style="display: none"></label>
+                            <label id="useful_links-error" class="text-danger error" for="useful_links"
+                                style="display: none"></label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Update Configuration</button>
@@ -154,16 +164,16 @@
                             const embedUrl = 'https://www.youtube.com/embed/' + videoId;
                             const embedHtml = '<iframe src="' + embedUrl +
                                 '" width="560" height="314" allowfullscreen="allowfullscreen"></iframe>';
-                            resolve({html: embedHtml});
+                            resolve({ html: embedHtml });
                         } else {
-                            resolve({html: ''});
+                            resolve({ html: '' });
                         }
                     } else {
-                        resolve({html: ''});
+                        resolve({ html: '' });
                     }
                 },
                 setup: function (editor) {
-                    editor.on('init', function() {
+                    editor.on('init', function () {
                         // This ensures the content is properly loaded when the editor initializes
                         var textareaId = editor.id.replace('_editor', '');
                         editor.setContent(document.getElementById(textareaId).value);
@@ -179,18 +189,18 @@
             // Rest of your validation and form submission code...
             $("#carConfigForm").validate({
                 rules: {
-                    rate_details: {required: true},
-                    what_to_expect: {required: true},
-                    what_include: {required: true},
-                    requirements: {required: true},
-                    useful_links: {required: true}
+                    rate_details: { required: true },
+                    what_to_expect: { required: true },
+                    what_include: { required: true },
+                    requirements: { required: true },
+                    useful_links: { required: true }
                 },
                 messages: {
-                    rate_details: {required: "The rate details field is required."},
-                    what_to_expect: {required: "The what to expect field is required."},
-                    what_include: {required: "The what's included field is required."},
-                    requirements: {required: "The requirements field is required."},
-                    useful_links: {required: "The useful links field is required."}
+                    rate_details: { required: "The rate details field is required." },
+                    what_to_expect: { required: "The what to expect field is required." },
+                    what_include: { required: "The what's included field is required." },
+                    requirements: { required: "The requirements field is required." },
+                    useful_links: { required: "The useful links field is required." }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
@@ -202,7 +212,7 @@
                     // Update all hidden textareas with TinyMCE content before submission
                     var editorIds = ['rate_details_editor', 'what_to_expect_editor', 'what_include_editor', 'requirements_editor', 'useful_links_editor'];
 
-                    editorIds.forEach(function(editorId) {
+                    editorIds.forEach(function (editorId) {
                         var editor = tinymce.get(editorId);
                         if (editor) {
                             var textareaId = editorId.replace('_editor', '');

@@ -55,12 +55,15 @@
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="grade" class="form-label">Grade <span class="text-danger">*</span></label>
+                            <label for="grade" class="form-label">{{ admin_label('auction_grade_form', 'grade', 'Grade') }}
+                                <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="grade" name="grade" placeholder="e.g. 4.5, S, 3B">
                             <p id="grade-error" class="text-danger mt-1" style="display: none;"></p>
                         </div>
                         <div class="mb-3">
-                            <label for="remarks" class="form-label">Remarks <span class="text-danger">*</span></label>
+                            <label for="remarks"
+                                class="form-label">{{ admin_label('auction_grade_form', 'remarks', 'Remarks') }} <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control" id="remarks" name="remarks" rows="3"
                                 placeholder="Description of this grade..."></textarea>
                             <p id="remarks-error" class="text-danger mt-1" style="display: none;"></p>
@@ -91,12 +94,16 @@
                     <input type="hidden" id="edit_id" name="id">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="edit_grade" class="form-label">Grade <span class="text-danger">*</span></label>
+                            <label for="edit_grade"
+                                class="form-label">{{ admin_label('auction_grade_form', 'grade', 'Grade') }} <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="edit_grade" name="grade">
                             <p id="edit_grade-error" class="text-danger mt-1" style="display: none;"></p>
                         </div>
                         <div class="mb-3">
-                            <label for="edit_remarks" class="form-label">Remarks <span class="text-danger">*</span></label>
+                            <label for="edit_remarks"
+                                class="form-label">{{ admin_label('auction_grade_form', 'remarks', 'Remarks') }} <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control" id="edit_remarks" name="remarks" rows="3"></textarea>
                             <p id="edit_remarks-error" class="text-danger mt-1" style="display: none;"></p>
                         </div>

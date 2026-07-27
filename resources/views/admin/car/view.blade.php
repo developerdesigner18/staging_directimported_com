@@ -121,6 +121,11 @@
                             <div class="ratio ratio-16x9 map">
                                 {!! $car->map->google_map_link !!}
                             </div>
+                        @elseif(!empty($car->location))
+                            <div class="p-3 bg-light rounded border">
+                                <h6 class="text-muted mb-1"><i class="ri-map-pin-2-line text-danger me-1"></i> Location</h6>
+                                <p class="mb-0 fw-semibold fs-15 text-dark">{{ $car->location }}</p>
+                            </div>
                         @endif
                     </div>
 

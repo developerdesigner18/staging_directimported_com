@@ -26,58 +26,61 @@
                         <div class="row">
                             <!-- Technical Specs -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Make</label>
-                                <input type="text" name="make" class="form-control"
-                                    value="{{ $car->spec->make ?? '' }}" placeholder="e.g. Toyota">
+                                <label class="form-label">{{ admin_label('car_form', 'make', 'Make') }}</label>
+                                <input type="text" name="make" class="form-control" value="{{ $car->spec->make ?? '' }}"
+                                    placeholder="e.g. Toyota">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Exterior Color</label>
-                                <input type="text" name="exterior_color" class="form-control" value="{{ $car->spec->exterior_color ?? '' }}"
-                                    placeholder="e.g. Pearl White">
+                                <label
+                                    class="form-label">{{ admin_label('car_form', 'exterior_color', 'Exterior Color') }}</label>
+                                <input type="text" name="exterior_color" class="form-control"
+                                    value="{{ $car->spec->exterior_color ?? '' }}" placeholder="e.g. Pearl White">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Body Type</label>
+                                <label class="form-label">{{ admin_label('car_form', 'body_type', 'Body Type') }}</label>
                                 <input type="text" name="body_type" class="form-control"
                                     value="{{ $car->spec->body_type ?? '' }}" placeholder="e.g. SUV">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Fuel Type</label>
+                                <label class="form-label">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
                                 <input type="text" name="fuel_type" class="form-control"
                                     value="{{ $car->spec->fuel_type ?? '' }}" placeholder="e.g. Hybrid">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Engine</label>
-                                <input type="text" name="engine" class="form-control"
-                                    value="{{ $car->spec->engine ?? '' }}" placeholder="e.g. 2.0L Turbo">
+                                <label class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
+                                <input type="text" name="engine" class="form-control" value="{{ $car->spec->engine ?? '' }}"
+                                    placeholder="e.g. 2.0L Turbo">
                             </div>
 
 
 
                             <!-- Car Specific Specs -->
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Odometer (km)</label>
+                                <label class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
                                 <input type="number" name="odometer" class="form-control"
                                     value="{{ $car->spec->odometer ?? '' }}" placeholder="e.g. 50000">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Model Year</label>
+                                <label class="form-label">{{ admin_label('car_form', 'year', 'Model Year') }}</label>
                                 <input type="number" name="model_year" class="form-control"
                                     value="{{ $car->spec->model_year ?? '' }}" placeholder="e.g. 2022">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Interior Color</label>
+                                <label
+                                    class="form-label">{{ admin_label('car_form', 'interior_color', 'Interior Color') }}</label>
                                 <input type="text" name="interior_color" class="form-control"
                                     value="{{ $car->spec->interior_color ?? '' }}" placeholder="e.g. Black Leather">
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Transmission</label>
+                                <label
+                                    class="form-label">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
                                 <input type="text" name="transmission" class="form-control"
                                     value="{{ $car->spec->transmission ?? '' }}" placeholder="e.g. Automatic / Manual">
                             </div>

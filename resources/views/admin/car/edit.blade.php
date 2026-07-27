@@ -9,23 +9,24 @@
                     <form id="editForm" enctype="multipart/form-data">
                         @csrf
                         <!-- Make + Model + Year -->
-                        <div class="row mb-3">
+                        <div class="row g-3 mb-4">
                             <!-- Make -->
                             <div class="col-md-4">
-                                <label for="manufacturer_id" class="form-label">{{ admin_label('car_form', 'make', 'Make') }}</label>
+                                <label for="manufacturer_id" class="form-label mb-2">{{ admin_label('car_form', 'make', 'Make') }}</label>
                                 <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
                                     <option value="">Select Make</option>
-                                    @foreach($manufacturers ?? [] as $manufacturer)
-                                        <option value="{{ optional($manufacturer)->id }}" {{ optional($car)->manufacturer_id == optional($manufacturer)->id ? 'selected' : '' }}>{{ optional($manufacturer)->name }}</option>
+                                    @foreach($manufacturers as $manufacturer)
+                                        <option value="{{ $manufacturer->id }}" {{ $car->manufacturer_id == $manufacturer->id ? 'selected' : '' }}>
+                                            {{ $manufacturer->name }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id"
-                                    style="display: none"></label>
+                                <label id="manufacturer_id-error" class="text-danger error" for="manufacturer_id" style="display: none"></label>
                             </div>
 
                             <!-- Model -->
                             <div class="col-md-4">
-                                <label for="model" class="form-label">{{ admin_label('car_form', 'model', 'Model') }}</label>
+                                <label for="model" class="form-label mb-2">{{ admin_label('car_form', 'model', 'Model') }}</label>
                                 <input type="text" class="form-control" id="model" name="model" value="{{ $car->model }}"
                                     placeholder="Enter model name">
                                 <label id="model-error" class="text-danger error" for="model" style="display: none"></label>
@@ -33,7 +34,7 @@
 
                             <!-- Year -->
                             <div class="col-md-4">
-                                <label for="year" class="form-label">{{ admin_label('car_form', 'year', 'Year') }}</label>
+                                <label for="year" class="form-label mb-2">{{ admin_label('car_form', 'year', 'Year') }}</label>
                                 <select class="form-select select2" id="year" name="year">
                                     <option value="">Select Year</option>
                                     @for($y = date('Y') + 1; $y >= 1970; $y--)
@@ -44,182 +45,128 @@
                             </div>
                         </div>
 
-                        <!-- Category -->
-                        <div class="mb-3">
-                            <label for="category_id" class="form-label">{{ admin_label('car_form', 'category', 'Category') }}</label>
-                            <select class="form-select" id="category_id" name="category_id">
-                                <option value="">Select Category</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ $car->category_id == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <label id="category_id-error" class="text-danger error" style="display:none"></label>
-                        </div>
-
-                        <!-- Hidden based on client request. -->
-                        {{--
-                        <!-- Pricing Rows -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="less_four_days_price" class="form-label">{{ admin_label('car_form', '1_4_days_price', '1-4 Days Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="less_four_days_price"
-                                    name="less_four_days_price" value="{{ $car->less_four_days_price }}">
-                                <label id="less_four_days_price-error" class="text-danger error"
-                                    style="display:none"></label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="five_six_days_price" class="form-label">{{ admin_label('car_form', '5_6_days_price', '5-6 Days Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="five_six_days_price"
-                                    name="five_six_days_price" value="{{ $car->five_six_days_price }}">
-                                <label id="five_six_days_price-error" class="text-danger error"
-                                    style="display:none"></label>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="week_price" class="form-label">{{ admin_label('car_form', 'weekly_price', 'Weekly Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="week_price" name="week_price"
-                                    value="{{ $car->week_price }}">
-                                <label id="week_price-error" class="text-danger error" style="display:none"></label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="month_price" class="form-label">{{ admin_label('car_form', 'monthly_price', 'Monthly Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="month_price" name="month_price"
-                                    value="{{ $car->month_price }}">
-                                <label id="month_price-error" class="text-danger error" style="display:none"></label>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="max_price" class="form-label">{{ admin_label('car_form', 'maximum_price', 'Maximum Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="max_price" name="max_price"
-                                    value="{{ $car->max_price }}">
-                                <label id="max_price-error" class="text-danger error" style="display:none"></label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="insurance_price" class="form-label">{{ admin_label('car_form', 'insurance_price', 'Insurance Price') }}</label>
-                                <input type="number" step="0.01" class="form-control" id="insurance_price"
-                                    name="insurance_price" value="{{ $car->insurance_price }}">
-                                <label id="insurance_price-error" class="text-danger error" style="display:none"></label>
-                            </div>
-                        </div>
-
-                        <!-- Free & Extra Accessories -->
-                        <div class="row">
-
-                             <!-- Free Accessory -->
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">{{ admin_label('car_form', 'included_accessory', 'Included Accessory') }}</label>
-                                <select class="form-select select2-multiple" name="free_accessory[]" multiple>
-                                    @foreach($freeAccessories as $accessory)
-                                        <option value="{{ $accessory['id'] }}" {{ isset($car->free_accessory) && in_array($accessory['id'], $car->free_accessory) ? 'selected' : '' }}>
-                                            {{ $accessory['name'] }}
+                        <!-- Category + Status + Auction Grade + Location -->
+                        <div class="row g-3 mb-4">
+                            <!-- Category -->
+                            <div class="col-lg-3">
+                                <label for="category_id" class="form-label mb-2">{{ admin_label('car_form', 'category', 'Category') }}</label>
+                                <select class="form-select select2" id="category_id" name="category_id">
+                                    <option value="">Select Category</option>
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ $car->category_id == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                <label id="free_accessory-error" class="text-danger error" style="display:none"></label>
+                                <label id="category_id-error" class="text-danger error" style="display:none"></label>
                             </div>
 
-                             <!-- Extra Accessory -->
-                            <div class="col-lg-6 mb-3">
-                                <label class="form-label">{{ admin_label('car_form', 'extra_accessory', 'Extra Accessory') }}</label>
-                                <select class="form-select select2-multiple" name="extra_accessory[]" multiple>
-                                    @foreach($extraAccessories as $accessory)
-                                        <option value="{{ $accessory['id'] }}" {{ isset($car->extra_accessory) && in_array($accessory['id'], $car->extra_accessory) ? 'selected' : '' }}>
-                                            {{ $accessory['name'] }}
+                            <!-- Status -->
+                            <div class="col-lg-3">
+                                <label for="status" class="form-label mb-2">{{ admin_label('car_form', 'status', 'Status') }}</label>
+                                <select class="form-select select2" id="status" name="status">
+                                    <option value="">Select Status</option>
+                                    @foreach(\App\Enum\VehicleStatus::cases() as $status)
+                                        <option value="{{ $status->value }}" {{ (isset($car->status) && $car->status->value == $status->value) ? 'selected' : '' }}>
+                                            {{ $status->label() }}
                                         </option>
                                     @endforeach
                                 </select>
-                                <label id="extra_accessory-error" class="text-danger error" style="display:none"></label>
+                                <label id="status-error" class="text-danger error" style="display: none"></label>
                             </div>
 
-                        </div>
-                        --}}
-
-                        <!-- Number Plate & Location -->
-                        <div class="row">
-
-                            <!-- Hidden based on client request. -->
-                            {{--
-                            <div class="col-lg-6 mb-3">
-                                <label for="numberPlate" class="form-label">{{ admin_label('car_form', 'number_plate', 'Number Plate') }}</label>
-                                <input type="text" class="form-control" id="numberPlate" value="{{ $car->number_plate }}"
-                                    name="number_plate">
-                                <label id="number_plate-error" class="text-danger error" style="display:none"></label>
-                            </div>
-                            --}}
-
-                            <div class="col-lg-6 mb-3">
-                                <label for="location" class="form-label">{{ admin_label('car_form', 'location', 'Location') }}</label>
-                                <select class="form-select select2" name="location">
-                                    <option value="">-- Select Location --</option>
-                                    @foreach($locations as $location)
-                                        <option value="{{ $location->id }}" {{ $car->location_id == $location->id ? 'selected' : '' }}>
-                                            {{ $location->name }}
+                            <!-- Auction Grade -->
+                            <div class="col-lg-3">
+                                <label for="auction_grade_id" class="form-label mb-2">{{ admin_label('car_form', 'auction_grade', 'Auction Grade') }}</label>
+                                <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
+                                    <option value="">Select Auction Grade</option>
+                                    @foreach($auctionGrades ?? [] as $grade)
+                                        <option value="{{ optional($grade)->id }}" {{ (optional($car)->auction_grade_id ?? '') == optional($grade)->id ? 'selected' : '' }}>
+                                            {{ optional($grade)->grade }} {{ optional($grade)->remarks }}
                                         </option>
                                     @endforeach
                                 </select>
-                                <label id="location-error" class="text-danger error" style="display:none"></label>
+                                <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
                             </div>
 
+                            <!-- Location -->
+                            <div class="col-lg-3">
+                                @php
+                                    $isManualLocation = empty($car->location_id) && !empty($car->location);
+                                @endphp
+                                <div class="d-flex align-items-center justify-content-between mb-2" style="min-height: 21px;">
+                                    <label class="form-label mb-0">{{ admin_label('car_form', 'location', 'Location') }}</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="form-check form-check-inline mb-0 me-0">
+                                            <input class="form-check-input" type="radio" name="location_type" id="location_type_list" value="list" {{ !$isManualLocation ? 'checked' : '' }}>
+                                            <label class="form-check-label small" for="location_type_list">
+                                                {{ admin_label('car_form', 'select_from_list', 'Select from List') }}
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline mb-0 me-0">
+                                            <input class="form-check-input" type="radio" name="location_type" id="location_type_manual" value="manual" {{ $isManualLocation ? 'checked' : '' }}>
+                                            <label class="form-check-label small" for="location_type_manual">
+                                                {{ admin_label('car_form', 'manual_entry', 'Manual Entry') }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dropdown for List selection -->
+                                <div id="location_list_container" style="{{ $isManualLocation ? 'display: none;' : '' }}">
+                                    <select class="form-select select2" id="location_id" name="location_id">
+                                        <option value="">Select Location</option>
+                                        @foreach($locations as $loc)
+                                            <option value="{{ $loc->id }}" {{ $car->location_id == $loc->id ? 'selected' : '' }}>
+                                                {{ $loc->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="location_id-error" class="text-danger error" style="display: none"></label>
+                                </div>
+
+                                <!-- Text Input for Manual Entry -->
+                                <div id="location_manual_container" style="{{ !$isManualLocation ? 'display: none;' : '' }}">
+                                    <input type="text" class="form-control" id="location_manual" name="location_manual" value="{{ old('location_manual', $car->location ?? '') }}" placeholder="Enter location">
+                                    <label id="location_manual-error" class="text-danger error" style="display: none"></label>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Vehicle ID + Status + Auction Grade -->
-                        <div class="mb-3">
-                            <div class="row">
-                                <!-- Vehicle ID -->
-                                <div class="col-lg-4">
-                                    <label for="vehicle_id" class="form-label">{{ admin_label('car_form', 'vehicle_id', 'Vehicle ID / Chassis No') }}</label>
+                        <!-- Vehicle ID + Recommended Switch -->
+                        <div class="row g-3 mb-4">
+                            <!-- Vehicle ID Type + Input -->
+                            <div class="col-lg-6">
+                                <label class="form-label d-block mb-2">{{ admin_label('car_form', 'vehicle_id_type', 'Vehicle ID Type') }}</label>
+                                <div class="d-flex align-items-center gap-4 py-1">
+                                    <div class="form-check me-2">
+                                        <input class="form-check-input" type="radio" name="vehicle_id_type" id="vehicle_id_type_auto" value="auto" {{ empty($car->vehicle_id) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="vehicle_id_type_auto">
+                                            Auto Generate
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="vehicle_id_type" id="vehicle_id_type_manual" value="manual" {{ !empty($car->vehicle_id) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="vehicle_id_type_manual">
+                                            Manual Entry
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div id="vehicle_id_container" class="mt-3" style="{{ empty($car->vehicle_id) ? 'display: none;' : '' }}">
+                                    <label for="vehicle_id" class="form-label mb-2">{{ admin_label('car_form', 'vehicle_id', 'Vehicle ID / Chassis No') }}</label>
                                     <input type="text" class="form-control" id="vehicle_id" name="vehicle_id" value="{{ old('vehicle_id', $car->vehicle_id ?? '') }}" placeholder="Enter Vehicle ID">
                                     <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
                                 </div>
-
-                                <!-- Status -->
-                                <div class="col-lg-4">
-                                    <label for="status" class="form-label">{{ admin_label('car_form', 'status', 'Status') }}</label>
-                                    <select class="form-select select2" id="status" name="status">
-                                        <option value="">Select Status</option>
-                                        @foreach(\App\Enum\VehicleStatus::cases() as $status)
-                                            <option value="{{ $status->value }}" {{ (isset($car->status) && $car->status->value == $status->value) ? 'selected' : '' }}>
-                                                {{ $status->label() }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label id="status-error" class="text-danger error" style="display: none"></label>
-                                </div>
-
-                                <!-- Auction Grade -->
-                                <div class="col-lg-4">
-                                    <label for="auction_grade_id" class="form-label">{{ admin_label('car_form', 'auction_grade', 'Auction Grade') }}</label>
-                                    <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
-                                        <option value="">Select Auction Grade</option>
-                                        @foreach($auctionGrades ?? [] as $grade)
-                                            <option value="{{ optional($grade)->id }}" {{ (optional($car)->auction_grade_id ?? '') == optional($grade)->id ? 'selected' : '' }}>
-                                                {{ optional($grade)->grade }} {{ optional($grade)->remarks }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
-                                </div>
                             </div>
-                        </div>
 
-                        <!-- Recommended Switch -->
-                        <div class="mb-3">
-                            <label class="form-label">{{ admin_label('car_form', 'recommended_car', 'Recommended Car') }}</label>
-                            <div class="form-check form-switch">
-                                <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended"
-                                    value="1" {{ $car->is_recommended ? 'checked' : '' }}>
-                                <label class="form-check-label" for="is_recommended">
-                                    Mark as recommended
-                                </label>
+                            <!-- Recommended Car Toggle -->
+                            <div class="col-lg-6">
+                                <label class="form-label d-block mb-2">{{ admin_label('car_form', 'recommended_car', 'Recommended Car') }}</label>
+                                <div class="form-check form-switch py-1">
+                                    <input type="checkbox" class="form-check-input" id="is_recommended" name="is_recommended" value="1" {{ $car->is_recommended ? 'checked' : '' }}>
+                                    <label class="form-check-label ms-2" for="is_recommended">Mark as recommended</label>
+                                </div>
                             </div>
                         </div>
 
@@ -485,6 +432,11 @@
                 placeholder: 'Select Auction Grade',
                 allowClear: true
             });
+            $('#location_id').select2({
+                width: '100%',
+                placeholder: 'Select Location',
+                allowClear: true
+            });
             const sortableContainer = document.getElementById('sortable-images');
 
             if (sortableContainer) {
@@ -527,19 +479,50 @@
 
 
 
+            $('input[name="vehicle_id_type"]').on('change', function () {
+                if ($(this).val() === 'manual') {
+                    $('#vehicle_id_container').slideDown();
+                } else {
+                    $('#vehicle_id_container').slideUp();
+                    $('#vehicle_id-error').hide();
+                }
+            });
+
+            $('input[name="location_type"]').on('change', function () {
+                if ($(this).val() === 'manual') {
+                    $('#location_list_container').hide();
+                    $('#location_id').val('').trigger('change');
+                    $('#location_manual_container').show();
+                    $('#location_id-error').hide();
+                } else {
+                    $('#location_manual_container').hide();
+                    $('#location_manual').val('');
+                    $('#location_list_container').show();
+                    $('#location_manual-error').hide();
+                }
+            });
+
             $("#editForm").validate({
                 rules: {
                     manufacturer_id: { required: true },
                     model: { required: true },
                     year: { required: true },
                     category_id: { required: true },
-                    // Hidden based on client request.
-                    // less_four_days_price: { required: true, number: true, min: 0 },
-                    // five_six_days_price: { required: true, number: true, min: 0 },
-                    // week_price: { required: true, number: true, min: 0 },
-                    // month_price: { required: true, number: true, min: 0 },
-                    // max_price: { required: true, number: true, min: 0 },
-                    vehicle_id: { required: true },
+                    vehicle_id: {
+                        required: function () {
+                            return $('input[name="vehicle_id_type"]:checked').val() === 'manual';
+                        }
+                    },
+                    location_id: {
+                        required: function () {
+                            return $('input[name="location_type"]:checked').val() === 'list';
+                        }
+                    },
+                    location_manual: {
+                        required: function () {
+                            return $('input[name="location_type"]:checked').val() === 'manual';
+                        }
+                    },
                     status: { required: true },
                     auction_grade_id: { required: true },
                     description: { required: true },
@@ -554,6 +537,8 @@
                     model: { required: "The model field is required." },
                     year: { required: "Please select a year." },
                     category_id: { required: "Please select a category." },
+                    location_id: { required: "Please select a location." },
+                    location_manual: { required: "Please enter a location." },
                     // Hidden based on client request.
                     // less_four_days_price: {
                     //     required: "Price for 1-3 days is required.",

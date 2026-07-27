@@ -12,10 +12,39 @@ class AdminLabelSeeder extends Seeder
      */
     public function run(): void
     {
-        // Truncate existing labels so we start fresh with only form input labels
+        // Truncate existing labels so we start fresh with all form input & sidebar labels
         AdminLabel::truncate();
 
         $labels = [
+            // Sidebar Menu Labels
+            ['page' => 'sidebar', 'key' => 'menu', 'value' => 'Menu'],
+            ['page' => 'sidebar', 'key' => 'dashboards', 'value' => 'Dashboards'],
+            ['page' => 'sidebar', 'key' => 'bookings', 'value' => 'Bookings'],
+            ['page' => 'sidebar', 'key' => 'contact_requests', 'value' => 'Contact Requests'],
+            ['page' => 'sidebar', 'key' => 'cars', 'value' => 'Cars'],
+            ['page' => 'sidebar', 'key' => 'cars_list', 'value' => 'Cars'],
+            ['page' => 'sidebar', 'key' => 'cars_categories', 'value' => 'Cars Categories'],
+            ['page' => 'sidebar', 'key' => 'manage_manufacturers', 'value' => 'Manage Manufacturers'],
+            ['page' => 'sidebar', 'key' => 'cars_configuration', 'value' => 'Cars Configuration'],
+            ['page' => 'sidebar', 'key' => 'manage_auction_grades', 'value' => 'Manage Auction Grades'],
+            ['page' => 'sidebar', 'key' => 'services', 'value' => 'Services'],
+            ['page' => 'sidebar', 'key' => 'about_us', 'value' => 'About Us'],
+            ['page' => 'sidebar', 'key' => 'accessories_equipments', 'value' => 'Accessories & Equipments'],
+            ['page' => 'sidebar', 'key' => 'location', 'value' => 'Location'],
+            ['page' => 'sidebar', 'key' => 'users', 'value' => 'Users'],
+            ['page' => 'sidebar', 'key' => 'employee', 'value' => 'Employee'],
+            ['page' => 'sidebar', 'key' => 'gallery', 'value' => 'Gallery'],
+            ['page' => 'sidebar', 'key' => 'slider', 'value' => 'Slider'],
+            ['page' => 'sidebar', 'key' => 'manage_information', 'value' => 'Manage Information'],
+            ['page' => 'sidebar', 'key' => 'rental_policies', 'value' => 'Rental Policies'],
+            ['page' => 'sidebar', 'key' => 'faq', 'value' => 'FAQ'],
+            ['page' => 'sidebar', 'key' => 'newsletters', 'value' => 'Newsletters'],
+            ['page' => 'sidebar', 'key' => 'emails', 'value' => 'Emails'],
+            ['page' => 'sidebar', 'key' => 'system_template', 'value' => 'System Template'],
+            ['page' => 'sidebar', 'key' => 'custom_mail', 'value' => 'Custom Mail'],
+            ['page' => 'sidebar', 'key' => 'system_settings', 'value' => 'System Settings'],
+            ['page' => 'sidebar', 'key' => 'manage_labels', 'value' => 'Manage Labels'],
+
             // Car Form Input Labels
             ['page' => 'car_form', 'key' => 'make', 'value' => 'Make'],
             ['page' => 'car_form', 'key' => 'model', 'value' => 'Model'],
@@ -33,7 +62,10 @@ class AdminLabelSeeder extends Seeder
             ['page' => 'car_form', 'key' => 'extra_accessory', 'value' => 'Extra Accessory'],
             ['page' => 'car_form', 'key' => 'number_plate', 'value' => 'Number Plate'],
             ['page' => 'car_form', 'key' => 'location', 'value' => 'Location'],
+            ['page' => 'car_form', 'key' => 'select_from_list', 'value' => 'Select from List'],
+            ['page' => 'car_form', 'key' => 'manual_entry', 'value' => 'Manual Entry'],
 
+            ['page' => 'car_form', 'key' => 'vehicle_id_type', 'value' => 'Vehicle ID Type'],
             ['page' => 'car_form', 'key' => 'vehicle_id', 'value' => 'Vehicle ID / Chassis No'],
             ['page' => 'car_form', 'key' => 'status', 'value' => 'Status'],
             ['page' => 'car_form', 'key' => 'auction_grade', 'value' => 'Auction Grade'],
@@ -53,6 +85,17 @@ class AdminLabelSeeder extends Seeder
 
             ['page' => 'car_form', 'key' => 'card_header', 'value' => 'Card Header'],
             ['page' => 'car_form', 'key' => 'card_subtitle', 'value' => 'Card Subtitle'],
+
+            // Auction Grade Form Input Labels
+            ['page' => 'auction_grade_form', 'key' => 'grade', 'value' => 'Grade'],
+            ['page' => 'auction_grade_form', 'key' => 'remarks', 'value' => 'Remarks'],
+
+            // Car Configuration Form Input Labels
+            ['page' => 'car_configuration_form', 'key' => 'rate_details', 'value' => 'Rate Details'],
+            ['page' => 'car_configuration_form', 'key' => 'what_to_expect', 'value' => 'What to Expect'],
+            ['page' => 'car_configuration_form', 'key' => 'what_include', 'value' => "What's Included"],
+            ['page' => 'car_configuration_form', 'key' => 'requirements', 'value' => 'Requirements'],
+            ['page' => 'car_configuration_form', 'key' => 'useful_links', 'value' => 'Useful Links'],
 
             // Service Form Input Labels
             ['page' => 'service_form', 'key' => 'service_title', 'value' => 'Service Title'],
