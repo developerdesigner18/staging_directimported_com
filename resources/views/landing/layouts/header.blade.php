@@ -71,13 +71,13 @@
     <div class="rid-header-bottom">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-2 col-md-8 col-sm-8 col-6">
+                <div class="col-lg-3 col-md-8 col-sm-8 col-6">
                     <a href="{{route('landing')}}">
                         <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow"
                             loading="lazy">
                     </a>
                 </div>
-                <div class="col-lg-10 col-md-4 col-sm-4 col-6">
+                <div class="col-lg-9 col-md-4 col-sm-4 col-6">
                     <div class="d-flex justify-content-center align-items-center">
                         <nav class="rid-menubar">
                             <ul class="list-inline">
@@ -88,6 +88,9 @@
                                         class="@if(request()->is('car')) active @endif">Cars</a></li> --}}
                                 <li class="list-inline-item"><a href="{{ route('car') }}"
                                         class="@if(request()->is('car')) active @endif">Auction Access</a></li>
+                                <li class="list-inline-item"><a href="{{ route('available.vehicles') }}"
+                                        class="@if(request()->is('available-vehicles')) active @endif">Available
+                                        Vehicles</a></li>
                                 <li class="list-inline-item"><a href="{{ route('services.view') }}"
                                         class="@if(request()->is('services')) active @endif">Services</a></li>
 

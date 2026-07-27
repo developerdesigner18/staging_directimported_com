@@ -703,6 +703,101 @@
         </div>
     </section>
     <!-- Filter/CTA Section End -->
+
+    <!-- Latest Cars Section Start -->
+    @if(!$cars->isEmpty())
+        <div class="rid-rentals-1 py-5">
+
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center mb-5">
+                    <div class="section-title">
+                        <h2>Latest Cars</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach($cars as $car)
+                        <div class="col-lg-3 col-md-6 mb-4">
+                            <div class="car-card">
+
+                                <!-- Image -->
+                                <div class="car-card-img-wrapper">
+                                    <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                        @if(isset($car->images[0]))
+                                            <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
+                                        @else
+                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $car->name }}" loading="lazy">
+                                        @endif
+                                    </a>
+                                </div>
+
+                                <!-- Body -->
+                                <div class="car-card-body">
+
+                                    <!-- Title -->
+                                    <h4 class="car-title">
+                                        <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                            {{ $car->card_header ?? $car->name }}
+                                        </a>
+                                    </h4>
+
+                                    <!-- Subtitle -->
+                                    <div class="car-subtitle">
+                                        {{ $car->card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
+                                    </div>
+
+                                    <div class="car-emblem-row">
+
+                                        <!-- Year -->
+                                        <div class="emblem-item">
+                                            <i class='bx bx-calendar'></i>
+                                            <span>{{ $car->year ?? '1994' }}</span>
+                                        </div>
+
+                                        <!-- Mileage -->
+                                        <div class="emblem-item">
+                                            <i class='bx bx-tachometer'></i>
+                                            <span>65000</span>
+                                        </div>
+
+                                        <!-- Fuel -->
+                                        <div class="emblem-item">
+                                            <i class="bx bx-ev-station"></i> <span>Hybrid/Petrol</span>
+                                        </div>
+
+                                        <!-- Transmission -->
+                                        <div class="emblem-item">
+                                            <i class='bx bx-git-branch'></i>
+                                            <span>ZF 8 Speed</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="margin-top: auto;">
+                                        <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
+                                            data-id="{{ $car->id }}" data-name="{{ $car->name }}"
+                                            data-image="{{ isset($car->images[0]) ? asset(CAR_PATH . $car->images[0]) : '' }}">
+                                            CHECK IT OUT
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ route('available.vehicles') }}" class="cta-btn text-white fw-bold d-inline-block px-5 py-3" style="text-decoration: none;">
+                        View All Vehicles
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    @endif
+    <!-- Latest Cars Section End -->
+
     <!-- Our Services Section Start -->
     <section id="ourservices">
         <div class="container">
@@ -788,111 +883,6 @@
     </section>
     @endif
     <!-- About IAS Japan Section End -->
-
-
-    @if(!$cars->isEmpty())
-        <div class="rid-rentals-1">
-
-            <div class="container">
-
-                <div class="d-flex justify-content-between align-items-center mb-5">
-                    <div class="section-title">
-                        <h2>Latest Cars</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    @foreach($cars as $car)
-                        <div class="col-lg-4 col-md-6 mb-4">
-                            <div class="car-card">
-
-                                <!-- Image -->
-                                <div class="car-card-img-wrapper">
-                                    <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
-                                        @if(isset($car->images[0]))
-                                            <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
-                                        @else
-                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $car->name }}" loading="lazy">
-                                        @endif
-                                    </a>
-                                </div>
-
-                                <!-- Body -->
-                                <div class="car-card-body">
-
-                                    <!-- Title -->
-                                    <h4 class="car-title">
-                                        <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
-                                            {{ $car->card_header ?? $car->name }}
-                                        </a>
-                                    </h4>
-
-                                    <!-- Subtitle -->
-                                    <div class="car-subtitle">
-                                        {{ $car->card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
-                                    </div>
-
-                                    <div class="car-emblem-row">
-
-                                        <!-- Year -->
-                                        <div class="emblem-item">
-                                            <i class='bx bx-calendar'></i>
-                                            <span>1994</span>
-                                        </div>
-
-                                        <!-- Mileage -->
-                                        <div class="emblem-item">
-                                            <i class='bx bx-tachometer'></i>
-                                            <span>65000</span>
-                                        </div>
-
-                                        <!-- Fuel -->
-                                        <div class="emblem-item">
-                                            <i class='bx bx-gas-pump'></i>
-                                            <span>Hybrid/Petrol</span>
-                                        </div>
-
-                                        <!-- Transmission -->
-                                        <div class="emblem-item">
-                                            <i class='bx bx-git-branch'></i>
-                                            <span>ZF 8 Speed</span>
-                                        </div>
-
-                                    </div>
-
-                                    <div style="margin-top: auto;">
-                                        <!-- Hidden based on client request. -->
-                                        {{--
-                                        <!-- Price -->
-                                        <div class="car-price-block">
-                                            <span class="price-amount">¥{{ number_format($car->month_price) }}</span>
-                                            <span class="price-per">fob</span>
-                                        </div>
-                                        --}}
-
-
-                                        <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
-                                            data-id="{{ $car->id }}" data-name="{{ $car->name }}"
-                                            data-image="{{ isset($car->images[0]) ? asset(CAR_PATH . $car->images[0]) : '' }}">
-                                            CHECK IT OUT
-                                        </button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div class="text-end mt-3">
-                    <a href="{{ route('car') }}" class="btn-read-more">
-                        SEE MORE <i class='bx bx-right-arrow-alt'></i>
-                    </a>
-                </div>
-
-            </div>
-        </div>
-    @endif
-    <!-- Rentals Section End -->
 
 
     <!--  How-it-work Section Start-->

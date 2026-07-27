@@ -29,7 +29,7 @@ class HomeController extends Controller
         $faqs = Faq::orderBy('created_at', 'desc')->get();
         $services = Service::orderBy('created_at', 'desc')->limit(3)->get();
 
-        $cars = Car::where('is_recommended', 1)->orderBy('created_at', 'desc')->limit(6)->get();
+        $cars = Car::orderBy('created_at', 'desc')->limit(8)->get();
         $color = Color::first();
         $homeSection = HomeSection::with('points')->first();
 
@@ -41,6 +41,12 @@ class HomeController extends Controller
         });
         $sliderImages = json_encode([...$array1, ...$array2]);
         return view('landing.pages.index', compact('sliders', 'gallery', 'cars', 'sliderImages', 'color', 'faqs', 'services', 'homeSection'));
+    }
+
+    public function availableVehicles()
+    {
+        $cars = Car::with('category')->orderBy('created_at', 'desc')->paginate(16);
+        return view('landing.pages.available-vehicles', compact('cars'));
     }
 
     public function rentalPolicies()

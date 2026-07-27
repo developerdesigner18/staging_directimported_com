@@ -105,6 +105,21 @@
             margin-right: 15px;
         }
 
+        .rid-menubar ul li a {
+            font-size: 15px !important;
+            margin-right: 35px !important;
+            white-space: nowrap !important;
+        }
+
+        .rid-menubar ul li:last-child a {
+            margin-right: 0 !important;
+        }
+
+        .logo {
+            max-width: 180px !important;
+            height: auto;
+        }
+
         .rid-menubar .dropdown-menu li a {
             font-size: 16px !important;
             color: #050B20 !important;
@@ -418,6 +433,7 @@
                 <li><a class="active home" style="color:white !important;" href="{{route('landing')}}">Home</a></li>
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 <li><a href="{{ route('car') }}">Auction Access</a></li>
+                <li><a href="{{ route('available.vehicles') }}">Available Vehicles</a></li>
                 <li><a href="{{ route('services.view') }}">Services</a></li>
                 {{-- <li class="dropdown">
                     <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
