@@ -3,6 +3,28 @@
 
 @section('style')
     <style>
+        /* FilePond Side-by-Side Grid Layout */
+        .filepond--root {
+            margin-bottom: 0 !important;
+        }
+
+        .filepond--item {
+            width: calc(25% - 0.5em);
+            height: 140px;
+        }
+
+        @media (max-width: 1200px) {
+            .filepond--item {
+                width: calc(33.33% - 0.5em);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filepond--item {
+                width: calc(50% - 0.5em);
+            }
+        }
+
         .color-picker-container {
             display: flex;
             flex-wrap: nowrap;
@@ -203,7 +225,9 @@
                                 <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
                                     <option value="">Select Auction Grade</option>
                                     @foreach($auctionGrades ?? [] as $grade)
-                                        <option value="{{ $grade->id }}">{{ $grade->grade }} {{ $grade->remarks }}</option>
+                                        <option value="{{ optional($grade)->id }}">{{ optional($grade)->grade }}
+                                            {{ optional($grade)->remarks }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
@@ -555,6 +579,7 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 60,
+                    imagePreviewHeight: 140,
                 });
             }
         }

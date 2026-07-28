@@ -3,6 +3,28 @@
 
 @section('style')
     <style>
+        /* FilePond Side-by-Side Grid Layout */
+        .filepond--root {
+            margin-bottom: 0 !important;
+        }
+
+        .filepond--item {
+            width: calc(25% - 0.5em);
+            height: 140px;
+        }
+
+        @media (max-width: 1200px) {
+            .filepond--item {
+                width: calc(33.33% - 0.5em);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filepond--item {
+                width: calc(50% - 0.5em);
+            }
+        }
+
         .color-picker-container {
             display: flex;
             flex-wrap: nowrap;
@@ -128,24 +150,29 @@
                         <div>
                             <label for="images"
                                 class="form-label">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
-                            <input type="file" class="filepond" id="images" name="images[]" multiple>
+                            <div class="mb-3">
+                                <input type="file" class="filepond" id="images" name="images[]" multiple>
+                            </div>
 
                             @if($car->images && count(array_filter($car->images)))
-                                <div id="sortable-images" class="d-flex flex-wrap mt-2 mb-2">
-                                    @foreach($car->images as $image)
-                                        @if(!empty($image))
-                                            <div class="image-preview-container me-2 mb-2 position-relative" data-image="{{ $image }}"
-                                                style="cursor: grab;">
-                                                <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
-                                                    draggable="false">
-                                                <button type="button"
-                                                    class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0"
-                                                    data-image="{{ $image }}">×</button>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                <div class="mt-4 pt-3 border-top">
+                                    <label class="form-label text-muted fw-semibold mb-2">Existing Car Images (Drag to reorder):</label>
+                                    <div id="sortable-images" class="d-flex flex-wrap gap-2">
+                                        @foreach($car->images as $image)
+                                            @if(!empty($image))
+                                                <div class="image-preview-container me-2 mb-2 position-relative" data-image="{{ $image }}"
+                                                    style="cursor: grab;">
+                                                    <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
+                                                        draggable="false">
+                                                    <button type="button"
+                                                        class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0"
+                                                        data-image="{{ $image }}">×</button>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <input type="hidden" name="image_order" id="image_order">
                                 </div>
-                                <input type="hidden" name="image_order" id="image_order">
                             @endif
 
                             <input type="hidden" id="removed_images" name="removed_images">
@@ -589,6 +616,7 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 60,
+                    imagePreviewHeight: 140,
                 });
             }
         }
