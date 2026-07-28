@@ -257,9 +257,7 @@ class CarController extends Controller
             'images' => 'required|array',
             'images.*' => 'required',
             'description' => 'required',
-            'location_type' => 'nullable|in:list,manual',
-            'location_id' => !$isManualLocation ? 'required|exists:locations,id' : 'nullable',
-            'location_manual' => $isManualLocation ? 'required|string|max:255' : 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
             'banner' => 'nullable|image',
 
             'card_header' => 'required',
@@ -272,8 +270,6 @@ class CarController extends Controller
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
             'vehicle_id.unique' => 'The entered Vehicle ID has already been taken. Please enter a unique Vehicle ID.',
-            'location_id.required' => 'The Location selection is required.',
-            'location_manual.required' => 'The Location text is required when Manual Entry is selected.',
         ]);
 
         if ($validator->fails()) {
@@ -299,14 +295,13 @@ class CarController extends Controller
             $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
-            if ($isManualLocation && $request->filled('location_manual')) {
-                $car->location_id = null;
-                $car->location = trim($request->location_manual);
-            } else {
-                $car->location_id = $request->location_id;
-                $car->location = null;
-            }
-
+            $car->location_id = null;
+            $car->location = $request->filled('location') ? trim($request->location) : null;
+            $car->vehicle_price = $request->vehicle_price;
+            $car->vin = $request->vin;
+            $car->drive_type = $request->drive_type;
+            $car->steering = $request->steering;
+            $car->private_notes = $request->private_notes;
 
             if ($request->hasFile('banner')) {
                 $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
@@ -348,6 +343,9 @@ class CarController extends Controller
                 'model_year' => $request->year,
                 'interior_color' => $request->interior_color,
                 'transmission' => $request->transmission,
+                'vin' => $request->vin,
+                'drive_type' => $request->drive_type,
+                'steering' => $request->steering,
             ]);
 
             DB::commit();
@@ -390,9 +388,7 @@ class CarController extends Controller
             'images' => 'sometimes|array',
             'images.*' => 'sometimes',
             'description' => 'required',
-            'location_type' => 'nullable|in:list,manual',
-            'location_id' => !$isManualLocation ? 'required|exists:locations,id' : 'nullable',
-            'location_manual' => $isManualLocation ? 'required|string|max:255' : 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
             'banner' => 'nullable|image',
 
             'card_header' => 'required',
@@ -406,8 +402,6 @@ class CarController extends Controller
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
             'vehicle_id.unique' => 'The entered Vehicle ID has already been taken. Please enter a unique Vehicle ID.',
-            'location_id.required' => 'The Location selection is required.',
-            'location_manual.required' => 'The Location text is required when Manual Entry is selected.',
         ]);
 
         if ($validator->fails()) {
@@ -431,13 +425,13 @@ class CarController extends Controller
             $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
-            if ($isManualLocation && $request->filled('location_manual')) {
-                $car->location_id = null;
-                $car->location = trim($request->location_manual);
-            } else {
-                $car->location_id = $request->location_id;
-                $car->location = null;
-            }
+            $car->location_id = null;
+            $car->location = $request->filled('location') ? trim($request->location) : null;
+            $car->vehicle_price = $request->vehicle_price;
+            $car->vin = $request->vin;
+            $car->drive_type = $request->drive_type;
+            $car->steering = $request->steering;
+            $car->private_notes = $request->private_notes;
 
 
             $car->card_header = $request->card_header;
@@ -541,6 +535,9 @@ class CarController extends Controller
                     'model_year' => $request->year,
                     'interior_color' => $request->interior_color,
                     'transmission' => $request->transmission,
+                    'vin' => $request->vin,
+                    'drive_type' => $request->drive_type,
+                    'steering' => $request->steering,
                 ]
             );
 

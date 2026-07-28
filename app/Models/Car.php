@@ -39,6 +39,11 @@ class Car extends Model
         'vehicle_id',
         'status',
         'auction_grade_id',
+        'vehicle_price',
+        'vin',
+        'drive_type',
+        'steering',
+        'private_notes',
     ];
 
     public function getNameAttribute()

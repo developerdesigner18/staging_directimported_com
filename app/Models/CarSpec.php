@@ -18,6 +18,9 @@ class CarSpec extends Model
         'model_year',
         'interior_color',
         'transmission',
+        'vin',
+        'drive_type',
+        'steering',
     ];
     public function car()
     {

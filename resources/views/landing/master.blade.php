@@ -115,10 +115,10 @@
             margin-right: 0 !important;
         }
 
-        .logo {
+        /* .logo {
             max-width: 180px !important;
             height: auto;
-        }
+        } */
 
         .rid-menubar .dropdown-menu li a {
             font-size: 16px !important;
