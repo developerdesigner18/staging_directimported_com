@@ -50,6 +50,11 @@ class AdminLabelSeeder extends Seeder
             ['page' => 'car_form', 'key' => 'model', 'value' => 'Model'],
             ['page' => 'car_form', 'key' => 'year', 'value' => 'Year'],
             ['page' => 'car_form', 'key' => 'category', 'value' => 'Category'],
+            ['page' => 'car_form', 'key' => 'vehicle_price', 'value' => 'Vehicle Price (¥)'],
+            ['page' => 'car_form', 'key' => 'vin', 'value' => 'VIN #'],
+            ['page' => 'car_form', 'key' => 'steering', 'value' => 'Steering'],
+            ['page' => 'car_form', 'key' => 'drive_type', 'value' => 'Drive Type'],
+            ['page' => 'car_form', 'key' => 'private_notes', 'value' => 'Private Notes'],
 
             ['page' => 'car_form', 'key' => '1_4_days_price', 'value' => '1-4 Days Price'],
             ['page' => 'car_form', 'key' => '5_6_days_price', 'value' => '5-6 Days Price'],

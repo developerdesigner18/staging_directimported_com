@@ -415,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                   ------------------------------------------------------------- */
+                                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                                   ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -643,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                    display: flex;
-                                                    align-items: center;
-                                                    gap: 12px;
-                                                    margin-bottom: 8px;
-                                                    flex-wrap: wrap;
-                                                } */
+                                                                    display: flex;
+                                                                    align-items: center;
+                                                                    gap: 12px;
+                                                                    margin-bottom: 8px;
+                                                                    flex-wrap: wrap;
+                                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1113,7 +1113,7 @@
                 <!-- Pricing Section matching reference -->
                 <div class="pricing-section">
                     <span class="pricing-label">FOB Price</span>
-                    <span class="pricing-value">¥{{ number_format($car->max_price) }}
+                    <span class="pricing-value">¥{{ $car->vehicle_price }}
                         <span class="pricing-fob">FOB</span></span>
                 </div>
 
@@ -1284,7 +1284,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                            ];
+                                                                                                                                                            ];
 
         let currentIndex = 0;
         let gridExpanded = false;
