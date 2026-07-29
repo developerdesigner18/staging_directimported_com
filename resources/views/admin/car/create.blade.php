@@ -3,25 +3,25 @@
 
 @section('style')
     <style>
-        /* FilePond Side-by-Side Grid Layout */
+        /* FilePond Side-by-Side Grid Layout (10 images per row) */
         .filepond--root {
             margin-bottom: 0 !important;
         }
 
         .filepond--item {
-            width: calc(25% - 0.5em);
-            height: 140px;
-        }
-
-        @media (max-width: 1200px) {
-            .filepond--item {
-                width: calc(33.33% - 0.5em);
-            }
+            width: calc(10% - 0.6em) !important;
+            height: 100px !important;
         }
 
         @media (max-width: 768px) {
             .filepond--item {
-                width: calc(50% - 0.5em);
+                width: calc(20% - 0.5em) !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filepond--item {
+                width: calc(33.33% - 0.5em) !important;
             }
         }
 
@@ -579,7 +579,7 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 60,
-                    imagePreviewHeight: 140,
+                    imagePreviewHeight: 100,
                 });
             }
         }

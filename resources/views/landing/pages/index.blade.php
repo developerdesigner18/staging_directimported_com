@@ -569,10 +569,11 @@
         .car-emblem-row {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 22px;
             padding: 12px 0;
             border: none;
+            gap: 4px;
         }
 
         .emblem-item {
@@ -580,12 +581,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
+            overflow: hidden;
         }
 
-        .emblem-item i {
+        .emblem-item i,
+        .emblem-item svg {
             display: block;
-            font-size: 22px;
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
             color: #111827;
             margin-bottom: 2px;
         }
@@ -596,7 +601,9 @@
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.1px;
-            white-space: nowrap;
+            white-space: normal;
+            line-height: 1.2;
+            word-break: normal;
         }
 
         .btn-adventure {
@@ -747,7 +754,6 @@
                                     </div>
 
                                     <div class="car-emblem-row">
-
                                         <!-- Year -->
                                         <div class="emblem-item">
                                             <i class='bx bx-calendar'></i>
@@ -757,20 +763,20 @@
                                         <!-- Mileage -->
                                         <div class="emblem-item">
                                             <i class='bx bx-tachometer'></i>
-                                            <span>65000</span>
+                                            <span>{{ !empty($car->spec->odometer) ? number_format($car->spec->odometer) : (!empty($car->odometer) ? number_format($car->odometer) : '65,000') }}</span>
                                         </div>
 
                                         <!-- Fuel -->
                                         <div class="emblem-item">
-                                            <i class="bx bx-ev-station"></i> <span>Hybrid/Petrol</span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M15 11a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2"/><path d="M10 11H5"/><path d="M3 22h12"/></svg>
+                                            <span>{{ $car->spec->fuel_type ?? ($car->fuel_type ?? 'Hybrid/Petrol') }}</span>
                                         </div>
 
                                         <!-- Transmission -->
                                         <div class="emblem-item">
                                             <i class='bx bx-git-branch'></i>
-                                            <span>ZF 8 Speed</span>
+                                            <span>{{ $car->spec->transmission ?? ($car->transmission ?? '8 Speed') }} </span>
                                         </div>
-
                                     </div>
 
                                     <div style="margin-top: auto;">
