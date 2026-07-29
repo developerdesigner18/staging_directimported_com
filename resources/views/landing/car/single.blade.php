@@ -415,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                                   ------------------------------------------------------------- */
+                                                                                                                                                                           MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                                           ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -643,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                    display: flex;
-                                                                    align-items: center;
-                                                                    gap: 12px;
-                                                                    margin-bottom: 8px;
-                                                                    flex-wrap: wrap;
-                                                                } */
+                                                                            display: flex;
+                                                                            align-items: center;
+                                                                            gap: 12px;
+                                                                            margin-bottom: 8px;
+                                                                            flex-wrap: wrap;
+                                                                        } */
 
         .sidebar-title {
             font-size: 24px;
@@ -679,33 +679,43 @@
         .pricing-section {
             margin-bottom: 12px;
             background-color: #ffffff;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(10, 42, 94, 0.06);
+            box-shadow: 0 4px 12px rgba(10, 42, 94, 0.05);
             border: 1px solid #cbd5e1;
             margin-top: 12px;
         }
 
+        .pricing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
         .pricing-label {
-            display: block;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 0;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .pricing-subtext {
             color: var(--primary-red);
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 2px;
-            letter-spacing: 0.5px;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .pricing-value {
-            font-size: 28px;
+            display: block;
+            font-size: 32px;
             font-weight: 900;
             color: var(--primary-blue);
-        }
-
-        .pricing-fob {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-weight: 700;
+            line-height: 1.1;
         }
 
         /* Inquiry Form Wrapper & Inline style element mappings */
@@ -1112,9 +1122,15 @@
                 </span>
                 <!-- Pricing Section matching reference -->
                 <div class="pricing-section">
-                    <span class="pricing-label">FOB Price</span>
-                    <span class="pricing-value">¥{{ $car->vehicle_price }}
-                        <span class="pricing-fob">FOB</span></span>
+                    <div class="pricing-header">
+                        <span class="pricing-label">Vehicle Base Price</span>
+                        <span class="pricing-subtext">(Excludes any FOB/CiF Fees)</span>
+                    </div>
+                    @php
+                        $cleanPrice = preg_replace('/[^\d.]/', '', $car->vehicle_price ?? 0);
+                        $formattedPrice = is_numeric($cleanPrice) && $cleanPrice > 0 ? number_format((float) $cleanPrice) : ($car->vehicle_price ?? '0');
+                    @endphp
+                    <span class="pricing-value">¥{{ $formattedPrice }}</span>
                 </div>
 
                 <!-- Inquiry/Booking Redesigned Form -->
@@ -1284,7 +1300,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                                            ];
+                                                                                                                                                                    ];
 
         let currentIndex = 0;
         let gridExpanded = false;

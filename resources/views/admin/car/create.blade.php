@@ -248,7 +248,7 @@
                                 <label for="vehicle_price"
                                     class="form-label mb-2">{{ admin_label('car_form', 'vehicle_price', 'Vehicle Price (¥)') }}</label>
                                 <input type="text" class="form-control" id="vehicle_price" name="vehicle_price"
-                                    placeholder="e.g. 15,000,000">
+                                    placeholder="e.g. 15000000">
                                 <label id="vehicle_price-error" class="text-danger error" style="display: none"></label>
                             </div>
                         </div>
@@ -606,7 +606,10 @@
 
             $('#manufacturer_id').on('change', updateCardHeader);
             $('#model').on('input', updateCardHeader);
-            $('#vehicle_price').on('input', updateCardSubtitle);
+            $('#vehicle_price').on('input', function () {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                updateCardSubtitle();
+            });
 
             $('input[name="vehicle_id_type"]').on('change', function () {
                 if ($(this).val() === 'manual') {
@@ -624,6 +627,7 @@
                     model: { required: true },
                     year: { required: true },
                     category_id: { required: true },
+                    vehicle_price: { digits: true },
                     vehicle_id: {
                         required: function () {
                             return $('input[name="vehicle_id_type"]:checked').val() === 'manual';
@@ -642,6 +646,7 @@
                     model: { required: "The model field is required." },
                     year: { required: "Please select a year." },
                     category_id: { required: "Please select a category." },
+                    vehicle_price: { digits: "The vehicle price must contain only numbers." },
                     vehicle_id: { required: "The Vehicle ID field is required." },
                     status: { required: "Please select a status." },
                     auction_grade_id: { required: "Please select an auction grade." },

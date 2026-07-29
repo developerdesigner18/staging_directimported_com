@@ -646,9 +646,11 @@ input:-webkit-autofill {
     padding: 23px 40px;
 }
 
-/* .logo {
-    padding: 12px;
-} */
+.logo-container,
+.col-lg-3.col-md-8.col-sm-8.col-6.logo-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
 
 .business-hour-mobile {
     display: none;
@@ -4882,7 +4884,6 @@ body.overlay-active:before {
     font-weight: 700;
     font-size: 1.2rem;
     border-radius: 5px;
-    width: 100%;
     padding: 15px;
     color: white;
     display: inline-block;

@@ -262,6 +262,7 @@ class CarController extends Controller
 
             'card_header' => 'required',
             'card_subtitle' => 'required',
+            'vehicle_price' => 'nullable|numeric',
             'vehicle_id_type' => 'nullable|in:auto,manual',
             'vehicle_id' => $isManual ? 'required|string|max:255|unique:cars,vehicle_id' : 'nullable|string|max:255',
             'status' => 'required',
@@ -270,6 +271,7 @@ class CarController extends Controller
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
             'vehicle_id.unique' => 'The entered Vehicle ID has already been taken. Please enter a unique Vehicle ID.',
+            'vehicle_price.numeric' => 'The Vehicle Price must contain only numbers.',
         ]);
 
         if ($validator->fails()) {
@@ -297,7 +299,7 @@ class CarController extends Controller
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
             $car->location = $request->filled('location') ? trim($request->location) : null;
-            $car->vehicle_price = $request->vehicle_price;
+            $car->vehicle_price = $request->filled('vehicle_price') ? preg_replace('/[^0-9]/', '', $request->vehicle_price) : null;
             $car->vin = $request->vin;
             $car->drive_type = $request->drive_type;
             $car->steering = $request->steering;
@@ -390,6 +392,7 @@ class CarController extends Controller
             'description' => 'required',
             'location' => 'nullable|string|max:255',
             'banner' => 'nullable|image',
+            'vehicle_price' => 'nullable|numeric',
 
             'card_header' => 'required',
             'card_subtitle' => 'required',
@@ -402,6 +405,7 @@ class CarController extends Controller
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
             'vehicle_id.unique' => 'The entered Vehicle ID has already been taken. Please enter a unique Vehicle ID.',
+            'vehicle_price.numeric' => 'The Vehicle Price must contain only numbers.',
         ]);
 
         if ($validator->fails()) {
@@ -427,7 +431,7 @@ class CarController extends Controller
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
             $car->location = $request->filled('location') ? trim($request->location) : null;
-            $car->vehicle_price = $request->vehicle_price;
+            $car->vehicle_price = $request->filled('vehicle_price') ? preg_replace('/[^0-9]/', '', $request->vehicle_price) : null;
             $car->vin = $request->vin;
             $car->drive_type = $request->drive_type;
             $car->steering = $request->steering;

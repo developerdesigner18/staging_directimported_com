@@ -115,10 +115,15 @@
             margin-right: 0 !important;
         }
 
-        /* .logo {
-            max-width: 180px !important;
-            height: auto;
-        } */
+        .logo-container,
+        .col-lg-3.col-md-8.col-sm-8.col-6.logo-container {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+
+        .logo {
+            padding: 0 !important;
+        }
 
         .rid-menubar .dropdown-menu li a {
             font-size: 16px !important;
@@ -189,7 +194,7 @@
                 margin-left: 0 !important;
                 margin-right: auto !important;
                 max-width: 156px !important;
-                padding: 5px !important;
+                padding: 0 !important;
             }
 
             .rid-header-bottom .rid-offcanvas-btn {

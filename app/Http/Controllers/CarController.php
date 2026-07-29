@@ -444,7 +444,7 @@ class CarController extends Controller
                         </tr>
                         <tr>
                             <td>Total Car Price</td>
-                            <td>¥' . $price . '</td>
+                            <td>¥' . number_format((float) $price) . '</td>
                         </tr>
                     </tbody>
                     <tr>
@@ -714,7 +714,7 @@ class CarController extends Controller
                             <td>End Date</td>
                             <td>' . date('d/m/Y', strtotime($request->end_date)) . ' Drop off ' . date('h:i A', strtotime($request->end_time)) . '</td>
                         </tr>
-                        <tr><td>Total Car Price</td><td>¥' . $request->price[$key] . '</td></tr>
+                        <tr><td>Total Car Price</td><td>¥' . number_format((float) $request->price[$key]) . '</td></tr>
                     </tbody>
                     <tr>
                         <td colspan="2"><h6 class="m-0 fw-bold">Accessories & Insurance</h6></td>

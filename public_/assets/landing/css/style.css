@@ -721,6 +721,11 @@ input:-webkit-autofill {
 
 }
 
+.col-lg-3.col-md-8.col-sm-8.col-6.logo-container {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
 .business-hour-mobile {
     display: none;
 }

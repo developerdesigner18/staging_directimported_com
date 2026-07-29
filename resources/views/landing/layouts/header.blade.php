@@ -71,7 +71,7 @@
     <div class="rid-header-bottom">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-3 col-md-8 col-sm-8 col-6">
+                <div class="col-lg-3 col-md-8 col-sm-8 col-6 logo-container ps-0 pe-0 px-0">
                     <a href="{{route('landing')}}">
                         <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow"
                             loading="lazy">

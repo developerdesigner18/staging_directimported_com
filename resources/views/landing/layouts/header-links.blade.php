@@ -1,5 +1,6 @@
 <!--favicon icon-->
-<link rel="icon" type="image/webp" href="{{asset('assets/logo/' . getSetting()->logo)}}">
+<link rel="shortcut icon" href="{{asset('assets/logo/' . getSetting()->favicon)}}">
+<link rel="icon" href="{{asset('assets/logo/' . getSetting()->favicon)}}">
 
 <!-- Inject:css -->
 
@@ -13,25 +14,46 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/responsive.min.css')}}">
 
 
-<link rel="preload" href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/admin/libs/sweetalert2/sweetalert2.min.css')}}">
+</noscript>
 
 <!-- jQuery UI CSS -->
-<link rel="preload" href="{{asset('assets/vendor/jquery-ui/jquery-ui.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/vendor/jquery-ui/jquery-ui.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/vendor/jquery-ui/jquery-ui.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/vendor/jquery-ui/jquery-ui.css')}}">
+</noscript>
 
-<link rel="preload" href="{{asset('assets/vendor/boxicons/latest/boxicons-basic.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/vendor/boxicons/latest/boxicons-basic.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/vendor/boxicons/latest/boxicons-basic.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/vendor/boxicons/latest/boxicons-basic.min.css')}}">
+</noscript>
 
-<link rel="preload" href="{{asset('assets/vendor/boxicons/latest/boxicons-brands.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/vendor/boxicons/latest/boxicons-brands.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/vendor/boxicons/latest/boxicons-brands.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/vendor/boxicons/latest/boxicons-brands.min.css')}}">
+</noscript>
 
 <!--datatable css-->
-<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/dataTables.bootstrap5.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/dataTables.bootstrap5.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/dataTables.bootstrap5.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/dataTables.bootstrap5.min.css')}}">
+</noscript>
 
-<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/responsive.bootstrap.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/responsive.bootstrap.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/responsive.bootstrap.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/responsive.bootstrap.min.css')}}">
+</noscript>
 
-<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/buttons.dataTables.min.css')}}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/buttons.dataTables.min.css')}}"></noscript>
+<link rel="preload" href="{{asset('assets/admin/libs/datatables/css/buttons.dataTables.min.css')}}" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+    <link rel="stylesheet" href="{{asset('assets/admin/libs/datatables/css/buttons.dataTables.min.css')}}">
+</noscript>

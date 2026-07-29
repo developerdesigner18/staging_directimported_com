@@ -716,9 +716,10 @@ input:-webkit-autofill {
     padding: 23px 40px;
 }
 
-.logo {
-    padding: 12px;
-
+.logo-container,
+.col-lg-3.col-md-8.col-sm-8.col-6.logo-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .business-hour-mobile {
