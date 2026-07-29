@@ -750,7 +750,7 @@
 
                                     <!-- Subtitle -->
                                     <div class="car-subtitle">
-                                        {{ $car->card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
+                                        {{ $car->formatted_card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
                                     </div>
 
                                     <div class="car-emblem-row">

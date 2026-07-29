@@ -415,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                                                   ------------------------------------------------------------- */
+                                                                                                                                                                                       MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                                                       ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -643,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                                    display: flex;
-                                                                                    align-items: center;
-                                                                                    gap: 12px;
-                                                                                    margin-bottom: 8px;
-                                                                                    flex-wrap: wrap;
-                                                                                } */
+                                                                                        display: flex;
+                                                                                        align-items: center;
+                                                                                        gap: 12px;
+                                                                                        margin-bottom: 8px;
+                                                                                        flex-wrap: wrap;
+                                                                                    } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1115,7 +1115,11 @@
                     <h1 class="sidebar-title">
                         {{ $car->name }}
                     </h1>
-
+                    @if(!empty($car->formatted_card_subtitle))
+                        <div class="car-subtitle text-muted mt-1 mb-2" style="font-size: 15px; font-weight: 500;">
+                            {{ $car->formatted_card_subtitle }}
+                        </div>
+                    @endif
                 </div>
                 <span class="status-badge">
                     {{ strtoupper($car->status->value) }}
@@ -1300,7 +1304,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                                                            ];
+                                                                                                                                                                                ];
 
         let currentIndex = 0;
         let gridExpanded = false;

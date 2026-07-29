@@ -2,6 +2,10 @@
 @section('title', 'Cars')
 @push('style')
     <style>
+        a.cta-btn.text-white.fw-bold.d-inline-block.px-5.py-3 {
+            max-width: 235px;
+        }
+
         .rid-menubar ul li a {
             font-size: 15px !important;
             margin-right: 20px !important;
@@ -658,7 +662,7 @@
 
                                                 <!-- Subtitle -->
                                                 <div class="car-subtitle">
-                                                    {{$car->card_subtitle ?? 'Premium Adventure Touring'}}
+                                                    {{ $car->formatted_card_subtitle ?? ($car->category->name ?? 'Premium Adventure Touring') }}
                                                 </div>
 
                                                 <!-- Emblems Row -->

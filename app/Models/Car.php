@@ -52,6 +52,39 @@ class Car extends Model
         return $dynamicName ?: ($this->attributes['name'] ?? '');
     }
 
+    public function getFormattedCardSubtitleAttribute()
+    {
+        $subtitle = $this->card_subtitle;
+        if (is_null($subtitle) || trim($subtitle) === '') {
+            return null;
+        }
+
+        $trimmed = trim($subtitle);
+
+        // Check if pure numbers (e.g. 1200000 or 1,200,000)
+        $cleanNumber = str_replace(',', '', $trimmed);
+        if (is_numeric($cleanNumber)) {
+            return '¥' . number_format((float) $cleanNumber);
+        }
+
+        // Check if text starts/ends with currency or contains numbers
+        if (preg_match('/^([^\d]*)([\d,]+)(\.?\d*)([^\d]*)$/', $trimmed, $matches)) {
+            $prefix = $matches[1];
+            $numStr = str_replace(',', '', $matches[2]);
+            $decimal = $matches[3];
+            $suffix = $matches[4];
+            if (is_numeric($numStr) && strlen($numStr) >= 3) {
+                $formattedNum = number_format((float) $numStr);
+                if (empty(trim($prefix)) && empty(trim($suffix))) {
+                    $prefix = '¥';
+                }
+                return $prefix . $formattedNum . $decimal . $suffix;
+            }
+        }
+
+        return $trimmed;
+    }
+
     protected $casts = [
         'less_four_days_price' => 'float',
         'five_six_days_price' => 'float',
