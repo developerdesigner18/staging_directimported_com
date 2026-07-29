@@ -348,7 +348,7 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="fuel_type"
-                                    class="form-label">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
+                                    class="form-label d-block">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
                                 <select id="fuel_type" name="fuel_type" class="form-select select2">
                                     <option value="">Select Fuel Type</option>
                                     <option value="Petrol">Petrol</option>
@@ -356,6 +356,56 @@
                                     <option value="Hybrid">Hybrid</option>
                                     <option value="Electric">Electric</option>
                                 </select>
+                                <div class="d-flex align-items-center gap-3 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input fuel-custom-toggle" type="radio"
+                                            name="fuel_custom_option" id="fuel_custom_off" value="0" checked>
+                                        <label class="form-check-label text-muted" for="fuel_custom_off">Standard
+                                            Only</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input fuel-custom-toggle" type="radio"
+                                            name="fuel_custom_option" id="fuel_custom_on" value="1">
+                                        <label class="form-check-label text-muted" for="fuel_custom_on">Add Custom
+                                            Wording</label>
+                                    </div>
+                                </div>
+                                <div id="fuel_custom_wrapper" class="mt-2 d-none">
+                                    <input type="text" id="fuel_type_custom" name="fuel_type_custom" class="form-control"
+                                        placeholder="Enter custom wording (optional)">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="transmission"
+                                    class="form-label d-block">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
+                                <select id="transmission" name="transmission" class="form-select select2">
+                                    <option value="">Select Transmission</option>
+                                    <option value="Auto">Auto</option>
+                                    <option value="MT">MT</option>
+                                    <option value="5Spd">5Spd</option>
+                                    <option value="6Spd">6Spd</option>
+                                    <option value="DCT">DCT</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="d-flex align-items-center gap-3 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input transmission-custom-toggle" type="radio"
+                                            name="transmission_custom_option" id="trans_custom_off" value="0" checked>
+                                        <label class="form-check-label text-muted" for="trans_custom_off">Standard
+                                            Only</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input transmission-custom-toggle" type="radio"
+                                            name="transmission_custom_option" id="trans_custom_on" value="1">
+                                        <label class="form-check-label text-muted" for="trans_custom_on">Add Custom
+                                            Wording</label>
+                                    </div>
+                                </div>
+                                <div id="trans_custom_wrapper" class="mt-2 d-none">
+                                    <input type="text" id="transmission_custom" name="transmission_custom"
+                                        class="form-control" placeholder="Enter custom wording (optional)">
+                                </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -370,20 +420,6 @@
                                     class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
                                 <input type="number" id="odometer" name="odometer" class="form-control"
                                     placeholder="e.g. 50000">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="transmission"
-                                    class="form-label">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
-                                <select id="transmission" name="transmission" class="form-select select2">
-                                    <option value="">Select Transmission</option>
-                                    <option value="Auto">Auto</option>
-                                    <option value="MT">MT</option>
-                                    <option value="5Spd">5Spd</option>
-                                    <option value="6Spd">6Spd</option>
-                                    <option value="DCT">DCT</option>
-                                    <option value="Other">Other</option>
-                                </select>
                             </div>
 
                             <div class="col-12 mb-3">
@@ -713,6 +749,27 @@
                             $('button[type="submit"]').html('Create Car');
                         }
                     });
+                }
+            });
+
+            // Custom Wording Radio Toggles
+            $(document).on('change', 'input[name="fuel_custom_option"]', function () {
+                if ($(this).val() == '1') {
+                    $('#fuel_custom_wrapper').removeClass('d-none');
+                    $('#fuel_type_custom').focus();
+                } else {
+                    $('#fuel_custom_wrapper').addClass('d-none');
+                    $('#fuel_type_custom').val('');
+                }
+            });
+
+            $(document).on('change', 'input[name="transmission_custom_option"]', function () {
+                if ($(this).val() == '1') {
+                    $('#trans_custom_wrapper').removeClass('d-none');
+                    $('#transmission_custom').focus();
+                } else {
+                    $('#trans_custom_wrapper').addClass('d-none');
+                    $('#transmission_custom').val('');
                 }
             });
         });

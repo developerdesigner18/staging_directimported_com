@@ -415,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                                           MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                                           ------------------------------------------------------------- */
+                                                                                                                                                                                   MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                                                   ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -643,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                            display: flex;
-                                                                            align-items: center;
-                                                                            gap: 12px;
-                                                                            margin-bottom: 8px;
-                                                                            flex-wrap: wrap;
-                                                                        } */
+                                                                                    display: flex;
+                                                                                    align-items: center;
+                                                                                    gap: 12px;
+                                                                                    margin-bottom: 8px;
+                                                                                    flex-wrap: wrap;
+                                                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1067,13 +1067,13 @@
                         <div class="specs-item">
                             <span class="specs-label">🔌 Fuel Type</span>
                             <span
-                                class="specs-value">{{ (!empty($car->spec->fuel_type) && strtoupper(trim($car->spec->fuel_type)) !== 'N/A') ? $car->spec->fuel_type : '-' }}</span>
+                                class="specs-value">{{ (!empty($car->spec->formatted_fuel_type) && strtoupper(trim($car->spec->formatted_fuel_type)) !== 'N/A') ? $car->spec->formatted_fuel_type : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
                             <span class="specs-label">🎛️ Transmission</span>
                             <span
-                                class="specs-value">{{ (!empty($car->spec->transmission) && strtoupper(trim($car->spec->transmission)) !== 'N/A') ? $car->spec->transmission : '-' }}</span>
+                                class="specs-value">{{ (!empty($car->spec->formatted_transmission) && strtoupper(trim($car->spec->formatted_transmission)) !== 'N/A') ? $car->spec->formatted_transmission : '-' }}</span>
                         </div>
 
                         <div class="specs-item">
@@ -1300,7 +1300,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                                                    ];
+                                                                                                                                                                            ];
 
         let currentIndex = 0;
         let gridExpanded = false;

@@ -769,13 +769,13 @@
                                         <!-- Fuel -->
                                         <div class="emblem-item">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M15 11a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2"/><path d="M10 11H5"/><path d="M3 22h12"/></svg>
-                                            <span>{{ $car->spec->fuel_type ?? ($car->fuel_type ?? 'Hybrid/Petrol') }}</span>
+                                            <span>{{ !empty($car->spec->formatted_fuel_type) ? $car->spec->formatted_fuel_type : ($car->fuel_type ?? 'Hybrid/Petrol') }}</span>
                                         </div>
 
                                         <!-- Transmission -->
                                         <div class="emblem-item">
                                             <i class='bx bx-git-branch'></i>
-                                            <span>{{ $car->spec->transmission ?? ($car->transmission ?? '8 Speed') }} </span>
+                                            <span>{{ !empty($car->spec->formatted_transmission) ? $car->spec->formatted_transmission : ($car->transmission ?? '8 Speed') }}</span>
                                         </div>
                                     </div>
 

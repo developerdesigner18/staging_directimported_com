@@ -341,9 +341,11 @@
                             $currentSteering = $car->steering ?? $car->spec->steering ?? '';
                             $currentDriveType = $car->drive_type ?? $car->spec->drive_type ?? '';
                             $currentFuelType = $car->spec->fuel_type ?? '';
+                            $currentFuelTypeCustom = $car->spec->fuel_type_custom ?? '';
                             $currentEngine = $car->spec->engine ?? '';
                             $currentOdometer = $car->spec->odometer ?? '';
                             $currentTransmission = $car->spec->transmission ?? '';
+                            $currentTransmissionCustom = $car->spec->transmission_custom ?? '';
                             $currentInteriorColor = $car->spec->interior_color ?? '';
                             $currentExteriorColor = $car->spec->exterior_color ?? '';
                         @endphp
@@ -390,13 +392,52 @@
 
                             <div class="col-md-6 mb-3">
                                 <label for="fuel_type"
-                                    class="form-label">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
+                                    class="form-label d-block">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
                                 <select id="fuel_type" name="fuel_type" class="form-select select2">
                                     <option value="">Select Fuel Type</option>
                                     @foreach(['Petrol', 'Diesel', 'Hybrid', 'Electric'] as $fType)
                                         <option value="{{ $fType }}" {{ strcasecmp($currentFuelType, $fType) === 0 ? 'selected' : '' }}>{{ $fType }}</option>
                                     @endforeach
                                 </select>
+                                @php $hasCustomFuel = !empty(old('fuel_type_custom', $currentFuelTypeCustom)); @endphp
+                                <div class="d-flex align-items-center gap-3 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input fuel-custom-toggle" type="radio" name="fuel_custom_option" id="fuel_custom_off" value="0" {{ !$hasCustomFuel ? 'checked' : '' }}>
+                                        <label class="form-check-label text-muted" for="fuel_custom_off">Standard Only</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input fuel-custom-toggle" type="radio" name="fuel_custom_option" id="fuel_custom_on" value="1" {{ $hasCustomFuel ? 'checked' : '' }}>
+                                        <label class="form-check-label text-muted" for="fuel_custom_on">Add Custom Wording</label>
+                                    </div>
+                                </div>
+                                <div id="fuel_custom_wrapper" class="mt-2 {{ $hasCustomFuel ? '' : 'd-none' }}">
+                                    <input type="text" id="fuel_type_custom" name="fuel_type_custom" class="form-control" value="{{ old('fuel_type_custom', $currentFuelTypeCustom) }}" placeholder="Enter custom wording (optional)">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="transmission"
+                                    class="form-label d-block">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
+                                <select id="transmission" name="transmission" class="form-select select2">
+                                    <option value="">Select Transmission</option>
+                                    @foreach(['Auto', 'MT', '5Spd', '6Spd', 'DCT', 'Other'] as $tType)
+                                        <option value="{{ $tType }}" {{ strcasecmp($currentTransmission, $tType) === 0 ? 'selected' : '' }}>{{ $tType }}</option>
+                                    @endforeach
+                                </select>
+                                @php $hasCustomTrans = !empty(old('transmission_custom', $currentTransmissionCustom)); @endphp
+                                <div class="d-flex align-items-center gap-3 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input transmission-custom-toggle" type="radio" name="transmission_custom_option" id="trans_custom_off" value="0" {{ !$hasCustomTrans ? 'checked' : '' }}>
+                                        <label class="form-check-label text-muted" for="trans_custom_off">Standard Only</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input transmission-custom-toggle" type="radio" name="transmission_custom_option" id="trans_custom_on" value="1" {{ $hasCustomTrans ? 'checked' : '' }}>
+                                        <label class="form-check-label text-muted" for="trans_custom_on">Add Custom Wording</label>
+                                    </div>
+                                </div>
+                                <div id="trans_custom_wrapper" class="mt-2 {{ $hasCustomTrans ? '' : 'd-none' }}">
+                                    <input type="text" id="transmission_custom" name="transmission_custom" class="form-control" value="{{ old('transmission_custom', $currentTransmissionCustom) }}" placeholder="Enter custom wording (optional)">
+                                </div>
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -411,17 +452,6 @@
                                     class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
                                 <input type="number" id="odometer" name="odometer" class="form-control"
                                     value="{{ $currentOdometer }}" placeholder="e.g. 50000">
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="transmission"
-                                    class="form-label">{{ admin_label('car_form', 'transmission', 'Transmission') }}</label>
-                                <select id="transmission" name="transmission" class="form-select select2">
-                                    <option value="">Select Transmission</option>
-                                    @foreach(['Auto', 'MT', '5Spd', '6Spd', 'DCT', 'Other'] as $tType)
-                                        <option value="{{ $tType }}" {{ strcasecmp($currentTransmission, $tType) === 0 ? 'selected' : '' }}>{{ $tType }}</option>
-                                    @endforeach
-                                </select>
                             </div>
 
                             <div class="col-12 mb-3">
@@ -775,6 +805,27 @@
                             $('button[type="submit"]').html('Update Car');
                         }
                     });
+                }
+            });
+
+            // Custom Wording Radio Toggles
+            $(document).on('change', 'input[name="fuel_custom_option"]', function () {
+                if ($(this).val() == '1') {
+                    $('#fuel_custom_wrapper').removeClass('d-none');
+                    $('#fuel_type_custom').focus();
+                } else {
+                    $('#fuel_custom_wrapper').addClass('d-none');
+                    $('#fuel_type_custom').val('');
+                }
+            });
+
+            $(document).on('change', 'input[name="transmission_custom_option"]', function () {
+                if ($(this).val() == '1') {
+                    $('#trans_custom_wrapper').removeClass('d-none');
+                    $('#transmission_custom').focus();
+                } else {
+                    $('#trans_custom_wrapper').addClass('d-none');
+                    $('#transmission_custom').val('');
                 }
             });
         });
