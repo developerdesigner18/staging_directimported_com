@@ -130,13 +130,198 @@
         </div>
     </div>
 
-    <div id="gridView">
-        @include('admin.car.grid_list')
+    {{-- ===== VEHICLE FILTER STYLES ===== --}}
+    <style>
+        .vf-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .vf-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: #6b7280;
+        }
+
+        .vf-select,
+        .vf-input {
+            height: 38px;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 13.5px;
+            color: #374151;
+            background: #f9fafb;
+            padding: 0 12px;
+            transition: border-color .2s, box-shadow .2s, background .2s;
+            outline: none;
+        }
+
+        .vf-select {
+            min-width: 160px;
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 32px;
+        }
+
+        .vf-select-wrap {
+            position: relative;
+        }
+
+        .vf-select-wrap .vf-select-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .vf-input {
+            min-width: 170px;
+        }
+
+        .vf-input-wrap {
+            position: relative;
+        }
+
+        .vf-input-wrap .vf-input {
+            padding-left: 34px;
+        }
+
+        .vf-input-wrap .vf-input-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 15px;
+        }
+
+        .vf-select:focus,
+        .vf-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, .12);
+            background: #fff;
+        }
+
+        .vf-btn-apply {
+            height: 38px;
+            background: #0ab39c;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: opacity .2s;
+            white-space: nowrap;
+        }
+
+        .vf-btn-apply:hover {
+            opacity: .85;
+        }
+
+        .vf-btn-clear {
+            height: 38px;
+            background: #fff;
+            color: #6b7280;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+            white-space: nowrap;
+        }
+
+        .vf-btn-clear:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+    </style>
+
+    <div class="row" id="vfFilterCard">
+        <div class="col-12">
+            <div class="card mb-2" style="border:1px solid #e9ebec; box-shadow:none; border-radius:8px;">
+                <div class="card-body py-3 px-4">
+                    <div class="d-flex align-items-flex-end gap-3 flex-wrap">
+
+                        {{-- Make --}}
+                        <div class="vf-field">
+                            <span class="vf-label">Make</span>
+                            <div class="vf-select-wrap">
+                                <select class="vf-select" id="tableFilterMake">
+                                    <option value="">All Makes</option>
+                                    @foreach($manufacturers as $manufacturer)
+                                        <option value="{{ $manufacturer->id }}">{{ $manufacturer->name }}</option>
+                                    @endforeach
+                                </select>
+                                <i class="ri-arrow-drop-down-line vf-select-icon"></i>
+                            </div>
+                        </div>
+
+                        {{-- Model --}}
+                        <div class="vf-field">
+                            <span class="vf-label">Model</span>
+                            <div class="vf-select-wrap">
+                                <select class="vf-select" id="tableFilterModel">
+                                    <option value="">All Models</option>
+                                    @foreach($modelsList as $m)
+                                        <option value="{{ $m }}">{{ $m }}</option>
+                                    @endforeach
+                                </select>
+                                <i class="ri-arrow-drop-down-line vf-select-icon"></i>
+                            </div>
+                        </div>
+
+                        {{-- Vehicle ID --}}
+                        <div class="vf-field">
+                            <span class="vf-label">Vehicle ID</span>
+                            <div class="vf-input-wrap">
+                                <i class="ri-hashtag vf-input-icon"></i>
+                                <input type="text" class="vf-input" id="tableFilterVid" placeholder="e.g. VH000001">
+                            </div>
+                        </div>
+
+                        {{-- Buttons --}}
+                        <div class="vf-field">
+                            <span class="vf-label" style="visibility:hidden;">act</span>
+                            <div style="display:flex;gap:8px;">
+                                <button class="vf-btn-apply" id="tableApplyFilters">
+                                    <i class="ri-search-line"></i> Apply
+                                </button>
+                                <button class="vf-btn-clear" id="tableClearFilters">
+                                    <i class="ri-close-line"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <div id="gridView">
+                        @include('admin.car.grid_list')
+                    </div>
+
                     <div id="tableView" style="display:none;">
                         <table class="table table-bordered" id="carTable">
 
@@ -186,12 +371,18 @@
             // $('.filter-range').closest('.btn-group').find('.dropdown-toggle').text(rangeText);
             $(this).closest('.btn-group').find('.dropdown-toggle').text(rangeText);
             if ($('#gridView').is(':visible')) {
+                let make = $('#tableFilterMake').val();
+                let model = $('#tableFilterModel').val();
+                let vehicle_id = $('#tableFilterVid').val();
                 $.ajax({
                     url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         range: range,
                         search_keyword: keyword,
+                        make: make,
+                        model: model,
+                        vehicle_id: vehicle_id,
                         view_type: 'grid'
                     },
                     success: function (response) {
@@ -269,6 +460,25 @@
         });
 
         $(document).ready(function () {
+            $('#tableApplyFilters').click(function () {
+                if ($('#gridView').is(':visible')) {
+                    reloadGridView();
+                } else {
+                    $('#carTable').DataTable().ajax.reload();
+                }
+            });
+
+            $('#tableClearFilters').click(function () {
+                $('#tableFilterMake').val('');
+                $('#tableFilterModel').val('');
+                $('#tableFilterVid').val('');
+
+                if ($('#gridView').is(':visible')) {
+                    reloadGridView();
+                } else {
+                    $('#carTable').DataTable().ajax.reload();
+                }
+            });
             loadBanner();
 
             // Load current banner image
@@ -298,20 +508,8 @@
                 $('#txtSearch').show();
                 $('#btnSearch').show();
 
-                // Load grid with current search keyword
-                let keyword = $('input[name="search"]').val();
-                $.ajax({
-                    url: "{{ route('admin.car.index') }}",
-                    type: "GET",
-                    data: {
-                        search_keyword: keyword,
-                        view_type: 'grid'
-                    },
-                    success: function (response) {
-                        $('#gridView').html(response);
-                        makeGridSortable();
-                    }
-                });
+                // Load grid with current search keyword and filters
+                reloadGridView();
             });
 
             // ============ TABLE VIEW BUTTON ============
@@ -364,7 +562,11 @@
                             type: "GET",
                             dataType: "JSON",
                             data: function (f) {
-                                f._token = "{{csrf_token()}}";
+                                f._token = "{{csrf_token()}}",
+                                    // Vehicle filters
+                                    f.make = $('#tableFilterMake').val();
+                                f.model = $('#tableFilterModel').val();
+                                f.vehicle_id = $('#tableFilterVid').val();
                             },
                             error: function (xhr) {
                                 dataTableError("openCallTable", xhr.responseJSON.message);
@@ -383,23 +585,38 @@
                 }
             });
 
-            $('#btnSearch').click(function (e) {
-                e.preventDefault();
+            // Helper to reload grid view dynamically
+            function reloadGridView() {
                 let keyword = $('input[name="search"]').val();
+                let make = $('#tableFilterMake').val();
+                let model = $('#tableFilterModel').val();
+                let vehicle_id = $('#tableFilterVid').val();
 
                 $.ajax({
                     url: "{{ route('admin.car.index') }}",
                     type: "GET",
                     data: {
                         search_keyword: keyword,
+                        make: make,
+                        model: model,
+                        vehicle_id: vehicle_id,
                         view_type: 'grid'
                     },
                     success: function (response) {
                         $('#gridView').html(response);
-                        // Re-initialize sortable if needed
                         makeGridSortable();
                     }
                 });
+            }
+
+            $('#btnSearch').click(function (e) {
+                e.preventDefault();
+                reloadGridView();
+            });
+
+            $('#gridSearchForm').submit(function (e) {
+                e.preventDefault();
+                reloadGridView();
             });
 
             // Add click handler for pagination links in grid view
@@ -407,13 +624,19 @@
                 e.preventDefault();
                 let url = $(this).attr('href');
                 let search = $('input[name="search"]').val();
+                let make = $('#tableFilterMake').val();
+                let model = $('#tableFilterModel').val();
+                let vehicle_id = $('#tableFilterVid').val();
 
                 $.ajax({
                     url: url,
                     type: "GET",
                     data: {
                         view_type: 'grid',
-                        search_keyword: search
+                        search_keyword: search,
+                        make: make,
+                        model: model,
+                        vehicle_id: vehicle_id
                     },
                     success: function (response) {
                         $('#gridView').html(response);

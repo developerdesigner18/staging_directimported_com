@@ -68,123 +68,240 @@ class CarController extends Controller
     public function index(Request $request)
     {
         // Handle search persistence in session
-        if (!$request->ajax() && !$request->has('search_keyword') && !$request->has('range') && !$request->has('page') && !$request->has('search')) {
+        if (
+            !$request->ajax() &&
+            !$request->has('search_keyword') &&
+            !$request->has('range') &&
+            !$request->has('page') &&
+            !$request->has('search')
+        ) {
             session()->forget(['car_search', 'car_range']);
         }
 
+
+        // Normal search
         if ($request->has('search_keyword')) {
             $search = $request->search_keyword;
             session(['car_search' => $search]);
         } else {
             $search = session('car_search', '');
         }
+
+
+        // CC range filter
         if ($request->has('range')) {
             $range = $request->range;
             session(['car_range' => $range]);
         } else {
             $range = session('car_range', '');
         }
+
+
+        // Vehicle filters
+        $make = $request->make;
+        $model = $request->model;
+        $vehicleId = $request->vehicle_id;
+
+
         $cars = Car::query()
             ->with('category')
             ->orderBy('id', 'desc');
 
+
+        // Existing search box filter
         if ($search) {
+
             $cars->where(function ($query) use ($search) {
+
                 $query->where('model', 'LIKE', "%{$search}%")
+                    ->orWhere('vehicle_id', 'LIKE', "%{$search}%")
                     ->orWhere('year', 'LIKE', "%{$search}%")
                     ->orWhereHas('manufacturer', function ($q) use ($search) {
+
                         $q->where('name', 'LIKE', "%{$search}%");
+
                     });
+
             });
+
         }
+
+
+        // Filter by Make dropdown
+        if ($make) {
+
+            $cars->where('manufacturer_id', $make);
+
+        }
+
+
+        // Filter by Model dropdown
+        if ($model) {
+
+            $cars->where('model', 'LIKE', "%{$model}%");
+
+        }
+
+
+        // Filter by Vehicle ID textbox
+        if ($vehicleId) {
+
+            $cars->where('vehicle_id', 'LIKE', "%{$vehicleId}%");
+
+        }
+
+
+        // CC Range filter
         if ($range == 'all') {
+
             session()->forget('car_range');
             $range = '';
+
         }
 
 
         $ranges = $this->getCCRanges();
 
+
         if ($range && isset($ranges[$range])) {
+
             $min = $ranges[$range]['min'];
             $max = $ranges[$range]['max'];
 
+
             $cars->whereHas('category', function ($q) use ($min, $max) {
-                $q->whereRaw("
-            CAST(REGEXP_SUBSTR(name, '[0-9]+') AS UNSIGNED) BETWEEN ? AND ?
-        ", [$min, $max]);
+
+                $q->whereRaw(
+                    "CAST(REGEXP_SUBSTR(name, '[0-9]+') AS UNSIGNED) BETWEEN ? AND ?",
+                    [$min, $max]
+                );
+
             });
+
         }
+
 
         $allCategories = Category::all();
         $ccRanges = $this->mapCategoriesToRanges($allCategories);
 
+
         if ($request->ajax()) {
 
+
+            // Grid View
             if ($request->has('view_type') && $request->view_type == 'grid') {
+
                 $cars = $cars->get();
+
                 return view('admin.car.grid_list', compact('cars', 'ccRanges'))->render();
+
             }
 
+
+            // Table View
             return DataTables::eloquent($cars)
+
                 ->addIndexColumn()
+
                 ->addColumn('name', function ($row) {
+
                     return $row->name;
+
                 })
+
+
                 ->filterColumn('name', function ($query, $keyword) {
+
                     $query->where(function ($q) use ($keyword) {
+
                         $q->where('model', 'LIKE', "%{$keyword}%")
                             ->orWhere('year', 'LIKE', "%{$keyword}%")
                             ->orWhereHas('manufacturer', function ($m) use ($keyword) {
+
                                 $m->where('name', 'LIKE', "%{$keyword}%");
+
                             });
+
                     });
+
                 })
+
+
                 ->addColumn('created_at', function ($row) {
-                    return $row->created_at ? $row->created_at->format('d M Y') : '-';
+
+                    return $row->created_at
+                        ? $row->created_at->format('d M Y')
+                        : '-';
+
                 })
-                //                ->addColumn('image', function ($row) {
-//
-//                    return '<img src="' . CAR_PATH.$row->images[0] . '" width="50px">';
-//                })
+
+
                 ->addColumn('action', function ($row) {
-                    // Action buttons
+
+
                     $editUrl = route('admin.car.edit', $row->id);
                     $viewUrl = route('admin.car.view', $row->id);
 
-                    $buttons = '
-                    <ul class="list-inline mb-0 d-flex justify-content-center text-center">
-                        <li class="list-inline-item">
-                               <a href="' . $viewUrl . '" class="btn btn-info btn-sm" data-bs-toggle="tooltip" title="View Car">
-                                <i class="ri-eye-line"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item">
-                            <a href="' . $editUrl . '" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Edit Car">
-                                <i class="ri-pencil-line"></i>
-                            </a>
-                        </li>
-                         <li class="list-inline-item">
-                                   <button class="btn btn-danger btn-sm" onclick="deleteCar(' . $row->id . ', this)" data-bs-toggle="tooltip" title="Delete Car">
-                                <i class="ri-delete-bin-line"></i>
-                            </button>
-                        </li>
 
-                    </ul>
-                ';
-                    return $buttons;
+                    return '
+                <ul class="list-inline mb-0 d-flex justify-content-center text-center">
+
+                    <li class="list-inline-item">
+                        <a href="' . $viewUrl . '" class="btn btn-info btn-sm">
+                            <i class="ri-eye-line"></i>
+                        </a>
+                    </li>
+
+
+                    <li class="list-inline-item">
+                        <a href="' . $editUrl . '" class="btn btn-success btn-sm">
+                            <i class="ri-pencil-line"></i>
+                        </a>
+                    </li>
+
+
+                    <li class="list-inline-item">
+                        <button class="btn btn-danger btn-sm"
+                            onclick="deleteCar(' . $row->id . ', this)">
+                            <i class="ri-delete-bin-line"></i>
+                        </button>
+                    </li>
+
+                </ul>';
+
                 })
+
+
                 ->rawColumns(['action'])
 
                 ->make(true);
 
         }
+
+
+
+        // Grid data
         $queryForGrid = clone $cars;
+
         $carsForGrid = $queryForGrid->get();
-        // we still paginate $cars so $cars variable exists for other possible code dependencies (even though grid uses carsForGrid and table uses datatables).
+
+
+        // Pagination
         $cars = $cars->paginate(8);
 
-        return view('admin.car.index', compact('cars', 'search', 'range', 'carsForGrid', 'ccRanges'));
+        // Dynamic dropdown lists for Make/Model filters
+        $manufacturers = Manufacturer::orderBy('name')->get();
+        $modelsList = Car::whereNotNull('model')->where('model', '!=', '')->distinct()->orderBy('model')->pluck('model');
+
+        return view('admin.car.index', compact(
+            'cars',
+            'search',
+            'range',
+            'carsForGrid',
+            'ccRanges',
+            'manufacturers',
+            'modelsList'
+        ));
     }
     private function generateNextVehicleId()
     {
