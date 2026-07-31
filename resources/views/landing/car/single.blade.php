@@ -415,8 +415,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                                                       MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                                                       ------------------------------------------------------------- */
+                                                                                                                                                                                                                       MIGRATED INLINE CLASSES FOR CLEAN HTML
+                                                                                                                                                                                                                       ------------------------------------------------------------- */
 
         /* Main Image Container & Watermark Display */
         .open-gallery-btn {
@@ -643,12 +643,12 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                                        display: flex;
-                                                                                        align-items: center;
-                                                                                        gap: 12px;
-                                                                                        margin-bottom: 8px;
-                                                                                        flex-wrap: wrap;
-                                                                                    } */
+                                                                                                                        display: flex;
+                                                                                                                        align-items: center;
+                                                                                                                        gap: 12px;
+                                                                                                                        margin-bottom: 8px;
+                                                                                                                        flex-wrap: wrap;
+                                                                                                                    } */
 
         .sidebar-title {
             font-size: 24px;
@@ -962,6 +962,21 @@
         .required-asterisk {
             color: var(--primary-red);
         }
+
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border: 1px solid #cbd5e1;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.15);
+            display: inline-block;
+            pointer-events: none;
+        }
+
+        .color-display-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 @endpush
 
@@ -1042,8 +1057,49 @@
 
                         <div class="specs-item">
                             <span class="specs-label">🎨 Exterior Color</span>
-                            <span
-                                class="specs-value">{{ (!empty($car->spec->exterior_color) && strtoupper(trim($car->spec->exterior_color)) !== 'N/A') ? $car->spec->exterior_color : '-' }}</span>
+                            @php
+                                $dbColor = trim($car->spec->exterior_color ?? '');
+                                $matchedHex = '';
+                                $colorName = (!empty($dbColor) && strtoupper($dbColor) !== 'N/A') ? $dbColor : '-';
+
+                                if (!empty($dbColor) && strtoupper($dbColor) !== 'N/A') {
+                                    if (preg_match('/^#[0-9A-Fa-f]{6}$/', $dbColor)) {
+                                        $matchedHex = $dbColor;
+                                    } else {
+                                        $colors = [
+                                            ['name' => 'White', 'hex' => '#FFFFFF'],
+                                            ['name' => 'Pearl', 'hex' => '#FDFDF0'],
+                                            ['name' => 'Silver', 'hex' => '#C0C0C0'],
+                                            ['name' => 'Gray', 'hex' => '#696969'],
+                                            ['name' => 'Black', 'hex' => '#1A1A1A'],
+                                            ['name' => 'Beige', 'hex' => '#E3DAC9'],
+                                            ['name' => 'Brown', 'hex' => '#654321'],
+                                            ['name' => 'Gold', 'hex' => '#D4AF37'],
+                                            ['name' => 'Yellow', 'hex' => '#FFD700'],
+                                            ['name' => 'Orange', 'hex' => '#FF8C00'],
+                                            ['name' => 'Red', 'hex' => '#CC0000'],
+                                            ['name' => 'Burgundy', 'hex' => '#800020'],
+                                            ['name' => 'Pink', 'hex' => '#FFB6C1'],
+                                            ['name' => 'Purple', 'hex' => '#4B0082'],
+                                            ['name' => 'L. Blue', 'hex' => '#87CEFA'],
+                                            ['name' => 'Blue', 'hex' => '#0047AB'],
+                                            ['name' => 'Green', 'hex' => '#2E8B57'],
+                                        ];
+
+                                        foreach ($colors as $c) {
+                                            if (strcasecmp($dbColor, $c['name']) === 0 || strcasecmp($dbColor, $c['hex']) === 0 || (strtolower($c['name']) !== 'blue' && strtolower($c['name']) !== 'l. blue' && strtolower($c['name']) !== 'white' && strtolower($c['name']) !== 'pearl' && str_contains(strtolower($dbColor), strtolower($c['name'])))) {
+                                                $matchedHex = $c['hex'];
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            @endphp
+                            <div class="color-display-wrapper">
+                                @if(!empty($matchedHex))
+                                    <div class="color-box" style="background-color: {{ $matchedHex }};"></div>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="specs-item">
@@ -1304,7 +1360,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                                                                ];
+                                                                                                                                                                                                                ];
 
         let currentIndex = 0;
         let gridExpanded = false;
