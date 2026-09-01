@@ -48,8 +48,11 @@ class Car extends Model
 
     public function getNameAttribute()
     {
+        if (!empty($this->attributes['name'])) {
+            return $this->attributes['name'];
+        }
         $dynamicName = trim(($this->manufacturer->name ?? '') . ' ' . $this->model . ' ' . $this->year);
-        return $dynamicName ?: ($this->attributes['name'] ?? '');
+        return $dynamicName ?: '';
     }
 
     public function getFormattedCardSubtitleAttribute()
