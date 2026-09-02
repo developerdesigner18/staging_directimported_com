@@ -324,12 +324,45 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
+                                <label for="type" class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
+                                <select id="type" name="type" class="form-select select2">
+                                    <option value="">All Types</option>
+                                    <option value="coupe">Coupe</option>
+                                    <option value="sedan">Sedan</option>
+                                    <option value="hatchback">Hatchback</option>
+                                    <option value="convertible">Convertible</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                                 <label for="steering"
                                     class="form-label">{{ admin_label('car_form', 'steering', 'Steering') }}</label>
                                 <select id="steering" name="steering" class="form-select select2">
                                     <option value="">Select Steering</option>
                                     <option value="RHD">RHD (Right-Hand Drive)</option>
                                     <option value="LHD">LHD (Left-Hand Drive)</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="interior_grade"
+                                    class="form-label">{{ admin_label('car_form', 'interior_grade', 'Interior Grade') }}</label>
+                                <select id="interior_grade" name="interior_grade" class="form-select select2">
+                                    <option value="">Select Interior Grade</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="exterior_grade"
+                                    class="form-label">{{ admin_label('car_form', 'exterior_grade', 'Exterior Grade') }}</label>
+                                <select id="exterior_grade" name="exterior_grade" class="form-select select2">
+                                    <option value="">Select Exterior Grade</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
                                 </select>
                             </div>
 
@@ -344,6 +377,13 @@
                                     <option value="FWD">FWD</option>
                                     <option value="RWD">RWD</option>
                                 </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="engine"
+                                    class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
+                                <input type="text" id="engine" name="engine" class="form-control"
+                                    placeholder="e.g. 2.0L Turbo">
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -406,13 +446,6 @@
                                     <input type="text" id="transmission_custom" name="transmission_custom"
                                         class="form-control" placeholder="Enter custom wording (optional)">
                                 </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="engine"
-                                    class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
-                                <input type="text" id="engine" name="engine" class="form-control"
-                                    placeholder="e.g. 2.0L Turbo">
                             </div>
 
                             <div class="col-md-6 mb-3">

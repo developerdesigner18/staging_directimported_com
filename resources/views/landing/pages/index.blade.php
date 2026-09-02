@@ -514,57 +514,58 @@
         }
 
         /* =========================
-   How It Works
-========================= */
+           How It Works
+        ========================= */
 
-.rid-how-it-work {
-    padding: 80px 0;
-    background: #f9fafb;
-}
+        .rid-how-it-work {
+            padding: 80px 0;
+            background: #f9fafb;
+        }
 
-.work-card {
-    background: #fff;
-    padding: 40px 25px;
-    border-radius: 18px;
-    height: 100%;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
+        .work-card {
+            background: #fff;
+            padding: 40px 25px;
+            border-radius: 18px;
+            height: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
 
-.work-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-}
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        }
 
-.work-icon {
-    width: 90px;
-    height: 90px;
-    margin: 0 auto 25px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .work-icon {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.work-icon i {
-    color: #fff;
-    font-size: 40px;
-}
+        .work-icon i {
+            color: #fff;
+            font-size: 40px;
+        }
 
-.work-card h4 {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #111827;
-}
+        .work-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #111827;
+        }
 
-.work-card p {
-    font-size: 15px;
-    line-height: 1.7;
-    color: #6b7280;
-    margin: 0;
-}
+        .work-card p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #6b7280;
+            margin: 0;
+        }
+
         /* ===== EMBLEM ROW ===== */
         .car-emblem-row {
             display: grid;
@@ -733,7 +734,8 @@
                                         @if(isset($car->images[0]))
                                             <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
                                         @else
-                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $car->name }}" loading="lazy">
+                                            <img src="{{ asset('assets/landing/img/no-image.jpg') }}" alt="{{ $car->name }}"
+                                                loading="lazy">
                                         @endif
                                     </a>
                                 </div>
@@ -768,7 +770,14 @@
 
                                         <!-- Fuel -->
                                         <div class="emblem-item">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18"/><path d="M15 11a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2"/><path d="M10 11H5"/><path d="M3 22h12"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round">
+                                                <path d="M3 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18" />
+                                                <path d="M15 11a2 2 0 0 1 2-2h1a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2" />
+                                                <path d="M10 11H5" />
+                                                <path d="M3 22h12" />
+                                            </svg>
                                             <span>{{ !empty($car->spec->formatted_fuel_type) ? $car->spec->formatted_fuel_type : ($car->fuel_type ?? 'Hybrid/Petrol') }}</span>
                                         </div>
 
@@ -794,7 +803,8 @@
                 </div>
 
                 <div class="text-center mt-4">
-                    <a href="{{ route('available.vehicles') }}" class="cta-btn text-white fw-bold d-inline-block px-5 py-3" style="text-decoration: none;">
+                    <a href="{{ route('available.vehicles') }}" class="cta-btn text-white fw-bold d-inline-block px-5 py-3"
+                        style="text-decoration: none;">
                         View All Vehicles
                     </a>
                 </div>
@@ -851,100 +861,100 @@
 
     <!-- About IAS Japan Section Start -->
     @if($homeSection)
-    <section id="about-ias">
-        <div class="container">
-            <div class="py-5">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title mb-5">
-                            <h2>{{ $homeSection->title }}</h2>
-                        </div>
-
-                        <div class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
-                            {!! $homeSection->short_description !!}
-                        </div>
-
-                        @if($homeSection->points->isNotEmpty())
-                        <div class="who-points mb-5">
-                            @foreach($homeSection->points as $point)
-                            <div class="who-point">
-                                <div class="who-point-icon">
-                                    <i class='bx bx-check'></i>
-                                </div>
-                                <p class="who-point-text">
-                                    {{ $point->point_text }}
-                                </p>
+        <section id="about-ias">
+            <div class="container">
+                <div class="py-5">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title mb-5">
+                                <h2>{{ $homeSection->title }}</h2>
                             </div>
-                            @endforeach
-                        </div>
-                        @endif
 
-                        <a href="#" class="btn-read-more">
-                            READ MORE <i class='bx bx-right-arrow-alt'></i>
-                        </a>
+                            <div class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
+                                {!! $homeSection->short_description !!}
+                            </div>
+
+                            @if($homeSection->points->isNotEmpty())
+                                <div class="who-points mb-5">
+                                    @foreach($homeSection->points as $point)
+                                        <div class="who-point">
+                                            <div class="who-point-icon">
+                                                <i class='bx bx-check'></i>
+                                            </div>
+                                            <p class="who-point-text">
+                                                {{ $point->point_text }}
+                                            </p>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+
+                            <a href="#" class="btn-read-more">
+                                READ MORE <i class='bx bx-right-arrow-alt'></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     @endif
     <!-- About IAS Japan Section End -->
 
 
     <!--  How-it-work Section Start-->
     <!-- How It Works Section Start -->
-<section class="rid-how-it-work">
-    <div class="container">
+    <section class="rid-how-it-work">
+        <div class="container">
 
-        <div class="section-title text-center mb-5">
-            <h2>How It Works</h2>
+            <div class="section-title text-center mb-5">
+                <h2>How It Works</h2>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- Step 1 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-search"></i>
+                        </div>
+                        <h4>Find the Right Car</h4>
+                        <p>
+                            Browse our wide range of quality vehicles and choose the perfect car for your needs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-cart"></i>
+                        </div>
+                        <h4>Buy It Online</h4>
+                        <p>
+                            Complete your purchase securely online with a smooth and hassle-free process.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-car"></i>
+                        </div>
+                        <h4>Enjoy Your Ride</h4>
+                        <p>
+                            Get your vehicle delivered and enjoy a reliable driving experience with confidence.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
         </div>
-
-        <div class="row g-4">
-
-            <!-- Step 1 -->
-            <div class="col-md-4">
-                <div class="work-card text-center">
-                    <div class="work-icon">
-                        <i class="bx bx-search"></i>
-                    </div>
-                    <h4>Find the Right Car</h4>
-                    <p>
-                        Browse our wide range of quality vehicles and choose the perfect car for your needs.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="col-md-4">
-                <div class="work-card text-center">
-                    <div class="work-icon">
-                        <i class="bx bx-cart"></i>
-                    </div>
-                    <h4>Buy It Online</h4>
-                    <p>
-                        Complete your purchase securely online with a smooth and hassle-free process.
-                    </p>
-                </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="col-md-4">
-                <div class="work-card text-center">
-                    <div class="work-icon">
-                        <i class="bx bx-car"></i>
-                    </div>
-                    <h4>Enjoy Your Ride</h4>
-                    <p>
-                        Get your vehicle delivered and enjoy a reliable driving experience with confidence.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-<!-- How It Works Section End -->
+    </section>
+    <!-- How It Works Section End -->
     <!-- Matters To You Section Start -->
     <section id="matters-to-you">
         <div class="container">
@@ -1079,7 +1089,8 @@
                 <!-- Right Column (Images) -->
                 <div class="col-lg-6">
                     <div class="who-img-area">
-                        <img src="{{asset('assets/landing/images/who/left-img-1.png')}}" alt="Who We Are" class="img-fluid" loading="lazy">
+                        <img src="{{asset('assets/landing/images/who/left-img-1.png')}}" alt="Who We Are" class="img-fluid"
+                            loading="lazy">
                     </div>
                 </div>
 
@@ -1089,99 +1100,7 @@
 
 
 
-    <!-- Our Car Section Start -->
-    <section class="rid-our-car sec-space">
-        <div class="container">
-            <h2 class="text-center">Why Us?</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="about-content pe-4">
-                        <h3>Discover Japan from the Best Starting Point</h3>
-                        <p>We are a car rental company situated in the second city in Japan - Osaka. We have very
-                            quick and easy access to much more than Tokyo. Osaka city itself has a wide variety of
-                            foods, is famous for its friendly and down-to-earth people, is less crowded but at the same
-                            time has all the shopping and entertainment facilities you'd expect. A little further away
-                            is stylish Kobe city, then historic Kyoto and Nara - 4 great cities all within an hour.</p>
 
-                        <h3 class="mt-4">The Perfect Base for Your Car Adventure</h3>
-                        <p>But wait, you're here to ride cars right? Well what better position in Japan to start
-                            touring than here in Osaka? Our shop location is minutes away from Suita interchange, with
-                            access to 3 major highways heading wherever you want. You can be on a country road in about
-                            20 minutes from pick up!</p>
-                        <p>Head North to Kyoto/Hyogo Prefectures for rugged coastline and secluded beaches, East toward
-                            Lake Biwa, then Suzuka a little further away, with fantastic country roads everywhere. Then
-                            perhaps South to Wakayama prefecture for the great fishing heritage and slightly more
-                            popular beaches. Then West, the best way, stay on the mainland toward Okayama, Tottori,
-                            Yamaguchi - all much less crowded with fantastic touring roads, or perhaps to the Island of
-                            Shikoku - awesome countryside, small cities, fantastic food, castles, and temples.</p>
-                        <p>Then even further afield you have Kyushu, another fantastically different area famed for hot
-                            springs, volcanoes and even more food!</p>
-
-                        <h3 class="mt-4">Our Commitment to You</h3>
-                        <p>We have a wide range of high quality, professionally maintained cars available for
-                            rent at reasonable prices, with a good range of accessories if you are travelling light.
-                            Please do have a look through our website - any questions please don't hesitate to ask. Why
-                            not be different and start your tour from Osaka!</p>
-                    </div>
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="map-container mb-4">
-                        <div class="text-center">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d819.1187075672343!2d135.54499482924905!3d34.793993998775676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzTCsDQ3JzM4LjQiTiAxMzXCsDMyJzQ0LjAiRQ!5e0!3m2!1sen!2sjp!4v1538629279601"
-                                width="400" height="450" frameborder="0" style="border:0; width: 100%;"
-                                allowfullscreen></iframe>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="rid-info-box-2 d-flex align-items-center mb-3">
-                                {{-- <div class="rid-info-box-icon position-relative">--}}
-                                    {{-- <i class="bx bx-history"></i>--}}
-                                    {{-- </div>--}}
-                                <div class="rid-info-box-text">
-                                    <h4>Immediate Booking</h4>
-                                    <p>Real-time availability with instant online booking.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="rid-info-box-2 d-flex align-items-center mb-3">
-
-                                <div class="rid-info-box-text">
-                                    <h4>Flexible Changes</h4>
-                                    <p>Change dates or cancel without extra fees.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="rid-info-box-2 d-flex align-items-center mb-3">
-
-                                <div class="rid-info-box-text">
-                                    <h4>Best Price Guarantee</h4>
-                                    <p>You won't find better prices for the same quality.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="rid-info-box-2 d-flex align-items-center mb-3">
-
-                                <div class="rid-info-box-text">
-                                    <h4>24/7 Support</h4>
-                                    <p>Multilingual assistance throughout your journey.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
 @endsection
