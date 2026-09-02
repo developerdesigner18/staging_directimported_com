@@ -43,10 +43,138 @@ class HomeController extends Controller
         return view('landing.pages.index', compact('sliders', 'gallery', 'cars', 'sliderImages', 'color', 'faqs', 'services', 'homeSection'));
     }
 
-    public function availableVehicles()
+    private function buildVehicleQuery(?Request $request = null)
     {
-        $cars = Car::with('category')->orderBy('created_at', 'desc')->paginate(16);
-        return view('landing.pages.available-vehicles', compact('cars'));
+        $query = Car::with(['category', 'spec', 'manufacturer', 'auctionGrade'])
+            ->orderBy('created_at', 'desc');
+
+        if (!$request) {
+            return $query;
+        }
+
+        if ($request->filled('maker')) {
+            $maker = trim($request->maker);
+            $query->where(function ($q) use ($maker) {
+                $q->whereHas('manufacturer', function ($m) use ($maker) {
+                    $m->where('name', $maker)->orWhere('id', $maker);
+                })->orWhereHas('spec', function ($s) use ($maker) {
+                    $s->where('make', $maker);
+                })->orWhere('manufacturer_id', $maker);
+            });
+        }
+
+        if ($request->filled('car_name')) {
+            $carName = trim($request->car_name);
+            $query->where(function ($q) use ($carName) {
+                $q->where('name', 'like', '%' . $carName . '%')
+                    ->orWhere('model', 'like', '%' . $carName . '%')
+                    ->orWhere('card_header', 'like', '%' . $carName . '%')
+                    ->orWhere('card_subtitle', 'like', '%' . $carName . '%')
+                    ->orWhere('slug', 'like', '%' . $carName . '%')
+                    ->orWhereHas('manufacturer', function ($m) use ($carName) {
+                        $m->where('name', 'like', '%' . $carName . '%');
+                    })
+                    ->orWhereHas('spec', function ($s) use ($carName) {
+                        $s->where('make', 'like', '%' . $carName . '%')
+                            ->orWhere('type', 'like', '%' . $carName . '%')
+                            ->orWhere('engine', 'like', '%' . $carName . '%')
+                            ->orWhere('body_type', 'like', '%' . $carName . '%');
+                    });
+            });
+        }
+
+        if ($request->filled('type')) {
+            $type = trim($request->type);
+            $query->where(function ($q) use ($type) {
+                $q->whereHas('spec', function ($s) use ($type) {
+                    $s->where('type', 'like', '%' . $type . '%')
+                        ->orWhere('body_type', 'like', '%' . $type . '%');
+                })->orWhereHas('category', function ($c) use ($type) {
+                    $c->where('name', 'like', '%' . $type . '%');
+                })->orWhere('name', 'like', '%' . $type . '%')
+                    ->orWhere('card_header', 'like', '%' . $type . '%');
+            });
+        }
+
+        if ($request->filled('year_min') || $request->filled('year_max')) {
+            $yMin = $request->filled('year_min') ? (int) $request->year_min : 0;
+            $yMax = $request->filled('year_max') ? (int) $request->year_max : 9999;
+            $query->where(function ($q) use ($yMin, $yMax) {
+                $q->where(function ($subQ) use ($yMin, $yMax) {
+                    $subQ->whereNotNull('year')
+                        ->where('year', '!=', '')
+                        ->whereBetween('year', [$yMin, $yMax]);
+                })->orWhere(function ($subQ) use ($yMin, $yMax) {
+                    $subQ->where(function ($isNull) {
+                        $isNull->whereNull('year')->orWhere('year', '');
+                    })->whereHas('spec', function ($s) use ($yMin, $yMax) {
+                        $s->whereBetween('model_year', [$yMin, $yMax]);
+                    });
+                });
+            });
+        }
+
+        if ($request->filled('mileage_min') || $request->filled('mileage_max')) {
+            $mMin = $request->filled('mileage_min') ? (int) $request->mileage_min : 0;
+            $mMax = $request->filled('mileage_max') ? (int) $request->mileage_max : 99999999;
+
+            $query->whereHas('spec', function ($s) use ($mMin, $mMax) {
+                $s->whereNotNull('odometer')
+                    ->whereBetween('odometer', [$mMin, $mMax]);
+            });
+        }
+
+        if ($request->filled('location')) {
+            $query->where('location', 'like', '%' . trim($request->location) . '%');
+        }
+
+        if ($request->filled('price_min') || $request->filled('price_max')) {
+            $minPrice = (float) $request->input('price_min', 0);
+            $maxPrice = (float) $request->input('price_max', 30000000);
+            if ($minPrice > 0 || $maxPrice < 30000000) {
+                if ($minPrice > 0) {
+                    $query->whereNotNull('vehicle_price')
+                        ->whereBetween('vehicle_price', [$minPrice, $maxPrice]);
+                } else {
+                    $query->where(function ($q) use ($maxPrice) {
+                        $q->where('vehicle_price', '<=', $maxPrice)
+                            ->orWhereNull('vehicle_price');
+                    });
+                }
+            }
+        }
+
+        return $query;
+    }
+
+    public function availableVehicles(Request $request)
+    {
+        $perPage = (int) $request->input('per_page', 10);
+        $cars = $this->buildVehicleQuery($request)->paginate($perPage)->withQueryString();
+
+        $manufacturers = \App\Models\Manufacturer::orderBy('name', 'asc')->get();
+
+        $locations = Car::whereNotNull('location')
+            ->where('location', '!=', '')
+            ->pluck('location')
+            ->filter(fn($l) => !empty(trim($l)))
+            ->unique()
+            ->sort();
+
+        return view('landing.pages.available-vehicles', compact('cars', 'manufacturers', 'locations'));
+    }
+
+    public function filterAvailableVehicles(Request $request)
+    {
+        $perPage = (int) $request->input('per_page', 10);
+        $cars = $this->buildVehicleQuery($request)->paginate($perPage)->withQueryString();
+
+        return response()->json([
+            'success' => true,
+            'html' => view('landing.pages.partials.vehicle-list', compact('cars'))->render(),
+            'count' => $cars->total(),
+            'pagination' => (string) $cars->links('pagination::bootstrap-4'),
+        ]);
     }
 
     public function rentalPolicies()

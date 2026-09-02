@@ -12,6 +12,7 @@ class CarSpec extends Model
         'make',
         'exterior_color',
         'body_type',
+        'type',
         'fuel_type',
         'fuel_type_custom',
         'engine',
@@ -23,7 +24,33 @@ class CarSpec extends Model
         'vin',
         'drive_type',
         'steering',
+        'interior_grade',
+        'exterior_grade',
     ];
+
+    public function getInteriorGradeStarsAttribute()
+    {
+        $grade = strtoupper(trim($this->interior_grade ?? ''));
+        if ($grade === 'A')
+            return '★★★';
+        if ($grade === 'B')
+            return '★★';
+        if ($grade === 'C')
+            return '★';
+        return null;
+    }
+
+    public function getExteriorGradeStarsAttribute()
+    {
+        $grade = strtoupper(trim($this->exterior_grade ?? ''));
+        if ($grade === 'A')
+            return '★★★';
+        if ($grade === 'B')
+            return '★★';
+        if ($grade === 'C')
+            return '★';
+        return null;
+    }
     public function car()
     {
         return $this->belongsTo(Car::class);
