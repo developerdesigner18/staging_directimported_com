@@ -13,6 +13,14 @@
             --bg-color: #f8fafc;
             --text-dark: #0f172a;
             --text-muted: #64748b;
+            --primary-blue: #0B2545;
+            --accent-red: #DC2626;
+            --bg-gray: #F9FAFB;
+            --border-gray: #E5E7EB;
+            --text-dark: #1F2937;
+            --text-muted: #4B5563;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
         }
 
         body {
@@ -415,10 +423,8 @@
         }
 
         /* -------------------------------------------------------------
-                                                                                                                                                                                                                       MIGRATED INLINE CLASSES FOR CLEAN HTML
-                                                                                                                                                                                                                       ------------------------------------------------------------- */
 
-        /* Main Image Container & Watermark Display */
+            /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -643,12 +649,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                                                                        display: flex;
-                                                                                                                        align-items: center;
-                                                                                                                        gap: 12px;
-                                                                                                                        margin-bottom: 8px;
-                                                                                                                        flex-wrap: wrap;
-                                                                                                                    } */
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+            } */
 
         .sidebar-title {
             font-size: 24px;
@@ -977,6 +982,120 @@
             align-items: center;
             gap: 8px;
         }
+
+        .section-title {
+            color: var(--primary-blue);
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            border-bottom: 3px solid var(--accent-red);
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .accordion {
+            background-color: #ffffff;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            margin-bottom: 14px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 18px 22px;
+            background: #ffffff;
+            border: none;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--primary-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: #F3F4F6;
+            color: var(--accent-red);
+        }
+
+        .icon {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+            color: var(--text-muted);
+        }
+
+        .accordion-header.active .icon {
+            transform: rotate(180deg);
+            color: var(--accent-red);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+            background-color: #ffffff;
+        }
+
+        .accordion-inner {
+            padding: 0 22px 22px 22px;
+            border-top: 1px solid var(--border-gray);
+            margin-top: 4px;
+            padding-top: 18px;
+        }
+
+        .qa-block {
+            margin-bottom: 18px;
+        }
+
+        .qa-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .question {
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .answer {
+            color: var(--text-muted);
+            font-size: 14.5px;
+            margin: 0;
+        }
+
+        .answer ul {
+            margin: 6px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .answer li {
+            margin-bottom: 8px;
+        }
+
+        /* WhatsApp Button Styles */
+        .wa-button {
+            display: inline-block;
+            background-color: var(--whatsapp-green);
+            color: #ffffff !important;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 8px;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 2px 4px rgba(37, 211, 102, 0.2);
+        }
+
+        .wa-button:hover {
+            background-color: var(--whatsapp-dark);
+        }
     </style>
 @endpush
 
@@ -1141,27 +1260,246 @@
                 </div>
 
                 <!-- FAQ Section matching premium styles -->
-                <h3 class="faq-header">Frequently Asked Questions</h3>
+
+                {{-- <h3 class="faq-header">Frequently Asked Questions</h3>
                 <div class="car-faq-container accordion" id="carFaqMain">
                     @foreach($carConf as $index => $conf)
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="faqHeading{{ $index }}">
-                                <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $index }}"
-                                    aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
-                                    {{ $conf->title }}
-                                </button>
-                            </h2>
-                            <div id="faqCollapse{{ $index }}"
-                                class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
-                                data-bs-parent="#carFaqMain">
-                                <div class="accordion-body">
-                                    {!! $conf->description !!}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqHeading{{ $index }}">
+                            <button class="accordion-button {{ $index === 0 ? '' : 'collapsed' }}" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ $index }}"
+                                aria-expanded="{{ $index === 0 ? 'true' : 'false' }}">
+                                {{ $conf->title }}
+                            </button>
+                        </h2>
+                        <div id="faqCollapse{{ $index }}"
+                            class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}"
+                            data-bs-parent="#carFaqMain">
+                            <div class="accordion-body">
+                                {!! $conf->description !!}
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div> --}}
+
+                <h2 class="section-title">Frequently Asked Questions</h2>
+
+                <!-- Menu 1 -->
+                <div class="accordion">
+                    <button class="accordion-header">
+                        <span>1. Vehicle Availability & How to Inquire</span>
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="qa-block">
+                                <div class="question">Q: Is this vehicle still available for purchase?</div>
+                                <div class="answer">Generally, our website is updated on a weekly basis. Because high-demand
+                                    vehicles move and trade hands quickly in Japan, it is possible that a car has already
+                                    been sold by the time you inquire. However, our team will check live availability
+                                    immediately upon receiving your inquiry.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: How can I inquire about this car?</div>
+                                <div class="answer">
+                                    <ul>
+                                        <li><strong>Option 1 (Inquiry Form - Preferred):</strong> Please fill out all
+                                            details in the contact form on this page so we can better understand your
+                                            request and location. This also automatically provides us with the specific
+                                            Vehicle Stock ID.</li>
+                                        <li><strong>Option 2 (Direct WhatsApp):</strong> We use a dedicated WhatsApp
+                                            Business Account for rapid replies. Click the WhatsApp button to message us
+                                            directly.<br>
+                                            <a href="https://wa.me/818033441177" class="wa-button" target="_blank"
+                                                rel="noopener noreferrer">Message Us on WhatsApp</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: Is this car listed in a live auction?</div>
+                                <div class="answer">No. We do not list active auction vehicles in this retail section of our
+                                    website. All auction vehicles are handled separately through our dedicated, live Auction
+                                    Portal.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: How quickly will I receive a response?</div>
+                                <div class="answer">Our standard response time is within the same day or the next business
+                                    day. Please note that many domestic car dealers in Japan take scheduled days off on
+                                    Mondays, Tuesdays, or Wednesdays. If a car is available, we act fast before another
+                                    buyer snaps it up.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu 2 -->
+                <div class="accordion">
+                    <button class="accordion-header">
+                        <span>2. Buying Process & Vehicle Inspections</span>
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="qa-block">
+                                <div class="question">Q: How do we purchase and secure this vehicle?</div>
+                                <div class="answer">Depending on your established buying history and transaction
+                                    relationship with us, we may be able to purchase and secure the vehicle immediately. For
+                                    new clients, a security deposit is required before purchasing.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: What is required for a security deposit?</div>
+                                <div class="answer">
+                                    <ul>
+                                        <li><strong>Vehicles up to ¥1,000,000 JPY:</strong> Minimum deposit of ¥200,000 JPY.
+                                        </li>
+                                        <li><strong>Premium Vehicles over ¥1,000,000 JPY:</strong> A 25% deposit of the
+                                            total vehicle budget.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: Do you physically inspect vehicles before purchase?</div>
+                                <div class="answer">Yes! We don't just sit behind a computer screen. Depending on the
+                                    location, we provide on-the-ground, personal vehicle inspections in Japan (such as in
+                                    the Kansai/Osaka and Tokyo regions). This includes translated condition reports,
+                                    detailed high-resolution photos, and mechanical verifications if available.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: What costs are involved in vehicle inspections?</div>
+                                <div class="answer">Vehicle inspections are evaluated on a case-by-case basis. Costs
+                                    generally cover travel time, fuel, and highway tolls, with a basic inspection at a
+                                    dealer yard starting from ¥35,000 JPY (which includes a full refund minus any customized
+                                    work requested). However, if we actively search, track down units, and travel out to
+                                    inspect physical cars at local auto auctions or dealers, direct technical costs incurred
+                                    will be systematically deducted from your deposit.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu 3 -->
+                <div class="accordion">
+                    <button class="accordion-header">
+                        <span>3. Deposits, Payment Methods & Refunds</span>
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="qa-block">
+                                <div class="question">Q: How can we pay our deposit or full vehicle balance?</div>
+                                <div class="answer">
+                                    <ul>
+                                        <li><strong>Option 1 (Full Vehicle Balance) — Telegraphic Transfer (T/T):</strong>
+                                            Direct bank wire transfer to our corporate bank account in Japan (preferred for
+                                            global business accounts). This method is used for full vehicle payment after
+                                            purchase.</li>
+                                        <li><strong>Option 2 (Deposits) — Wise Business:</strong> Instant localized business
+                                            payments directly into local accounts within your domestic region. Wise is our
+                                            preferred method for deposits so refunds don't incur international T/T wire fees
+                                            and are usually instant.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: What is your deposit refund policy?</div>
+                                <div class="answer">
+                                    <ul>
+                                        <li><strong>T/T Bank Transfer Refunds:</strong> Processed from our Japanese
+                                            corporate bank account. International wire handling fees will be deducted, and
+                                            net values can shift depending on daily exchange rate fluctuations.</li>
+                                        <li><strong>Wise Refunds:</strong> We simply reverse the original transaction. You
+                                            receive your full amount back, less any direct third-party processing fees or
+                                            specific requests.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: Does Japanese Consumption Tax apply?</div>
+                                <div class="answer">A standard 10% Japanese consumption tax applies to all domestic business
+                                    fees, localized service rates, and regional processing charges within Japan. When
+                                    exporting a vehicle, the 10% GST/consumption tax portion for the vehicle itself is
+                                    removed from the export invoice—you do not pay Japanese consumption tax on the vehicle
+                                    itself.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu 4 -->
+                <div class="accordion">
+                    <button class="accordion-header">
+                        <span>4. Shipping, FOB Costs & Global Export</span>
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="qa-block">
+                                <div class="question">Q: What does the listed price include?</div>
+                                <div class="answer">The price shown on the listing is the Japanese Base Price (excluding FOB
+                                    export fees, marine freight, and local import taxes). Contact us for a complete CIF
+                                    (Cost, Insurance, Freight) quote to your nearest entry port.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: What does FOB mean?</div>
+                                <div class="answer">FOB stands for "Free On Board" (or Full On Board). This includes all
+                                    Japanese domestic transport, export documentation, and port charges required to get the
+                                    vehicle onto the vessel. It does not cover ocean freight, destination customs, or
+                                    special individual requests.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: What export services do you provide?</div>
+                                <div class="answer">We handle complete export procedures, including export clearance,
+                                    de-registration certificates, customs documentation, and booking RoRo (Roll-on/Roll-off)
+                                    or container ocean freight.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: Do you offer Odometer Certification?</div>
+                                <div class="answer">Yes. We offer independent ODO certification (such as JEVIC) to verify
+                                    genuine mileage prior to export (the fee is determined by inspection type).</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: Which countries do you export to?</div>
+                                <div class="answer">We export globally, specializing in major English-speaking markets
+                                    including Australia, the USA, Canada, the UK, and Europe.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu 5 -->
+                <div class="accordion">
+                    <button class="accordion-header">
+                        <span>5. Compliance & Importation Support</span>
+                        <span class="icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="accordion-inner">
+                            <div class="qa-block">
+                                <div class="question">Q: Do you offer compliance support in Australia?</div>
+                                <div class="answer">Yes! Unlike traditional export agents who only handle paperwork, we
+                                    maintain an established network of compliance support and licensed RAWs/SEVS facilities
+                                    to help you import and ensure your vehicle complies in Australia.</div>
+                            </div>
+                            <div class="qa-block">
+                                <div class="question">Q: How do you assist with import regulations in my country?</div>
+                                <div class="answer">
+                                    <ul>
+                                        <li><strong>USA:</strong> We ensure vehicles meet the 25-Year Rule requirement,
+                                            handle export documentation, and connect you with specialized import agents or
+                                            licensed dealers who can assist with US entry and titling.</li>
+                                        <li><strong>Australia:</strong> We offer personal import services for private
+                                            customers through our established licensed dealer and compliance networks.</li>
+                                        <li><strong>Canada, UK & Europe:</strong> We guide you through specific age
+                                            restrictions, local duty rates, and import requirements.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
                 </div>
+
             </div>
 
             <!-- RIGHT COLUMN: Pricing & Form (STICKY) -->
@@ -1354,13 +1692,33 @@
 
 @section('script')
     <script>
+        const accordions = document.querySelectorAll('.accordion-header');
+
+        accordions.forEach(acc => {
+            acc.addEventListener('click', function () {
+                accordions.forEach(otherAcc => {
+                    if (otherAcc !== this) {
+                        otherAcc.classList.remove('active');
+                        otherAcc.nextElementSibling.style.maxHeight = null;
+                    }
+                });
+
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+            });
+        });
         const photoUrls = [
             @if(!empty($car->images))
                 @foreach($car->images as $image)
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                                                                                                                                                                                ];
+            ];
 
         let currentIndex = 0;
         let gridExpanded = false;
