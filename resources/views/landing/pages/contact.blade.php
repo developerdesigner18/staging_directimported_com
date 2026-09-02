@@ -1,15 +1,15 @@
 @extends('landing.master')
-@section('title','Contact Us')
+@section('title', 'Contact Us')
 @push('style-src')
     <script src='https://www.google.com/recaptcha/api.js'></script>
 @endpush
 @push('style')
-<style>
-    .rid-menubar ul li a {
-        font-size: 15px !important;
-        margin-right: 20px !important;
-    }
-</style>
+    <style>
+        .rid-menubar ul li a {
+            font-size: 15px !important;
+            margin-right: 20px !important;
+        }
+    </style>
 @endpush
 @section('main')
     <section class="rid-contact sec-space">
@@ -34,7 +34,7 @@
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Our Phone</h4>
-                                <span class="d-block">+81 6 4864 2081</span>
+                                <span class="d-block">+81 8033441177</span>
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Address</h4>
-                                <span>4-10 Senrioka Shimo, Suita Shi, Osaka 565-0813</span>
+                                <span>1 Chome Minami-Nakaburi, Hirakata City, Osaka, 573-0094,Japan</span>
                             </div>
                         </div>
 
@@ -58,8 +58,9 @@
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Online Support</h4>
-                                <span><a href="https://m.me/carrentaljapan">Facebook</a></span>
-                                <span><a href="mailto:rental@carrentaljapan.com">rental@carrentaljapan.com</a></span>
+                                <a href="https://wa.me/818033441177" target="_blank"><img
+                                        src="{{ asset('assets/landing/images/whatsapp.webp') }}" alt="whatsapp"></a>
+                                <span><a href="mailto:Sales@Directimported.com">Sales@Directimported.com</a></span>
                             </div>
                         </div>
                     </div>
@@ -80,16 +81,17 @@
                                 <input type="number" class="form-control" placeholder="Contact Number" name="contactNumber">
                             </div>
                             <div class="mb-4">
-                                <textarea class="form-control" rows="4" placeholder="Write Your Message" name="message"></textarea>
+                                <textarea class="form-control" rows="4" placeholder="Write Your Message"
+                                    name="message"></textarea>
                             </div>
                             <div class="form-group">
                                 <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
-                                     data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
+                                    data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
                             </div>
                             <button class="btn" type="submit">Send Message</button>
                             <span><strong>All queries are replied</strong> usually within 24hrs.</span>
                         </form>
-                      
+
                     </div>
                 </div>
             </div>
@@ -98,7 +100,7 @@
 @endsection
 @section('script')
     <script !src="">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#contactUs").validate({
                 rules: {
                     name: {
@@ -141,16 +143,16 @@
                     }
                 },
                 errorClass: 'text-danger error',
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     element.after(error);
                 },
-                submitHandler: function(form, e) {
+                submitHandler: function (form, e) {
                     e.preventDefault();
 
                     // Verify reCAPTCHA first
                     var recaptchaResponse = grecaptcha.getResponse();
                     if (recaptchaResponse.length === 0) {
-                        sendToast("Please complete the reCAPTCHA verification",'danger');
+                        sendToast("Please complete the reCAPTCHA verification", 'danger');
                         return false;
                     }
 
@@ -159,20 +161,20 @@
                         method: "POST",
                         dataType: "json",
                         data: $(form).serialize(),
-                        beforeSend: function() {
+                        beforeSend: function () {
                             $('button[type="submit"]').attr('disabled', true);
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...');
                         },
-                        success: function(result) {
+                        success: function (result) {
                             // Handle success
                             sendSuccess(result.message || 'Message sent successfully!');
                             form.reset();
                             grecaptcha.reset();
                         },
-                        error: function(xhr) {
+                        error: function (xhr) {
                             let data = xhr.responseJSON;
                             if (data && data.hasOwnProperty('errors')) {
-                                $.each(data.errors, function(key, value) {
+                                $.each(data.errors, function (key, value) {
                                     $("#" + key + "-error").html(value[0]).show();
                                 });
                             } else if (data && data.hasOwnProperty('message')) {
@@ -181,7 +183,7 @@
                                 sendError("An error occurred. Please try again.");
                             }
                         },
-                        complete: function() {
+                        complete: function () {
                             $('button[type="submit"]').attr('disabled', false);
                             $('button[type="submit"]').html('Send Message');
                         }
@@ -191,4 +193,3 @@
         });
     </script>
 @endsection
-
