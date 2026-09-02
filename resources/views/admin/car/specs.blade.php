@@ -45,6 +45,42 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
+                                <select name="type" class="form-select">
+                                    <option value="">All Types</option>
+                                    <option value="coupe" {{ ($car->spec->type ?? '') == 'coupe' ? 'selected' : '' }}>Coupe
+                                    </option>
+                                    <option value="sedan" {{ ($car->spec->type ?? '') == 'sedan' ? 'selected' : '' }}>Sedan
+                                    </option>
+                                    <option value="hatchback" {{ ($car->spec->type ?? '') == 'hatchback' ? 'selected' : '' }}>
+                                        Hatchback</option>
+                                    <option value="convertible" {{ ($car->spec->type ?? '') == 'convertible' ? 'selected' : '' }}>Convertible</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label
+                                    class="form-label">{{ admin_label('car_form', 'interior_grade', 'Interior Grade') }}</label>
+                                <select name="interior_grade" class="form-select">
+                                    <option value="">Select Interior Grade</option>
+                                    <option value="A" {{ strtoupper($car->spec->interior_grade ?? '') == 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ strtoupper($car->spec->interior_grade ?? '') == 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="C" {{ strtoupper($car->spec->interior_grade ?? '') == 'C' ? 'selected' : '' }}>C</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label
+                                    class="form-label">{{ admin_label('car_form', 'exterior_grade', 'Exterior Grade') }}</label>
+                                <select name="exterior_grade" class="form-select">
+                                    <option value="">Select Exterior Grade</option>
+                                    <option value="A" {{ strtoupper($car->spec->exterior_grade ?? '') == 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ strtoupper($car->spec->exterior_grade ?? '') == 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="C" {{ strtoupper($car->spec->exterior_grade ?? '') == 'C' ? 'selected' : '' }}>C</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'fuel_type', 'Fuel Type') }}</label>
                                 <input type="text" name="fuel_type" class="form-control"
                                     value="{{ $car->spec->fuel_type ?? '' }}" placeholder="e.g. Hybrid">

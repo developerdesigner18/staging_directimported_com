@@ -23,6 +23,7 @@ use Laravel\SerializableClosure\Contracts\Serializable;
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('landing');
     Route::get('/available-vehicles', 'availableVehicles')->name('available.vehicles');
+    Route::get('/available-vehicles/filter', 'filterAvailableVehicles')->name('available-vehicles.filter');
     Route::get('/contact', 'contact')->name('contact');
     Route::post('/contact', 'contactPost')->name('contact.post');
     Route::get('/rental-policies', 'rentalPolicies')->name('rental.policies');
