@@ -456,6 +456,7 @@ class CarController extends Controller
                 'make' => $manufacturer->name,
                 'exterior_color' => $request->exterior_color,
                 'body_type' => $request->body_type,
+                'type' => $request->type,
                 'fuel_type' => $request->fuel_type,
                 'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
                 'engine' => $request->engine,
@@ -467,6 +468,8 @@ class CarController extends Controller
                 'vin' => $request->vin,
                 'drive_type' => $request->drive_type,
                 'steering' => $request->steering,
+                'interior_grade' => $request->interior_grade ?: null,
+                'exterior_grade' => $request->exterior_grade ?: null,
             ]);
 
             DB::commit();
@@ -652,6 +655,7 @@ class CarController extends Controller
                     'make' => $manufacturer->name,
                     'exterior_color' => $request->exterior_color,
                     'body_type' => $request->body_type,
+                    'type' => $request->type,
                     'fuel_type' => $request->fuel_type,
                     'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
                     'engine' => $request->engine,
@@ -663,6 +667,8 @@ class CarController extends Controller
                     'vin' => $request->vin,
                     'drive_type' => $request->drive_type,
                     'steering' => $request->steering,
+                    'interior_grade' => $request->interior_grade ?: null,
+                    'exterior_grade' => $request->exterior_grade ?: null,
                 ]
             );
 
@@ -781,6 +787,7 @@ class CarController extends Controller
             'make' => 'nullable|string',
             'exterior_color' => 'nullable|string',
             'body_type' => 'nullable|string',
+            'type' => 'nullable|string',
             'fuel_type' => 'nullable|string',
             'engine' => 'nullable|string',
             'odometer' => 'nullable|integer',
@@ -802,12 +809,15 @@ class CarController extends Controller
                     'make',
                     'exterior_color',
                     'body_type',
+                    'type',
                     'fuel_type',
                     'engine',
                     'odometer',
                     'model_year',
                     'interior_color',
-                    'transmission'
+                    'transmission',
+                    'interior_grade',
+                    'exterior_grade'
                 ])
             );
 

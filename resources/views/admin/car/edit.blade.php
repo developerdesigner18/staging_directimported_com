@@ -338,6 +338,7 @@
                         @php
                             $currentVin = $car->vin ?? $car->spec->vin ?? '';
                             $currentBodyType = $car->spec->body_type ?? '';
+                            $currentType = $car->spec->type ?? '';
                             $currentSteering = $car->steering ?? $car->spec->steering ?? '';
                             $currentDriveType = $car->drive_type ?? $car->spec->drive_type ?? '';
                             $currentFuelType = $car->spec->fuel_type ?? '';
@@ -348,6 +349,8 @@
                             $currentTransmissionCustom = $car->spec->transmission_custom ?? '';
                             $currentInteriorColor = $car->spec->interior_color ?? '';
                             $currentExteriorColor = $car->spec->exterior_color ?? '';
+                            $currentInteriorGrade = $car->spec->interior_grade ?? '';
+                            $currentExteriorGrade = $car->spec->exterior_grade ?? '';
                         @endphp
                         <div class="row g-3">
                             <div class="col-md-6 mb-3">
@@ -368,6 +371,18 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
+                                <label for="type"
+                                    class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
+                                <select id="type" name="type" class="form-select select2">
+                                    <option value="">All Types</option>
+                                    <option value="coupe" {{ strcasecmp($currentType, 'coupe') === 0 ? 'selected' : '' }}>Coupe</option>
+                                    <option value="sedan" {{ strcasecmp($currentType, 'sedan') === 0 ? 'selected' : '' }}>Sedan</option>
+                                    <option value="hatchback" {{ strcasecmp($currentType, 'hatchback') === 0 ? 'selected' : '' }}>Hatchback</option>
+                                    <option value="convertible" {{ strcasecmp($currentType, 'convertible') === 0 ? 'selected' : '' }}>Convertible</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                                 <label for="steering"
                                     class="form-label">{{ admin_label('car_form', 'steering', 'Steering') }}</label>
                                 <select id="steering" name="steering" class="form-select select2">
@@ -380,6 +395,28 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
+                                <label for="interior_grade"
+                                    class="form-label">{{ admin_label('car_form', 'interior_grade', 'Interior Grade') }}</label>
+                                <select id="interior_grade" name="interior_grade" class="form-select select2">
+                                    <option value="">Select Interior Grade</option>
+                                    <option value="A" {{ strtoupper($currentInteriorGrade) === 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ strtoupper($currentInteriorGrade) === 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="C" {{ strtoupper($currentInteriorGrade) === 'C' ? 'selected' : '' }}>C</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="exterior_grade"
+                                    class="form-label">{{ admin_label('car_form', 'exterior_grade', 'Exterior Grade') }}</label>
+                                <select id="exterior_grade" name="exterior_grade" class="form-select select2">
+                                    <option value="">Select Exterior Grade</option>
+                                    <option value="A" {{ strtoupper($currentExteriorGrade) === 'A' ? 'selected' : '' }}>A</option>
+                                    <option value="B" {{ strtoupper($currentExteriorGrade) === 'B' ? 'selected' : '' }}>B</option>
+                                    <option value="C" {{ strtoupper($currentExteriorGrade) === 'C' ? 'selected' : '' }}>C</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
                                 <label for="drive_type"
                                     class="form-label">{{ admin_label('car_form', 'drive_type', 'Drive Type') }}</label>
                                 <select id="drive_type" name="drive_type" class="form-select select2">
@@ -388,6 +425,13 @@
                                         <option value="{{ $dType }}" {{ strcasecmp($currentDriveType, $dType) === 0 ? 'selected' : '' }}>{{ $dType }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="engine"
+                                    class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
+                                <input type="text" id="engine" name="engine" class="form-control"
+                                    value="{{ $currentEngine }}" placeholder="e.g. 2.0L Turbo">
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -438,13 +482,6 @@
                                 <div id="trans_custom_wrapper" class="mt-2 {{ $hasCustomTrans ? '' : 'd-none' }}">
                                     <input type="text" id="transmission_custom" name="transmission_custom" class="form-control" value="{{ old('transmission_custom', $currentTransmissionCustom) }}" placeholder="Enter custom wording (optional)">
                                 </div>
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label for="engine"
-                                    class="form-label">{{ admin_label('car_form', 'engine', 'Engine') }}</label>
-                                <input type="text" id="engine" name="engine" class="form-control"
-                                    value="{{ $currentEngine }}" placeholder="e.g. 2.0L Turbo">
                             </div>
 
                             <div class="col-md-6 mb-3">
