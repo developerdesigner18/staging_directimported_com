@@ -74,7 +74,8 @@
                 <div class="col-lg-3 col-md-8 col-sm-8 col-6 logo-container ps-0 pe-0 px-0">
                     <a href="{{route('landing')}}">
                         <img class="logo" src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="Ridexo Logo Yellow"
-                            loading="lazy">
+                            loading="lazy" style=" max-width: 270px;margin-left: 7px;height: 63px;">
+
                     </a>
                 </div>
                 <div class="col-lg-9 col-md-4 col-sm-4 col-6">
