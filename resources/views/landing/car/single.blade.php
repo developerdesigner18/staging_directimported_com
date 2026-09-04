@@ -23,11 +23,17 @@
             --whatsapp-dark: #128C7E;
         }
 
+        html,
+        body {
+            overflow-x: clip;
+        }
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-dark);
         }
+
 
         .rid-menubar ul li a {
             font-size: 15px !important;
@@ -363,12 +369,17 @@
             color: #fff;
         }
 
+        .related-cars-slider {
+            position: relative;
+            overflow-x: clip;
+        }
+
         .related-cars-slider .slick-prev {
-            left: -20px;
+            left: 0;
         }
 
         .related-cars-slider .slick-next {
-            right: -20px;
+            right: 0;
         }
 
         .related-cars-slider .slick-prev:before {
@@ -399,10 +410,11 @@
         .details-right-column {
             flex: 1 1 350px;
             max-width: 450px;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 75px;
             z-index: 99;
+            position: sticky !important;
+            top: 10px !important;
+
+
         }
 
         @media (max-width: 991px) {
@@ -424,7 +436,7 @@
 
         /* -------------------------------------------------------------
 
-            /* Main Image Container & Watermark Display */
+                                                        /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -649,11 +661,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 12px;
-            } */
+                                                            display: flex;
+                                                            justify-content: space-between;
+                                                            align-items: center;
+                                                            margin-bottom: 12px;
+                                                        } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1504,107 +1516,111 @@
 
             <!-- RIGHT COLUMN: Pricing & Form (STICKY) -->
             <div class="details-right-column">
+                <div class="inner-right-column">
 
-                <div class="sidebar-header">
-                    <h1 class="sidebar-title">
-                        {{ $car->name }}
-                    </h1>
-                    @if(!empty($car->formatted_card_subtitle))
-                        <div class="car-subtitle text-muted mt-1 mb-2" style="font-size: 15px; font-weight: 500;">
-                            {{ $car->formatted_card_subtitle }}
+
+                    <div class="sidebar-header">
+                        <h1 class="sidebar-title">
+                            {{ $car->name }}
+                        </h1>
+                        @if(!empty($car->formatted_card_subtitle))
+                            <div class="car-subtitle text-muted mt-1 mb-2" style="font-size: 15px; font-weight: 500;">
+                                {{ $car->formatted_card_subtitle }}
+                            </div>
+                        @endif
+                    </div>
+                    <span class="status-badge">
+                        {{ strtoupper($car->status->value) }}
+                    </span>
+                    <!-- Pricing Section matching reference -->
+                    <div class="pricing-section">
+                        <div class="pricing-header">
+                            <span class="pricing-label">Vehicle Base Price</span>
+                            <span class="pricing-subtext">(Excludes any FOB/CiF Fees)</span>
                         </div>
-                    @endif
+                        @php
+                            $cleanPrice = preg_replace('/[^\d.]/', '', $car->vehicle_price ?? 0);
+                            $formattedPrice = is_numeric($cleanPrice) && $cleanPrice > 0 ? number_format((float) $cleanPrice) : ($car->vehicle_price ?? '0');
+                        @endphp
+                        <span class="pricing-value">¥{{ $formattedPrice }}</span>
+                    </div>
+
+                    <!-- Inquiry/Booking Redesigned Form -->
+                    <form id="contactRequestForm" novalidate method="POST" class="contact-form-container">
+                        @csrf
+                        <h2 class="contact-form-title">Contact Us</h2>
+
+                        <input type="hidden" name="vehicle_id" value="{{ $car->name }}">
+
+                        <label>Vehicle Stock #</label>
+                        <input type="text" value="{{ $car->vehicle_id ?? $car->name ?? '' }}" readonly
+                            class="form-input form-readonly-input">
+
+                        <label>Full Name <span class="required-asterisk">*</span></label>
+                        <input type="text" name="full_name" id="full_name" required placeholder="Full Name"
+                            class="form-input">
+
+                        <label>Email Address <span class="required-asterisk">*</span></label>
+                        <input type="email" name="email" id="email" required placeholder="Email Address" class="form-input">
+
+                        <div class="form-row-2 row-2">
+                            <div class="form-col">
+                                <label>Phone <span class="required-asterisk">*</span></label>
+                                <input type="tel" name="phone_number" id="phone_number" required placeholder="Phone Number"
+                                    class="form-input">
+                            </div>
+                            <div class="form-col">
+                                <label>Contact Method <span class="required-asterisk">*</span></label>
+                                <select name="preferred_contact_method" id="preferred_contact_method" required
+                                    class="form-input form-select-white">
+                                    <option value="">Select...</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Phone">Phone</option>
+                                    <option value="WhatsApp">WhatsApp</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Searchable Destination Country Datalist & Nearest Port -->
+                        <div class="form-row-2 row-2">
+                            <div class="form-col">
+                                <label>Country <span class="required-asterisk">*</span></label>
+                                <input list="countryList" name="destination_country" id="destination_country" required
+                                    placeholder="Select Country..." class="form-input">
+                                <datalist id="countryList">
+                                    <option value="USA"></option>
+                                    <option value="UK"></option>
+                                    <option value="Australia"></option>
+                                    <option value="Bahamas"></option>
+                                    <option value="Canada"></option>
+                                    <option value="New Zealand"></option>
+                                    <option value="Ireland"></option>
+                                    <option value="Pakistan"></option>
+                                    <option value="India"></option>
+                                    <option value="Japan"></option>
+                                    <option value="Singapore"></option>
+                                    <option value="South Africa"></option>
+                                </datalist>
+                            </div>
+
+                            <div class="form-col">
+                                <label>Nearest Port <span class="required-asterisk">*</span></label>
+                                <input type="text" name="nearest_port_or_postal_code" id="nearest_port_or_postal_code"
+                                    required placeholder="Port / Post Code" class="form-input">
+                            </div>
+                        </div>
+
+                        <label>Message <span class="required-asterisk">*</span></label>
+                        <textarea name="message" id="message" required rows="3" placeholder="Your Message"
+                            class="form-input textarea-message"></textarea>
+
+                        <!-- Popping Red Gradient Button -->
+                        <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
+                            <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
+                            Request Details & Quote
+                        </button>
+                    </form>
                 </div>
-                <span class="status-badge">
-                    {{ strtoupper($car->status->value) }}
-                </span>
-                <!-- Pricing Section matching reference -->
-                <div class="pricing-section">
-                    <div class="pricing-header">
-                        <span class="pricing-label">Vehicle Base Price</span>
-                        <span class="pricing-subtext">(Excludes any FOB/CiF Fees)</span>
-                    </div>
-                    @php
-                        $cleanPrice = preg_replace('/[^\d.]/', '', $car->vehicle_price ?? 0);
-                        $formattedPrice = is_numeric($cleanPrice) && $cleanPrice > 0 ? number_format((float) $cleanPrice) : ($car->vehicle_price ?? '0');
-                    @endphp
-                    <span class="pricing-value">¥{{ $formattedPrice }}</span>
-                </div>
-
-                <!-- Inquiry/Booking Redesigned Form -->
-                <form id="contactRequestForm" novalidate method="POST" class="contact-form-container">
-                    @csrf
-                    <h2 class="contact-form-title">Contact Us</h2>
-
-                    <input type="hidden" name="vehicle_id" value="{{ $car->name }}">
-
-                    <label>Vehicle Stock #</label>
-                    <input type="text" value="{{ $car->vehicle_id ?? $car->name ?? '' }}" readonly
-                        class="form-input form-readonly-input">
-
-                    <label>Full Name <span class="required-asterisk">*</span></label>
-                    <input type="text" name="full_name" id="full_name" required placeholder="Full Name" class="form-input">
-
-                    <label>Email Address <span class="required-asterisk">*</span></label>
-                    <input type="email" name="email" id="email" required placeholder="Email Address" class="form-input">
-
-                    <div class="form-row-2 row-2">
-                        <div class="form-col">
-                            <label>Phone <span class="required-asterisk">*</span></label>
-                            <input type="tel" name="phone_number" id="phone_number" required placeholder="Phone Number"
-                                class="form-input">
-                        </div>
-                        <div class="form-col">
-                            <label>Contact Method <span class="required-asterisk">*</span></label>
-                            <select name="preferred_contact_method" id="preferred_contact_method" required
-                                class="form-input form-select-white">
-                                <option value="">Select...</option>
-                                <option value="Email">Email</option>
-                                <option value="Phone">Phone</option>
-                                <option value="WhatsApp">WhatsApp</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Searchable Destination Country Datalist & Nearest Port -->
-                    <div class="form-row-2 row-2">
-                        <div class="form-col">
-                            <label>Country <span class="required-asterisk">*</span></label>
-                            <input list="countryList" name="destination_country" id="destination_country" required
-                                placeholder="Select Country..." class="form-input">
-                            <datalist id="countryList">
-                                <option value="USA"></option>
-                                <option value="UK"></option>
-                                <option value="Australia"></option>
-                                <option value="Bahamas"></option>
-                                <option value="Canada"></option>
-                                <option value="New Zealand"></option>
-                                <option value="Ireland"></option>
-                                <option value="Pakistan"></option>
-                                <option value="India"></option>
-                                <option value="Japan"></option>
-                                <option value="Singapore"></option>
-                                <option value="South Africa"></option>
-                            </datalist>
-                        </div>
-
-                        <div class="form-col">
-                            <label>Nearest Port <span class="required-asterisk">*</span></label>
-                            <input type="text" name="nearest_port_or_postal_code" id="nearest_port_or_postal_code" required
-                                placeholder="Port / Post Code" class="form-input">
-                        </div>
-                    </div>
-
-                    <label>Message <span class="required-asterisk">*</span></label>
-                    <textarea name="message" id="message" required rows="3" placeholder="Your Message"
-                        class="form-input textarea-message"></textarea>
-
-                    <!-- Popping Red Gradient Button -->
-                    <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
-                        <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
-                        Request Details & Quote
-                    </button>
-                </form>
             </div>
         </div>
     </div>
@@ -1718,7 +1734,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-            ];
+                                                        ];
 
         let currentIndex = 0;
         let gridExpanded = false;

@@ -5275,42 +5275,48 @@ body.overlay-active:before {
 
 .service-card {
     background-color: #ffffff;
-    border: 1px solid #E5E7EB;
-    border-radius: 12px;
-    padding: 40px 30px !important;
+    border: none;
+    border-radius: 18px;
+    padding: 40px 25px !important;
     transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
 }
 
 
 .service-card:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
 }
 
 .service-card .icon-wrapper {
-    margin-bottom: 24px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 25px;
+    background: transparent;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .service-card .icon-wrapper img {
-    height: 100%;
-    width: auto;
+    max-width: 80px;
+    max-height: 80px;
     object-fit: contain;
 }
 
 .service-card h4 {
     font-size: 22px;
     font-weight: 700;
-    color: #000B21;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    color: #111827;
 }
 
 .service-card p {
     font-size: 15px;
-    line-height: 1.6;
-    color: #8892B0;
+    line-height: 1.7;
+    color: #6b7280;
+    margin: 0;
 }
 
 

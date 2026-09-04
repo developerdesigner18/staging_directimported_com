@@ -135,7 +135,7 @@
 
 
 
-                @if($user->hasRole('admin') || $user->can('accessories_equipments'))
+                {{-- @if($user->hasRole('admin') || $user->can('accessories_equipments'))
                     <li class="nav-item">
                         <a href="{{route('admin.accessory.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.accessory.*')) active @endif">
@@ -143,7 +143,7 @@
                                 data-key="t-dashboards">{{ admin_label('sidebar', 'accessories_equipments', 'Accessories & Equipments') }}</span>
                         </a>
                     </li>
-                @endif
+                @endif --}}
 
                 {{-- @if($user->hasRole('admin') || $user->can('location'))
 

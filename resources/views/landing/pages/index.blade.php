@@ -514,56 +514,70 @@
         }
 
         /* =========================
-           How It Works
-        ========================= */
+                                               How It Works & Our Services Cards
+                                            ========================= */
 
         .rid-how-it-work {
             padding: 80px 0;
             background: #f9fafb;
         }
 
-        .work-card {
-            background: #fff;
-            padding: 40px 25px;
-            border-radius: 18px;
+        .work-card,
+        .service-card {
+            background: #fff !important;
+            padding: 40px 25px !important;
+            border-radius: 18px !important;
+            border: none !important;
             height: 100%;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease !important;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05) !important;
+            text-align: center !important;
         }
 
-        .work-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        .work-card:hover,
+        .service-card:hover {
+            transform: translateY(-5px) !important;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
         }
 
-        .work-icon {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 25px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #053C7C 0%, #042B59 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .work-icon,
+        .service-card .icon-wrapper {
+            width: 90px !important;
+            height: 90px !important;
+            margin: 0 auto 25px !important;
+            background: transparent !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
         }
 
-        .work-icon i {
-            color: #fff;
-            font-size: 40px;
+        .work-icon i,
+        .service-card .icon-wrapper i {
+            color: #053C7C !important;
+            font-size: 45px !important;
         }
 
-        .work-card h4 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #111827;
+        .work-icon img,
+        .service-card .icon-wrapper img {
+            max-width: 80px !important;
+            max-height: 80px !important;
+            object-fit: contain !important;
         }
 
-        .work-card p {
-            font-size: 15px;
-            line-height: 1.7;
-            color: #6b7280;
-            margin: 0;
+        .work-card h4,
+        .service-card h4 {
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            margin-bottom: 15px !important;
+            color: #111827 !important;
+        }
+
+        .work-card p,
+        .service-card p {
+            font-size: 15px !important;
+            line-height: 1.7 !important;
+            color: #6b7280 !important;
+            margin: 0 !important;
         }
 
         /* ===== EMBLEM ROW ===== */
@@ -813,7 +827,59 @@
         </div>
     @endif
     <!-- Latest Cars Section End -->
+    <!-- How It Works Section Start -->
+    <section class="rid-how-it-work">
+        <div class="container">
 
+            <div class="section-title text-center mb-5">
+                <h2>How It Works</h2>
+            </div>
+
+            <div class="row g-4">
+
+                <!-- Step 1 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-search"></i>
+                        </div>
+                        <h4>Find the Right Car</h4>
+                        <p>
+                            Browse our wide range of quality vehicles and choose the perfect car for your needs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-cart"></i>
+                        </div>
+                        <h4>Buy It Online</h4>
+                        <p>
+                            Complete your purchase securely online with a smooth and hassle-free process.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="col-md-4">
+                    <div class="work-card text-center">
+                        <div class="work-icon">
+                            <i class="bx bx-car"></i>
+                        </div>
+                        <h4>Enjoy Your Ride</h4>
+                        <p>
+                            Get your vehicle delivered and enjoy a reliable driving experience with confidence.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- How It Works Section End -->
     <!-- Our Services Section Start -->
     <section id="ourservices">
         <div class="container">
@@ -830,8 +896,8 @@
                         @foreach ($services as $service)
                             <!-- Auction Inspection Services -->
                             <div class="col-lg-4 col-md-6">
-                                <div class="service-card h-100">
-                                    <div class="icon-wrapper">
+                                <div class="service-card work-card text-center h-100">
+                                    <div class="icon-wrapper work-icon">
                                         <img src="{{ isset($service->images[0]) ? asset(SERVICE_PATH . $service->images[0]) : asset('uploads/user_documents/default.jpg') }}"
                                             alt="{{ $service->title }}" loading="lazy">
                                     </div>
@@ -845,7 +911,7 @@
 
                     </div>
 
-                    <div class="text-end mt-5">
+                    <div class="text-center mt-5">
                         <a href="{{ route('services.view') }}" class="btn-read-more">
                             READ MORE <i class='bx bx-right-arrow-alt'></i>
                         </a>
@@ -902,59 +968,7 @@
 
 
     <!--  How-it-work Section Start-->
-    <!-- How It Works Section Start -->
-    <section class="rid-how-it-work">
-        <div class="container">
 
-            <div class="section-title text-center mb-5">
-                <h2>How It Works</h2>
-            </div>
-
-            <div class="row g-4">
-
-                <!-- Step 1 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-search"></i>
-                        </div>
-                        <h4>Find the Right Car</h4>
-                        <p>
-                            Browse our wide range of quality vehicles and choose the perfect car for your needs.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 2 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-cart"></i>
-                        </div>
-                        <h4>Buy It Online</h4>
-                        <p>
-                            Complete your purchase securely online with a smooth and hassle-free process.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Step 3 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-car"></i>
-                        </div>
-                        <h4>Enjoy Your Ride</h4>
-                        <p>
-                            Get your vehicle delivered and enjoy a reliable driving experience with confidence.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    <!-- How It Works Section End -->
     <!-- Matters To You Section Start -->
     <section id="matters-to-you">
         <div class="container">

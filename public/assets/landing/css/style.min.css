@@ -23,7 +23,7 @@
 html,
 body {
     font-family: var(--body-font);
-    overflow-x: hidden;
+
 }
 
 @media (min-width: 1400px) {
@@ -4922,12 +4922,12 @@ body.overlay-active:before {
 
 #ourservices,
 #matters-to-you {
-    background-color: transparent !important;
+    background-color: #F9FAFB !important;
 }
 
 .inner-container-bg {
-    background-color: #E6EAF4;
-    padding: 60px 40px;
+    /* background-color: #E6EAF4; */
+    /* padding: 60px 40px; */
     border-radius: 24px;
 }
 
