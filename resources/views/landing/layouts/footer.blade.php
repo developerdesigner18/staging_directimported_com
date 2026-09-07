@@ -39,16 +39,16 @@
 
                     <div class="social-icon-box">
                         <a href="https://wa.me/818033441177" target="_blank" aria-label="WhatsApp">
-                            <i class='bx bxl-whatsapp'></i>
+                            <i class='bxl bx-whatsapp'></i>
                         </a>
                         <a href="#" target="_blank" aria-label="Facebook">
-                            <i class='bx bxl-facebook'></i>
+                            <i class='bxl bx-facebook'></i>
                         </a>
                         <a href="#" target="_blank" aria-label="Instagram">
-                            <i class='bx bxl-instagram'></i>
+                            <i class='bxl bx-instagram'></i>
                         </a>
                         <a href="#" target="_blank" aria-label="YouTube">
-                            <i class='bx bxl-youtube'></i>
+                            <i class='bxl bx-youtube'></i>
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                     <h4 class="footer-title">Quick Links</h4>
                     <ul class="footer-list">
                         <li><a href="{{ route('landing') }}#auction">Auction</a></li>
-                        <li><a href="{{ route('car') }}">Example Cars</a></li>
+                        <li><a href="{{ route('available.vehicles') }}">Available Cars</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="{{ route('faqs') }}">FAQs</a></li>
                         <li><a href="{{ route('landing') }}#about">About us</a></li>
@@ -107,10 +107,10 @@
                     <div class="contact-list">
                         <div class="contact-item mb-3">
                             <i class='bx bxs-envelope'></i>
-                            <a href="mailto:IAS@directimported.com">IAS@directimported.com</a>
+                            <a href="mailto:IAS@directimported.com">sales@directimported.com</a>
                         </div>
                         <div class="contact-item mb-3">
-                            <i class='bx bxl-whatsapp'></i>
+                            <i class='bxl bx-whatsapp'></i>
                             <a href="https://wa.me/818033441177" target="_blank">Whatsapp +81 8033441177</a>
                         </div>
                         <div class="contact-item mb-3">

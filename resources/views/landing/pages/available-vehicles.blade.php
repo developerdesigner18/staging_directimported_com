@@ -400,49 +400,69 @@
         }
 
         /* --- PAGINATION STYLES --- */
-        .pagination {
+        .pagination-wrapper {
             display: flex;
             align-items: center;
-            gap: 5px;
         }
 
-        .pagination button {
-            padding: 6px 12px;
+        .pagination-wrapper nav {
+            margin: 0;
+        }
+
+        .pagination-wrapper .pagination {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .pagination-wrapper .page-item .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
             border: 1px solid var(--border-color);
             background-color: var(--card-bg);
             color: var(--text-heading);
             font-size: 0.85rem;
             font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 4px !important;
+            text-decoration: none;
             transition: all 0.2s ease;
-            min-width: 36px;
         }
 
-        .pagination button:hover:not(:disabled) {
+        .pagination-wrapper .page-item .page-link:hover {
             background-color: #EDF2F7;
             border-color: #A0AEC0;
+            color: var(--text-heading);
         }
 
-        .pagination button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .pagination button.active {
+        .pagination-wrapper .page-item.active .page-link {
             background-color: var(--text-heading);
             color: #FFFFFF;
             border-color: var(--text-heading);
         }
 
-        .pagination button.skip-btn {
-            background-color: #F8FAFC;
-            color: var(--primary-red);
+        .pagination-wrapper .page-item.disabled .page-link {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background-color: var(--card-bg);
+            color: var(--text-muted);
         }
 
-        .pagination button.skip-btn:hover:not(:disabled) {
-            background-color: #FEE2E2;
-            border-color: var(--primary-red);
+        /* Prevent SVG icon inflation */
+        .pagination-wrapper svg,
+        .controls-bar svg {
+            width: 16px !important;
+            height: 16px !important;
+            max-width: 16px !important;
+            max-height: 16px !important;
+            display: inline-block;
+            vertical-align: middle;
         }
 
         /* Listing Cards */
@@ -922,8 +942,8 @@
                     <option value="50">50</option>
                 </select>
             </div>
-            <div id="pagination-bottom" class="pagination">
-                {!! (string) $cars->links() !!}
+            <div id="pagination-bottom" class="pagination-wrapper">
+                {!! (string) $cars->links('pagination::bootstrap-4') !!}
             </div>
         </div>
     </div>
