@@ -3,641 +3,405 @@
 
 @push('style')
     <style>
-        .rid-menubar ul li a {
-            font-size: 15px !important;
-            margin-right: 20px !important;
-        }
+     /* 
+     * Custom CSS to exactly match the provided image references.
+     * This isolates the styling so it won't conflict with your site's current theme.
+     */
+    .terms-page-wrapper {
+        background-color: #f8f9fb; /* Light off-white background from image */
+        padding: 50px 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #333333;
+    }
+    /* .terms-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    } */
+    
+    /* Main Page Title */
+    .terms-page-title {
+        text-align: center;
+        font-size: 2.75rem;
+        font-weight: 700;
+        color: #2b3b4e; /* Dark slate blue */
+        margin-bottom: 50px;
+        position: relative;
+    }
+    .terms-page-title::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background-color: #172a53; /* Dark navy underline matching the image */
+        margin: 15px auto 0;
+        border-radius: 2px;
+    }
 
-        .terms-container {
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-            min-height: 100vh;
-            padding: 60px 0;
-        }
+    /* Card Styling */
+    .term-card {
+        background-color: #ffffff;
+        border-radius: 8px;
+        margin-bottom: 40px;
+        /* Soft shadow with a very faint pink/red tint matching the reference images */
+        box-shadow: 0 12px 35px rgba(220, 20, 60, 0.04), 0 4px 10px rgba(0,0,0,0.03);
+        overflow: hidden;
+    }
 
-        .main-title {
-            color: #2c3e50;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
+    /* Card Header */
+    .term-header {
+        background-color: #121933; /* Deep Navy Blue from image */
+        padding: 0px 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+    .term-badge {
+        background-color: #3460a8; /* Lighter blue circle */
+        color: #ffffff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 700;
+        font-size: 15px;
+        flex-shrink: 0;
+    }
+    .term-header h2 {
+        color: #ffffff;
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
 
-        .main-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: linear-gradient(90deg, #053C7C, #141733);
-            border-radius: 2px;
-        }
+    /* Card Body */
+    .term-body {
+        padding: 30px 40px;
+        line-height: 1.7;
+        font-size: 0.95rem;
+        color: #475569;
+        /* Force word wrapping to prevent horizontal scrolling */
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    .term-body p {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+    .term-body ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .term-body li {
+        margin-bottom: 24px;
+        padding-left: 0;
+    }
+    .term-body li:last-child {
+        margin-bottom: 0;
+    }
+    .term-body strong {
+        color: #1e293b;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 4px;
+    }
 
-        .terms-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(243, 54, 79, 0.1);
-            margin-bottom: 2rem;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: white;
-        }
+    /* Table Styling for Insurace & Glossary */
+    .table-wrapper {
+        overflow-x: auto;
+        margin-top: 15px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+    }
+    .terms-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        min-width: 600px; /* Ensures tables don't squish too much on mobile */
+    }
+    .terms-table th, .terms-table td {
+        padding: 14px 20px;
+        border-bottom: 1px solid #e2e8f0;
+        vertical-align: top;
+    }
+    .terms-table th {
+        background-color: #f8fafc;
+        color: #0f172a;
+        font-weight: 600;
+    }
+    .terms-table tr:last-child td {
+        border-bottom: none;
+    }
 
-        .terms-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(243, 54, 79, 0.15);
-        }
-
-        .card-header-custom {
-            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-bottom: none;
-        }
-
-        .section-title {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            color: white;
-        }
-
-        .section-number {
-            background: rgba(255, 255, 255, 0.2);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-
-        .card-body-custom {
-            padding: 2rem;
-            background: white;
-        }
-
-        .list-lower-alpha {
-            list-style-type: lower-alpha;
-            padding-left: 1.5rem;
-        }
-
-        .list-lower-alpha li {
-            margin-bottom: 0.8rem;
-            line-height: 1.6;
-            color: #444;
-        }
-
-        .refund-table {
-            background: #fff5f6;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-left: 4px solid #053C7C;
-        }
-
-        .refund-table ul {
-            margin: 0;
-            padding-left: 1rem;
-        }
-
-        .refund-table li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #f8d7da;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .refund-table li:last-child {
-            border-bottom: none;
-        }
-
-        .refund-table h5 {
-            color: #053C7C;
-            font-weight: 600;
-        }
-
-        .highlight-box {
-            background: #fff5f6;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            border-left: 4px solid #053C7C;
-        }
-
-        .contact-info {
-            background: #053C7C;
-            color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-
-        .contact-info h5 {
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-
-        .insurance-explanation {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 2px solid #053C7C;
-        }
-
-        .insurance-title {
-            color: #053C7C;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-        }
-
-        .prohibited-list {
-            background: #fff5f6;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid #053C7C;
-        }
-
-        .prohibited-list ul {
-            margin: 0;
-            color: #8A1821;
-        }
-
-        .prohibited-list h6 {
-            color: #053C7C;
-            font-weight: 600;
-        }
-
-        .charges-list {
-            background: #fff5f6;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid #053C7C;
-        }
-
-        .charges-list h6 {
-            color: #053C7C;
-            font-weight: 600;
-        }
-
-        .important-note {
-            background: #053C7C;
-            color: white;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            text-align: center;
-            font-weight: 600;
-            border: 2px solid #8A1821;
-        }
-
-        .company-footer {
-            background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
-            color: white;
-            border-radius: 10px;
-            padding: 2rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .company-footer a {
-            color: white;
-            text-decoration: none;
-        }
-
-        .company-footer a:hover {
-            color: #f8f9fa;
-            text-decoration: underline;
-        }
-
-        .badge.bg-success {
-            background-color: #28a745 !important;
-        }
-
-        .badge.bg-warning {
-            background-color: #ffc107 !important;
-            color: #212529;
-        }
-
-        .badge.bg-orange {
-            background-color: #fd7e14 !important;
-        }
-
-        .badge.bg-danger {
-            background-color: #053C7C !important;
-        }
-
-        .text-primary {
-            color: #053C7C !important;
-        }
-
-        .border-primary {
-            border-color: #053C7C !important;
-        }
-
-        .btn-primary {
-            background-color: #053C7C;
-            border-color: #053C7C;
-        }
-
-        .btn-primary:hover {
-            background-color: #8A1821;
-            border-color: #8A1821;
-        }
-
-        @media (max-width: 768px) {
-            .terms-container {
-                padding: 30px 0;
-            }
-
-            .main-title {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .card-body-custom {
-                padding: 1.5rem;
-            }
-
-            .section-number {
-                width: 28px;
-                height: 28px;
-                font-size: 0.8rem;
-            }
-
-            .section-title {
-                font-size: 1rem;
-            }
-        }
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+        .terms-page-title { font-size: 2rem; }
+        .term-body { padding: 20px; }
+        .term-header { padding: 14px 18px; }
+    }
     </style>
 @endpush
 
 @section('main')
-    <div class="terms-container">
-        <div class="container">
-            <h2 class="main-title text-center">Rental Terms and Conditions</h2>
+    <div class="container">
+        
+        <h1 class="terms-page-title">Terms and Conditions</h1>
 
-            <div class="row justify-content-center">
-                <div class="col-12">
-                    <?php
-    $cnt = 1;
-                        ?>
-                    <!-- Section 1: General -->
-                    @if($policies->isNotEmpty())
+        <!-- Section 1 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">1</span>
+                <h2>Account, Bidding, and Financial Terms</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Platform Access and Deposits:</strong> A bidding retainer (25% of your maximum target bid over ¥1,000,000 JPY, with a ¥200,000 minimum baseline) is required to activate live bidding rights. Deposits are fully refundable prior to a successful auction win, minus any bank processing fees, exchange rate fluctuations, or direct costs incurred for requested physical inspections.</li>
+                    <li><strong>Payment and Settlement:</strong> The remaining balance must be settled via Telegraphic Transfer (SWIFT) or Wise Business within 7 days of a winning bid. Cash is not accepted.</li>
+                    <li><strong>Bank Fees and Transaction Charges:</strong> The registered account holder is strictly responsible for all cross-border bank fees, transaction charges, and intermediary fees, including those incurred via Telegraphic Transfer (TT) or Wise. When initiating a transfer, you must explicitly select the option to cover all originator and intermediary bank fees (e.g., the "OUR" instruction for wire transfers) to ensure the exact invoice amount arrives in our account. Failure to cover these fees will result in a payment shortage, which will delay the shipping and documentation process until the remaining balance is cleared.</li>
+                    <li><strong>Exchange Rates and Market Fluctuations:</strong> Direct Imported is not responsible for any financial loss or profit resulting from foreign exchange rate fluctuations. We highly recommend settling your invoice immediately within the required 7-day window to mitigate exposure to currency volatility and ensure exchange rate shifts do not negatively impact the profitability of your purchases.</li>
+                    <li><strong>Binding Contracts (No Cancellations):</strong> Under the Japanese wholesale auction system, all winning bids are legally binding commercial contracts. Once the hammer falls, sales are final and cannot be canceled, retracted, or returned under any circumstances.</li>
+                    <li><strong>Post-Auction Negotiations:</strong> If a vehicle fails to meet its reserve price, Direct Imported may submit a post-auction counter-offer or secure a "Buy-It-Now" fixed price. A standard negotiation fee (averaging ¥15,000 to ¥25,000) applies to successful post-sale negotiations.</li>
+                </ul>
+            </div>
+        </div>
 
-                        @foreach($policies as $policy)
-                            <div class="terms-card">
-                                <div class="card-header-custom">
-                                    <h4 class="section-title">
-                                        <span class="section-number"><?= $cnt ?></span>
-                                        {{$policy->key ?? '-'}}
-                                    </h4>
-                                </div>
-                                <div class="card-body-custom">
-                                    {!! $policy->value !!}
-                                </div>
-                            </div>
-                            <?php        $cnt++; ?>
+        <!-- Section 2 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">2</span>
+                <h2>Duty of Care, Vehicle Condition, and Auction Inaccuracies</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Standard Duty of Care:</strong> Direct Imported exercises all reasonable skill, diligence, and industry-standard care in translating auction documents, performing requested on-site inspections, and managing your export logistics. While every reasonable precaution is taken to ensure a transparent and smooth process, we act strictly as an intermediary purchasing agent. Our services are provided on a "best-effort" basis and do not constitute a warranty or guarantee of the vehicle's mechanical integrity or future performance.</li>
+                    <li><strong>Auction Sheet Limitations:</strong> Standard auction house evaluations take only a few minutes. While our team translates inspector notes and defect diagrams, these sheets serve as baseline guides and do not constitute a perfect guarantee of condition.</li>
+                    <li><strong>Liability for Inaccuracies:</strong> Because our platform grants access to fast-paced, true wholesale floor pricing, Direct Imported is not liable for hidden mechanical issues or undisclosed cosmetic defects missed by the auction house networks. We mitigate risks through detailed, on-site physical evaluations when requested, but all vehicles are ultimately purchased strictly "as-is."</li>
+                    <li><strong>Odometer and Value Falsification:</strong> Direct Imported strictly complies with international trade laws. We will outright refuse any requests to roll back odometer readings, alter a vehicle’s manufacturing year, or falsify commercial invoice values to reduce your import taxes.</li>
+                    <li><strong>JDM Specifications:</strong> All vehicles are true Japanese Domestic Market (JDM) models. Infotainment systems and owner manuals will be in Japanese. Spare keys are not guaranteed unless physically provided by the seller to the auction house.</li>
+                </ul>
+            </div>
+        </div>
 
-                        @endforeach
-                    @endif
+        <!-- Section 3 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">3</span>
+                <h2>Shipping, Logistics, and Customs</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Shipping Timelines and Force Majeure:</strong> We facilitate transport via RoRo (Roll-on/Roll-off) or Containerized freight. Ocean transit schedules are dictated entirely by the shipping lines. Direct Imported shall not be held liable for vessel delays, schedule changes, transshipments, or cancellations caused by unforeseen circumstances (Force Majeure). This includes, but is not limited to, severe weather events, natural disasters, geopolitical conflicts, acts of war, port strikes, or sudden operational cancellations by the shipping lines.</li>
+                    <li><strong>Freight Rate Fluctuations:</strong> Global shipping rates are subject to market volatility. In the event that a shipment must be rebooked due to a carrier cancellation or an unforeseen delay, Direct Imported is not liable for any resulting fluctuations in ocean freight costs. Any subsequent increases in shipping rates applied by the carriers during the rebooking process will be amended on your final invoice and remain the responsibility of the buyer.</li>
+                    <li><strong>Port Storage Fees and Vessel Allocation:</strong> Direct Imported provides up to 30 days of complimentary yard storage while a vehicle awaits vessel allocation. Because we do not control shipping line schedules, vessel space availability, or cargo roll-overs, we cannot guarantee departure within this window. Should a vehicle remain at the port or holding yard beyond the 30-day period, standard daily storage fees will apply. Any accrued storage fees will be calculated and billed to the account holder after the vessel officially departs Japan.</li>
+                    <li><strong>Non-Running Vehicles and Loading Cancellations:</strong> RoRo vessels require vehicles to be fully drivable under their own power. Vehicles that fail to start, run, or operate normally on the day of loading (e.g., due to dead batteries, stale fuel, or mechanical failure while sitting) are subject to immediate cancellation by the shipping line. Classic and older vehicles inherently carry a high risk of falling into this "non-runner" category. Direct Imported is not liable for shipping cancellations caused by a vehicle's inability to run. The registered account holder remains wholly responsible for any resulting port storage fees, towing costs, or mechanical repair bills required to return the vehicle to a running state for the next available vessel.</li>
+                    <li><strong>Loose Cargo Prohibition:</strong> In strict accordance with international maritime law, placing loose parts, aftermarket upgrades, or personal cargo inside a vehicle shipped via RoRo is strictly prohibited.</li>
+                    <li><strong>Consignee Documentation Accuracy:</strong> The Consignee details provided for the Bill of Lading (B/L) must perfectly match your Passport or National ID. Typographical errors require formal B/L amendments, which will incur severe port delays and financial penalties at the buyer's expense.</li>
+                </ul>
+            </div>
+        </div>
 
-                    {{-- <!-- Section 2: Booking -->--}}
-                    {{-- <div class="terms-card">--}}
-                        {{-- <div class="card-header-custom">--}}
-                            {{-- <h4 class="section-title">--}}
-                                {{-- <span class="section-number">2</span>--}}
-                                {{-- Booking--}}
-                                {{-- </h4>--}}
-                            {{-- </div>--}}
-                        {{-- <div class="card-body-custom">--}}
-                            {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>Bookings are made via our booking system on the website, by email or by telephone.
-                                </li>--}}
-                                {{-- <li><strong>Payment in full must be made via the payment system on the website to
-                                        confirm a booking.</strong></li>--}}
-                                {{-- <li>Small changes in dates are permitted but the rental period is fixed. A reduction in
-                                    days follows our cancellation policy.</li>--}}
-                                {{-- <li>Cancellations must be made in writing (email).</li>--}}
-                                {{-- <li>A standard refund is paid based on the total amount due including the 50% deposit
-                                    if reservation is canceled. Please note, EZ Moto Kansai is not able to make any refunds
-                                    if there is a cancellation 7 days or less prior to pick up. Refunds will not be given if
-                                    a cancelation is made during the rental period.</li>--}}
-                                {{-- </ol>--}}
+        <!-- Section 4 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">4</span>
+                <h2>Import Regulations and Compliance Indemnity</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Role as an Export Agent:</strong> Direct Imported operates strictly as a Japanese export agency acting on your behalf to facilitate the purchase, domestic handling, and outbound shipping of vehicles. We are not a guaranteed import company, destination customs broker, or compliance certifier.</li>
+                    <li><strong>Account Holder Responsibility:</strong> It is the absolute and sole responsibility of the registered account holder (and/or their respective end-user) to thoroughly research and verify all local import laws, vehicle eligibility restrictions, age rules (e.g., the USA 25-Year Rule), emissions regulations, and required pre-export inspections before placing a bid.</li>
+                    <li><strong>Indemnity Against Claims:</strong> By utilizing our services, the account holder agrees to fully indemnify and hold Direct Imported harmless against any claims, financial losses, port storage fees, legal actions, or damages resulting from a failure to comply with destination import laws.</li>
+                    <li><strong>Failed Imports:</strong> Direct Imported accepts zero liability if a purchased vehicle is denied entry, seized, mandated for destruction (crushed), or forced to be re-exported by destination customs authorities (such as the Australian Border Force or US Customs and Border Protection) due to the account holder's failure to secure necessary approvals (e.g., ROVER) or check local regulations prior to purchase.</li>
+                </ul>
+            </div>
+        </div>
 
-                            {{-- <div class="refund-table">--}}
-                                {{-- <h5 class="mb-3">Refund Schedule</h5>--}}
-                                {{-- <p class="mb-3">Refunds will be paid if the reservation is canceled based on the
-                                    following prior to the pick up time:</p>--}}
-                                {{-- <ul class="list-unstyled">--}}
-                                    {{-- <li><span>More than 30 days prior:</span> <span class="badge bg-success">75%</span>
-                                    </li>--}}
-                                    {{-- <li><span>30-21 days prior:</span> <span class="badge bg-warning">50%</span></li>
-                                    --}}
-                                    {{-- <li><span>20-8 days prior:</span> <span class="badge bg-orange">25%</span></li>--}}
-                                    {{-- <li><span>7 or less days prior:</span> <span class="badge bg-danger">0%</span></li>
-                                    --}}
-                                    {{-- </ul>--}}
-                                {{-- </div>--}}
+        <!-- Section 5 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">5</span>
+                <h2>Service Fees and Inclusions</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Agency Fee Structure:</strong> Our standard import agency service fee covers your wholesale platform access, official auction sheet translations, ground staff physical inspections (including photos/videos), live proxy bidding, and the coordination of export and shipping logistics.</li>
+                    <li><strong>Non-Refundable Services:</strong> Once our ground team has physically inspected a vehicle, or a winning bid has been secured on your behalf, the service fee becomes strictly non-refundable.</li>
+                    <li><strong>Additional Third-Party Fees:</strong> Any requested services outside our standard agency scope—such as third-party digital odometer verifications, asbestos testing, post-auction negotiations, or domestic mechanical servicing—incur separate, non-refundable fees that will be quoted and added to your final Proforma Invoice.</li>
+                </ul>
+            </div>
+        </div>
 
-                            {{-- <ol class="list-lower-alpha" start="6">--}}
-                                {{-- <li>With all efforts EZ Moto Kansai will provide the vehicle originally requested in
-                                    the booking, however due to unseen circumstances it may be necessary to provide a
-                                    substitute vehicle of a similar class. Amends will be made to the cost if the substitute
-                                    vehicle is of a lower class. For a higher class the cost will remain the same as when
-                                    booked. EZ Moto Kansai will notify the renter as early as possible if this situation
-                                    arises.</li>--}}
-                                {{-- </ol>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
+        <!-- Section 6 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">6</span>
+                <h2>Intellectual Property, Auction Data, and Media Restrictions</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Proprietary Nature of Data:</strong> All auction data, translated auction sheets, historical sales metrics, on-site physical inspection reports, digital photographs, and video footage provided to you by Direct Imported are strictly proprietary. They are provided solely for your private use to make an informed purchasing decision.</li>
+                    <li><strong>Prohibition on Public Display and Social Media:</strong> You are expressly prohibited from publishing, broadcasting, reposting, or displaying any media or inspection data provided by Direct Imported on any public platform. This includes, but is not limited to, social media networks, public forums, personal blogs, or commercial websites.</li>
+                    <li><strong>Commercial Exploitation:</strong> Direct Imported’s auction videos, translated documents, and inspection photos may not be used to advertise a vehicle for resale, generate social media engagement, or be monetized in any way prior to the vehicle’s legal arrival and physical transfer of ownership.</li>
+                    <li><strong>Breach of Terms:</strong> Unauthorized public distribution or commercial use of our proprietary data and inspection media constitutes a direct breach of these Terms and Conditions. Direct Imported reserves the right to immediately terminate your account access, forfeit your bidding deposit, and pursue legal remedies for intellectual property infringement.</li>
+                </ul>
+            </div>
+        </div>
 
-                    {{-- <!-- Section 3: Insurance -->--}}
-                    {{-- <div class="terms-card">--}}
-                        {{-- <div class="card-header-custom">--}}
-                            {{-- <h4 class="section-title">--}}
-                                {{-- <span class="section-number">3</span>--}}
-                                {{-- Insurance--}}
-                                {{-- </h4>--}}
-                            {{-- </div>--}}
-                        {{-- <div class="card-body-custom">--}}
-                            {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>The rental car (251cc or more) is insured with compulsory third party
-                                    insurance plus a rental insurance policy covering: (Third part injury: Unlimited, Third
-                                    Party Property: Unlimited, Personal injury: 80,000,000 yen, Property: 2,000,000yen,
-                                    passenger: 5,000,000 yen, an excess of 300,000 is payable on all claims). For mopeds or
-                                    vehicles from 51cc-250cc, only personal unrestricted damages are covered. Damages that
-                                    exceed the amount covered by the insurance policy is assumed by the renter. The vehicle
-                                    insurance doesn't cover this and is unrestricted.</li>--}}
-                                {{-- <li><strong>Damage to the vehicle from a single vehicle accident are solely the
-                                        responsibility of the renter</strong> who is liable for the full repair or
-                                    replacements costs of the vehicle, unless however the excess reduction insurance (ERI)
-                                    of 1000jpy/day is purchased whereby the excess is reduced to a maximum of 300,000jpy.
-                                </li>--}}
-                                {{-- <li>Accidents involving other vehicles will be decided by the police who give a
-                                    percentage blame. This is contestable and EZ Moto Kansai will do our utmost to reduce
-                                    this further if at all possible.</li>--}}
-                                {{-- <li>If any minor infringement notices are issued due to or connected with the accident
-                                    including but not limited to speeding or driving on the other side of the road
-                                    (intentionally or not) EZ Moto Kansai's ERI will be null and void. (Case example: renter
-                                    collided with a car while they were speeding and received an infringement notice from
-                                    the police investigation. The renter took out EZ Moto Kansai's Excess Waiver Reduction
-                                    (ERI) however this was nulled and voided due to the speeding infringement notice. The
-                                    renter was liable for 100% of the rental vehicle's losses.)</li>--}}
-                                {{-- <li>Accidents resulting in an infringement notice to the renter including but not
-                                    limited to speeding, driving while intoxicated may cancel any insurance cover and any
-                                    damages will be solely the responsibility of the renter and may/will be pursued in a
-                                    court of law.</li>--}}
-                                {{-- <li>Any occurrence of theft or accident must be reported immediately to the police or
-                                    the nearest police box and EZ Moto Kansai quoting the accident or crime number provided
-                                    by the police. You must never under any circumstances accept responsibility or make or
-                                    receive any out of court settlements.</li>--}}
-                                {{-- </ol>--}}
+        <!-- Section 7 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">7</span>
+                <h2>Late Payments and Default</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Late Payment Penalty:</strong> As Japanese auction houses require rapid settlement, your remaining balance must be remitted within 7 days of a winning bid. If funds are not received within this 7-14 day window, a late payment fee equal to 1% of the total invoice amount will be automatically applied to your balance.</li>
+                    <li><strong>Extended Delays and Repeated Breaches:</strong> Prompt payment is critical to our operations. If a payment is delayed beyond 14 days, or if your account demonstrates a history of repeated late payment breaches, Direct Imported reserves the right to consider the transaction defaulted. In the event of a default, your bidding deposit may be forfeited to cover auction cancellation penalties for people who remain 30 days in default.</li>
+                </ul>
+            </div>
+        </div>
 
-                            {{-- <div class="contact-info">--}}
-                                {{-- <h5>Emergency Contact</h5>--}}
-                                {{-- <p class="mb-0"><strong>EZ Moto Kansai: 06 4864 2081</strong></p>--}}
-                                {{-- </div>--}}
+        <!-- Section 8 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">8</span>
+                <h2>Re-Auction Vehicles and Cancellations</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Transport and Yard Liability:</strong> In the event a purchased vehicle needs to be re-auctioned, Direct Imported is not liable for domestic transport logistics, the recovery of non-running vehicles, or any repairs necessitated due to deterioration or damage occurring while the vehicle was stored at port yards.</li>
+                    <li><strong>Account Holder Responsibility:</strong> All costs associated with every step of the re-auction process are the sole responsibility of the registered account holder. This applies strictly regardless of whether the account holder is acting as a broker, agent, or middleman for a third party.</li>
+                    <li><strong>Financial Losses:</strong> Any financial deficit or loss generated at auction during the resale of the vehicle will be borne entirely by the registered account holder, regardless of the end user's involvement or failure to pay.</li>
+                    <li><strong>Document Conversion Fees:</strong> Re-auctioning requires converting export documentation (such as reverting Export Certificates back to deregistered certificates for domestic sale). This administrative process will be billed at an hourly rate, plus any associated government or agency fees required to prepare the paperwork for domestic re-auction.</li>
+                    <li><strong>Consumption Tax Application:</strong> Because re-auctioning transitions the vehicle from a tax-exempt export to a Japanese domestic transaction, the standard Japanese Consumption Tax (10%) becomes fully applicable. This tax will be applied to both the original purchase costs and the final sale costs, and billed directly to the account holder's ledger.</li>
+                    <li><strong>End-User Acknowledgement:</strong> Account holders acting on behalf of clients or end users are strictly required to ensure their customers have read, understood, and accepted these Terms and Conditions regarding cancellations and re-auctions. The account holder remains the sole responsible party to Direct Imported in all circumstances.</li>
+                </ul>
+            </div>
+        </div>
 
-                            {{-- <div class="insurance-explanation">--}}
-                                {{-- <h5 class="insurance-title">Our insurance in Layman's terms</h5>--}}
-                                {{-- <p>Our rental insurance covers everything legally required by Japanese law as laid out
-                                    in our terms and conditions. However, damage to the car regardless of fault is not
-                                    covered, this is far too expensive and not financially viable to have as a business
-                                    expense plus with the nature of the rental car business there are more claims than
-                                    private ownership resulting in higher and higher premiums so unfortunately the customer
-                                    has to cover this. This is commonplace in Japan and as far as we know there are no
-                                    companies offering full insurance to cover car damage. In the case of single vehicle
-                                    accident, this excess is unlimited and could potentially be the amount to replace the
-                                    whole car. Some travel insurance policies cover this so we urge you to take out this
-                                    kind of cover if available. We offer the excess reduction insurance of 1000/day which
-                                    reduces the excess from unlimited to a maximum of 300,000 jpy. This is not available on
-                                    some cars so please do ask when booking. In the case of multiple vehicle accidents, a
-                                    300,000 jpy excess is automatically charged and will be adjusted depending on the police
-                                    investigation where they award percentage blame and insurance is paid accordingly. In
-                                    Japan, the larger vehicle has an automatic higher percentage blame, so a car has
-                                    responsibility over a car, a motocycle over a bicycle etc. So riding a car
-                                    is finacially percentage blame wise safer. However it is extremely rare to be given 0%
-                                    blame, being on the road anyway you are considered to be partly to blame for any
-                                    accident involving yourself so typically if you are hit while stationary at a traffic
-                                    light then you are awarded 10% blame and your insurance is calculated on that. This
-                                    percentage blame is contestable and we at EZ Moto will do our best to reduce this as
-                                    best we can and then refund any monies owed. Camera footage always helps so if you do
-                                    have your own GoPro etc then please do use it.</p>--}}
-                                {{-- </div>--}}
-
-                            {{-- <h6 class="insurance-title">Insurance restrictions and uses</h6>--}}
-                            {{-- <ol>--}}
-                                {{-- <li>If any of the terms and conditions are broken, voluntary insurance and our standard
-                                    vehicle compensation become null and void.</li>--}}
-                                {{-- <li>If in the case of an accident, you settle privately, any later insurance claims are
-                                    null and void and are not covered by the optional insurance. Any further costs are the
-                                    burden of the renter. All processes at the accident site must be completed by the
-                                    renter.</li>--}}
-                                {{-- <li>If the damages exceed the amount of compensation covered by insurance it becomes
-                                    the burden of the renter to settle the damages.</li>--}}
-                                {{-- <li>Theft is not covered under the insurance. This becomes the burden of the renter and
-                                    EZ Moto will demand compensation. The replacement costs will be calculated by EZ Moto
-                                    Kansai and is based on the market value of the vehicle or parts.</li>--}}
-                                {{-- <li>Any unsettled costs which are unpaid by the customer including but not limited to
-                                    parking tickets, speeding fines, damage excess etc for which the renter then skips the
-                                    country will be pursued aggressively according to the law of Japan and that of the
-                                    renter's native country, and may include being being detained at customs if a crime is
-                                    reported against the renter.</li>--}}
-                                {{-- </ol>--}}
-
-                            {{-- <ol class="list-lower-alpha" start="7">--}}
-                                {{-- <li>The renter is liable for the following one off payment excess in the case of a
-                                    vehicle being unable to be rented out due to any accident or occurrence. (It is not
-                                    related to any time period and is a uniform charge).</li>--}}
-                                {{-- </ol>--}}
-
-                            {{-- <div class="highlight-box">--}}
-                                {{-- <p class="mb-0">--}}
-                                    {{-- <strong>50～125cc = ¥20,000</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
-                                    {{-- <strong>126cc or more = ¥40,000</strong>--}}
-                                    {{-- </p>--}}
-                                {{-- </div>--}}
-
-                            {{-- <p>We will estimate and claim the cost of any parts and repair costs caused by a fall or
-                                accident. However, accidents which occur with a third party are to be reported to the police
-                                who investigate and issue a percentage blame ratio. The insurance claim by the blame ratio
-                                is claimed to the opponent for the person in question. The renter is liable for an excess of
-                                300,000jpy (see 3. Insurance clause c) for the immunity of responsibility of the person's
-                                fault though the optional insurance is paid to the other party. In the case of theft, It is
-                                necessary to make repairs or to replace the damaged vehicle. (note 4, <strong>Insurance
-                                    restrictions and uses.)</strong></p>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
-
-                    {{-- <!-- Section 4: Prohibited Use -->--}}
-                    {{-- <div class="terms-card">--}}
-                        {{-- <div class="card-header-custom">--}}
-                            {{-- <h4 class="section-title">--}}
-                                {{-- <span class="section-number">4</span>--}}
-                                {{-- Prohibited Use and Breach of Contract--}}
-                                {{-- </h4>--}}
-                            {{-- </div>--}}
-                        {{-- <div class="card-body-custom">--}}
-                            {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>The car must under no circumstances be used for or have any the following
-                                    activities applied to it:</li>--}}
-                                {{-- </ol>--}}
-
-                            {{-- <div class="prohibited-list">--}}
-                                {{-- <h6>Strictly Prohibited</h6>--}}
-                                {{-- <ul>--}}
-                                    {{-- <li>Be transferred or sold to another person.</li>--}}
-                                    {{-- <li>Used for racing on or off road, or used on any closed circuit for track days
-                                        etc.</li>--}}
-                                    {{-- <li>Have any modifications made to the vehicle.</li>--}}
-                                    {{-- <li>Be used for commercial purposes.</li>--}}
-                                    {{-- </ul>--}}
-                                {{-- </div>--}}
-
-                            {{-- <p>If the contract is broken, the customer is liable for the following charges or
-                                cancellation costs:</p>--}}
-
-                            {{-- <div class="charges-list">--}}
-                                {{-- <h6>Breach of Contract Charges</h6>--}}
-                                {{-- <ul>--}}
-                                    {{-- <li>Prohibitions, (Clause 4), Rental x 1.5 times the contracted rental period.</li>
-                                    --}}
-                                    {{-- <li>Parking Violations, (Clause 4-c), if the vehicle is returned with outstanding
-                                        violations the amount will be calculated.</li>--}}
-                                    {{-- <li>Repeated prohibited use, breach of contract or repeated violations and we
-                                        consider it malicious we will cancel any future rental.</li>--}}
-                                    {{-- <li>Non return (Clause 4-d), we charge the extension rate based on the charge table
-                                        for every one hour of unarranged rental and with no contact from the renter at the
-                                        basic hourly rate x 1.5.</li>--}}
-                                    {{-- </ul>--}}
-                                {{-- </div>--}}
-
-                            {{-- <ol class="list-lower-alpha" start="2">--}}
-                                {{-- <li>EZ Moto solely deal in renting a vehicle to a customer and do not supply or
-                                    introduce any labour of 3rd party drivers. Hired or paid drivers are forbidden to drive
-                                    our vehicles.</li>--}}
-                                {{-- <li>Parking tickets/fines must be paid by the renter themselves when at all possible
-                                    and depend on that specific infringement. The renter is liable for all associated costs
-                                    for example when the vehicle is impounded. If the vehicle is returned with outstanding
-                                    parking tickets/fines/infringements then the renter is liable for the extra unlimited
-                                    costs of processing these notices. Please contact us for advice on how to pay locally.
-                                </li>--}}
-                                {{-- <li>Please contact us immediately if you have passed or are going to miss the return
-                                    date. (we will charge the extension rate based on the charge table for every one hour of
-                                    unarranged rental if there is no contact from renter. We also charge the rental fee for
-                                    every one hour over the agreed hire time. ) For 1 week or less rental a rental day is
-                                    calculated at a 24 hour block, e.g. 10am to 10am. For longer than 1 week rental more
-                                    leeway is given but the renter must abide by the agreed return time, please confirm on
-                                    sign up. Extension rate for arranged time is based on the length of the current
-                                    contract. Extension rate for late notified returns is 2500ypy/hour. Extension rate for
-                                    unarranged returns with no contact from the renter 3750jpy/hour.</li>--}}
-                                {{-- </ol>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
-
-                    {{-- <!-- Section 5: Rental -->--}}
-                    {{-- <div class="terms-card">--}}
-                        {{-- <div class="card-header-custom">--}}
-                            {{-- <h4 class="section-title">--}}
-                                {{-- <span class="section-number">5</span>--}}
-                                {{-- Rental--}}
-                                {{-- </h4>--}}
-                            {{-- </div>--}}
-                        {{-- <div class="card-body-custom">--}}
-                            {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>EZ Moto Kansai reserve the right to cancel the rental contract in the case of any
-                                    accident, theft or natural disaster for which EZ Moto Kansai has no control over, and
-                                    are not liable to replace a vehicle or refund any rental cost if there is time remaining
-                                    on the contract.</li>--}}
-                                {{-- <li>The renter must conduct necessary daily inspection and maintenance of the Rental
-                                    Vehicle before use if rented for more than two days.</li>--}}
-                                {{-- <li>Please confirm and understand in store on pick up that we supply vehicles covered
-                                    by two types of insurance, and that you agree and understand the conditions of both.
-                                </li>--}}
-                                {{-- <li>In the case of lost keys, the renter is liable for the actual replacement costs
-                                    only, however if further costs are incurred the renter is liable for those.</li>--}}
-                                {{-- <li>If rental goods or extras are damaged, the customer is liable to be charged a fixed
-                                    amount for each item. Please confirm it in the details when you return the car. The
-                                    replacement costs are based on the RRP of the specific parts.</li>--}}
-                                {{-- <li>Except in the case of a rental being canceled by us, we do not refund the full
-                                    amount. If we ask for a return earlier than is contracted due to unforeseen
-                                    circumstances the rate will be fully refunded, for example, for 1 week out of a monthly
-                                    rental of ¥63000, ¥63,000-¥31,500 = ¥31500will be refunded.</li>--}}
-                                {{-- </ol>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
-
-                    {{-- <!-- Section 6: When in Use -->--}}
-                    {{-- <div class="terms-card">--}}
-                        {{-- <div class="card-header-custom">--}}
-                            {{-- <h4 class="section-title">--}}
-                                {{-- <span class="section-number">6</span>--}}
-                                {{-- When in Use.--}}
-                                {{-- </h4>--}}
-                            {{-- </div>--}}
-                        {{-- <div class="card-body-custom">--}}
-                            {{-- <ol class="list-lower-alpha">--}}
-                                {{-- <li>This agreement must be carried at all times during the rental period without
-                                    exception and presented to any police officer, District Transport Bureau or Land
-                                    Transport Office who demands it.</li>--}}
-                                {{-- <li>If not a resident of Japan, your passport must be carried at all times.</li>--}}
-                                {{-- <li>Your license or IDP must be carried at all times.</li>--}}
-                                {{-- <li>Copies of the vehicle's shaken and insurance are supplied with the vehicle.</li>
-                                --}}
-                                {{-- <li>Failure to carry the above three documents will result in heavy penalties by the
-                                    police and more so in the case of any accidents or infringements.</li>--}}
-                                {{-- <li>The renter must conduct necessary daily inspection and maintenance of the Rental
-                                    Vehicle before use if rented for more than two days. Any problems must be reported to EZ
-                                    Moto Kansai, failure to undertake required maintenance resulting in damage and EZ Moto
-                                    Kansai judge that it is due to the renter's negligence then any costs will be the
-                                    renter's liability.</li>--}}
-                                {{-- <li>Punctures are the responsibility of the renter to repair or replace the tyre if
-                                    necessary.</li>--}}
-                                {{-- <li>EZ Moto Kansai will not be held liable for any unforeseen mechanical breakdown
-                                    rendering the vehicle unusable or for any time or travel costs involved in picking up a
-                                    replacement vehicle. The renter is highly recommended to take out travel insurance to
-                                    cover such costs.</li>--}}
-                                {{-- <li>EZ Moto Kansai will not be held liable for any losses due to natural disaster or
-                                    similar unavoidable occurrences.</li>--}}
-                                {{-- <li>EZ Moto Kansai will not be held liable for any injuries, sickness or death of any
-                                    renter, passenger, third party or anyone associated with the rental. The renter entirely
-                                    indemnifies EZ Moto Kansai of any claims whatsoever.</li>--}}
-                                {{-- <li>Gasoline is full when rented; it must be full on return. A 3000jpy fee will be
-                                    charged for any vehicles returned without being full.</li>--}}
-                                {{-- <li>If carrying a passenger, the passenger must also read these terms and conditions.
-                                </li>--}}
-                                {{-- </ol>--}}
-
-                            {{-- <div class="important-note">--}}
-                                {{-- <strong>NOTE: Japan has a 0 tolerance policy for drink driving.</strong>--}}
-                                {{-- </div>--}}
-                            {{-- </div>--}}
-                        {{-- </div>--}}
-
-                    {{-- <!-- Company Information Footer -->--}}
-                    {{-- <div class="company-footer">--}}
-                        {{-- <p class="mb-0">--}}
-                            {{-- <strong>EZ Moto Kansai</strong>, 4/10 Senrioka Shimo, Suita Shi, Osaka, Japan. 565-0813,
-                            06-4864-2081--}}
-                            {{-- <a href="mailto:info@ezmotokansai.com">info@ezmotokansai.com</a>--}}
-                            {{-- <a href="http://www.ezmotokansai.com">www.ezmotokansai.com</a>--}}
-                            {{-- </p>--}}
-                        {{-- </div>--}}
-
+        <!-- Section 9 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">9</span>
+                <h2>Marine Transit Insurance</h2>
+            </div>
+            <div class="term-body">
+                <p><strong>Optional Pre-Export and Transit Coverage:</strong> Marine transit insurance is available upon request (and is typically included under CIF shipping terms once the Bill of Lading (B/L) is produced, and not prior, unless explicitly notified or requested as an add-on). When this pre-export add-on is secured, coverage includes pre-export yard inclusions, protecting your vehicle against unforeseen environmental perils such as flood damage or severe storms while it is stored at the Japanese port awaiting vessel departure.</p>
+                <p><strong>Standardized Institute Cargo Clauses:</strong> Policies are typically underwritten based on standard international shipping practices—Institute Cargo Clauses (A) or (C), depending on the shipping method and destination port regulations. The insured value is based on the final commercial invoice amount.</p>
+                <p><strong>Claims Procedure and Port Surveys:</strong> In the rare event of damage, the Consignee (buyer) is strictly responsible for filing the insurance claim directly with the local insurance agent at the destination port. Damage must be photographed and officially documented by a certified port surveyor before the vehicle is removed from the customs or port authority yard. Moving the vehicle prior to an official inspection will immediately void the policy.</p>
+                <p><strong>Coverage Limitations:</strong> Used vehicle marine insurance is designed to protect against major catastrophes. It does not act as a bumper-to-bumper warranty.</p>
+                
+                <div class="table-wrapper">
+                    <table class="terms-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 50%;">Standard Inclusions (Covered)</th>
+                                <th>Standard Exclusions (Not Covered)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pre-export port yard damage from floods or storms (if add-on is secured prior to sailing).</td>
+                                <td>Pre-existing damage noted on auction sheets or minor cosmetic wear occurring during port handling.</td>
+                            </tr>
+                            <tr>
+                                <td>Total loss of the carrying vessel, sinking, or stranding.</td>
+                                <td>Mechanical failures, engine issues, dead batteries, or "inherent vice" that manifest during the voyage.</td>
+                            </tr>
+                            <tr>
+                                <td>Major catastrophes, including fire, explosion, or vessel collision.</td>
+                                <td>Theft or loss of loose items, aftermarket parts, or spare keys left inside the vehicle.</td>
+                            </tr>
+                            <tr>
+                                <td>Complete failure of port loading equipment dropping the vehicle.</td>
+                                <td>Losses caused by shipping delays, acts of war, port strikes, or riots (unless a War & Strikes premium is purchased).</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+
+        <!-- Section 10 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">10</span>
+                <h2>General Legal Provisions & Compliance</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Export Controls and International Sanctions:</strong> Direct Imported complies strictly with Japanese (METI) and international export control laws. By utilizing our services, you warrant that you are not listed on any international sanctions or restricted party lists. Furthermore, you guarantee that any vehicle purchased through our platform will not be exported to embargoed nations or utilized for illicit, military, or terrorist activities.</li>
+                    <li><strong>Limitation of Liability:</strong> In the event that Direct Imported is found liable for any claim, loss, or damage arising out of these Terms and Conditions or the provision of our services, our total aggregate liability shall under no circumstances exceed the total amount of the Agency Service Fee paid by the account holder for the specific transaction in dispute. We are not liable for the underlying cost of the vehicle, lost profits, or indirect consequential damages.</li>
+                    <li><strong>Right to Refuse Service & Account Termination:</strong> Direct Imported reserves the right to refuse service, suspend bidding privileges, or permanently terminate any user account at our sole discretion, without prior notice. Grounds for termination include, but are not limited to, suspected fraudulent activity, abusive behavior toward our staff, repeated failure to remit timely payments, or submission of continuous unviable bids.</li>
+                    <li><strong>Data Privacy and Document Handling:</strong> To generate official export and shipping documents, we require sensitive personal information (such as Passport or National ID copies). Direct Imported commits to utilizing this data strictly for customs clearance, shipping bookings, and legal compliance. We will not sell, rent, or distribute your personal data to unauthorized third parties.</li>
+                    <li><strong>Severability:</strong> If any provision or clause of these Terms and Conditions is determined to be invalid, illegal, or unenforceable by a court of competent jurisdiction, such invalidity shall not affect the enforceability of any other provision within this document. The remaining terms shall remain in full force and effect.</li>
+                    <li><strong>Right to Amend Terms:</strong> Direct Imported reserves the right to update, modify, or replace these Terms and Conditions at any time to reflect changing laws, shipping policies, or business operations. Continued use of our platform and services following any changes constitutes your explicit acceptance of the revised Terms.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 11 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">11</span>
+                <h2>Governing Law and Jurisdiction</h2>
+            </div>
+            <div class="term-body">
+                <ul>
+                    <li><strong>Applicable Law:</strong> These Terms and Conditions, as well as any separate agreements, invoices, or services provided by Direct Imported, shall be governed by, construed, and enforced strictly in accordance with the laws of Japan, without regard to its conflict of law principles.</li>
+                    <li><strong>Exclusive Jurisdiction:</strong> Any disputes, controversies, claims, or legal proceedings arising out of or in connection with these Terms and Conditions, your account, the bidding process, or the export of any vehicle shall be subject to the exclusive jurisdiction of the district courts of Japan. By utilizing our services, you expressly consent to the personal and exclusive jurisdiction of these courts.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Section 12 -->
+        <div class="term-card">
+            <div class="term-header">
+                <span class="term-badge">12</span>
+                <h2>Glossary of Standard Import Terms</h2>
+            </div>
+            <div class="term-body">
+                <div class="table-wrapper">
+                    <table class="terms-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Term</th>
+                                <th>Definition</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>B/L (Bill of Lading)</strong></td>
+                                <td>The official contract of carriage and legal proof of cargo ownership required to claim your vehicle at the destination port.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>FOB (Free On Board)</strong></td>
+                                <td>The vehicle cost including all Japanese-side expenses (auction buying fees, inland transport, and export customs). Excludes ocean freight.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CIF (Cost, Insurance, Freight)</strong></td>
+                                <td>The complete FOB price plus the cost of ocean freight and "All Risks" marine transit insurance to your destination.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Consignee</strong></td>
+                                <td>The exact individual or business listed on the B/L who will legally own the vehicle upon arrival.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Export Certificate</strong></td>
+                                <td>An official document issued by the Japanese government proving the vehicle’s domestic registration has been legally canceled for international export.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Proforma Invoice</strong></td>
+                                <td>The final, formal estimate detailing the total amount due before shipping arrangements are booked.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
