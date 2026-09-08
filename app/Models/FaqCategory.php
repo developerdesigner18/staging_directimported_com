@@ -6,17 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Faq extends Model
+class FaqCategory extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = [
-        'faq_category_id',
-        'key',
-        'value'
+        'name',
     ];
 
-    public function category()
+    public function faqs()
     {
-        return $this->belongsTo(FaqCategory::class, 'faq_category_id');
+        return $this->hasMany(Faq::class, 'faq_category_id');
     }
 }

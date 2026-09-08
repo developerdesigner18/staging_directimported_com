@@ -26,7 +26,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/available-vehicles/filter', 'filterAvailableVehicles')->name('available-vehicles.filter');
     Route::get('/contact', 'contact')->name('contact');
     Route::post('/contact', 'contactPost')->name('contact.post');
-    Route::get('/rental-policies', 'rentalPolicies')->name('rental.policies');
+    Route::get('/terms-and-conditions', 'rentalPolicies')->name('rental.policies');
     Route::get('/licence-requirement', 'licenceRequirement')->name('licence.requirement');
     Route::get('/about-our-cars', 'aboutOurCars')->name('about.our.cars');
     Route::get('/useful-links', 'usefulLinks')->name('useful.links');

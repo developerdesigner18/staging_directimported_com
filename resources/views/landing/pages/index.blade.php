@@ -744,7 +744,7 @@
 
                                 <!-- Image -->
                                 <div class="car-card-img-wrapper">
-                                    <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                    <a href="{{ route('car.single', ['slug' => $car->stock_id]) }}">
                                         @if(isset($car->images[0]))
                                             <img src="{{ asset(CAR_PATH . $car->images[0]) }}" alt="{{ $car->name }}" loading="lazy">
                                         @else
@@ -759,7 +759,7 @@
 
                                     <!-- Title -->
                                     <h4 class="car-title">
-                                        <a href="{{ route('car.single', ['slug' => $car->slug]) }}">
+                                        <a href="{{ route('car.single', ['slug' => $car->stock_id]) }}">
                                             {{ $car->card_header ?? $car->name }}
                                         </a>
                                     </h4>
@@ -803,7 +803,7 @@
                                     </div>
 
                                     <div style="margin-top: auto;">
-                                        <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
+                                        <button class="btn-adventure btncheckout" data-slug="{{ $car->stock_id }}"
                                             data-id="{{ $car->id }}" data-name="{{ $car->name }}"
                                             data-image="{{ isset($car->images[0]) ? asset(CAR_PATH . $car->images[0]) : '' }}">
                                             CHECK IT OUT

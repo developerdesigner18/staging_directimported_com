@@ -34,8 +34,8 @@
 
     $gradeStr = $car->auctionGrade->grade ?? '';
     $remarksStr = $car->auctionGrade->remarks ?? '';
-    $repairHistory = trim(($gradeStr ? 'Grade ' . $gradeStr : '') . ($remarksStr ? ' ' . $remarksStr : '')) ?: 'N/A';
-    $ratingCert = $gradeStr ? ('Grade ' . $gradeStr) : ($remarksStr ?: 'N/A');
+    $repairHistory = trim($gradeStr ? 'Grade ' . $gradeStr : '') ?: '-';
+    $ratingCert = $gradeStr ? ('Grade ' . $gradeStr) :'-';
 
     $makeName = $car->manufacturer->name ?? ($car->spec->make ?? '');
     $modelName = $car->model ?? '';
@@ -46,15 +46,15 @@
             : (trim(($makeName ? $makeName . ' ' : '') . $modelName) ?: 'Vehicle'));
 
     $typeName = $car->spec->type ?? '';
-    $yearVal = $car->year ?? ($car->spec->model_year ?? 'N/A');
-    $mileageVal = isset($car->spec->odometer) && $car->spec->odometer ? number_format($car->spec->odometer) . ' km' : 'N/A';
-    $engineVal = $car->spec->engine ?? 'N/A';
+    $yearVal = $car->year ?? ($car->spec->model_year ?? '-');
+    $mileageVal = isset($car->spec->odometer) && $car->spec->odometer ? number_format($car->spec->odometer) . ' km' : '-';
+    $engineVal = $car->spec->engine ?? '-';
     $transmissionVal = !empty($car->spec->transmission_custom)
         ? $car->spec->transmission_custom
-        : ($car->spec->transmission ?? 'N/A');
-    $locationVal = $car->location ?? 'N/A';
+        : ($car->spec->transmission ?? '-');
+    $locationVal = $car->location ?? '-';
     $priceVal = number_format((float) ($car->vehicle_price ?? 0));
-    $detailUrl = route('car.single', $car->slug ?? $car->id);
+    $detailUrl = route('car.single', $car->stock_id ?? ($car->slug ?? $car->id));
 @endphp
 
 <div class="listing-card" data-make="{{ $makeName }}" data-model="{{ strtolower($modelName) }}"
@@ -112,7 +112,7 @@
 
             <div class="spec-item">
                 <span class="spec-label">Location</span>
-                <span class="spec-value">{!! $locationVal ? str_replace(' ', '<br>', e($locationVal)) : 'N/A' !!}</span>
+                <span class="spec-value">{!! $locationVal ? str_replace(' ', '<br>', e($locationVal)) : '-' !!}</span>
             </div>
         </div>
 
@@ -141,10 +141,11 @@
 
             <span>
                 Rating Certification
-                <span class="eval-grade">{{ $ratingCert }}</span>
-            </span>
+<span class="eval-grade">
+    {{ $ratingCert ?? '' }}{{ $remarksStr ? ' ' . $remarksStr : '' }}
+</span>            </span>
 
-            <span>
+            {{-- <span>
                 Interior:
                 <span class="stars">{{ $car->spec->interior_grade_stars ?? '' }}</span>
             </span>
@@ -152,7 +153,7 @@
             <span>
                 Exterior:
                 <span class="stars">{{ $car->spec->exterior_grade_stars ?? '' }}</span>
-            </span>
+            </span> --}}
         </div>
     </div>
 </div>

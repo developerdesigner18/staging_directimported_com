@@ -55,6 +55,11 @@ class Car extends Model
         return $dynamicName ?: '';
     }
 
+    public function getStockIdAttribute()
+    {
+        return !empty($this->vehicle_id) ? $this->vehicle_id : ($this->slug ?: $this->id);
+    }
+
     public function getFormattedCardSubtitleAttribute()
     {
         $subtitle = $this->card_subtitle;

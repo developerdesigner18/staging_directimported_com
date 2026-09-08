@@ -1165,7 +1165,7 @@
                     </div>
 
                     <div class="tab-stock">
-                        STOCK # <span class="stock-badge">{{ $car->vehicle_id ?? $car->name ?? '-' }}</span>
+                        STOCK # <span class="stock-badge">{{ $car->stock_id }}</span>
                     </div>
                 </div>
 
@@ -1671,7 +1671,7 @@
                 @foreach($relatedCars as $relatedCar)
                     <div class="px-2">
                         <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
-                            <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}">
+                            <a href="{{ route('car.single', ['slug' => $relatedCar->stock_id]) }}">
                                 @php
                                     $relImg = (!empty($relatedCar->images) && is_array($relatedCar->images) && isset($relatedCar->images[0]) && !empty($relatedCar->images[0])) ? $relatedCar->images[0] : null;
                                 @endphp
@@ -1680,7 +1680,7 @@
                             </a>
                             <div class="card-body p-4">
                                 <h5 class="fw-bold mb-3related-card-title">
-                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="card-title-link">
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->stock_id]) }}" class="card-title-link">
                                         {{ $relatedCar->name }}
                                     </a>
                                 </h5>
@@ -1693,7 +1693,7 @@
                                             '/ day' }}</span>
                                     </div>
                                     --}}
-                                    <a href="{{ route('car.single', ['slug' => $relatedCar->slug]) }}" class="view-btn">
+                                    <a href="{{ route('car.single', ['slug' => $relatedCar->stock_id]) }}" class="view-btn">
                                         VIEW <i class="bx bx-right-arrow-alt"></i>
                                     </a>
                                 </div>

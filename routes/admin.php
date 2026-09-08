@@ -185,6 +185,14 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::post('/update', 'update')->name('update');
             Route::post('/delete', 'delete')->name('delete');
+
+            Route::prefix('category')->name('category.')->group(function () {
+                Route::get('/list', 'categoryList')->name('list');
+                Route::post('/store', 'categoryStore')->name('store');
+                Route::get('/edit/{id}', 'categoryEdit')->name('edit');
+                Route::post('/update', 'categoryUpdate')->name('update');
+                Route::post('/delete', 'categoryDelete')->name('delete');
+            });
         });
     });
 

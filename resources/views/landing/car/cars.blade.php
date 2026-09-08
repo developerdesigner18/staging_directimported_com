@@ -641,7 +641,7 @@
 
                                             <!-- Image -->
                                             <div class="car-card-img-wrapper">
-                                                <a href="{{route('car.single', ['slug' => $car->slug])}}">
+                                                <a href="{{route('car.single', ['slug' => $car->stock_id])}}">
                                                     @php
                                                         $cImg = (!empty($car->images) && is_array($car->images) && isset($car->images[0]) && !empty($car->images[0])) ? $car->images[0] : null;
                                                     @endphp
@@ -655,7 +655,7 @@
 
                                                 <!-- Title -->
                                                 <h4 class="car-title">
-                                                    <a href="{{route('car.single', ['slug' => $car->slug])}}">
+                                                    <a href="{{route('car.single', ['slug' => $car->stock_id])}}">
                                                         {{$car->card_header ?? $car->name}}
                                                     </a>
                                                 </h4>
@@ -682,7 +682,7 @@
                                                 </div>
 
                                                 <!-- Button -->
-                                                <button class="btn-adventure btncheckout" data-slug="{{ $car->slug }}"
+                                                <button class="btn-adventure btncheckout" data-slug="{{ $car->stock_id }}"
                                                     data-id="{{ $car->id }}" data-name="{{ $car->name }}"
                                                     data-image="{{ $cImg ? asset(CAR_PATH . $cImg) : '' }}">
                                                     CHECK IT OUT

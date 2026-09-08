@@ -6,6 +6,7 @@ use App\Http\Traits\ResponseTrait;
 use App\Mail\ContactFormMail;
 use App\Models\Car;
 use App\Models\Faq;
+use App\Models\FaqCategory;
 use App\Models\Gallery;
 use App\Models\HeroSlider;
 use App\Models\Service;
@@ -179,7 +180,7 @@ class HomeController extends Controller
 
     public function rentalPolicies()
     {
-        $policies = RentalPolicies::get();
+        $policies = RentalPolicies::orderBy('id', 'asc')->get();
 
         return view('landing.pages.rental-policies', compact('policies'));
     }
@@ -221,9 +222,17 @@ class HomeController extends Controller
 
     public function faqs()
     {
-        $faqs = Faq::orderBy('created_at', 'desc')->get();
-        //        dd($faqs);
-        return view('landing.pages.faqs', compact('faqs'));
+        $categories = FaqCategory::with([
+            'faqs' => function ($q) {
+                $q->orderBy('id', 'asc');
+            }
+        ])->orderBy('id', 'asc')->get();
+
+        $uncategorizedFaqs = Faq::whereNull('faq_category_id')->orderBy('id', 'asc')->get();
+
+        $faqs = Faq::with('category')->orderBy('id', 'asc')->get();
+
+        return view('landing.pages.faqs', compact('categories', 'uncategorizedFaqs', 'faqs'));
     }
     public function contactPost(Request $request)
     {

@@ -144,7 +144,7 @@ class CarController extends Controller
                             $categoryName = $car->category->name ?? 'Top Rated';
                             $description = \Illuminate\Support\Str::limit(strip_tags($car->description), 40);
                             $imageUrl = asset(CAR_PATH . $car->images[0]);
-                            $singleRoute = route('car.single', ['slug' => $car->slug]);
+                            $singleRoute = route('car.single', ['slug' => $car->stock_id]);
 
                             $html .= '<div class="col-lg-4 col-md-6 mb-4">
                                 <div class="car-card">
@@ -173,7 +173,7 @@ class CarController extends Controller
                                             <span class="price-per">/ Per Day</span>
                                         </div>
                                         <button class="btn-adventure btncheckout"
-                                        data-slug="' . $car->slug . '"
+                                        data-slug="' . $car->stock_id . '"
                                                 data-id="' . $car->id . '"
                                                 data-name="' . $car->name . '"
                                                 data-insurance="' . $car->insurance_price . '"
@@ -204,7 +204,13 @@ class CarController extends Controller
     public function singleCar($slug)
     {
 
-        $car = Car::with(['map', 'spec', 'auctionGrade'])->where('slug', $slug)->firstOrFail();
+        $car = Car::with(['map', 'spec', 'auctionGrade'])
+            ->where(function ($query) use ($slug) {
+                $query->where('vehicle_id', $slug)
+                    ->orWhere('slug', $slug)
+                    ->orWhere('id', $slug);
+            })
+            ->firstOrFail();
         $carConf = CarConfiguration::get();
         $banner = Banner::first();
 
