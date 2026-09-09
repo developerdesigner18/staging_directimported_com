@@ -718,7 +718,7 @@
         <div class="container">
             <div class="cta-box" id="reclaimed-cta-box">
                 <h2 class="cta-title">Buy cars from Japan</h2>
-                <a href="http://127.0.0.1:8000/car" class="cta-btn">
+                <a href="{{ route('car') }}" class="cta-btn">
                     Search auctions live here
                 </a>
             </div>
