@@ -215,6 +215,11 @@ class HomeController extends Controller
         return view('landing.pages.contact');
     }
 
+    public function blog()
+    {
+        return view('landing.pages.blog');
+    }
+
     public function reviews()
     {
         return view('landing.pages.reviews');

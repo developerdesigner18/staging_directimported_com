@@ -94,17 +94,8 @@
                                         Vehicles</a></li>
                                 <li class="list-inline-item"><a href="{{ route('services.view') }}"
                                         class="@if(request()->is('services')) active @endif">Services</a></li>
-
-                                {{-- <li class="list-inline-item dropdown">
-                                    <a href="javascript:void (0);"
-                                        class="dropdown-toggle @if(request()->is('my-bookings')) active @endif"
-                                        data-bs-toggle="dropdown">Bookings</a>
-                                    <ul class="dropdown-menu px-2">
-                                        <li><a href="{{ route('my.bookings') }}"
-                                                class="font-10 m-0 dropdown-a @if(request()->is('my-bookings')) active @endif">Request
-                                                a Quote</a></li>
-                                    </ul>
-                                </li> --}}
+                                <li class="list-inline-item"><a href="{{ route('blog') }}"
+                                        class="@if(request()->is('blog')) active @endif">Blog</a></li>
                                 <li class="list-inline-item"><a class="@if(request()->is('contact')) active @endif"
                                         href="{{route('contact')}}">Contact</a></li>
 

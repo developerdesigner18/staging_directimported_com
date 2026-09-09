@@ -59,6 +59,7 @@
                     <ul class="footer-list">
                         <li><a href="{{ route('landing') }}#auction">Auction</a></li>
                         <li><a href="{{ route('available.vehicles') }}">Available Cars</a></li>
+                        <li><a href="{{ route('blog') }}">Blog</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="{{ route('faqs') }}">FAQs</a></li>
                         <li><a href="{{ route('landing') }}#about">About us</a></li>

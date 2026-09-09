@@ -440,6 +440,7 @@
                 <li><a href="{{ route('car') }}">Auction Access</a></li>
                 <li><a href="{{ route('available.vehicles') }}">Available Vehicles</a></li>
                 <li><a href="{{ route('services.view') }}">Services</a></li>
+                <li><a href="{{ route('blog') }}">Blog</a></li>
                 {{-- <li class="dropdown">
                     <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
                     <ul class="dropdown-menu">
