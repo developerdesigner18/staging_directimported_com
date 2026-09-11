@@ -34,6 +34,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/ride-japan-law', 'rideJapanLaw')->name('ride.japan.law');
     Route::get('/reviews', 'reviews')->name('reviews');
     Route::get('/blog', 'blog')->name('blog');
+    Route::get('/blog/{slug}', 'blogDetail')->name('blog.detail');
     Route::get('/faqs', 'faqs')->name('faqs');
 });
 Route::controller(ServiceController::class)->prefix('services')->name('services.')->group(function () {
