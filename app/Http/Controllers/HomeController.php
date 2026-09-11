@@ -18,6 +18,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 use App\Models\EmailTemplates;
 use App\Models\RentalPolicies;
 use App\Models\HomeSection;
+use App\Models\BlogPost;
 
 class HomeController extends Controller
 {
@@ -217,7 +218,19 @@ class HomeController extends Controller
 
     public function blog()
     {
-        return view('landing.pages.blog');
+        $posts = BlogPost::orderBy('published_at', 'desc')->paginate(9);
+        return view('landing.pages.blog', compact('posts'));
+    }
+
+    public function blogDetail($slug)
+    {
+        $post = BlogPost::where('slug', $slug)->firstOrFail();
+        $recentPosts = BlogPost::where('id', '!=', $post->id)
+            ->orderBy('published_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('landing.pages.blog-detail', compact('post', 'recentPosts'));
     }
 
     public function reviews()

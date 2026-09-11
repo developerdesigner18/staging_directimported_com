@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'soro' => [
+        'rss_url' => env('SORO_RSS_URL'),
+    ],
+
 ];
