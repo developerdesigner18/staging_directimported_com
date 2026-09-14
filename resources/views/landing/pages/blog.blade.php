@@ -1,253 +1,176 @@
 @extends('landing.master')
-@section('title', 'Blog')
+@section('title', 'News & Articles')
 
 @push('style')
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .blog-container {
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
-            min-height: 80vh;
-            padding: 60px 0;
-        }
-
-        .main-title {
-            color: #2c3e50;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-
-        .main-title::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, #053C7C, #141733);
-            border-radius: 2px;
-        }
-
-        .blog-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(20, 23, 51, 0.08);
-            margin-bottom: 2rem;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 18px 35px rgba(20, 23, 51, 0.15);
-        }
-
-        .blog-img-wrapper {
-            position: relative;
-            width: 100%;
-            height: 220px;
-            overflow: hidden;
-            background-color: #f0f2f5;
-        }
-
-        .blog-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .blog-card:hover .blog-img {
-            transform: scale(1.05);
-        }
-
-        .blog-date-badge {
-            position: absolute;
-            bottom: 12px;
-            left: 12px;
-            background: rgba(5, 60, 124, 0.9);
-            color: #ffffff;
-            font-size: 0.82rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .blog-card-body {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .blog-card-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #141733;
-            margin-bottom: 0.75rem;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .blog-card-title a {
-            color: #141733;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .blog-card-title a:hover {
-            color: #053C7C;
-        }
-
-        .blog-card-description {
-            color: #6c757d;
-            font-size: 0.92rem;
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-            flex-grow: 1;
+        .line-clamp-3 {
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
-        .blog-card-footer {
-            margin-top: auto;
-            padding-top: 0.75rem;
-            border-top: 1px solid #f0f0f0;
-        }
-
-        .btn-read-more {
-            display: inline-flex;
-            align-items: center;
-            color: white;
-            font-weight: 600;
-            font-size: 0.92rem;
-            text-decoration: none;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-
-        .btn-read-more i {
-            margin-left: 6px;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-read-more:hover {
-            color: #141733;
-            text-decoration: none;
-        }
-
-        .btn-read-more:hover i {
-            transform: translateX(4px);
-        }
-
-        .pagination-wrapper {
-            margin-top: 2rem;
-        }
-
-        .pagination-wrapper .pagination {
-            justify-content: center;
-        }
-
-        @media (max-width: 768px) {
-            .blog-container {
-                padding: 35px 0;
-            }
-
-            .main-title {
-                font-size: 2rem;
-                margin-bottom: 2rem;
-            }
-
-            .blog-img-wrapper {
-                height: 190px;
-            }
-        }
     </style>
 @endpush
 
 @section('main')
-    <div class="blog-container">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="main-title text-center">Latest News & Articles</h2>
+<div class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4">
+
+        <!-- Header: Search Bar + Dynamic View Navigation Button -->
+        <div class="mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+            <div class="relative flex-1">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-gray-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <input 
+                    type="search" 
+                    id="searchInput" 
+                    placeholder="Search {{ $posts->total() }} auction articles & guides..." 
+                    class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm text-slate-800 placeholder-gray-400 focus:outline-none focus:border-[#0B437C] focus:ring-1 focus:ring-[#0B437C] shadow-sm"
+                >
             </div>
 
-            @if($posts->isNotEmpty())
-                <div class="row">
-                    @foreach($posts as $post)
-                        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                            <div class="blog-card">
-                                <div class="blog-img-wrapper">
-                                    @php
-                                        $image = !empty($post->featured_image)
-                                            ? $post->featured_image
-                                            : asset('assets/landing/images/blog/blog-no-sidebar.jpg');
-                                    @endphp
-                                    <a href="{{ route('blog.detail', $post->slug) }}">
-                                        <img src="{{ $image }}" alt="{{ $post->title }}" class="blog-img" loading="lazy"
-                                             onerror="this.onerror=null;this.src='{{ asset('assets/landing/images/blog/blog-no-sidebar.jpg') }}';">
-                                    </a>
-                                    @if($post->published_at)
-                                        <span class="blog-date-badge">
-                                            <i class="far fa-calendar-alt mr-1"></i> {{ $post->published_at->format('d M, Y') }}
-                                        </span>
-                                    @endif
-                                </div>
+            <!-- Switch Page Navigation Link -->
+            <button 
+                id="viewNavBtn" 
+                type="button"
+                class="inline-flex items-center justify-center gap-2 bg-white border border-[#0B437C] text-[#0B437C] hover:bg-[#0B437C] hover:text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-all duration-200 shadow-sm whitespace-nowrap cursor-default"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 002 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11a2 2 0 002-2v-.055M11 20.055V18a2 2 0 002-2h1a2 2 0 002-2v-1a2 2 0 012-2h2.945M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Import regulation for your country.
+            </button>
+        </div>
 
-                                <div class="blog-card-body">
-                                    <h5 class="blog-card-title">
-                                        <a href="{{ route('blog.detail', $post->slug) }}">
-                                            {{ $post->title }}
-                                        </a>
-                                    </h5>
+        <!-- Page Info & Items Per Page Dropdown -->
+        <div class="flex items-center justify-between mb-4 px-1">
+            <p id="pageCounter" class="text-xs font-semibold text-gray-500">
+                Showing {{ $posts->firstItem() ?? 0 }} to {{ $posts->lastItem() ?? 0 }} of {{ $posts->total() }} articles on Page {{ $posts->currentPage() }} ({{ $posts->total() }} total)
+            </p>
+            
+            <div class="flex items-center gap-2">
+                <label for="itemsPerPageSelect" class="text-xs font-semibold text-gray-500 whitespace-nowrap">Initial Display:</label>
+                <select 
+                    id="itemsPerPageSelect" 
+                    onchange="fetchPage(1, this.value);"
+                    class="text-xs font-bold text-[#0B437C] bg-white border border-gray-200 rounded-xl px-3 py-1.5 pr-8 focus:outline-none focus:border-[#0B437C] focus:ring-1 focus:ring-[#0B437C] shadow-sm cursor-pointer"
+                >
+                    <option value="2" {{ ($perPage ?? 2) == 2 ? 'selected' : '' }}>2 per page</option>
+                    <option value="5" {{ ($perPage ?? 2) == 5 ? 'selected' : '' }}>5 per page</option>
+                    <option value="10" {{ ($perPage ?? 2) == 10 ? 'selected' : '' }}>10 per page</option>
+                    <option value="20" {{ ($perPage ?? 2) == 20 ? 'selected' : '' }}>20 per page</option>
+                    <option value="30" {{ ($perPage ?? 2) == 30 ? 'selected' : '' }}>30 per page</option>
+                </select>
+            </div>
+        </div>
 
-                                    <p class="blog-card-description">
-                                        {{ Str::limit(strip_tags($post->description ?? $post->content), 130) }}
-                                    </p>
+        <!-- Dynamic Tiles Container -->
+        <div id="postsContainer" class="flex flex-col space-y-4">
+            @forelse($posts as $post)
+                @include('landing.pages.partials.blog-card', ['post' => $post])
+            @empty
+                <p class="text-center text-gray-500 py-8">No articles found.</p>
+            @endforelse
+        </div>
 
-                                    <div class="blog-card-footer">
-                                        <a href="#" class="btn-read-more">
-                                            Read More <i class="fas fa-arrow-right"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                @if($posts->hasPages())
-                    <div class="row">
-                        <div class="col-12 pagination-wrapper">
-                            {{ $posts->links('pagination::bootstrap-4') }}
-                        </div>
-                    </div>
-                @endif
+        <!-- Bottom Page Number Navigation (AJAX Pagination) -->
+        <div id="pagination" class="flex items-center justify-center gap-2 mt-8 pt-4 border-t border-gray-200/60">
+            <!-- Prev Button -->
+            @if ($posts->onFirstPage())
+                <button disabled class="opacity-40 cursor-not-allowed px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-400">Prev</button>
             @else
-                <div class="row justify-content-center">
-                    <div class="col-md-8 text-center py-5">
-                        <div class="alert alert-info shadow-sm p-4 rounded-lg">
-                            <i class="fas fa-newspaper fa-3x mb-3 text-muted"></i>
-                            <h4 class="font-weight-bold">No Blog Posts Available</h4>
-                            <p class="text-muted mb-0">Check back soon for latest news, updates, and articles.</p>
-                        </div>
-                    </div>
-                </div>
+                <button onclick="fetchPage({{ $posts->currentPage() - 1 }})" class="px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50">Prev</button>
+            @endif
+
+            <!-- Page Number Links -->
+            @php
+                $lastPage = max(1, $posts->lastPage());
+            @endphp
+            @for ($page = 1; $page <= $lastPage; $page++)
+                @if ($page == $posts->currentPage())
+                    <span class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#0B437C] text-white shadow-sm">{{ $page }}</span>
+                @else
+                    <button onclick="fetchPage({{ $page }})" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50">{{ $page }}</button>
+                @endif
+            @endfor
+
+            <!-- Next Button -->
+            @if ($posts->hasMorePages())
+                <button onclick="fetchPage({{ $posts->currentPage() + 1 }})" class="px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50">Next</button>
+            @else
+                <button disabled class="opacity-40 cursor-not-allowed px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-400">Next</button>
             @endif
         </div>
+
     </div>
+</div>
 @endsection
 
 @section('script')
+<script>
+    let currentPage = {{ $posts->currentPage() }};
+    let perPage = {{ $perPage ?? 2 }};
+
+    function fetchPage(page, perPageVal) {
+        if (page < 1) return;
+        if (perPageVal) perPage = perPageVal;
+
+        $.ajax({
+            url: "{{ route('blog') }}",
+            type: "GET",
+            data: {
+                page: page,
+                per_page: perPage
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#postsContainer').html(response.html);
+                    currentPage = response.currentPage;
+
+                    // Update page counter text
+                    $('#pageCounter').html(`Showing ${response.firstItem} to ${response.lastItem} of ${response.total} articles on Page ${response.currentPage} (${response.total} total)`);
+
+                    // Re-render pagination buttons
+                    renderPaginationButtons(response.currentPage, response.lastPage);
+                }
+            },
+            error: function(xhr) {
+                console.error("Failed to fetch page data", xhr);
+            }
+        });
+    }
+
+    function renderPaginationButtons(current, last) {
+        let html = '';
+
+        // Prev Button
+        if (current <= 1) {
+            html += `<button disabled class="opacity-40 cursor-not-allowed px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-400">Prev</button>`;
+        } else {
+            html += `<button onclick="fetchPage(${current - 1})" class="px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50">Prev</button>`;
+        }
+
+        // Page Numbers
+        for (let i = 1; i <= last; i++) {
+            if (i === current) {
+                html += `<span class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#0B437C] text-white shadow-sm">${i}</span>`;
+            } else {
+                html += `<button onclick="fetchPage(${i})" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-white border border-gray-200 text-gray-700 hover:bg-gray-50">${i}</button>`;
+            }
+        }
+
+        // Next Button
+        if (current >= last) {
+            html += `<button disabled class="opacity-40 cursor-not-allowed px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-400">Next</button>`;
+        } else {
+            html += `<button onclick="fetchPage(${current + 1})" class="px-3 py-1.5 rounded-lg border bg-white text-xs font-semibold text-gray-700 hover:bg-gray-50">Next</button>`;
+        }
+
+        $('#pagination').html(html);
+    }
+</script>
 @endsection

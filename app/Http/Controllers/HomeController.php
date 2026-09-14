@@ -216,10 +216,33 @@ class HomeController extends Controller
         return view('landing.pages.contact');
     }
 
-    public function blog()
+    public function blog(Request $request)
     {
-        $posts = BlogPost::orderBy('published_at', 'desc')->paginate(9);
-        return view('landing.pages.blog', compact('posts'));
+        $perPage = (int) $request->input('per_page', 2);
+        if (!in_array($perPage, [2, 5, 10, 20, 30])) {
+            $perPage = 2;
+        }
+
+        $posts = BlogPost::orderBy('published_at', 'desc')->paginate($perPage);
+
+        if ($request->ajax()) {
+            $html = '';
+            foreach ($posts as $post) {
+                $html .= view('landing.pages.partials.blog-card', compact('post'))->render();
+            }
+
+            return response()->json([
+                'success' => true,
+                'html' => $html,
+                'currentPage' => $posts->currentPage(),
+                'lastPage' => max(1, $posts->lastPage()),
+                'total' => $posts->total(),
+                'firstItem' => $posts->firstItem() ?? 0,
+                'lastItem' => $posts->lastItem() ?? 0,
+            ]);
+        }
+
+        return view('landing.pages.blog', compact('posts', 'perPage'));
     }
 
     public function blogDetail($slug)

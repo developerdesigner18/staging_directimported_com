@@ -133,6 +133,34 @@
                     </li>
                 @endif
 
+                @if($user->hasRole('admin') || $user->can('blogs'))
+                    <li class="nav-item">
+                        <a class="nav-link menu-link @if(request()->is('admin/blogs*')) active @endif"
+                            href="#sidebarBlogs" data-bs-toggle="collapse" role="button"
+                            aria-expanded="{{ request()->is('admin/blogs*') ? 'true' : 'false' }}"
+                            aria-controls="sidebarBlogs">
+                            <i class="bx bx-news"></i> <span
+                                data-key="t-multi-level">{{ admin_label('sidebar', 'blogs', 'Blogs') }}</span>
+                        </a>
+                        <div class="menu-dropdown collapse @if(request()->is('admin/blogs*')) show @endif"
+                            id="sidebarBlogs">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.blogs.general') }}"
+                                        class="nav-link @if(request()->routeIs('admin.blogs.general')) active @endif"
+                                        data-key="t-level-1.1">{{ admin_label('sidebar', 'general_blogs', 'General Blogs') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.blogs.import_regulation') }}"
+                                        class="nav-link @if(request()->routeIs('admin.blogs.import_regulation')) active @endif"
+                                        data-key="t-level-1.1">{{ admin_label('sidebar', 'import_regulation_blogs', 'Import Regulation Blogs') }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endif
+
+
 
 
                 {{-- @if($user->hasRole('admin') || $user->can('accessories_equipments'))
