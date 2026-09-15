@@ -485,21 +485,29 @@
             gap: 6px;
         }
 
-        .main-img {
+        .main-img-anchor {
+            display: block;
             width: 100%;
             height: 200px;
-            object-fit: cover;
             border-radius: 6px;
+            overflow: hidden;
             background-color: #E6EAEF;
             border: 1px solid #edf2f7;
-            transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .main-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            transition: transform 0.35s ease-in-out, filter 0.35s ease-in-out;
             cursor: pointer;
         }
 
-        .main-img:hover {
-            transform: scale(1.02);
+        .main-img-anchor:hover .main-img {
+            transform: scale(1.08);
             filter: brightness(1.04);
-            box-shadow: 0 4px 12px rgba(15, 44, 89, 0.15);
         }
 
         .thumbnail-grid {
@@ -547,6 +555,16 @@
             font-size: 1.3rem;
             font-weight: 700;
             margin: 0;
+        }
+
+        .vehicle-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .vehicle-title a:hover {
+            color: var(--blue-link);
         }
 
         .vehicle-title span.make {

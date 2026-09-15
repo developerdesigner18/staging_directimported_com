@@ -7,7 +7,6 @@
         return asset($relativePath);
     };
 
-
     $mainImg = !empty($car->banner)
         ? $getImgSrc($car->banner)
         : (!empty($car->images) && is_array($car->images) && count(array_filter($car->images)) > 0
@@ -62,11 +61,13 @@
     data-mileage="{{ (int) ($car->spec->odometer ?? 0) }}" data-location="{{ $locationVal }}"
     data-price="{{ (float) ($car->vehicle_price ?? 0) }}">
     <div class="gallery">
-        <img src="{{ $mainImg }}" alt="{{ $displayName }}" class="main-img">
+        <a href="{{ $detailUrl }}" class="main-img-anchor">
+            <img src="{{ $mainImg }}" alt="{{ $displayName }}" class="main-img">
+        </a>
         <div class="thumbnail-grid">
             @foreach(array_slice($thumbs, 0, 4) as $t)
                 <img src="{{ $t }}" alt="thumb" class="thumb-img"
-                    onclick="this.closest('.gallery').querySelector('.main-img').src='{{ $t }}'">
+                    onclick="event.preventDefault(); event.stopPropagation(); this.closest('.gallery').querySelector('.main-img').src='{{ $t }}';">
             @endforeach
         </div>
     </div>
@@ -74,7 +75,7 @@
     <div class="details">
         <div class="header-row">
             <h2 class="vehicle-title">
-                {{ $displayName }}
+                <a href="{{ $detailUrl }}">{{ $displayName }}</a>
             </h2>
             <div class="status-badge">{{ $inspection }}</div>
         </div>
@@ -141,19 +142,10 @@
 
             <span>
                 Rating Certification
-<span class="eval-grade">
-    {{ $ratingCert ?? '' }}{{ $remarksStr ? ' ' . $remarksStr : '' }}
-</span>            </span>
-
-            {{-- <span>
-                Interior:
-                <span class="stars">{{ $car->spec->interior_grade_stars ?? '' }}</span>
+                <span class="eval-grade">
+                    {{ $ratingCert ?? '' }}{{ $remarksStr ? ' ' . $remarksStr : '' }}
+                </span>
             </span>
-
-            <span>
-                Exterior:
-                <span class="stars">{{ $car->spec->exterior_grade_stars ?? '' }}</span>
-            </span> --}}
         </div>
     </div>
 </div>

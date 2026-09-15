@@ -84,7 +84,8 @@
                             <ul class="list-inline">
                                 <li class="list-inline-item"><a class="@if(request()->is('/')) active @endif"
                                         href="{{route('landing')}}">Home</a></li>
-                                <li class="list-inline-item"><a href="javascript:void(0);">About Us</a></li>
+                                <li class="list-inline-item"><a href="{{ route('about.us') }}"
+                                        class="@if(request()->is('about-us')) active @endif">About Us</a></li>
                                 {{-- <li class="list-inline-item"><a href="{{ route('car') }}"
                                         class="@if(request()->is('car')) active @endif">Cars</a></li> --}}
                                 <li class="list-inline-item"><a href="{{ route('car') }}"
