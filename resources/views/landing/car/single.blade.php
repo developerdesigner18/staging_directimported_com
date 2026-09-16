@@ -1523,15 +1523,8 @@
                         <h1 class="sidebar-title">
                             {{ $car->name }}
                         </h1>
-                        @if(!empty($car->formatted_card_subtitle))
-                            <div class="car-subtitle text-muted mt-1 mb-2" style="font-size: 15px; font-weight: 500;">
-                                {{ $car->formatted_card_subtitle }}
-                            </div>
-                        @endif
                     </div>
-                    <span class="status-badge">
-                        {{ strtoupper($car->status->value) }}
-                    </span>
+                 
                     <!-- Pricing Section matching reference -->
                     <div class="pricing-section">
                         <div class="pricing-header">
@@ -1542,7 +1535,14 @@
                             $cleanPrice = preg_replace('/[^\d.]/', '', $car->vehicle_price ?? 0);
                             $formattedPrice = is_numeric($cleanPrice) && $cleanPrice > 0 ? number_format((float) $cleanPrice) : ($car->vehicle_price ?? '0');
                         @endphp
-                        <span class="pricing-value">¥{{ $formattedPrice }}</span>
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <span class="pricing-value">¥{{ $formattedPrice }}</span>
+                            @if(!empty($car->status))
+                                <span class="status-badge">
+                                    {{ strtoupper($car->status->value ?? $car->status) }}
+                                </span>
+                            @endif
+                        </div>
                     </div>
 
                     <!-- Inquiry/Booking Redesigned Form -->
