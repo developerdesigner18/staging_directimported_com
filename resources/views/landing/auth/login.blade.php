@@ -28,7 +28,7 @@
 
         .auth-image {
             background: linear-gradient(45deg, rgba(243, 54, 79, 0.9), rgba(243, 54, 79, 0.7)),
-            url("{{asset('assets/logo/main.png')}}") center/cover;
+            url("{{asset('assets/logo/login-back-image.png')}}") center/cover;
             min-height: 600px;
             display: flex;
             align-items: center;
@@ -230,9 +230,8 @@
                     <div class="col-lg-6 auth-image">
                         <div class="">
                             <div>
-                                <h3 class="mb-4">Welcome Back!</h3>
-                                <p class="mb-0">Start your car adventure in Japan. Login to access your bookings
-                                    and explore our premium car collection.</p>
+                                <h3 class="mb-4">Welcome back to Direct Imported!</h3>
+                                <p class="mb-0">Sign in to view live auctions, track vehicle exports and documentation, and manage your next purchases.</p>
                             </div>
                         </div>
                     </div>
@@ -271,7 +270,7 @@
                                            name="password"
                                            autocomplete="current-password"
                                            placeholder="Enter your password">
-                                    <button type="button" class="bg-transparent border btn btn-outline-secondary text-black" onclick="togglePassword('password', this)">
+                                    <button type="button" class="bg-transparent border btn btn-outline-secondary text-white" onclick="togglePassword('password', this)">
                                         <i class="bx bx-eye"></i>
                                     </button>
                                     </div>
