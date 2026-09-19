@@ -436,6 +436,7 @@
         <div class="rid-menu d-flex justify-content-center text-center">
             <ul>
                 <li><a class="active home" style="color:white !important;" href="{{route('landing')}}">Home</a></li>
+                <li><a href="{{ route('about.us') }}">About Us</a></li>
                 <li><a href="{{route('contact')}}">Contact</a></li>
                 <li><a href="{{ route('car') }}">Auction Access</a></li>
                 <li><a href="{{ route('available.vehicles') }}">Available Vehicles</a></li>

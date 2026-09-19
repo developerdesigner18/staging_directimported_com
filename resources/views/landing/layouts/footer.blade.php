@@ -62,7 +62,7 @@
                         <li><a href="{{ route('blog') }}">Blog</a></li>
                         <li><a href="{{ route('contact') }}">Contact</a></li>
                         <li><a href="{{ route('faqs') }}">FAQs</a></li>
-                        <li><a href="{{ route('landing') }}#about">About us</a></li>
+                        <li><a href="{{ route('about.us') }}">About us</a></li>
                         <li><a href="{{ route('rental.policies') }}">Terms & Conditions</a></li>
                     </ul>
                 </div>

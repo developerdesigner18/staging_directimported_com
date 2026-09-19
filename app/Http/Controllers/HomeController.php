@@ -196,6 +196,14 @@ class HomeController extends Controller
         return view('landing.pages.about-our-cars');
     }
 
+    public function aboutUs()
+    {
+        if (view()->exists('landing.pages.about-us')) {
+            return view('landing.pages.about-us');
+        }
+        return view('about-us');
+    }
+
     public function usefulLinks()
     {
         return view('landing.pages.useful-links');
@@ -216,10 +224,58 @@ class HomeController extends Controller
         return view('landing.pages.contact');
     }
 
-    public function blog()
+    public function blog(Request $request)
     {
-        $posts = BlogPost::orderBy('published_at', 'desc')->paginate(9);
-        return view('landing.pages.blog', compact('posts'));
+        $perPage = (int) $request->input('per_page', 10);
+        if ($perPage <= 0) {
+            $perPage = 10;
+        }
+
+        $category = $request->input('category', 'blog');
+        $search = trim($request->input('search', ''));
+
+        $query = BlogPost::query();
+
+        if (in_array(strtolower($category), ['blog', 'general', ''])) {
+            $query->where(function ($q) {
+                $q->whereIn('category', ['general', 'General', ''])
+                    ->orWhereNull('category');
+            });
+        } else {
+            $query->whereIn('category', ['import_regulation', 'Import Regulation', 'import regulation', 'regulations']);
+        }
+
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('content', 'like', '%' . $search . '%');
+            });
+        }
+
+        $posts = $query->orderBy('published_at', 'desc')->paginate($perPage)->withQueryString();
+
+        if ($request->ajax()) {
+            $cards = [];
+            foreach ($posts as $post) {
+                $cards[] = [
+                    'id' => $post->id,
+                    'html' => view('landing.pages.partials.blog-card', compact('post'))->render(),
+                ];
+            }
+
+            return response()->json([
+                'success' => true,
+                'cards' => $cards,
+                'currentPage' => $posts->currentPage(),
+                'lastPage' => max(1, $posts->lastPage()),
+                'total' => $posts->total(),
+                'firstItem' => $posts->firstItem() ?? 0,
+                'lastItem' => $posts->lastItem() ?? 0,
+            ]);
+        }
+
+        return view('landing.pages.blog', compact('posts', 'perPage', 'category', 'search'));
     }
 
     public function blogDetail($slug)

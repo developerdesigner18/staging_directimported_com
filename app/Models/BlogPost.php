@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BlogPost extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'blog_posts';
 
@@ -19,6 +20,7 @@ class BlogPost extends Model
         'content',
         'featured_image',
         'soro_url',
+        'category',
         'published_at',
     ];
 

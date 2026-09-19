@@ -29,6 +29,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/terms-and-conditions', 'rentalPolicies')->name('rental.policies');
     Route::get('/licence-requirement', 'licenceRequirement')->name('licence.requirement');
     Route::get('/about-our-cars', 'aboutOurCars')->name('about.our.cars');
+    Route::get('/about-us', 'aboutUs')->name('about.us');
     Route::get('/useful-links', 'usefulLinks')->name('useful.links');
     Route::get('/japan-law', 'japanLaw')->name('japan.law');
     Route::get('/ride-japan-law', 'rideJapanLaw')->name('ride.japan.law');

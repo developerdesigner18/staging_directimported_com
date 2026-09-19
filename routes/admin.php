@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\ManufacturerController;
 use App\Http\Controllers\Admin\LabelController;
+use App\Http\Controllers\Admin\BlogController;
 
 
 /*
@@ -272,6 +273,17 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::get('/edit', 'edit')->name('edit');
         Route::post('/update', 'update')->name('update');
     });
+
+    // Blogs Management
+    Route::controller(BlogController::class)->prefix('blogs')->name('blogs.')->group(function () {
+        Route::get('/general', 'general')->name('general');
+        Route::get('/import-regulation', 'importRegulation')->name('import_regulation');
+        Route::get('/list', 'list')->name('list');
+        Route::get('/edit/{id}', 'edit')->name('edit');
+        Route::post('/update', 'update')->name('update');
+        Route::post('/delete', 'delete')->name('delete');
+    });
+
 
     // Locations
     Route::group(['middleware' => ['check_permission:location']], function () {
