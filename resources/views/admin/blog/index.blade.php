@@ -15,10 +15,14 @@
                     <input type="hidden" id="editBlogId" name="id">
 
                     <div class="modal-body">
-                        <!-- Featured Image Display (Read Only - No Edit) -->
+                        <!-- Featured Image Upload & Preview -->
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Featured Image (Read-Only)</label>
-                            <div class="p-2 border rounded bg-light text-center">
+                            <label for="editFeaturedImage" class="form-label fw-bold">Featured Image</label>
+                            <input type="file" class="form-control" id="editFeaturedImage" name="featured_image" accept=".webp">
+                            <small class="text-muted d-block mt-1">Leave blank to keep current image. Only <strong>.webp</strong> images are allowed (max 2MB).</small>
+                            <label id="featured_image-error" class="text-danger error" style="display: none"></label>
+
+                            <div class="p-2 border rounded bg-light text-center mt-2" style="max-width: 300px;">
                                 <img id="editBlogImagePreview" src="" alt="Blog Featured Image" class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: cover; display: none;">
                                 <div id="editBlogNoImage" class="text-muted py-3" style="display: none;">
                                     <i class="ri-image-line fs-24 d-block mb-1"></i>
@@ -192,6 +196,29 @@
 
             window.blogDataTable = dataTable;
 
+            // Image input client-side webp validation & preview for Edit Blog
+            $('#editFeaturedImage').on('change', function () {
+                var file = this.files[0];
+                if (file) {
+                    var extension = file.name.split('.').pop().toLowerCase();
+                    if (extension !== 'webp') {
+                        $('#featured_image-error').html('Only .webp images are allowed.').show();
+                        $(this).val('');
+                    } else if (file.size > 2 * 1024 * 1024) {
+                        $('#featured_image-error').html('Image size must not exceed 2MB.').show();
+                        $(this).val('');
+                    } else {
+                        $('#featured_image-error').html('').hide();
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            $('#editBlogImagePreview').attr('src', e.target.result).show();
+                            $('#editBlogNoImage').hide();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+            });
+
             // jQuery Form Validation & AJAX Submission for Edit Blog
             $("#editBlogForm").validate({
                 rules: {
@@ -209,12 +236,31 @@
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
-                    element.after(error);
+                    if (element.attr("name") == "featured_image") {
+                        $("#featured_image-error").html(error.text()).show();
+                    } else {
+                        element.after(error);
+                    }
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
                     if (typeof tinymce !== 'undefined' && tinymce.get('edit_content_editor')) {
                         $('#editContent').val(tinymce.get('edit_content_editor').getContent());
+                    }
+
+                    // Strict webp extension and size check if a new image file is selected
+                    var fileInput = $('#editFeaturedImage')[0];
+                    if (fileInput && fileInput.files.length > 0) {
+                        var file = fileInput.files[0];
+                        var ext = file.name.split('.').pop().toLowerCase();
+                        if (ext !== 'webp') {
+                            $('#featured_image-error').html('Only .webp images are allowed.').show();
+                            return false;
+                        }
+                        if (file.size > 2 * 1024 * 1024) {
+                            $('#featured_image-error').html('Image size must not exceed 2MB.').show();
+                            return false;
+                        }
                     }
 
                     $('.error').html('').hide();
@@ -262,6 +308,7 @@
         function editBlog(id) {
             var editUrl = "{{ route('admin.blogs.edit', ':id') }}";
             $('.error').html('').hide();
+            $('#editFeaturedImage').val('');
 
             $.ajax({
                 url: editUrl.replace(':id', id),
