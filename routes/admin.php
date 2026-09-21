@@ -278,7 +278,9 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
     Route::controller(BlogController::class)->prefix('blogs')->name('blogs.')->group(function () {
         Route::get('/general', 'general')->name('general');
         Route::get('/import-regulation', 'importRegulation')->name('import_regulation');
+        Route::get('/create', 'create')->name('create');
         Route::get('/list', 'list')->name('list');
+        Route::post('/store', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('/update', 'update')->name('update');
         Route::post('/delete', 'delete')->name('delete');

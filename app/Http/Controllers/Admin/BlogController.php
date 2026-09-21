@@ -29,6 +29,12 @@ class BlogController extends Controller
         return view('admin.blog.index', compact('category', 'pageTitle'));
     }
 
+    public function create()
+    {
+        $pageTitle = 'Add Custom Blog';
+        return view('admin.blog.create', compact('pageTitle'));
+    }
+
     public function list(Request $request)
     {
         $category = $request->input('category', 'general');
@@ -87,6 +93,71 @@ class BlogController extends Controller
                 return $this->sendError("Blog post not found", 404);
             }
         } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), 500);
+        }
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'category' => 'required|in:general,import_regulation,General,Import Regulation',
+            'description' => 'nullable|string',
+            'content' => 'required|string',
+            'featured_image' => [
+                'required',
+                'file',
+                'max:2048',
+                function ($attribute, $value, $fail) {
+                    if ($value && strtolower($value->getClientOriginalExtension()) !== 'webp') {
+                        $fail('Only .webp images are allowed.');
+                    }
+                }
+            ],
+            'published_at' => 'nullable|date',
+        ], [
+            'title.required' => 'The blog title is required.',
+            'category.required' => 'The blog category is required.',
+            'category.in' => 'Selected category is invalid.',
+            'content.required' => 'The blog content is required.',
+            'featured_image.required' => 'The blog featured image is required.',
+            'featured_image.file' => 'The featured image must be a file.',
+            'featured_image.max' => 'Image size must not exceed 2MB.',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendValidationError($validator->errors());
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $blog = new BlogPost();
+            $blog->soro_guid = 'custom_' . (string) Str::uuid();
+            $blog->title = $request->title;
+
+            $slug = Str::slug($request->title);
+            if (BlogPost::where('slug', $slug)->exists()) {
+                $slug .= '-' . time();
+            }
+            $blog->slug = $slug;
+
+            $blog->category = $request->category;
+            $blog->description = $request->description;
+            $blog->content = $request->content;
+            $blog->published_at = $request->filled('published_at') ? $request->published_at : now();
+
+            if ($request->hasFile('featured_image')) {
+                $imageName = uploadFile($request->file('featured_image'), BLOG_IMAGE_PATH, 'blog_');
+                $blog->featured_image = asset(BLOG_IMAGE_PATH . $imageName);
+            }
+
+            $blog->save();
+
+            DB::commit();
+            return $this->sendSuccess('Custom blog post created successfully!');
+        } catch (\Exception $exception) {
+            DB::rollBack();
             return $this->sendError($exception->getMessage(), 500);
         }
     }
@@ -152,6 +223,7 @@ class BlogController extends Controller
                 return $this->sendError("Failed to remove blog post");
             }
         } catch (\Exception $exception) {
+            DB::rollBack();
             return $this->sendError($exception->getMessage(), 500);
         }
     }

@@ -52,3 +52,6 @@ if (!defined('DEFAULT_PATH'))
 
 if (!defined('LOGO_PATH'))
     define('LOGO_PATH', 'assets/logo/');
+
+if (!defined('BLOG_IMAGE_PATH'))
+    define('BLOG_IMAGE_PATH', 'uploads/blog_image/');

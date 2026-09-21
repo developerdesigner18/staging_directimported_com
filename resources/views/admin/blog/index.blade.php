@@ -38,8 +38,8 @@
                         <div class="mb-3">
                             <label for="editCategory" class="form-label fw-bold">Category <span class="text-danger">*</span></label>
                             <select class="form-select" id="editCategory" name="category">
-                                <option value="general">General Blogs</option>
-                                <option value="import_regulation">Import Regulation Blogs</option>
+                                <option value="general">General Blogs Management</option>
+                                <option value="import_regulation">Import Regulation Blogs Management</option>
                             </select>
                             <label id="category-error" class="text-danger error" style="display: none"></label>
                         </div>
@@ -192,7 +192,7 @@
 
             window.blogDataTable = dataTable;
 
-            // jQuery Form Validation & AJAX Submission
+            // jQuery Form Validation & AJAX Submission for Edit Blog
             $("#editBlogForm").validate({
                 rules: {
                     title: { required: true, maxlength: 255 },
@@ -286,7 +286,6 @@
                         }
 
                         if (blog.published_at) {
-                            // Format date for datetime-local
                             var pubDate = new Date(blog.published_at);
                             var formattedDate = pubDate.toISOString().slice(0, 16);
                             $('#editPublishedAt').val(formattedDate);
@@ -294,7 +293,6 @@
                             $('#editPublishedAt').val('');
                         }
 
-                        // Handle Featured Image Preview
                         if (blog.featured_image) {
                             $('#editBlogImagePreview').attr('src', blog.featured_image).show();
                             $('#editBlogNoImage').hide();
