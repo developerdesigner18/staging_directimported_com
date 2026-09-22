@@ -492,10 +492,37 @@
                             </div>
 
                             <div class="col-12 mb-3">
-                                <label for="interior_color"
-                                    class="form-label">{{ admin_label('car_form', 'interior_color', 'Interior Color') }}</label>
-                                <input type="text" id="interior_color" name="interior_color" class="form-control"
-                                    value="{{ $currentInteriorColor }}" placeholder="e.g. Black Leather">
+                                <label class="form-label">{{ admin_label('car_form', 'interior_color', 'Interior Color Selection') }}</label>
+                                <div class="color-picker-container">
+                                    @php
+                                        $interiorColors = [
+                                            ['name' => 'White', 'hex' => '#FFFFFF'],
+                                            ['name' => 'Pearl', 'hex' => '#FDFDF0'],
+                                            ['name' => 'Silver', 'hex' => '#C0C0C0'],
+                                            ['name' => 'Gray', 'hex' => '#696969'],
+                                            ['name' => 'Black', 'hex' => '#1A1A1A'],
+                                            ['name' => 'Beige', 'hex' => '#E3DAC9'],
+                                            ['name' => 'Brown', 'hex' => '#654321'],
+                                            ['name' => 'Gold', 'hex' => '#D4AF37'],
+                                            ['name' => 'Yellow', 'hex' => '#FFD700'],
+                                            ['name' => 'Orange', 'hex' => '#FF8C00'],
+                                            ['name' => 'Red', 'hex' => '#CC0000'],
+                                            ['name' => 'Burgundy', 'hex' => '#800020'],
+                                            ['name' => 'Pink', 'hex' => '#FFB6C1'],
+                                            ['name' => 'Purple', 'hex' => '#4B0082'],
+                                            ['name' => 'L. Blue', 'hex' => '#87CEFA'],
+                                            ['name' => 'Blue', 'hex' => '#0047AB'],
+                                            ['name' => 'Green', 'hex' => '#2E8B57'],
+                                        ];
+                                    @endphp
+                                    @foreach($interiorColors as $col)
+                                        <label class="color-option">
+                                            <input type="radio" name="interior_color" value="{{ $col['hex'] }}" {{ strcasecmp($currentInteriorColor, $col['hex']) === 0 ? 'checked' : '' }}>
+                                            <div class="color-box" style="background-color: {{ $col['hex'] }};"></div>
+                                            <span class="color-name">{{ $col['name'] }}</span>
+                                        </label>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="col-12 mb-3">
