@@ -23,3 +23,21 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+# -----------------------------------------------------------------------
+# Large Image Upload Support
+# Allows admins to upload large car images. Images are auto-resized and
+# converted to WebP in the backend, so we only need generous limits here.
+# -----------------------------------------------------------------------
+<IfModule mod_php.c>
+    php_value upload_max_filesize 256M
+    php_value post_max_size       256M
+    php_value memory_limit        512M
+    php_value max_execution_time  120
+</IfModule>
+<IfModule mod_php8.c>
+    php_value upload_max_filesize 256M
+    php_value post_max_size       256M
+    php_value memory_limit        512M
+    php_value max_execution_time  120
+</IfModule>

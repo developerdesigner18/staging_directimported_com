@@ -20,21 +20,34 @@ function fileName($ext, $prefix = 'img_')
 // Upload File
 function uploadFile($file, $path, $prefix = 'img_')
 {
+    // Raise memory limit for large image processing (works regardless of server config)
+    ini_set('memory_limit', '512M');
+
     $manager = new \Intervention\Image\ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
     $image = $manager->read($file);
+
+    // Resize down if larger than 2000px on any side (preserves aspect ratio)
+    $maxDimension = 2000;
+    if ($image->width() > $maxDimension || $image->height() > $maxDimension) {
+        $image->scaleDown(width: $maxDimension, height: $maxDimension);
+    }
+
     $fileName = $prefix . time() . '_' . uniqid() . '.webp';
 
     if (!File::exists(public_path($path))) {
         File::makeDirectory(public_path($path), 0755, true);
     }
 
-    $image->toWebp(80)->save(public_path($path) . $fileName);
+    $image->toWebp(85)->save(public_path($path) . $fileName);
 
     return $fileName;
 }
 
 function uploadFilepondEncodedFile($json, $path, $prefix = 'img_')
 {
+    // Raise memory limit for large image processing (works regardless of server config)
+    ini_set('memory_limit', '512M');
+
     $bannerJson = json_decode($json, true);
     if (!isset($bannerJson['data']) || !isset($bannerJson['type'])) {
         return null;
@@ -45,13 +58,19 @@ function uploadFilepondEncodedFile($json, $path, $prefix = 'img_')
     $manager = new \Intervention\Image\ImageManager(\Intervention\Image\Drivers\Gd\Driver::class);
     $image = $manager->read($base64Image);
 
+    // Resize down if larger than 2000px on any side (preserves aspect ratio)
+    $maxDimension = 2000;
+    if ($image->width() > $maxDimension || $image->height() > $maxDimension) {
+        $image->scaleDown(width: $maxDimension, height: $maxDimension);
+    }
+
     $fileName = $prefix . time() . '_' . uniqid() . '.webp';
 
     if (!File::exists(public_path($path))) {
         File::makeDirectory(public_path($path), 0755, true);
     }
 
-    $image->toWebp(80)->save(public_path($path) . $fileName);
+    $image->toWebp(85)->save(public_path($path) . $fileName);
 
     return $fileName;
 }
