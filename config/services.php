@@ -39,4 +39,12 @@ return [
         'rss_url' => env('SORO_RSS_URL'),
     ],
 
+    'recaptcha' => [
+        'site_key' => env('CAPTCHA_SITE_KEY'),
+        'secret_key' => env('CAPTCHA_SECRET_KEY'),
+    ],
+
+    'receiver_mail' => env('RECEIVER_MAIL'),
+
 ];
+

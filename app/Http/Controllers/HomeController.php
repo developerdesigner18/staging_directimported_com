@@ -19,6 +19,7 @@ use App\Models\EmailTemplates;
 use App\Models\RentalPolicies;
 use App\Models\HomeSection;
 use App\Models\BlogPost;
+use App\Models\ContactRequest;
 
 class HomeController extends Controller
 {
@@ -334,7 +335,7 @@ class HomeController extends Controller
 
         // Verify reCAPTCHA
         $recaptcha = $request->input('g-recaptcha-response');
-        $secret_key = env('CAPTCHA_SECRET_KEY');
+        $secret_key = config('services.recaptcha.secret_key');
         $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $recaptcha;
 
         $response = file_get_contents($url);
@@ -345,7 +346,14 @@ class HomeController extends Controller
         }
 
         try {
-            sendDynamicEmail(env('RECEIVER_MAIL'), 'ContactUsMail', [
+            ContactRequest::create([
+                'full_name' => $request->name,
+                'email' => $request->email,
+                'phone_number' => $request->contactNumber,
+                'message' => $request->message,
+            ]);
+
+            sendDynamicEmail(config('services.receiver_mail'), 'ContactUsMail', [
                 'name' => $request->name,
                 'email' => $request->email,
                 'contactNumber' => $request->contactNumber,

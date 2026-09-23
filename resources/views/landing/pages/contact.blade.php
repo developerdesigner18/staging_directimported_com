@@ -86,7 +86,7 @@
                             </div>
                             <div class="form-group">
                                 <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
-                                    data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
+                                    data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                             </div>
                             <button class="btn" type="submit">Send Message</button>
                             <span><strong>All queries are replied</strong> usually within 24hrs.</span>
