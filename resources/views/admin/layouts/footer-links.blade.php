@@ -74,6 +74,10 @@
     src="{{asset('assets/admin/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js')}}"></script>
 <script
     src="{{asset('assets/admin/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js')}}"></script>
+<script
+    src="{{asset('assets/admin/libs/filepond-plugin-image-resize/filepond-plugin-image-resize.min.js')}}"></script>
+<script
+    src="{{asset('assets/admin/libs/filepond-plugin-image-transform/filepond-plugin-image-transform.min.js')}}"></script>
 <script src="{{asset('assets/admin/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js')}}"></script>
 <script src="{{asset('assets/vendor/filepond/filepond-plugin-file-validate-type.js')}}"></script>
 

@@ -146,7 +146,9 @@
                 FilePondPluginFileValidateSize,
                 FilePondPluginImageExifOrientation,
                 FilePondPluginImagePreview,
-                FilePondPluginFileValidateType
+                FilePondPluginFileValidateType,
+                FilePondPluginImageResize,
+                FilePondPluginImageTransform
             );
 
             const inputElement = document.querySelector('input.filepond');
@@ -154,6 +156,14 @@
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 30,
+                    allowImageResize: true,
+                    imageResizeTargetWidth: 1920,
+                    imageResizeTargetHeight: 1920,
+                    imageResizeMode: 'contain',
+                    imageResizeUpscale: false,
+                    allowImageTransform: true,
+                    imageTransformOutputQuality: 85,
+                    imageTransformOutputMimeType: 'image/jpeg'
                 });
             }
         }
