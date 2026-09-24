@@ -528,6 +528,26 @@
                     </div>
                 </div>
 
+                <!-- AI Content Generator Card -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light d-flex align-items-center justify-content-between">
+                        <h5 class="mb-0">
+                            <i class="ri-sparkling-fill text-primary me-1"></i> AI Content Generator
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="ai_prompt" class="form-label">Content / Prompt</label>
+                            <textarea class="form-control" id="ai_prompt" name="ai_prompt" rows="3"
+                                placeholder="Enter prompt or details about the vehicle to generate a professional description..."></textarea>
+                            <label id="ai_prompt-error" class="text-danger error" style="display: none"></label>
+                        </div>
+                        <button type="button" id="btn-generate-ai" class="btn btn-primary">
+                            <i class="ri-magic-line me-1"></i> Generate AI Content
+                        </button>
+                    </div>
+                </div>
+
                 <!-- 4. Description Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
@@ -842,6 +862,83 @@
                     $('#trans_custom_wrapper').addClass('d-none');
                     $('#transmission_custom').val('');
                 }
+            });
+
+            // AI Content Generation Handler
+            $('#btn-generate-ai').on('click', function (e) {
+                e.preventDefault();
+
+                $('#ai_prompt').rules('add', {
+                    required: true,
+                    messages: {
+                        required: 'Please enter prompt/content before generating AI description.'
+                    }
+                });
+
+                var isValid = $('#addForm').validate().element('#ai_prompt');
+
+                $('#ai_prompt').rules('remove', 'required');
+
+                if (!isValid) {
+                    return false;
+                }
+
+                const promptText = $('#ai_prompt').val().trim();
+                const $btn = $(this);
+
+                $.ajax({
+                    url: "{{ route('admin.car.generate-ai-content') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        prompt: promptText
+                    },
+                    beforeSend: function () {
+                        $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Generating...');
+                    },
+                    success: function (result) {
+                        if (result.status && result.content) {
+                            $('#description_editor').val(result.content);
+                            if (typeof tinymce !== 'undefined' && tinymce.get('description_editor')) {
+                                tinymce.get('description_editor').setContent(result.content);
+                            }
+                            $('#description').val(result.content);
+                            $('#description-error').hide();
+
+                            if (typeof sendSuccess === 'function') {
+                                sendSuccess(result.message || 'AI Content generated successfully!');
+                            }
+                        } else {
+                            if (typeof sendError === 'function') {
+                                sendError(result.message || 'Failed to generate content.');
+                            }
+                        }
+                    },
+                    error: function (xhr) {
+                        let data = xhr.responseJSON;
+                        let errorMsg = 'An error occurred while generating AI content.';
+                        if (data && data.hasOwnProperty('error')) {
+                            if (typeof data.error === 'string') {
+                                errorMsg = data.error;
+                            } else if (typeof data.error === 'object') {
+                                let firstKey = Object.keys(data.error)[0];
+                                errorMsg = Array.isArray(data.error[firstKey]) ? data.error[firstKey][0] : data.error[firstKey];
+                            }
+                        } else if (data && data.hasOwnProperty('message')) {
+                            errorMsg = data.message;
+                        }
+
+                        if (typeof sendError === 'function') {
+                            sendError(errorMsg);
+                        } else {
+                            alert(errorMsg);
+                        }
+                    },
+                    complete: function () {
+                        $btn.prop('disabled', false).html('<i class="ri-magic-line me-1"></i> Generate AI Content');
+                    }
+                });
             });
         });
     </script>

@@ -212,6 +212,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/specs/update/{id}', 'updateSpecs')->name('specs.update');
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
+            Route::post('/generate-ai-content', 'generateAiContent')->name('generate-ai-content');
 
         });
         Route::controller(AucationController::class)->prefix('auction-grade')->name('auctiongrade.')->group(function () {

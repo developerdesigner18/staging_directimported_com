@@ -46,5 +46,9 @@ return [
 
     'receiver_mail' => env('RECEIVER_MAIL'),
 
+    'gemini' => [
+        'key' => env('GEMINI_API_KEY'),
+    ],
+
 ];
 
