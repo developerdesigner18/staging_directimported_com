@@ -155,18 +155,21 @@
         });
 
         function initFilepond() {
-            FilePond.registerPlugin(
-                FilePondPluginFileEncode,
-                FilePondPluginFileValidateSize,
-                FilePondPluginImageExifOrientation,
-                FilePondPluginImagePreview,
-                FilePondPluginFileValidateType,
-                FilePondPluginImageResize,
-                FilePondPluginImageTransform
-            );
+            const plugins = [];
+            if (typeof FilePondPluginFileEncode !== 'undefined') plugins.push(FilePondPluginFileEncode);
+            if (typeof FilePondPluginFileValidateSize !== 'undefined') plugins.push(FilePondPluginFileValidateSize);
+            if (typeof FilePondPluginImageExifOrientation !== 'undefined') plugins.push(FilePondPluginImageExifOrientation);
+            if (typeof FilePondPluginImagePreview !== 'undefined') plugins.push(FilePondPluginImagePreview);
+            if (typeof FilePondPluginFileValidateType !== 'undefined') plugins.push(FilePondPluginFileValidateType);
+            if (typeof FilePondPluginImageResize !== 'undefined') plugins.push(FilePondPluginImageResize);
+            if (typeof FilePondPluginImageTransform !== 'undefined') plugins.push(FilePondPluginImageTransform);
+
+            if (plugins.length > 0 && typeof FilePond !== 'undefined') {
+                FilePond.registerPlugin(...plugins);
+            }
 
             const inputElement = document.querySelector('input.filepond');
-            if (inputElement) {
+            if (inputElement && typeof FilePond !== 'undefined') {
                 FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 30,
