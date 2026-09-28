@@ -290,10 +290,6 @@ class HomeController extends Controller
         return view('landing.pages.blog-detail', compact('post', 'recentPosts'));
     }
 
-    public function reviews()
-    {
-        return view('landing.pages.reviews');
-    }
 
     public function faqs()
     {

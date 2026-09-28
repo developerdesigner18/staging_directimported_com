@@ -238,13 +238,13 @@ class CarController extends Controller
         }
     }
 
-    public function myBookings()
-    {
-        $user = Auth::guard('web')->user();
-        $accessories = Accessories::all();
+    // public function myBookings()
+    // {
+    //     $user = Auth::guard('web')->user();
+    //     $accessories = Accessories::all();
 
-        return view('landing.car.my_bookings', compact('accessories', 'user'));
-    }
+    //     return view('landing.car.my_bookings', compact('accessories', 'user'));
+    // }
 
     public function myBookingsAction_old(Request $request)
     {
@@ -295,113 +295,113 @@ class CarController extends Controller
         }
     }
 
-    public function myBookingsAction(Request $request)
-    {
+    // public function myBookingsAction(Request $request)
+    // {
 
-        try {
-            $validator = Validator::make($request->all(), [
-                'car_ids' => 'required|array',
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'email' => 'required',
-                'mobile' => 'required',
-                //                'start_time' => 'required|date_format:h:i A',
-                //                'end_time' => 'required|date_format:h:i A',
-                'start_time' => 'required',
-                'end_time' => 'required',
-                'policy_status' => 'required',
-            ], [
-                'car_ids' => 'The car Selection is required.',
-                'start_time.required' => 'Please enter the start time.',
-                'start_time.date_format' => 'Start time must be in the format HH:MM AM/PM.',
-                //                'end_time.required' => 'Please enter the end time.',
-                //                'end_time.date_format' => 'End time must be in the format HH:MM AM/PM.',
-            ]);
+    //     try {
+    //         $validator = Validator::make($request->all(), [
+    //             'car_ids' => 'required|array',
+    //             'first_name' => 'required',
+    //             'last_name' => 'required',
+    //             'email' => 'required',
+    //             'mobile' => 'required',
+    //             //                'start_time' => 'required|date_format:h:i A',
+    //             //                'end_time' => 'required|date_format:h:i A',
+    //             'start_time' => 'required',
+    //             'end_time' => 'required',
+    //             'policy_status' => 'required',
+    //         ], [
+    //             'car_ids' => 'The car Selection is required.',
+    //             'start_time.required' => 'Please enter the start time.',
+    //             'start_time.date_format' => 'Start time must be in the format HH:MM AM/PM.',
+    //             //                'end_time.required' => 'Please enter the end time.',
+    //             //                'end_time.date_format' => 'End time must be in the format HH:MM AM/PM.',
+    //         ]);
 
-            if ($validator->fails()) {
-                return $this->sendValidationError($validator->errors());
-            }
+    //         if ($validator->fails()) {
+    //             return $this->sendValidationError($validator->errors());
+    //         }
 
-            $user_id = Auth::guard('web')->user()->id ?? null;
+    //         $user_id = Auth::guard('web')->user()->id ?? null;
 
-            //            dd($user_id);
-            $carsaveData = [];
-            $booking_ids = [];
-            if ($request->car_ids) {
-                foreach ($request->car_ids as $car_id) {
-                    $insurance = $request->acc_insurance[$car_id] ?? 0;
-                    $acc_car_id = $request->acc_car_id[$car_id] ?? [];
-                    $booking_id = generateBookingId();
+    //         //            dd($user_id);
+    //         $carsaveData = [];
+    //         $booking_ids = [];
+    //         if ($request->car_ids) {
+    //             foreach ($request->car_ids as $car_id) {
+    //                 $insurance = $request->acc_insurance[$car_id] ?? 0;
+    //                 $acc_car_id = $request->acc_car_id[$car_id] ?? [];
+    //                 $booking_id = generateBookingId();
 
-                    $booking_ids[] = $booking_id;
-                    $carsaveData[] = [
-                        'user_id' => $user_id,
-                        'booking_id' => $booking_id,
-                        'car_id' => $car_id,
-                        'first_name' => $request->first_name,
-                        'last_name' => $request->last_name,
-                        'email' => $request->email,
-                        'mobile' => $request->mobile,
-                        'start_date' => $request->start_date,
-                        'end_date' => $request->end_date,
-                        'start_time' => Carbon::createFromFormat('h:i A', $request->start_time)->format('H:i:s'),
-                        'end_time' => Carbon::createFromFormat('h:i A', $request->end_time)->format('H:i:s'),
-                        'location' => $request->location,
-                        'policy_status' => $request->policy_status,
-                        'comment' => $request->comment,
-                        //                        'status' => 'PENDING',
-                        'selected_accessories' => $acc_car_id,
-                        'insurance' => $insurance,
-                    ];
-                }
-            }
+    //                 $booking_ids[] = $booking_id;
+    //                 $carsaveData[] = [
+    //                     'user_id' => $user_id,
+    //                     'booking_id' => $booking_id,
+    //                     'car_id' => $car_id,
+    //                     'first_name' => $request->first_name,
+    //                     'last_name' => $request->last_name,
+    //                     'email' => $request->email,
+    //                     'mobile' => $request->mobile,
+    //                     'start_date' => $request->start_date,
+    //                     'end_date' => $request->end_date,
+    //                     'start_time' => Carbon::createFromFormat('h:i A', $request->start_time)->format('H:i:s'),
+    //                     'end_time' => Carbon::createFromFormat('h:i A', $request->end_time)->format('H:i:s'),
+    //                     'location' => $request->location,
+    //                     'policy_status' => $request->policy_status,
+    //                     'comment' => $request->comment,
+    //                     //                        'status' => 'PENDING',
+    //                     'selected_accessories' => $acc_car_id,
+    //                     'insurance' => $insurance,
+    //                 ];
+    //             }
+    //         }
 
-            $bookings = $carsaveData;
-            $quoteDetails = view('landing.car.quoteDetails', compact('bookings', 'booking_ids', 'request', 'user_id'))->render();
+    //         $bookings = $carsaveData;
+    //         $quoteDetails = view('landing.car.quoteDetails', compact('bookings', 'booking_ids', 'request', 'user_id'))->render();
 
-            // Send email to admin
-            sendDynamicEmail(env('RECEIVER_MAIL'), 'BookingQuoteMail', [
-                'name' => 'Admin',
-                'booking_details' => $quoteDetails,
-            ]);
+    //         // Send email to admin
+    //         sendDynamicEmail(env('RECEIVER_MAIL'), 'BookingQuoteMail', [
+    //             'name' => 'Admin',
+    //             'booking_details' => $quoteDetails,
+    //         ]);
 
-            // Send email to user
-            sendDynamicEmail($request->email, 'BookingQuoteMail', [
-                'name' => $request->first_name,
-                'booking_details' => $quoteDetails,
-            ]);
-            //            if (!Auth::guard('web')->check()) {
-            //                $existingUser = User::where('email', $request->email)->first();
-            //                if ($existingUser) {
-            //                    return $this->sendError('You are already registered. Please login to continue.', 400);
-            //                }
-            //
-            //                $user = new User();
-            //                $user->first_name = $request->first_name;
-            //                $user->last_name = $request->last_name;
-            //                $user->mobile = $request->mobile;
-            //                $user->email = $request->email;
-            //                $user->password = Hash::make($booking_id); // Or temp password logic
-            //                $user->save();
-            //                Mail::to($user->email)->send(new RegisterMail($user->first_name,$user->last_name,$user->email,$user->mobile));
-            //
-            //                Auth::guard('web')->attempt([
-            //                    'email' => $user->email,
-            //                    'password' => $booking_id
-            //                ]);
-            //            }
-            DB::commit();
+    //         // Send email to user
+    //         sendDynamicEmail($request->email, 'BookingQuoteMail', [
+    //             'name' => $request->first_name,
+    //             'booking_details' => $quoteDetails,
+    //         ]);
+    //         //            if (!Auth::guard('web')->check()) {
+    //         //                $existingUser = User::where('email', $request->email)->first();
+    //         //                if ($existingUser) {
+    //         //                    return $this->sendError('You are already registered. Please login to continue.', 400);
+    //         //                }
+    //         //
+    //         //                $user = new User();
+    //         //                $user->first_name = $request->first_name;
+    //         //                $user->last_name = $request->last_name;
+    //         //                $user->mobile = $request->mobile;
+    //         //                $user->email = $request->email;
+    //         //                $user->password = Hash::make($booking_id); // Or temp password logic
+    //         //                $user->save();
+    //         //                Mail::to($user->email)->send(new RegisterMail($user->first_name,$user->last_name,$user->email,$user->mobile));
+    //         //
+    //         //                Auth::guard('web')->attempt([
+    //         //                    'email' => $user->email,
+    //         //                    'password' => $booking_id
+    //         //                ]);
+    //         //            }
+    //         DB::commit();
 
-            return $this->sendSuccess([
-                'data' => $carsaveData,
-                'booking_ids' => $booking_ids,
-                'html' => $quoteDetails,
-            ]);
+    //         return $this->sendSuccess([
+    //             'data' => $carsaveData,
+    //             'booking_ids' => $booking_ids,
+    //             'html' => $quoteDetails,
+    //         ]);
 
-        } catch (\Exception $exception) {
-            return $this->sendError($exception->getMessage(), 500);
-        }
-    }
+    //     } catch (\Exception $exception) {
+    //         return $this->sendError($exception->getMessage(), 500);
+    //     }
+    // }
 
     public function bookingsQuoteDetails(Request $request)
     {
@@ -838,29 +838,29 @@ class CarController extends Controller
         return $this->sendSuccess($freeAccessories);
     }
 
-    public function getExtraAccessories(Request $request)
-    {
-        // 1️⃣ Get the car by ID
-        $car = Car::find($request->car_id);
+    // public function getExtraAccessories(Request $request)
+    // {
+    //     // 1️⃣ Get the car by ID
+    //     $car = Car::find($request->car_id);
 
-        // 2️⃣ Get only the extra accessories for this car
-        $extra = $car ? $car->extraAccessories() : collect();
+    //     // 2️⃣ Get only the extra accessories for this car
+    //     $extra = $car ? $car->extraAccessories() : collect();
 
-        // 3️⃣ Check if empty
-        if ($extra->isEmpty()) {
-            return response()->json([
-                'status' => true,
-                'accessories' => [],
-                'message' => 'No Extra Accessories Found!',
-            ]);
-        }
+    //     // 3️⃣ Check if empty
+    //     if ($extra->isEmpty()) {
+    //         return response()->json([
+    //             'status' => true,
+    //             'accessories' => [],
+    //             'message' => 'No Extra Accessories Found!',
+    //         ]);
+    //     }
 
-        // 4️⃣ Return as JSON
-        return response()->json([
-            'status' => true,
-            'accessories' => $extra,
-        ]);
-    }
+    //     // 4️⃣ Return as JSON
+    //     return response()->json([
+    //         'status' => true,
+    //         'accessories' => $extra,
+    //     ]);
+    // }
 
     /**
      * Get CC range definitions

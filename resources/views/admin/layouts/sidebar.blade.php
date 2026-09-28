@@ -50,16 +50,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('bookings'))
 
-                    <li class="nav-item">
-                        <a href="{{route('admin.booking.index')}}"
-                            class="nav-link menu-link  @if(request()->routeIs('admin.booking.*')) active @endif">
-                            <i class="bx bx-bookmark"></i> <span
-                                data-key="t-dashboards">{{ admin_label('sidebar', 'bookings', 'Bookings') }}</span>
-                        </a>
-                    </li>
-                @endif
 
                 @if($user->hasRole('admin') || $user->can('emails'))
                     <li class="nav-item">
@@ -135,8 +126,8 @@
 
                 @if($user->hasRole('admin') || $user->can('blogs'))
                     <li class="nav-item">
-                        <a class="nav-link menu-link @if(request()->is('admin/blogs*')) active @endif"
-                            href="#sidebarBlogs" data-bs-toggle="collapse" role="button"
+                        <a class="nav-link menu-link @if(request()->is('admin/blogs*')) active @endif" href="#sidebarBlogs"
+                            data-bs-toggle="collapse" role="button"
                             aria-expanded="{{ request()->is('admin/blogs*') ? 'true' : 'false' }}"
                             aria-controls="sidebarBlogs">
                             <i class="bx bx-news"></i> <span
@@ -145,7 +136,7 @@
                         <div class="menu-dropdown collapse @if(request()->is('admin/blogs*')) show @endif"
                             id="sidebarBlogs">
                             <ul class="nav nav-sm flex-column">
-                                       <li class="nav-item">
+                                <li class="nav-item">
                                     <a href="{{ route('admin.blogs.create') }}"
                                         class="nav-link @if(request()->routeIs('admin.blogs.create')) active @endif"
                                         data-key="t-level-1.1">{{ admin_label('sidebar', 'add_custom_blog', 'Add Custom Blog') }}</a>
@@ -160,7 +151,7 @@
                                         class="nav-link @if(request()->routeIs('admin.blogs.import_regulation')) active @endif"
                                         data-key="t-level-1.1">{{ admin_label('sidebar', 'import_regulation_blogs', 'Import Regulation Blogs') }}</a>
                                 </li>
-                         
+
                             </ul>
                         </div>
                     </li>
@@ -170,13 +161,13 @@
 
 
                 {{-- @if($user->hasRole('admin') || $user->can('accessories_equipments'))
-                    <li class="nav-item">
-                        <a href="{{route('admin.accessory.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.accessory.*')) active @endif">
-                            <i class="ri-tools-line"></i> <span
-                                data-key="t-dashboards">{{ admin_label('sidebar', 'accessories_equipments', 'Accessories & Equipments') }}</span>
-                        </a>
-                    </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.accessory.index')}}"
+                        class="nav-link menu-link @if(request()->routeIs('admin.accessory.*')) active @endif">
+                        <i class="ri-tools-line"></i> <span data-key="t-dashboards">{{ admin_label('sidebar',
+                            'accessories_equipments', 'Accessories & Equipments') }}</span>
+                    </a>
+                </li>
                 @endif --}}
 
                 {{-- @if($user->hasRole('admin') || $user->can('location'))

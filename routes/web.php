@@ -33,7 +33,6 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/useful-links', 'usefulLinks')->name('useful.links');
     Route::get('/japan-law', 'japanLaw')->name('japan.law');
     Route::get('/ride-japan-law', 'rideJapanLaw')->name('ride.japan.law');
-    Route::get('/reviews', 'reviews')->name('reviews');
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog/{slug}', 'blogDetail')->name('blog.detail');
     Route::get('/faqs', 'faqs')->name('faqs');
@@ -47,12 +46,7 @@ Route::middleware('profile')->group(function () {
         Route::post('car/pagination', 'pagination')->name('car.pagination');
         Route::get('car/{slug}', 'singleCar')->name('car.single');
         Route::post('car/request/quote', 'requestQuote')->name('car.request.quote');
-        Route::get('my-bookings', 'myBookings')->name('my.bookings');
-        Route::post('my-bookings-action', 'myBookingsAction')->name('my.bookings.action');
-        Route::post('my-bookings-quote-details', 'bookingsQuoteDetails')->name('my.bookings.quote.details');
-        Route::post('my-bookings-quote-car-accessories', 'carAccessories')->name('my.bookings.quote.car.accessories');
-        Route::post('booking-processing', 'bookingProcessing')->name('car.booking.processing');
-        Route::post('/extra-accessories', 'getExtraAccessories')->name('car.extra.accessories');
+
     });
 });
 Route::group(['middleware' => 'guest:web'], function () {

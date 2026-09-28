@@ -81,31 +81,31 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
 
     // Bookings & Slider
     Route::group(['middleware' => ['check_permission:bookings']], function () {
-        Route::controller(BookingController::class)->prefix('booking')->name('booking.')->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/list', 'list')->name('list');
-            Route::get('/view/{id}', 'view')->name('view');
-            Route::post('/view/action/{id}', 'viewAction')->name('view.action');
-            Route::post('/accessories', 'accessories')->name('accessories');
-            Route::post('/update-status', 'updateStatus')->name('update-status');
-            Route::post('/delete', 'delete')->name('delete');
-            Route::post('/table-data', 'tableData')->name('table.data');
-            Route::post('/calculate-quote', 'calculateQuote')->name('calculate-quote');
-            Route::get('/user/{id}', 'bookings')->name('bookings');
-            Route::post('/list-user-booking', 'listBookingUser')->name('bookings-list-user');
-            Route::post('/send-login-detail', 'sendLoginDetail')->name('send-login-detail');
-            Route::post('/set-status', 'setStatus')->name('set-status');
-            Route::post('/send-booking-details', 'BookingDetail')->name('send-booking-detail');
-            Route::post('/send-document-verified-mail', 'DocumentVerifiedMail')->name('document-verified-mail');
 
-            Route::post('/send-payment-mail', 'PaymentMail')->name('payment_link');
+        //     Route::get('/', 'index')->name('index');
+        //     Route::post('/list', 'list')->name('list');
+        //     Route::get('/view/{id}', 'view')->name('view');
+        //     Route::post('/view/action/{id}', 'viewAction')->name('view.action');
+        //     Route::post('/accessories', 'accessories')->name('accessories');
+        //     Route::post('/update-status', 'updateStatus')->name('update-status');
+        //     Route::post('/delete', 'delete')->name('delete');
+        //     Route::post('/table-data', 'tableData')->name('table.data');
+        //     Route::post('/calculate-quote', 'calculateQuote')->name('calculate-quote');
+        //     Route::get('/user/{id}', 'bookings')->name('bookings');
+        //     Route::post('/list-user-booking', 'listBookingUser')->name('bookings-list-user');
+        //     Route::post('/send-login-detail', 'sendLoginDetail')->name('send-login-detail');
+        //     Route::post('/set-status', 'setStatus')->name('set-status');
+        //     Route::post('/send-booking-details', 'BookingDetail')->name('send-booking-detail');
+        //     Route::post('/send-document-verified-mail', 'DocumentVerifiedMail')->name('document-verified-mail');
 
-            Route::get('/contract-preview/{id}', 'contractPreview')->name('contract-preview');
-            Route::post('/send-verified-mail', 'sendDocumentVerifiedMail')->name('send-verified-mail');
-            Route::post('/bulk-send', 'bulkSend')->name('bulk-send');
-            Route::post('/update-customer-password', 'updateCustomerPassword')->name('update-customer-password');
+        //     Route::post('/send-payment-mail', 'PaymentMail')->name('payment_link');
 
-        });
+        //     Route::get('/contract-preview/{id}', 'contractPreview')->name('contract-preview');
+        //     Route::post('/send-verified-mail', 'sendDocumentVerifiedMail')->name('send-verified-mail');
+        //     Route::post('/bulk-send', 'bulkSend')->name('bulk-send');
+        //     Route::post('/update-customer-password', 'updateCustomerPassword')->name('update-customer-password');
+
+        // });
 
         Route::controller(SliderController::class)->prefix('slider')->name('slider.')->group(function () {
             Route::get('/', 'index')->name('index');

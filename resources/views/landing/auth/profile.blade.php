@@ -1,5 +1,5 @@
 @extends('landing.master')
-@section('title','Profile')
+@section('title', 'Profile')
 
 @push('style')
     <style>
@@ -17,7 +17,7 @@
             padding: 18px;
             margin-bottom: 18px;
             border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
         .document-header {
@@ -511,7 +511,8 @@
             background-color: #f8f9fa !important;
             color: #333 !important;
             font-weight: 600 !important;
-            width: 12.5% !important; /* 100% / 8 columns */
+            width: 12.5% !important;
+            /* 100% / 8 columns */
             border-bottom: 2px solid #dee2e6 !important;
         }
 
@@ -531,7 +532,8 @@
             background: linear-gradient(135deg, #053C7C 0%, #141733 100%);
             border: none;
         }
-        .swal2-actions{
+
+        .swal2-actions {
             gap: 5px;
         }
     </style>
@@ -551,21 +553,13 @@
                                     <i class="fas fa-user me-2"></i>Profile Information
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#documents" role="tab">
-                                    <i class="fas fa-file-alt me-2"></i>Documents & Verification
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" data-bs-toggle="tab" href="#security" role="tab">
                                     <i class="fas fa-shield-alt me-2"></i>Security Settings
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#bookings" role="tab">
-                                    <i class="fas fa-shield-alt me-2"></i>Bookings
-                                </a>
-                            </li>
+
                         </ul>
                     </div>
 
@@ -578,14 +572,12 @@
                                     <div class="row">
                                         <div class="col-lg-3 text-center mb-4">
                                             <div class="profile-avatar">
-                                                <img src="{{$user->profile_img}}"
-                                                     alt="Profile Image"
-                                                     id="profileImagePreview"
-                                                     class="rounded-circle" loading="lazy">
-                                                <input type="file" id="profileImageInput" name="profile"
-                                                       accept="image/*" class="d-none">
+                                                <img src="{{$user->profile_img}}" alt="Profile Image"
+                                                    id="profileImagePreview" class="rounded-circle" loading="lazy">
+                                                <input type="file" id="profileImageInput" name="profile" accept="image/*"
+                                                    class="d-none">
                                                 <div class="camera-icon"
-                                                     onclick="document.getElementById('profileImageInput').click()">
+                                                    onclick="document.getElementById('profileImageInput').click()">
                                                     <i class="bx bx-camera"></i>
                                                 </div>
                                             </div>
@@ -595,14 +587,13 @@
 
                                         <div class="col-lg-9">
                                             @if(session('warning'))
-                                                <div
-                                                    class="alert alert-warning alert-border-left alert-dismissible fade show"
+                                                <div class="alert alert-warning alert-border-left alert-dismissible fade show"
                                                     role="alert">
                                                     <i class="bx bx-error me-3 align-middle"></i>
                                                     {{ session('warning') }}
 
                                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                            aria-label="Close"></button>
+                                                        aria-label="Close"></button>
 
                                                 </div>
                                             @endif
@@ -611,27 +602,24 @@
                                                 <div class="col-md-6">
                                                     <label for="firstName" class="form-label">First Name <span
                                                             class="text-danger">*required</span></label>
-                                                    <input type="text" id="firstName" name="first_name"
-                                                           class="form-control" placeholder="Enter your first name"
-                                                           value="{{$user->first_name}}">
+                                                    <input type="text" id="firstName" name="first_name" class="form-control"
+                                                        placeholder="Enter your first name" value="{{$user->first_name}}">
                                                     <span class="text-danger small" id="first_name-error"></span>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="lastName" class="form-label">Last Name <span
                                                             class="text-danger">*required</span></label>
-                                                    <input type="text" id="lastName" name="last_name"
-                                                           class="form-control" placeholder="Enter your last name"
-                                                           value="{{$user->last_name}}">
+                                                    <input type="text" id="lastName" name="last_name" class="form-control"
+                                                        placeholder="Enter your last name" value="{{$user->last_name}}">
                                                     <span class="text-danger small" id="last_name-error"></span>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="email" class="form-label">Email Address <span
                                                             class="text-danger">*</span></label>
-                                                    <input type="email" id="email" name="email"
-                                                           class="form-control" placeholder="Enter your email"
-                                                           value="{{$user->email}}">
+                                                    <input type="email" id="email" name="email" class="form-control"
+                                                        placeholder="Enter your email" value="{{$user->email}}">
                                                     <span class="text-danger small" id="email-error"></span>
                                                 </div>
 
@@ -642,9 +630,10 @@
                                                     <div class="input-group">
                                                         <span class="input-group-text"><i
                                                                 class="bx bxs-calendar"></i></span>
-                                                        <input type="text" class="form-control datepicker"
-                                                               id="dateOfBirth" name="date_of_birth"
-                                                                value="{{ $user->date_of_birth ? \Carbon\Carbon::parse($user->date_of_birth)->format('d - M- Y') : '' }}" placeholder="Select Date of Birth">
+                                                        <input type="text" class="form-control datepicker" id="dateOfBirth"
+                                                            name="date_of_birth"
+                                                            value="{{ $user->date_of_birth ? \Carbon\Carbon::parse($user->date_of_birth)->format('d - M- Y') : '' }}"
+                                                            placeholder="Select Date of Birth">
                                                     </div>
                                                     <span class="text-danger small" id="date_of_birth-error"></span>
                                                 </div>
@@ -652,27 +641,24 @@
                                                 <div class="col-md-6">
                                                     <label for="phone" class="form-label">Phone Number <span
                                                             class="text-danger">*required</span></label>
-                                                    <input type="text" id="phone" name="phone"
-                                                           class="form-control" placeholder="+1 (555) 123-4567"
-                                                           value="{{$user->mobile}}">
+                                                    <input type="text" id="phone" name="phone" class="form-control"
+                                                        placeholder="+1 (555) 123-4567" value="{{$user->mobile}}">
                                                     <span class="text-danger small" id="phone-error"></span>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="address" class="form-label">Address <span
                                                             class="text-danger">*required</span></label>
-                                                    <input type="text" id="address" name="address"
-                                                           class="form-control" placeholder="Enter your address"
-                                                           value="{{$user->address}}">
+                                                    <input type="text" id="address" name="address" class="form-control"
+                                                        placeholder="Enter your address" value="{{$user->address}}">
                                                     <span class="text-danger small" id="address-error"></span>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <label for="country" class="form-label">Country <span
                                                             class="text-danger">*required</span></label>
-                                                    <input type="text" id="country" name="country"
-                                                           class="form-control" placeholder="Enter your country"
-                                                           value="{{$user->country}}">
+                                                    <input type="text" id="country" name="country" class="form-control"
+                                                        placeholder="Enter your country" value="{{$user->country}}">
 
                                                     <span class="text-danger small" id="country-error"></span>
                                                 </div>
@@ -698,94 +684,15 @@
 
                                     @php
                                         $passport_status = strtoupper($user->userDetail?->passport_status ?? 'PENDING');
-                                        $regular_status  = strtoupper($user->userDetail?->regular_lic_status ?? 'PENDING');
-                                        $idp_status      = strtoupper($user->userDetail?->international_lic_status ?? 'PENDING');
+                                        $regular_status = strtoupper($user->userDetail?->regular_lic_status ?? 'PENDING');
+                                        $idp_status = strtoupper($user->userDetail?->international_lic_status ?? 'PENDING');
                                     @endphp
 
-                                    {{-- PASSPORT CARD --}}
-                                    <div class="document-card">
-                                        <div class="document-header">
-                                            <div>
-                                                <span class="document-title">1. PASSPORT</span>
-                                                <span class="document-number">Number: {{ $user->userDetail?->passport_number ?? '-' }}</span>
-                                            </div>
-                                            <span class="document-status @if($passport_status=='VERIFIED') status-approved @elseif($passport_status=='REJECTED') status-rejected @else status-pending @endif">
-                                                {{ $passport_status }}
-                                            </span>
-                                        </div>
-                                        <div class="document-body">
-                                            <div class="document-images">
-                                                @if($user->userDetail?->getRawOriginal('passport'))
-                                                    <img src="{{ $user->userDetail->passport }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="Passport Document" loading="lazy">
-                                                @else
-                                                    <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
-                                                @endif
-                                            </div>
-                                            <button type="button" class="update-btn" onclick="openDriverPortal(1)">
-                                                <i class="fas fa-upload me-1"></i>Update Documents
-                                            </button>
-                                        </div>
-                                    </div>
 
-                                    {{-- DRIVER'S LICENSE CARD --}}
-                                    <div class="document-card">
-                                        <div class="document-header">
-                                            <div>
-                                                <span class="document-title">2. DRIVER'S LICENSE</span>
-                                                <span class="document-number">Number: {{ $user->userDetail?->regular_lic_number ?? '-' }}</span>
-                                            </div>
-                                            <span class="document-status @if($regular_status=='VERIFIED') status-approved @elseif($regular_status=='REJECTED') status-rejected @else status-pending @endif">
-                                                {{ $regular_status }}
-                                            </span>
-                                        </div>
-                                        <div class="document-body">
-                                            <div class="document-images">
-                                                @if($user->userDetail?->getRawOriginal('regular_lic'))
-                                                    <img src="{{ $user->userDetail->regular_lic }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="License Front" loading="lazy">
-                                                @endif
-                                                @if($user->userDetail?->getRawOriginal('regular_lic_back'))
-                                                    <img src="{{ $user->userDetail->regular_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="License Back" loading="lazy">
-                                                @endif
-                                                @if(!$user->userDetail?->getRawOriginal('regular_lic'))
-                                                    <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
-                                                @endif
-                                            </div>
-                                            <button type="button" class="update-btn" onclick="openDriverPortal(2)">
-                                                <i class="fas fa-upload me-1"></i>Update Documents
-                                            </button>
-                                        </div>
-                                    </div>
 
-                                    {{-- IDP CARD --}}
-                                    <div class="document-card">
-                                        <div class="document-header">
-                                            <div>
-                                                <span class="document-title">3. INT'L PERMIT (IDP)</span>
-                                                <span class="document-number">Number: {{ $user->userDetail?->idp_number ?? '-' }}</span>
-                                            </div>
-                                            <span class="document-status @if($idp_status=='VERIFIED') status-approved @elseif($idp_status=='REJECTED') status-rejected @else status-pending @endif">
-                                                {{ $idp_status }}
-                                            </span>
-                                        </div>
-                                        <div class="document-body">
-                                            <div class="document-images">
-                                                @if($user->userDetail?->getRawOriginal('international_lic'))
-                                                    <img src="{{ $user->userDetail->international_lic }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="IDP Front" loading="lazy">
-                                                @endif
-                                                @if($user->userDetail?->getRawOriginal('international_lic_back'))
-                                                    <img src="{{ $user->userDetail->international_lic_back }}" class="document-thumb" onclick="showImagePreview(this.src)" alt="IDP Back" loading="lazy">
-                                                @endif
-                                                @if(!$user->userDetail?->getRawOriginal('international_lic'))
-                                                    <span class="text-muted small"><i class="fas fa-image me-1"></i>No document uploaded</span>
-                                                @endif
-                                            </div>
-                                            <button type="button" class="update-btn" onclick="openDriverPortal(3)">
-                                                <i class="fas fa-upload me-1"></i>Update Documents
-                                            </button>
-                                        </div>
-                                    </div>
+                                </div>
 
-                                </div>{{-- /.documents-wrapper --}}
+
 
                             </div>{{-- /.tab-pane documents --}}
 
@@ -818,26 +725,33 @@
                                                     <div class="dp-section-title">1. Passport Details</div>
                                                     <div class="row g-3 mb-3">
                                                         <div class="col-md-6">
-                                                            <label class="form-label fw-semibold" style="font-size:13px;">Passport Number</label>
-                                                            <input type="text" id="dp_passport_number" name="passport_number"
-                                                                   class="form-control form-control-sm"
-                                                                   placeholder="e.g., M12345678"
-                                                                   value="{{ $user->userDetail?->passport_number ?? '' }}">
+                                                            <label class="form-label fw-semibold"
+                                                                style="font-size:13px;">Passport Number</label>
+                                                            <input type="text" id="dp_passport_number"
+                                                                name="passport_number" class="form-control form-control-sm"
+                                                                placeholder="e.g., M12345678"
+                                                                value="{{ $user->userDetail?->passport_number ?? '' }}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="dp-warning">
                                                                 <i class="fas fa-exclamation-triangle"></i>
-                                                                <span><strong>CRITICAL:</strong> The passport number in the photo must be 100% readable and match the number you type above.</span>
+                                                                <span><strong>CRITICAL:</strong> The passport number in the
+                                                                    photo must be 100% readable and match the number you
+                                                                    type
+                                                                    above.</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="dp-upload-zone" id="passportZone" onclick="document.getElementById('passportInput').click()">
+                                                    <div class="dp-upload-zone" id="passportZone"
+                                                        onclick="document.getElementById('passportInput').click()">
                                                         <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                         <div class="dp-upload-label">Click to Upload Passport Photo</div>
                                                         <div class="dp-upload-sub">or drag and drop</div>
-                                                        <img class="dp-preview d-none" id="passportThumb" alt="Passport Preview" loading="lazy">
+                                                        <img class="dp-preview d-none" id="passportThumb"
+                                                            alt="Passport Preview" loading="lazy">
                                                     </div>
-                                                    <input type="file" id="passportInput" name="passport" class="d-none" accept="image/*">
+                                                    <input type="file" id="passportInput" name="passport" class="d-none"
+                                                        accept="image/*">
                                                 </div>
 
                                                 {{-- STEP 2: DRIVER'S LICENSE --}}
@@ -845,74 +759,102 @@
                                                     <div class="dp-section-title">2. Licence Details</div>
                                                     <div class="row g-3 mb-3">
                                                         <div class="col-md-6">
-                                                            <label class="form-label fw-semibold" style="font-size:13px;">Licence Number</label>
-                                                            <input type="text" id="dp_regular_license_number" name="regular_license_number"
-                                                                   class="form-control form-control-sm"
-                                                                   placeholder="e.g., M12345678"
-                                                                   value="{{ $user->userDetail?->regular_lic_number ?? '' }}">
+                                                            <label class="form-label fw-semibold"
+                                                                style="font-size:13px;">Licence Number</label>
+                                                            <input type="text" id="dp_regular_license_number"
+                                                                name="regular_license_number"
+                                                                class="form-control form-control-sm"
+                                                                placeholder="e.g., M12345678"
+                                                                value="{{ $user->userDetail?->regular_lic_number ?? '' }}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="dp-warning">
                                                                 <i class="fas fa-exclamation-triangle"></i>
-                                                                <span><strong>CRITICAL:</strong> The licence number in the photo must be 100% readable and match the number you type above.</span>
+                                                                <span><strong>CRITICAL:</strong> The licence number in the
+                                                                    photo
+                                                                    must be 100% readable and match the number you type
+                                                                    above.</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="dp-upload-zones-row">
-                                                        <div class="dp-upload-zone" id="regularLicZone" onclick="document.getElementById('regularLicInput').click()">
+                                                        <div class="dp-upload-zone" id="regularLicZone"
+                                                            onclick="document.getElementById('regularLicInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
-                                                            <div class="dp-upload-label">Click to upload Licence front side</div>
+                                                            <div class="dp-upload-label">Click to upload Licence front side
+                                                            </div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="regularLicThumb" alt="License Front Preview" loading="lazy">
+                                                            <img class="dp-preview d-none" id="regularLicThumb"
+                                                                alt="License Front Preview" loading="lazy">
                                                         </div>
-                                                        <div class="dp-upload-zone" id="regularBackZone" onclick="document.getElementById('regularBackInput').click()">
+                                                        <div class="dp-upload-zone" id="regularBackZone"
+                                                            onclick="document.getElementById('regularBackInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
-                                                            <div class="dp-upload-label">Click to upload Licence back side</div>
+                                                            <div class="dp-upload-label">Click to upload Licence back side
+                                                            </div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="regularBackThumb" alt="License Back Preview" loading="lazy">
+                                                            <img class="dp-preview d-none" id="regularBackThumb"
+                                                                alt="License Back Preview" loading="lazy">
                                                         </div>
                                                     </div>
-                                                    <input type="file" id="regularLicInput" name="regular_lic" class="d-none" accept="image/*">
-                                                    <input type="file" id="regularBackInput" name="regular_lic_back" class="d-none" accept="image/*">
+                                                    <input type="file" id="regularLicInput" name="regular_lic"
+                                                        class="d-none" accept="image/*">
+                                                    <input type="file" id="regularBackInput" name="regular_lic_back"
+                                                        class="d-none" accept="image/*">
                                                 </div>
 
                                                 {{-- STEP 3: IDP --}}
                                                 <div class="dp-step-panel" id="dpPanel3">
-                                                    <div class="dp-section-title">3. International Driving Permit (IDP)</div>
-                                                    <p class="text-muted" style="font-size:12px; margin-top:-8px; margin-bottom:14px;">
-                                                        <em>This page will be duplicated for IDP (International drivers permit 1949 Convention only Booklet type)</em>
+                                                    <div class="dp-section-title">3. International Driving Permit (IDP)
+                                                    </div>
+                                                    <p class="text-muted"
+                                                        style="font-size:12px; margin-top:-8px; margin-bottom:14px;">
+                                                        <em>This page will be duplicated for IDP (International drivers
+                                                            permit
+                                                            1949 Convention only Booklet type)</em>
                                                     </p>
                                                     <div class="row g-3 mb-3">
                                                         <div class="col-md-6">
-                                                            <label class="form-label fw-semibold" style="font-size:13px;">IDP Number</label>
+                                                            <label class="form-label fw-semibold"
+                                                                style="font-size:13px;">IDP
+                                                                Number</label>
                                                             <input type="text" id="dp_idp_number" name="idp_number"
-                                                                   class="form-control form-control-sm"
-                                                                   placeholder="e.g., M12345678"
-                                                                   value="{{ $user->userDetail?->idp_number ?? '' }}">
+                                                                class="form-control form-control-sm"
+                                                                placeholder="e.g., M12345678"
+                                                                value="{{ $user->userDetail?->idp_number ?? '' }}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="dp-warning">
                                                                 <i class="fas fa-exclamation-triangle"></i>
-                                                                <span><strong>CRITICAL:</strong> The IDP number in the photo must be 100% readable and match the number you type above.</span>
+                                                                <span><strong>CRITICAL:</strong> The IDP number in the photo
+                                                                    must be 100% readable and match the number you type
+                                                                    above.</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="dp-upload-zones-row">
-                                                        <div class="dp-upload-zone" id="idpFrontZone" onclick="document.getElementById('internationalLicInput').click()">
+                                                        <div class="dp-upload-zone" id="idpFrontZone"
+                                                            onclick="document.getElementById('internationalLicInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
-                                                            <div class="dp-upload-label">Click to upload IDP front side</div>
+                                                            <div class="dp-upload-label">Click to upload IDP front side
+                                                            </div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="idpFrontThumb" alt="IDP Front Preview" loading="lazy">
+                                                            <img class="dp-preview d-none" id="idpFrontThumb"
+                                                                alt="IDP Front Preview" loading="lazy">
                                                         </div>
-                                                        <div class="dp-upload-zone" id="idpBackZone" onclick="document.getElementById('internationalLicBackInput').click()">
+                                                        <div class="dp-upload-zone" id="idpBackZone"
+                                                            onclick="document.getElementById('internationalLicBackInput').click()">
                                                             <div class="dp-upload-icon"><i class="fas fa-camera"></i></div>
                                                             <div class="dp-upload-label">Click to upload IDP back side</div>
                                                             <div class="dp-upload-sub">or drag and drop</div>
-                                                            <img class="dp-preview d-none" id="idpBackThumb" alt="IDP Back Preview" loading="lazy">
+                                                            <img class="dp-preview d-none" id="idpBackThumb"
+                                                                alt="IDP Back Preview" loading="lazy">
                                                         </div>
                                                     </div>
-                                                    <input type="file" id="internationalLicInput" name="international_lic" class="d-none" accept="image/*">
-                                                    <input type="file" id="internationalLicBackInput" name="international_lic_back" class="d-none" accept="image/*">
+                                                    <input type="file" id="internationalLicInput" name="international_lic"
+                                                        class="d-none" accept="image/*">
+                                                    <input type="file" id="internationalLicBackInput"
+                                                        name="international_lic_back" class="d-none" accept="image/*">
                                                 </div>
 
                                             </div>{{-- /.dp-body --}}
@@ -939,15 +881,14 @@
                                         <div class="col-12">
                                             <label for="oldPassword" class="form-label">Current Password <span
                                                     class="text-danger">*</span></label>
-                                            <input type="password" id="oldPassword" name="old_password"
-                                                   class="form-control" placeholder="Enter your current password"
-                                                   required>
+                                            <input type="password" id="oldPassword" name="old_password" class="form-control"
+                                                placeholder="Enter your current password" required>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="newPassword" class="form-label">New Password <span
                                                     class="text-danger">*</span></label>
-                                            <input type="password" id="newPassword" name="new_password"
-                                                   class="form-control" placeholder="Enter new password" required>
+                                            <input type="password" id="newPassword" name="new_password" class="form-control"
+                                                placeholder="Enter new password" required>
                                             <small class="text-muted">Password must be at least 8 characters
                                                 long</small>
                                         </div>
@@ -955,7 +896,7 @@
                                             <label for="confirmPassword" class="form-label">Confirm New Password
                                                 <span class="text-danger">*</span></label>
                                             <input type="password" id="confirmPassword" name="confirm_password"
-                                                   class="form-control" placeholder="Confirm new password" required>
+                                                class="form-control" placeholder="Confirm new password" required>
                                         </div>
                                     </div>
 
@@ -967,27 +908,7 @@
                                 </form>
                             </div>
 
-                            <!-- Bookings Tab -->
-                            <div class="tab-pane fade" id="bookings" role="tabpanel">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered data-table">
-                                        <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Price</th>
-                                            <th>Start Date</th>
-                                            <th>End Date</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -1005,14 +926,14 @@
                 ajax: "{{ route('profile.booking') }}",
                 autoWidth: false,
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false}, // Row number column
-                    {data: 'name', name: 'name'},
-                    {data: 'email', name: 'email'},
-                    {data: 'price', name: 'price'},
-                    {data: 'start_date', name: 'start_date'},
-                    {data: 'end_date', name: 'end_date'},
-                    {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false }, // Row number column
+                    { data: 'name', name: 'name' },
+                    { data: 'email', name: 'email' },
+                    { data: 'price', name: 'price' },
+                    { data: 'start_date', name: 'start_date' },
+                    { data: 'end_date', name: 'end_date' },
+                    { data: 'status', name: 'status' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ]
             });
             // Profile Image Preview
@@ -1029,12 +950,12 @@
             }
 
             // Handle tab switching specifically for the Profile tab
-            $('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+            $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
                 if ($(e.relatedTarget).attr('href') === '#profile' && isProfileFormDirty()) {
                     e.preventDefault(); // Stop the tab switch
 
                     var targetElement = e.target;
-                    showConfirmNavigation(function() {
+                    showConfirmNavigation(function () {
                         var tab = new bootstrap.Tab(targetElement);
                         tab.show();
                     });
@@ -1042,16 +963,16 @@
             });
 
             // Customized "Confirm Navigation" Prompt for Internal Links
-            $(document).on('click', 'a', function(e) {
+            $(document).on('click', 'a', function (e) {
                 var href = $(this).attr('href');
                 if (!href || href === '#' || href.startsWith('javascript:')) return;
-                
+
                 // Allow tab switching to be handled by the show.bs.tab event listener above
                 if ($(this).data('bs-toggle') === 'tab') return;
 
                 if (isProfileFormDirty()) {
                     e.preventDefault();
-                    showConfirmNavigation(function() {
+                    showConfirmNavigation(function () {
                         window.location.href = href;
                     });
                 }
@@ -1080,12 +1001,12 @@
                         document.getElementById('profileForm').reset();
                         profileImageChanged = false;
                         profileFormInitialData = $("#profileForm").serialize();
-                        
+
                         var profilePicThumbnail = document.getElementById('profileImagePreview');
                         if (profilePicThumbnail) {
                             profilePicThumbnail.src = "{{$user->profile_img}}";
                         }
-                        
+
                         $(window).off('beforeunload'); // Turn off browser dialog for this transition
                         if (typeof onConfirm === 'function') onConfirm();
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -1096,7 +1017,7 @@
                             return;
                         }
                         var formData = new FormData(form);
-                        
+
                         Swal.fire({
                             title: 'Saving...',
                             allowOutsideClick: false,
@@ -1156,13 +1077,13 @@
             });
 
             // Drag and drop for wizard upload zones
-            $('.dp-upload-zone').on('dragover', function(e) {
+            $('.dp-upload-zone').on('dragover', function (e) {
                 e.preventDefault();
                 $(this).addClass('dragover');
-            }).on('dragleave', function(e) {
+            }).on('dragleave', function (e) {
                 e.preventDefault();
                 $(this).removeClass('dragover');
-            }).on('drop', function(e) {
+            }).on('drop', function (e) {
                 e.preventDefault();
                 $(this).removeClass('dragover');
                 var inputId = $(this).next('input[type="file"]').attr('id');
@@ -1191,7 +1112,7 @@
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         var $thumb = $('#' + thumbId);
-                        var $zone  = $('#' + zoneId);
+                        var $zone = $('#' + zoneId);
                         $thumb.attr('src', e.target.result).removeClass('d-none');
                         $zone.addClass('has-file');
                         $zone.find('.dp-upload-label').text('File selected ✓');
@@ -1274,12 +1195,12 @@
                         processData: false,
                         cache: false,
                         success: function (result) {
-                             sendSuccess(result.message || "Profile updated.");
-                             // Reset dirty state tracking
-                             profileFormInitialData = $("#profileForm").serialize();
-                             profileImageChanged = false;
-                             $(window).off('beforeunload'); // Turn off browser dialog before reload
-                             setTimeout(function() { location.reload(); }, 2000);
+                            sendSuccess(result.message || "Profile updated.");
+                            // Reset dirty state tracking
+                            profileFormInitialData = $("#profileForm").serialize();
+                            profileImageChanged = false;
+                            $(window).off('beforeunload'); // Turn off browser dialog before reload
+                            setTimeout(function () { location.reload(); }, 2000);
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
@@ -1303,11 +1224,11 @@
 
             // Driver Portal wizard — step navigation & submit
             var dpCurrentStep = 1;
-            var dpTotalSteps  = 3;
+            var dpTotalSteps = 3;
 
-            window.openDriverPortal = function(startStep) {
+            window.openDriverPortal = function (startStep) {
                 if (isProfileFormDirty()) {
-                    showConfirmNavigation(function() {
+                    showConfirmNavigation(function () {
                         // If they choose to leave unsaved changes, we can either save or just continue.
                         // Given the prompt "Leave this page", it implies discarding.
                         // However, for Driver Portal, they transition steps.
@@ -1325,7 +1246,7 @@
                 modal.show();
             };
 
-            window.dpNext = function() {
+            window.dpNext = function () {
                 if (dpCurrentStep < dpTotalSteps) {
                     dpCurrentStep++;
                     dpGoToStep(dpCurrentStep);
@@ -1375,7 +1296,7 @@
                         sendSuccess(result.message || "Documents updated. Await verification.");
                         // Reload page after short delay to refresh status cards
                         $(window).off('beforeunload'); // Turn off browser dialog before reload
-                        setTimeout(function() { location.reload(); }, 1800);
+                        setTimeout(function () { location.reload(); }, 1800);
                     },
                     error: function (xhr) {
                         let data = xhr.responseJSON;
@@ -1390,7 +1311,7 @@
             }
 
             // Reset wizard state when modal closes
-            $('#driverPortalModal').on('hidden.bs.modal', function() {
+            $('#driverPortalModal').on('hidden.bs.modal', function () {
                 dpCurrentStep = 1;
                 dpGoToStep(1);
             });
@@ -1465,28 +1386,26 @@
             });
 
         });
-        function showImagePreview(src)
-        {
+        function showImagePreview(src) {
             let modal = `
-    <div class="modal fade image-preview-modal" id="imgModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <img src="${src}" alt="Image Preview" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </div>`;
+                    <div class="modal fade image-preview-modal" id="imgModal">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <img src="${src}" alt="Image Preview" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
 
             $('body').append(modal);
 
             let m = new bootstrap.Modal(document.getElementById('imgModal'));
             m.show();
 
-            $('#imgModal').on('hidden.bs.modal', function(){
+            $('#imgModal').on('hidden.bs.modal', function () {
                 $('#imgModal').remove();
             });
         }
     </script>
 @endsection
-

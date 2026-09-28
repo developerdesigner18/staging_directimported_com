@@ -436,7 +436,7 @@
 
         /* -------------------------------------------------------------
 
-                /* Main Image Container & Watermark Display */
+                    /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -661,11 +661,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                display: flex;
-                                                                justify-content: space-between;
-                                                                align-items: center;
-                                                                margin-bottom: 12px;
-                                                            } */
+                                                                    display: flex;
+                                                                    justify-content: space-between;
+                                                                    align-items: center;
+                                                                    margin-bottom: 12px;
+                                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1861,7 +1861,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                ];
+                    ];
 
         let currentIndex = 0;
         let gridExpanded = false;

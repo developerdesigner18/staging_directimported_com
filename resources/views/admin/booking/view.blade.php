@@ -979,23 +979,6 @@
                         );
                     }
 
-                    // Login Detail
-                    if (selectedActions.send_login_detail) {
-                        requests.push(
-                            $.ajax({
-                                url: "{{ route('admin.booking.send-login-detail') }}", // Update this route
-                                type: "POST",
-                                dataType: "json",
-                                data: {
-                                    id: id,
-                                    booking_id: bookingId,
-                                    email: email,
-                                    status: status,
-                                    _token: "{{ csrf_token() }}"
-                                }
-                            })
-                        );
-                    }
 
                     // Document Verified Mail
                     if (selectedActions.send_document_verified) {
@@ -1346,59 +1329,7 @@
                 }
             });
 
-            $('#btnSendLoginDetail').on('click', function () {
-                var bookingId = $(this).data('booking-id');
-                var id = $(this).data('id');
-                var email = $(this).data('email');
-                // var status=$(this).data('status');
-                // var fname = $(this).data('fname');
-                // var lname = $(this).data('lname');
-
-                $.ajax({
-                    url: "{{ route('admin.booking.send-login-detail') }}",
-                    method: "post",
-                    dataType: "json",
-
-                    data: {
-                        id: id,
-                        booking_id: bookingId,
-                        email: email,
-                        status: status,
-                        "_token": "{{csrf_token()}}",
-                    },
-
-                    beforeSend: function () {
-                        $('#btnSendLoginDetail').attr('disabled', true);
-                        $("#btnSendLoginDetailSpinner").show();
-                    },
-                    success: function (result) {
-                        sendSuccess(result.message);
-                    },
-                    error: function (xhr) {
-                        let data = xhr.responseJSON;
-                        if (data.hasOwnProperty('error')) {
-                            $.each(data.error, function (key, value) {
-                                $("#" + key + "-error").html(value).show();
-                            });
-
-                            if (data.error.hasOwnProperty('car_ids')) {
-                                sendError(data.error.car_ids);
-                            }
-                        } else if (data.hasOwnProperty('message')) {
-                            actionError(xhr, data.message);
-                        } else {
-                            actionError(xhr);
-                        }
-                    },
-                    complete: function () {
-                        $('#btnSendLoginDetail').attr('disabled', false);
-                        $("#btnSendLoginDetailSpinner").hide();
-                    },
-
-                });
-
-            });
-
+           
             $(document).on('click', '.btnSendBookingDetail', function () {
                 alert('dd');
                 var bookingId = $(this).data('booking-id');

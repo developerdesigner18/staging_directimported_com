@@ -495,7 +495,7 @@
             text-transform: uppercase;
         }
 
-        .section-title h2 {
+        .section-title {
             display: flex;
             align-items: center;
             font-size: 32px;
@@ -504,7 +504,7 @@
             margin-bottom: 0;
         }
 
-        .section-title h2::before {
+        .section-title::before {
             content: "";
             display: inline-block;
             width: 30px;
@@ -514,31 +514,16 @@
         }
 
         /* =========================
-                                               How It Works & Our Services Cards
-                                            ========================= */
+                                                                                               How It Works & Our Services Cards
+                                                                                            ========================= */
 
         .rid-how-it-work {
             padding: 80px 0;
             background: #f9fafb;
         }
 
-        .work-card,
-        .service-card {
-            background: #fff !important;
-            padding: 40px 25px !important;
-            border-radius: 18px !important;
-            border: none !important;
-            height: 100%;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05) !important;
-            text-align: center !important;
-        }
 
-        .work-card:hover,
-        .service-card:hover {
-            transform: translateY(-5px) !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
-        }
+
 
         .work-icon,
         .service-card .icon-wrapper {
@@ -564,21 +549,6 @@
             object-fit: contain !important;
         }
 
-        .work-card h4,
-        .service-card h4 {
-            font-size: 22px !important;
-            font-weight: 700 !important;
-            margin-bottom: 15px !important;
-            color: #111827 !important;
-        }
-
-        .work-card p,
-        .service-card p {
-            font-size: 15px !important;
-            line-height: 1.7 !important;
-            color: #6b7280 !important;
-            margin: 0 !important;
-        }
 
         /* ===== EMBLEM ROW ===== */
         .car-emblem-row {
@@ -686,6 +656,144 @@
         .top-20vh {
             top: 20vh;
         }
+
+        /* Section Backgrounds (alternating for a clean look) */
+        .section-bg-light {
+            background-color: #f7f9fc;
+            padding: 80px 20px;
+        }
+
+        .section-bg-white {
+            background-color: #ffffff;
+            padding: 80px 20px;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Shared Section Title */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0b1a30;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 2px;
+            background-color: #0b1a30;
+        }
+
+        /* 4-Column Grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Individual Tile (Card) Styling */
+        .tile {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            /* Slight border for white background section */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tile:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Icon Styling */
+        .icon {
+            margin-bottom: 24px;
+        }
+
+        /* Blue icons for "How it works" */
+        .icon-blue {
+            color: #004a8f;
+        }
+
+        /* Dark slate icons for "Our Services" to match the screenshot */
+        .icon-dark {
+            color: #2a3547;
+        }
+
+        .icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            /* Slightly thinner stroke to match screenshot icons */
+        }
+
+        /* Title inside the card */
+        .tile-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0b1a30;
+            margin: 0 0 16px 0;
+            line-height: 1.3;
+        }
+
+        /* Description text */
+        .tile-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* Button Styling */
+        .button-wrapper {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #083b7c;
+            /* Dark blue from screenshot */
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            padding: 14px 36px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #062a5c;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 1024px) {
+            .tiles-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .tiles-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 @endpush
 @section('main')
@@ -733,9 +841,8 @@
             <div class="container">
 
                 <div class="d-flex justify-content-between align-items-center mb-5">
-                    <div class="section-title">
-                        <h2>Latest Cars</h2>
-                    </div>
+                    <h2 class="section-title">Latest Cars</h2>
+
                 </div>
                 <div class="row">
                     @foreach($cars as $car)
@@ -828,100 +935,161 @@
     @endif
     <!-- Latest Cars Section End -->
     <!-- How It Works Section Start -->
-    <section class="rid-how-it-work">
-        <div class="container">
+    <section class="section-bg-light">
+        <div class="section-container">
+            <h2 class="section-title">How It Works</h2>
 
-            <div class="section-title text-center mb-5">
-                <h2>How It Works</h2>
-            </div>
-
-            <div class="row g-4">
-
-                <!-- Step 1 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-search"></i>
-                        </div>
-                        <h4>Find the Right Car</h4>
-                        <p>
-                            Browse our wide range of quality vehicles and choose the perfect car for your needs.
-                        </p>
+            <div class="tiles-grid">
+                <!-- Tile 1 -->
+                <div class="tile">
+                    <div class="icon icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
                     </div>
+                    <h3 class="tile-title">Find Your Vehicle</h3>
+                    <p class="tile-description">Browse our auction site or vehicle listings and select the model for your
+                        needs.</p>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-cart"></i>
-                        </div>
-                        <h4>Buy It Online</h4>
-                        <p>
-                            Complete your purchase securely online with a smooth and hassle-free process.
-                        </p>
+                <!-- Tile 2 -->
+                <div class="tile">
+                    <div class="icon icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 3l6.5 6.5-4.5 4.5-6.5-6.5z" />
+                            <path d="M12.5 8.5l2-2" />
+                            <path d="M15.5 11.5l2-2" />
+                            <path d="M12.5 10.75L4.5 18.75" />
+                            <path d="M3 20.25l1.5 1.5" />
+                            <path d="M13 21h8" />
+                            <path d="M14.5 18.5h5" />
+                        </svg>
                     </div>
+                    <h3 class="tile-title">Bid &amp; Secure</h3>
+                    <p class="tile-description">Place your bid or order Dealer cars with inspections for complete
+                        confidence.</p>
                 </div>
 
-                <!-- Step 3 -->
-                <div class="col-md-4">
-                    <div class="work-card text-center">
-                        <div class="work-icon">
-                            <i class="bx bx-car"></i>
-                        </div>
-                        <h4>Enjoy Your Ride</h4>
-                        <p>
-                            Get your vehicle delivered and enjoy a reliable driving experience with confidence.
-                        </p>
+                <!-- Tile 3 -->
+                <div class="tile">
+                    <div class="icon icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13"></rect>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                        </svg>
                     </div>
+                    <h3 class="tile-title">Prepare for Export</h3>
+                    <p class="tile-description">We handle all export customs clearance and shipping documentation.</p>
                 </div>
 
+                <!-- Tile 4 -->
+                <div class="tile">
+                    <div class="icon icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="tile-title">Global Doorstep Delivery</h3>
+                    <p class="tile-description">Track your shipment across borders and enjoy reliable delivery right to your
+                        door.</p>
+                </div>
             </div>
         </div>
     </section>
     <!-- How It Works Section End -->
     <!-- Our Services Section Start -->
-    <section id="ourservices">
-        <div class="container">
-            <div class="inner-container-bg">
-                <div class="d-flex justify-content-between align-items-center mb-5">
-                    <div class="section-title">
-                        <h2>Our Services</h2>
+    <!-- SECTION 2: OUR SERVICES -->
+    <section class="section-bg-white">
+        <div class="section-container">
+            <h2 class="section-title">Our Services</h2>
+
+            <div class="tiles-grid">
+                <!-- Tile 1 -->
+                <div class="tile">
+                    <div class="icon icon-dark">
+                        <!-- Document / List Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="8" y1="13" x2="16" y2="13"></line>
+                            <line x1="8" y1="17" x2="16" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
                     </div>
-                    {{-- <a href="#" class="show-all-link">Show All</a> --}}
+                    <h3 class="tile-title">Documentation for export</h3>
+                    <p class="tile-description">Complete support with export and import documentation, customs export
+                        clearance, to successfully export your vehicles without delay.</p>
                 </div>
 
-                @if($services->isNotEmpty())
-                    <div class="row g-4">
-                        @foreach ($services as $service)
-                            <!-- Auction Inspection Services -->
-                            <div class="col-lg-4 col-md-6">
-                                <div class="service-card work-card text-center h-100">
-                                    <div class="icon-wrapper work-icon">
-                                        <img src="{{ isset($service->images[0]) ? asset(SERVICE_PATH . $service->images[0]) : asset('uploads/user_documents/default.jpg') }}"
-                                            alt="{{ $service->title }}" loading="lazy">
-                                    </div>
-                                    <h4>{{ $service->title }}</h4>
-                                    <p>
-                                        {!! $service->description !!}
-                                    </p>
-                                </div>
-                            </div>
-                        @endforeach
+                <!-- Tile 2 -->
+                <div class="tile">
+                    <div class="icon icon-dark">
+                        <!-- Certificate / Ribbon Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="14" rx="2"></rect>
+                            <path d="M7 7h10"></path>
+                            <path d="M7 11h10"></path>
+                            <circle cx="16" cy="16" r="3"></circle>
+                            <path d="M14.5 18.5l-1 4 2.5-1.5 2.5 1.5-1-4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="tile-title">Inspection and ODO Certification</h3>
+                    <p class="tile-description">Thorough inspection reports translated checked based on auction location and
+                        grading. Not all auctions are equal. ODO certification services from JEVIC to ensure genuine KLM</p>
+                </div>
 
+                <!-- Tile 3 -->
+                <div class="tile">
+                    <div class="icon icon-dark">
+                        <!-- Gear / Settings / Check Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                            </path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
                     </div>
+                    <h3 class="tile-title">Auction Inspection Services</h3>
+                    <p class="tile-description">Do we sit behind a computer NO!!! We provide detailed information,
+                        high-resolution photos, and condition reports for each vehicle at the auctions we attend.</p>
+                </div>
 
-                    <div class="text-center mt-5">
-                        <a href="{{ route('services.view') }}" class="btn-read-more">
-                            READ MORE <i class='bx bx-right-arrow-alt'></i>
-                        </a>
+                <!-- Tile 4 (NEW) -->
+                <div class="tile">
+                    <div class="icon icon-dark">
+                        <!-- Document + Shield/Compliance Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <path d="M12 18s5-2 5-6V9l-5-2-5 2v3c0 4 5 6 5 6z"></path>
+                        </svg>
                     </div>
-                @else
-                    <div class="text-center py-5">
-                        <p class="text-muted">No services available right now.</p>
-                    </div>
-                @endif
+                    <h3 class="tile-title">Custom Import service for your country</h3>
+                    <p class="tile-description">Customs clearance and compliance assistance and or brokerage if required.
+                    </p>
+                </div>
             </div>
+
+            <!-- READ MORE BUTTON -->
+            {{-- <div class="button-wrapper">
+                <a href="#" class="btn-primary">READ MORE</a>
+            </div> --}}
+
         </div>
     </section>
 
@@ -932,9 +1100,8 @@
                 <div class="py-5">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="section-title mb-5">
-                                <h2>{{ $homeSection->title }}</h2>
-                            </div>
+
+                            <h2 class="section-title">{{ $homeSection->title }}</h2>
 
                             <div class="mb-5" style="font-size: 16px; color: #6B7280; line-height: 1.8;">
                                 {!! $homeSection->short_description !!}

@@ -5,17 +5,7 @@
 
 <!-- Google Reviews Section Ends-->
 <footer class="rid-footer-1">
-    <section class="rid-filter-1">
-        <div class="container">
-            <h2 class="visually-hidden">Rental Car Search</h2>
-            <div class="filter-box cta-box top-0 mb-4">
-                <h3 class="cta-title text-dark">Check our Google reviews</h3>
-                <a href="{{ route('reviews') }}" class="cta-btn fs-5">
-                    Google Reviews
-                </a>
-            </div>
-        </div>
-    </section>
+
     <div class="footer-top">
         <div class="container">
             <div class="row justify-content-between">

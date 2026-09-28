@@ -26,88 +26,7 @@ class UserController extends Controller
         $visiblePermissions = UserPermission::all();
         return view('admin.user.index', compact('visiblePermissions'));
     }
-    public function listUser_old(Request $request)
-    {
-        try {
-            $response = Booking::with('user')->latest();
 
-            return DataTables::eloquent($response)
-                ->addIndexColumn()
-                ->addColumn('image', function ($row) {
-
-                    if (!$row->user) {
-                        return '<img src="'.asset('assets/admin/images/users/avatar-9.jpg').'" width="50">';
-                    }
-
-                    return '<a href="' . $row->user->profile_img . '" target="_blank">
-                <img src="' . $row->user->profile_img . '" width="50">
-            </a>';
-                })
-                ->filterColumn('name', function ($query, $keyword) {
-                    $query->where('first_name', 'LIKE', "%{$keyword}%");
-                })
-                ->addColumn('name', function ($row) {
-                    $name = $row->first_name ?? '-';
-                    return $name.' '.($row->last_name ?? '-');
-                })
-                ->addColumn('price', function ($row) {
-                    return number_format($row->price, 2);
-                })
-                ->addColumn('created_at', function ($row) {
-                    return $row->created_at ? $row->created_at->format('d M Y') : '-';
-                })
-
-                ->addColumn('action', function ($row) {
-
-                  ;
-                    $viewButton = '
-        <button type="button" onclick="getDetails(' . $row->user_id . ', this)" class="btn btn-outline-info btn-sm btn-icon waves-effect waves-light material-shadow-none" data-bs-toggle="tooltip" title="View">
-            <i class="ri-eye-fill fs-16"></i>
-        </button>';
-
-                    $link = route('admin.booking.bookings', ['id' => $row->id]);
-
-                    return '
-           <ul class="list-inline mb-0 d-flex justify-content-center text-center">
-
-        <li class="list-inline-item">
-            ' . $viewButton . '
-        </li>
-
-        <li class="list-inline-item">
-            <a href="' . route('admin.booking.bookings', $row->id) . '"
-               class="btn btn-info btn-sm waves-effect waves-light material-shadow-none"
-               title="View Booking">
-                <i class="ri-eye-line"></i>
-            </a>
-        </li>
-
-        <li class="list-inline-item">
-            <button type="button"
-                    id="btnSendLoginDetail"
-                    class="btn btn-soft-danger btn-sm waves-effect waves-light btnSendLoginDetail"
-                    data-booking-id="' . $row->booking_id . '"
-                    data-status="' . $row->status->value . '"
-                    data-email="' . $row->email . '"
-                    data-id="' . $row->id . '"
-                    data-fname="' . $row->first_name . '"
-                    data-lname="' . $row->last_name . '"
-                    title="Send Login Details">
-
-                <i class="bx bx-loader spinner me-2" style="display:none" id="btnSendLoginDetailSpinner"></i>
-                <i class="ri-mail-send-line"></i>
-            </button>
-        </li>
-
-    </ul>';
-                })
-                ->rawColumns(['image','action'])
-                ->make(true);
-
-        } catch (\Exception $exception) {
-            return $this->sendDataTableError(ERROR_500, [], 500);
-        }
-    }
     public function listUser(Request $request)
     {
         try {
@@ -121,7 +40,7 @@ class UserController extends Controller
                 ->addColumn('image', function ($row) {
 
                     if (!$row->profile_img) {
-                        return '<img src="'.asset('assets/admin/images/users/avatar-9.jpg').'" width="50">';
+                        return '<img src="' . asset('assets/admin/images/users/avatar-9.jpg') . '" width="50">';
                     }
 
                     return '
@@ -148,68 +67,15 @@ class UserController extends Controller
                         : '-';
                 })
 
-                // ------------- ACTION BUTTONS -----------
-                ->addColumn('action', function ($row) {
 
-                    // Get first booking safely
-                    $booking = $row->bookings->first();
-                    $bookingId = $booking->booking_id ?? '';
-
-                    // View button
-                    $viewButton = '
-                <button type="button"
-                        onclick="getDetails(' . $row->id . ', this)"
-                        class="btn btn-outline-info btn-sm btn-icon waves-effect waves-light material-shadow-none"
-                        data-bs-toggle="tooltip"
-                        title="View Details">
-                    <i class="bx bx-show fs-16"></i>
-                </button>';
-
-                    return '
-                <ul class="list-inline mb-0 d-flex justify-content-center text-center">
-
-                    <li class="list-inline-item">
-                        ' . $viewButton . '
-                    </li>
-
-                    <li class="list-inline-item">
-                        <a href="' . route('admin.booking.bookings', $row->id) . '"
-                           class="btn btn-info btn-sm waves-effect waves-light material-shadow-none"
-                           data-bs-toggle="tooltip"
-                           title="View Booking History">
-                            <i class="bx bx-calendar"></i>
-                        </a>
-                    </li>
-
-                    <li class="list-inline-item">
-                        <button type="button"
-                                id="btnSendLoginDetail"
-                                class="btn btn-soft-danger btn-sm waves-effect waves-light btnSendLoginDetail"
-                                data-booking-id="' . $bookingId . '"
-                                data-status="' . ($row->status->value ?? '') . '"
-                                data-email="' . $row->email . '"
-                                data-id="' . $row->id . '"
-                                data-fname="' . $row->first_name . '"
-                                data-lname="' . $row->last_name . '"
-                                data-bs-toggle="tooltip"
-                                title="Send Login Details">
-
-                            <i class="bx bx-loader spinner me-2" style="display:none" id="btnSendLoginDetailSpinner"></i>
-                            <i class="bx bx-envelope"></i>
-                        </button>
-                    </li>
-
-                </ul>';
-                })
-
-                ->rawColumns(['image', 'action'])
+                ->rawColumns(['image'])
                 ->make(true);
 
         } catch (\Exception $exception) {
             return $this->sendDataTableError(ERROR_500, [], 500);
         }
     }
-//    function details(Request $request)
+    //    function details(Request $request)
 //    {
 //        try {
 //            $validator = Validator::make($request->all(), [
@@ -265,7 +131,7 @@ class UserController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'id'  => ['required'],
+                'id' => ['required'],
             ]);
 
             if ($validator->fails()) {
@@ -308,13 +174,13 @@ class UserController extends Controller
                 <label>' . $label . '</label>
                <a href="javascript:void(0);"
                    class="openPreview"
-                   data-img="'.$doc_url.'"
-                   data-docno="'.$field_value.'"
-                   data-id="'.$user_details->id.'"
-                   data-user_id="'.$user_details->user_id.'"
-                   data-field="'.$field.'"
-                   data-has-image="'.$has_image.'"
-                   data-status="'.$status.'">
+                   data-img="' . $doc_url . '"
+                   data-docno="' . $field_value . '"
+                   data-id="' . $user_details->id . '"
+                   data-user_id="' . $user_details->user_id . '"
+                   data-field="' . $field . '"
+                   data-has-image="' . $has_image . '"
+                   data-status="' . $status . '">
                     <img src="' . $doc_url . '"
                          style="height:200px;object-fit:cover;width:100%;cursor:pointer;" alt="document image ">
                 </a>
@@ -326,21 +192,19 @@ class UserController extends Controller
                         <button class="btn btn-success btn-sm" disabled>Verified</button>
                         <button type="button"
                             class="btn btn-sm btn-outline-danger detailsRejectBtn"
-                            data-id="' .$user_details->id.'"
-                            data-user_id="' .$user_details->user_id. '"
-                            data-field="'.$field.'">
+                            data-id="' . $user_details->id . '"
+                            data-user_id="' . $user_details->user_id . '"
+                            data-field="' . $field . '">
                             Reject
                         </button>';
-                    }
-                    elseif ($status == 'REJECTED') {
+                    } elseif ($status == 'REJECTED') {
                         $html .= '
                         <button class="btn btn-danger btn-sm" disabled>Rejected</button>
                         <button type="button" class="btn btn-outline-success btn-sm"
                             onclick="verifyDocument(' . $user_details->id . ', \'' . $field . '\', this)">
                             Verify
                         </button>';
-                    }
-                    else {
+                    } else {
                         $html .= '
                         <button type="button" class="btn btn-outline-success btn-sm"
                             onclick="verifyDocument(' . $user_details->id . ', \'' . $field . '\', this)">
@@ -348,9 +212,9 @@ class UserController extends Controller
                         </button>
                         <button type="button"
                             class="btn btn-sm btn-outline-danger detailsRejectBtn"
-                            data-id="' .$user_details->id.'"
-                            data-user_id="' .$user_details->user_id. '"
-                            data-field="'.$field.'">
+                            data-id="' . $user_details->id . '"
+                            data-user_id="' . $user_details->user_id . '"
+                            data-field="' . $field . '">
                             Reject
                         </button>';
                     }
@@ -374,7 +238,7 @@ class UserController extends Controller
         $user = UserDetail::findOrFail($request->id);
         $column = $request->field . '_status';
 
-        $user->$column =DocumentStatus::VERIFIED->value;
+        $user->$column = DocumentStatus::VERIFIED->value;
         $user->save();
 
         return $this->sendSuccess('Document verified successfully.');
@@ -385,7 +249,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $validator = Validator::make($request->all(), [
-                'id'  => 'required'
+                'id' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -393,7 +257,7 @@ class UserController extends Controller
             }
 
             $user_details = UserDetail::find($request->id);
-            $user_details->update(['status'=>DocumentStatus::VERIFIED]);
+            $user_details->update(['status' => DocumentStatus::VERIFIED]);
 
             DB::commit();
             return $this->sendSuccess('User Details Verified successfully!');
@@ -408,8 +272,8 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $validator = Validator::make($request->all(), [
-                'user_id'  => 'required',
-                'message'  => 'required',
+                'user_id' => 'required',
+                'message' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -438,7 +302,7 @@ class UserController extends Controller
 
             $column = $request->field . '_status';
 
-            $userDetail->$column =DocumentStatus::REJECTED->value;
+            $userDetail->$column = DocumentStatus::REJECTED->value;
             $userDetail->save();
             sendDynamicEmail($user->email, 'DocumentRejectedMail', [
                 'name' => $user->first_name,

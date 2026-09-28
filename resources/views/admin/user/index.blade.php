@@ -192,11 +192,7 @@
                 {data: 'image', name: 'image', title: 'image', class: 'text-center'},
                 {data: 'name', name: 'name', title: 'Name', class: 'text-center'},
                 {data: 'email', name: 'email', title: 'Email', class: 'text-center'},
-                // {data: 'mobile', name: 'mobile', title: 'Mobile', class: 'text-center'},
-                // {data: 'address', name: 'address', title: 'Address', class: 'text-center'},
-                // {data: 'country', name: 'country', title: 'Country', class: 'text-center'},
                 {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
-                {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
             ],
             ajax: {
                 url: '{{ route("admin.user.list") }}',
@@ -469,62 +465,7 @@ function verifyDocument(id, field, element) {
                 $('body').addClass('modal-open');
             });
 
-            $(document).delegate('.btnSendLoginDetail','click',function(){
-
-                var bookingId = $(this).data('booking-id');
-                var id = $(this).data('id');
-                var email = $(this).data('email');
-                // var status=$(this).data('status');
-//                         var fname = $(this).data('fname');
-//                         var lname = $(this).data('lname');
-
-
-                $.ajax({
-                    url: "{{ route('admin.booking.send-login-detail') }}",
-                    method: "post",
-                    dataType: "json",
-
-                    data: {
-                        id:id,
-                        booking_id: bookingId,
-                        email: email,
-                        "_token": "{{csrf_token()}}"
-
-
-
-                    },
-
-                    beforeSend: function () {
-                        $('#btnSendLoginDetail').attr('disabled', true);
-                        $("#btnSendLoginDetailSpinner").show();
-                    },
-                    success: function (result) {
-                        sendSuccess(result.message);
-                    },
-                    error: function (xhr) {
-                        let data = xhr.responseJSON;
-                        if (data.hasOwnProperty('error')) {
-                            $.each(data.error, function (key, value) {
-                                $("#" + key + "-error").html(value).show();
-                            });
-
-                            if (data.error.hasOwnProperty('car_ids')) {
-                                sendError(data.error.car_ids);
-                            }
-                        } else if (data.hasOwnProperty('message')) {
-                            actionError(xhr, data.message);
-                        } else {
-                            actionError(xhr);
-                        }
-                    },
-                    complete: function () {
-                        $('#btnSendLoginDetail').attr('disabled', false);
-                        $("#btnSendLoginDetailSpinner").hide();
-                    },
-
-                });
-
-            });
+            
         });
 
 
