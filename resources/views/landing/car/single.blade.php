@@ -436,7 +436,7 @@
 
         /* -------------------------------------------------------------
 
-                    /* Main Image Container & Watermark Display */
+                                    /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -661,11 +661,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                    display: flex;
-                                                                    justify-content: space-between;
-                                                                    align-items: center;
-                                                                    margin-bottom: 12px;
-                                                                } */
+                                                                                    display: flex;
+                                                                                    justify-content: space-between;
+                                                                                    align-items: center;
+                                                                                    margin-bottom: 12px;
+                                                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1140,7 +1140,104 @@
         }
     </style>
 @endpush
+@section('meta')
 
+    @php
+
+        $ogTitle = $car->name ?? 'Vehicle';
+
+        $cleanOgPrice = preg_replace(
+            '/[^\d.]/',
+            '',
+            $car->vehicle_price ?? 0
+        );
+
+        $formattedOgPrice = is_numeric($cleanOgPrice) && $cleanOgPrice > 0
+            ? number_format((float) $cleanOgPrice)
+            : ($car->vehicle_price ?? '0');
+
+        $ogDescriptionParts = [];
+
+        if (!empty($car->vehicle_price)) {
+            $ogDescriptionParts[] = '¥' . $formattedOgPrice;
+        }
+
+        if (!empty($car->spec->odometer)) {
+            $ogDescriptionParts[] =
+                number_format($car->spec->odometer) . ' km';
+        }
+
+        if (!empty($car->spec->formatted_transmission)) {
+            $ogDescriptionParts[] =
+                $car->spec->formatted_transmission;
+        }
+
+        if (!empty($car->spec->make)) {
+            $ogDescriptionParts[] =
+                $car->spec->make;
+        }
+
+        if (!empty($car->spec->model_year)) {
+            $ogDescriptionParts[] =
+                $car->spec->model_year;
+        }
+
+        $ogDescription = implode(
+            ' | ',
+            $ogDescriptionParts
+        );
+
+        $ogImage = null;
+
+        if (
+            !empty($car->images) &&
+            is_array($car->images) &&
+            !empty($car->images[0])
+        ) {
+            $ogImage = asset(
+                CAR_PATH . $car->images[0]
+            );
+        }
+
+        $ogUrl = url()->current();
+
+    @endphp
+
+
+    <meta property="og:type" content="website">
+
+    <meta property="og:url" content="{{ $ogUrl }}">
+
+    <meta property="og:title" content="{{ $ogTitle }}">
+
+    <meta property="og:description" content="{{ $ogDescription }}">
+
+    @if($ogImage)
+
+        <meta property="og:image" content="{{ $ogImage }}">
+
+        <meta property="og:image:secure_url" content="{{ $ogImage }}">
+
+        <meta property="og:image:type" content="image/webp">
+
+        <meta property="og:image:width" content="1200">
+
+        <meta property="og:image:height" content="630">
+
+    @endif
+
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+
+    @if($ogImage)
+        <meta name="twitter:image" content="{{ $ogImage }}">
+    @endif
+
+@endsection
 @section('main')
     <div class="car-detail-wrapper">
         <div class="details-flex-container">
@@ -1861,7 +1958,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                    ];
+                                    ];
 
         let currentIndex = 0;
         let gridExpanded = false;
