@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\ManufacturerController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\CarSensorImportController;
 
 
 /*
@@ -213,8 +214,11 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
             Route::post('/generate-ai-content', 'generateAiContent')->name('generate-ai-content');
-
         });
+
+        // CarSensor import (separate controller — never creates vehicle records)
+        Route::post('/car/import-carsensor', [CarSensorImportController::class, 'import'])
+            ->name('car.import-carsensor');
         Route::controller(AucationController::class)->prefix('auction-grade')->name('auctiongrade.')->group(function () {
             Route::get('/', 'auctionGrade')->name('auction-grade');
             Route::post('/list', 'auctionGradeList')->name('list');

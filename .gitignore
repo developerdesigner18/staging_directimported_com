@@ -23,8 +23,6 @@ config.bat
 .env
 /public/uploads
 /public/assets/
-branch_structure.json
-temp_auto_push.bat
-temp_interactive_push.bat
 .gitignore
 .vscode/
+AI_PROMPT_FOR_SCRAPING.md
