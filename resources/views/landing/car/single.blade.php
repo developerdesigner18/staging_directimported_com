@@ -1109,6 +1109,11 @@
             background-color: var(--whatsapp-dark);
         }
 
+        .share-container {
+            position: relative;
+            display: inline-block;
+        }
+
         .share-menu {
             display: none;
             position: absolute;
@@ -1119,6 +1124,9 @@
             border: 1px solid #ddd;
             border-radius: 6px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            right: 0;
+            top: 100%;
+            margin-top: 8px;
         }
 
         .share-menu a,
@@ -1273,13 +1281,25 @@
                 <div class="main-thumb-container">
                     <div id="mainThumbGrid" class="main-thumb-grid"></div>
 
-                    <button id="viewAllBtn" class="view-all-btn">
-                        View All {{ count($car->images) }} Photos
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
+                    <div class="photo-actions-group" style="display: flex; gap: 12px; align-items: center;">
+                        <button id="viewAllBtn" class="view-all-btn" style="flex: 1;">
+                            View All {{ count($car->images) }} Photos
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="share-container">
+                            <button type="button" id="shareCarBtnTop" class="view-all-btn share-car-trigger" style="width: auto; padding: 12px 20px; gap: 8px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    viewBox="0 0 16 16" style="flex-shrink:0;">
+                                    <path
+                                        d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z" />
+                                </svg>
+                                Share
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Tabs Area, Grade & Stock # matching reference style -->
@@ -1439,7 +1459,7 @@
                         </div>
                         <!-- Share Button -->
                         <div class="share-container">
-                            <button type="button" id="shareCarBtn" class="btn btn-outline-primary"
+                            <button type="button" id="shareCarBtn" class="btn btn-outline-primary share-car-trigger"
                                 style="display: flex; align-items: center; gap: 8px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     viewBox="0 0 16 16" style="flex-shrink:0;">
@@ -2213,123 +2233,129 @@
             });
         });
 
-        const shareButton = document.getElementById('shareCarBtn');
+        const shareTriggers = document.querySelectorAll('.share-car-trigger');
         const shareMenu = document.getElementById('shareMenu');
         const copyButton = document.getElementById('copyShareLink');
 
         // Close menu when clicking outside
         document.addEventListener('click', function (event) {
-            if (shareMenu && shareButton) {
-                if (!shareButton.contains(event.target) && !shareMenu.contains(event.target)) {
+            if (shareMenu && shareMenu.style.display !== 'none') {
+                let clickedInsideTrigger = false;
+                shareTriggers.forEach(btn => {
+                    if (btn.contains(event.target)) {
+                        clickedInsideTrigger = true;
+                    }
+                });
+                if (!clickedInsideTrigger && !shareMenu.contains(event.target)) {
                     shareMenu.style.display = 'none';
                 }
             }
         });
 
-        shareButton.addEventListener('click', async function (e) {
-            e.preventDefault();
-            // Get vehicle details directly from Laravel
-            const vehicleName = @json($car->name ?? '');
-            const stockNumber = @json($car->vehicle_id ?? '');
-            const price = @json($formattedPrice ?? '0');
-            const currentUrl = window.location.href;
-            const title = document.title;
-            const text = 'Check out this vehicle detail from Direct Import Japan.\n\n' +
-                'Vehicle: ' + vehicleName + '\n' +
-                'Stock No.: ' + stockNumber + '\n' +
-                'Price: ' + price + '\n\n' +
-                'View the full vehicle details:\n' +
-                currentUrl;
+        shareTriggers.forEach(button => {
+            button.addEventListener('click', async function (e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            /*
-             * Browser supports Web Share API
-             * Use the native share menu
-             */
-            if (navigator.share) {
+                // Get vehicle details directly from Laravel
+                const vehicleName = @json($car->name ?? '');
+                const stockNumber = @json($car->vehicle_id ?? '');
+                const price = @json($formattedPrice ?? '0');
+                const currentUrl = window.location.href;
+                const title = document.title;
+                const text = 'Check out this vehicle detail from Direct Import Japan.\n\n' +
+                    'Vehicle: ' + vehicleName + '\n' +
+                    'Stock No.: ' + stockNumber + '\n' +
+                    'Price: ' + price + '\n\n' +
+                    'View the full vehicle details:\n' +
+                    currentUrl;
 
-                try {
-
-                    await navigator.share({
-                        title: title,
-                        text: text,
-                        url: currentUrl
-                    });
-
-                } catch (error) {
-
-                    // User cancelled the share menu.
-                    console.log('Share cancelled.');
-
+                /*
+                 * Browser supports Web Share API
+                 * Use the native share menu
+                 */
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: title,
+                            text: text,
+                            url: currentUrl
+                        });
+                    } catch (error) {
+                        // User cancelled the share menu.
+                        console.log('Share cancelled.');
+                    }
+                    return;
                 }
 
-                return;
-            }
+                /*
+                 * DESKTOP
+                 * Show our custom share menu
+                 */
+                const container = button.closest('.share-container');
+                if (container && shareMenu) {
+                    if (shareMenu.parentElement !== container) {
+                        container.appendChild(shareMenu);
+                    }
+                }
 
-            /*
-             * DESKTOP
-             * Show our custom share menu
-             */
+                if (shareMenu.style.display === 'none' ||
+                    shareMenu.style.display === '') {
+                    shareMenu.style.display = 'block';
+                } else {
+                    shareMenu.style.display = 'none';
+                }
 
-            if (shareMenu.style.display === 'none' ||
-                shareMenu.style.display === '') {
+                const encodedUrl = encodeURIComponent(currentUrl);
+                const encodedText = encodeURIComponent(text);
 
-                shareMenu.style.display = 'block';
+                // WhatsApp
+                document.getElementById('shareWhatsApp').href =
+                    'https://api.whatsapp.com/send?text=' +
+                    encodedText +
+                    '%20' +
+                    encodedUrl;
 
-            } else {
+                // Facebook
+                document.getElementById('shareFacebook').href =
+                    'https://www.facebook.com/sharer/sharer.php?u=' +
+                    encodedUrl;
 
-                shareMenu.style.display = 'none';
+                // X / Twitter
+                document.getElementById('shareX').href =
+                    'https://twitter.com/intent/tweet?text=' +
+                    encodedText +
+                    '&url=' +
+                    encodedUrl;
 
-            }
+                // Threads
+                document.getElementById('shareThreads').href =
+                    'https://threads.net/intent/post?text=' +
+                    encodedText +
+                    '%20' +
+                    encodedUrl;
 
-            const encodedUrl = encodeURIComponent(currentUrl);
-            const encodedText = encodeURIComponent(text);
+                // Email
+                document.getElementById('shareEmail').href =
+                    'mailto:?subject=' +
+                    encodeURIComponent(title) +
+                    '&body=' +
+                    encodeURIComponent(
+                        'Check out this listing: ' + currentUrl
+                    );
 
-            // WhatsApp
-            document.getElementById('shareWhatsApp').href =
-                'https://api.whatsapp.com/send?text=' +
-                encodedText +
-                '%20' +
-                encodedUrl;
+                // Telegram
+                document.getElementById('shareTelegram').href =
+                    'https://t.me/share/url?url=' +
+                    encodedUrl +
+                    '&text=' +
+                    encodedText;
 
-            // Facebook
-            document.getElementById('shareFacebook').href =
-                'https://www.facebook.com/sharer/sharer.php?u=' +
-                encodedUrl;
-
-            // X / Twitter
-            document.getElementById('shareX').href =
-                'https://twitter.com/intent/tweet?text=' +
-                encodedText +
-                '&url=' +
-                encodedUrl;
-
-            // Threads
-            document.getElementById('shareThreads').href =
-                'https://threads.net/intent/post?text=' +
-                encodedText +
-                '%20' +
-                encodedUrl;
-
-            // Email
-            document.getElementById('shareEmail').href =
-                'mailto:?subject=' +
-                encodeURIComponent(title) +
-                '&body=' +
-                encodeURIComponent(
-                    'Check out this listing: ' + currentUrl
-                );
-
-            // Telegram
-            document.getElementById('shareTelegram').href =
-                'https://t.me/share/url?url=' +
-                encodedUrl +
-                '&text=' +
-                encodedText;
-
-            // LinkedIn
-            document.getElementById('shareLinkedIn').href =
-                'https://www.linkedin.com/sharing/share-offsite/?url=' +
-                encodedUrl;
+                // LinkedIn
+                document.getElementById('shareLinkedIn').href =
+                    'https://www.linkedin.com/sharing/share-offsite/?url=' +
+                    encodedUrl;
+            });
         });
 
 
