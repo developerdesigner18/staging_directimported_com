@@ -19,11 +19,14 @@ class CarSensorImportService
     /**
      * Run the full import pipeline.
      *
+     * @param string $rawUrl
+     * @param int|null $adminId
+     * @param int|null $ignoreCarId
      * @return array Structured import result for frontend consumption
      * @throws \InvalidArgumentException On validation failure
      * @throws \Exception On scraping/mapping failure
      */
-    public function run(string $rawUrl, ?int $adminId = null): array
+    public function run(string $rawUrl, ?int $adminId = null, ?int $ignoreCarId = null): array
     {
         $startTime = microtime(true);
         $importId  = Str::uuid()->toString();
@@ -38,7 +41,7 @@ class CarSensorImportService
 
         try {
             // 3. Duplicate check
-            $duplicate = $this->duplicateChecker->check($sourceId);
+            $duplicate = $this->duplicateChecker->check($sourceId, $ignoreCarId);
             if ($duplicate['exists']) {
                 $this->updateLog($logId, 'failed', 'Duplicate detected', 0, 0);
                 return [

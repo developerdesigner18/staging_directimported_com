@@ -114,7 +114,12 @@
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent">
                 <h4 class="mb-sm-0">Edit Car</h4>
 
-                <div class="page-title-right">
+                <div class="page-title-right d-flex align-items-center gap-3">
+                    {{-- CarSensor Import Button --}}
+                    <button type="button" id="btn-open-carsensor-modal" class="btn btn-warning d-flex align-items-center gap-2" title="Import vehicle data from any car listing website">
+                        <i class="ri-import-line"></i>
+                        <span>Import from Listing URL</span>
+                    </button>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="javascript: void(0);">Car</a></li>
                         <li class="breadcrumb-item active">Edit Car</li>
@@ -123,6 +128,8 @@
             </div>
         </div>
     </div>
+
+    @include('admin.car.partials.carsensor-modal', ['isEdit' => true])
 
     <div class="row">
         <div class="col-12">
@@ -563,6 +570,8 @@
                     </div>
                 </div>
 
+                @include('admin.car.partials.ai-generator')
+
                 <!-- 4. Description Section -->
                 <div class="card mb-4">
                     <div class="card-header bg-light">
@@ -907,4 +916,5 @@
             });
         });
     </script>
+    @include('admin.car.partials.scripts', ['isEdit' => true, 'carId' => $car->id])
 @endsection

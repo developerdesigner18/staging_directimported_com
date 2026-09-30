@@ -832,14 +832,73 @@ class CarController extends Controller
 
     public function generateAiContent(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'prompt' => 'required|string',
-        ], [
-            'prompt.required' => 'The prompt field is required.',
-        ]);
+        $vehicleData = $request->input('vehicle_data', []);
+        $userPrompt = trim((string) $request->input('prompt', ''));
 
-        if ($validator->fails()) {
-            return $this->sendValidationError($validator->errors());
+        if (is_string($vehicleData)) {
+            $decoded = json_decode($vehicleData, true);
+            if (is_array($decoded)) {
+                $vehicleData = $decoded;
+            }
+        }
+
+        // Build structured vehicle details from submitted form fields
+        $vehicleInfoLines = [];
+        $fieldMap = [
+            'make'           => 'Make',
+            'model'          => 'Model',
+            'year'           => 'Year',
+            'category'       => 'Category',
+            'status'         => 'Status',
+            'auction_grade'  => 'Auction Grade',
+            'location'       => 'Location',
+            'price'          => 'Price (JPY)',
+            'stock_id'       => 'Stock / Vehicle ID',
+            'vin'            => 'VIN / Chassis No',
+            'body_type'      => 'Body Type',
+            'type'           => 'Type',
+            'steering'       => 'Steering',
+            'interior_grade' => 'Interior Grade',
+            'exterior_grade' => 'Exterior Grade',
+            'drive_type'     => 'Drive Type',
+            'engine'         => 'Engine',
+            'fuel_type'      => 'Fuel Type',
+            'transmission'   => 'Transmission',
+            'odometer'       => 'Odometer / Mileage',
+            'exterior_color' => 'Exterior Color',
+            'interior_color' => 'Interior Color',
+            'card_header'    => 'Card Title / Header',
+            'card_subtitle'  => 'Card Subtitle',
+        ];
+
+        if (is_array($vehicleData)) {
+            foreach ($fieldMap as $key => $label) {
+                if (!empty($vehicleData[$key]) && trim((string) $vehicleData[$key]) !== '' && $vehicleData[$key] !== 'Select ' . $label) {
+                    $val = trim((string) $vehicleData[$key]);
+                    if ($key === 'odometer' && is_numeric($val)) {
+                        $val = number_format((float) $val) . ' km';
+                    } elseif ($key === 'price' && is_numeric(str_replace(',', '', $val))) {
+                        $val = '¥' . number_format((float) str_replace(',', '', $val));
+                    }
+                    $vehicleInfoLines[] = "- {$label}: {$val}";
+                }
+            }
+        }
+
+        $vehicleInfoText = implode("\n", $vehicleInfoLines);
+
+        if (!empty($userPrompt)) {
+            if (!empty($vehicleInfoText)) {
+                $vehicleInfoText .= "\n\nAdditional Features / Instructions / Notes:\n" . $userPrompt;
+            } else {
+                $vehicleInfoText = $userPrompt;
+            }
+        }
+
+        if (empty(trim($vehicleInfoText))) {
+            return $this->sendValidationError([
+                'prompt' => ['Please enter vehicle details (such as Make, Model, or Year) or provide a prompt before generating AI description.']
+            ]);
         }
 
         $apiKey = config('services.gemini.key') ?? env('GEMINI_API_KEY');
@@ -849,8 +908,6 @@ class CarController extends Controller
         }
 
         try {
-            $prompt = $request->input('prompt');
-
             $systemPrompt = "You are an expert automotive copywriter for a Japanese vehicle import business (Direct Imported Japan). "
                 . "Write a detailed, captivating, and professional car listing description based only on the vehicle information provided. "
                 . "Do not invent specifications, features, mileage, condition, or any other information that is not provided. "
@@ -858,7 +915,7 @@ class CarController extends Controller
                 . "The HTML should be suitable for display inside a rich text web editor. "
                 . "Do NOT wrap the response in markdown code blocks such as ```html ... ```.";
 
-            $fullPrompt = $systemPrompt . "\n\nVehicle Information:\n" . $prompt;
+            $fullPrompt = $systemPrompt . "\n\nVehicle Information:\n" . $vehicleInfoText;
 
             $response = Http::withHeaders([
                 'x-goog-api-key' => $apiKey,

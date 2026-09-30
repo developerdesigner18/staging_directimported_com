@@ -26,7 +26,8 @@ class CarSensorImportController extends Controller
     public function import(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'url' => ['required', 'string', 'url', 'max:2048'],
+            'url'    => ['required', 'string', 'url', 'max:2048'],
+            'car_id' => ['nullable', 'integer'],
         ], [
             'url.required' => 'Please enter a CarSensor.net listing URL.',
             'url.url'      => 'Please enter a valid URL.',
@@ -47,7 +48,8 @@ class CarSensorImportController extends Controller
                 // Non-critical; continue without admin ID
             }
 
-            $result = $this->importService->run($request->input('url'), $adminId);
+            $ignoreCarId = $request->filled('car_id') ? (int) $request->input('car_id') : null;
+            $result = $this->importService->run($request->input('url'), $adminId, $ignoreCarId);
 
             // Duplicate detected — stop before form population
             if (isset($result['duplicate']) && $result['duplicate']) {
