@@ -116,32 +116,60 @@
     .about-passion-header {
         max-width: 750px;
     }
+
+    /* CMS rich-text blocks: match the original paragraph styling */
+    .about-intro p {
+        margin-bottom: 1rem;
+    }
+
+    .about-intro p:first-child {
+        font-weight: 300;
+    }
+
+    .about-intro p:last-child {
+        margin-bottom: 1.5rem;
+    }
 </style>
 @endpush
 
 @section('main')
+@php
+    $about = $homeSection ?? new \App\Models\HomeSection();
+    $heroImage = \App\Models\HomeSection::imageUrl($about->about_hero_image);
+    $storyImages = collect($about->story_images ?? [])->map(fn($image) => \App\Models\HomeSection::imageUrl($image))->filter();
+    $operations = collect($about->operations ?? [])->filter(fn($item) => filled($item['title'] ?? null));
+    $facts = collect($about->facts ?? [])->filter(fn($item) => filled($item['feature'] ?? null));
+    $passionCards = collect($about->passion_cards ?? [])->filter(fn($item) => filled($item['title'] ?? null));
+    $hasStory = filled($about->founded_title) || filled($about->founded_content) || filled($about->advantage_title) || filled($about->advantage_content);
+@endphp
+
 <!-- Main Header / Hero Intro -->
 <section class="py-5 bg-white">
     <div class="container py-2">
         <div class="row align-items-center">
-            <div class="col-lg-7 mb-4 mb-lg-0">
+            <div class="{{ $heroImage ? 'col-lg-7 mb-4 mb-lg-0' : 'col-lg-12' }}">
+                @if(filled($about->about_badge))
                 <div class="pill-badge mb-3">
-                    <i class="bx bx-check-circle"></i> Licensed Automobile Dealer in Japan
+                    <i class="bx bx-check-circle"></i> {{ $about->about_badge }}
                 </div>
-                <h1 class="fw-bold display-5 text-dk mb-3">About Direct Imported Japan</h1>
-                <p class="text-secondary lead fs-6 mb-3">
-                    Direct Imported Japan operates under <strong>International Auto Select Japan LLC</strong> (short name <strong>IAS Japan</strong>), a fully licensed automobile dealer based in Japan. While operating under our independent LLC structure, we retain the Direct Imported website as our dedicated purchasing storefront, as we have for over 25 years.
-                </p>
-                <p class="text-secondary mb-4">
-                    Our operations are managed by Phil Cathcart, a trade-qualified Automotive Technician who completed his technical schooling in 1992 and has been a resident of Japan for over 25 years.
-                </p>
-                <a href="#about-details" class="btn-di-navy">Read More</a>
+                @endif
+                <h1 class="fw-bold display-5 text-dk mb-3">{{ $about->about_title ?: 'About Us' }}</h1>
+                @if(filled($about->about_intro))
+                <div class="about-intro text-secondary">
+                    {!! $about->about_intro !!}
+                </div>
+                @endif
+                @if(filled($about->about_button_text))
+                <a href="#about-details" class="btn-di-navy">{{ $about->about_button_text }}</a>
+                @endif
             </div>
+            @if($heroImage)
             <div class="col-lg-5">
                 <div class="rounded-image-card shadow-sm">
-                    <img src="{{ asset('uploads/about_us/pexels-photo-4489749.avif') }}" alt="Phil Cathcart - Vehicle Inspection" class="img-fluid w-100 about-hero-img">
+                    <img src="{{ $heroImage }}" alt="{{ $about->about_title }}" class="img-fluid w-100 about-hero-img">
                 </div>
             </div>
+            @endif
         </div>
     </div>
 </section>
@@ -151,77 +179,78 @@
     <div class="container py-4">
 
         <!-- Why Founded & Automotive Inspection Advantage -->
+        @if($hasStory)
         <div class="row align-items-center mb-5">
+            @if($storyImages->isNotEmpty())
             <div class="col-lg-5 mb-4 mb-lg-0">
                 <div class="row g-3">
+                    @foreach($storyImages as $storyImage)
                     <div class="col-12">
                         <div class="rounded-image-card">
-                            <img src="{{ asset('uploads/about_us/pexels-photo-2244746.avif') }}" alt="Engine Inspection" class="img-fluid w-100 about-inspection-img">
+                            <img src="{{ $storyImage }}" alt="{{ $about->founded_title }}" class="img-fluid w-100 about-inspection-img">
                         </div>
                     </div>
-                    <div class="col-12">
-                        <div class="rounded-image-card">
-                            <img src="{{ asset('uploads/about_us/pexels-photo-3807277.avif') }}" alt="Vehicle Panel Assessment" class="img-fluid w-100 about-inspection-img">
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
-            <div class="col-lg-7 ps-lg-5">
-                <h2 class="h3 fw-bold text-dk mb-3">Why We Were Founded</h2>
-                <p class="text-secondary">
-                    Direct Imported Japan was established to fix a major flaw in the vehicle export industry: reliance on commission-driven salespeople. Most export agents act purely as sales staff chasing monthly quotas, creating a hit-or-miss, 50/50 chance of buyers receiving a rusty, misrepresented car just so an agent can hit a target. As a licensed Japanese motor vehicle dealer, we operate without sales targets, providing accurate vehicle descriptions, honest condition reports, and true technical assessments.
-                </p>
+            @endif
+            <div class="{{ $storyImages->isNotEmpty() ? 'col-lg-7 ps-lg-5' : 'col-lg-12' }}">
+                @if(filled($about->founded_title))
+                <h2 class="h3 fw-bold text-dk mb-3">{{ $about->founded_title }}</h2>
+                @endif
+                @if(filled($about->founded_content))
+                <div class="text-secondary">
+                    {!! $about->founded_content !!}
+                </div>
+                @endif
 
-                <h3 class="h4 fw-bold mt-4 mb-2 text-dk">Our Automotive Inspection Advantage</h3>
-                <p class="text-secondary">
-                    Auction inspectors in Japan process hundreds of cars daily and frequently miss critical details, factory options, or aftermarket modifications—sometimes failing to even note a turbo attached to an engine block.
-                </p>
-                <p class="text-secondary">
-                    Combining our export operations established in 1997 with formal automotive trade qualifications, Phil personally conducts physical inspections at the auctions we attend. Having worked as a vehicle assessor for nearly 30 years, his strict attention to detail ensures he spots misaligned panel gaps, concealed body repairs, rust, and mechanical issues before you place a bid or commit funds.
-                </p>
+                @if(filled($about->advantage_title))
+                <h3 class="h4 fw-bold mt-4 mb-2 text-dk">{{ $about->advantage_title }}</h3>
+                @endif
+                @if(filled($about->advantage_content))
+                <div class="text-secondary">
+                    {!! $about->advantage_content !!}
+                </div>
+                @endif
             </div>
         </div>
+        @endif
 
         <!-- Core Operations -->
+        @if($operations->isNotEmpty())
         <div class="my-5 py-3">
             <div class="text-center mb-4">
-                <h2 class="fw-bold text-dk">Core Operations</h2>
-                <p class="text-muted">Direct purchasing access across Japan with full logistics support</p>
+                @if(filled($about->operations_title))
+                <h2 class="fw-bold text-dk">{{ $about->operations_title }}</h2>
+                @endif
+                @if(filled($about->operations_subtitle))
+                <p class="text-muted">{{ $about->operations_subtitle }}</p>
+                @endif
             </div>
             <div class="row g-4">
+                @foreach($operations as $operation)
                 <div class="col-md-4">
                     <div class="p-4 di-card h-100">
-                        <i class="bx bx-gavel fs-1 mb-3 icon-navy"></i>
-                        <h4 class="h5 fw-bold text-dk">Auction Vehicle Bidding</h4>
+                        <i class="{{ ($operation['icon'] ?? null) ?: 'bx bx-check-circle' }} fs-1 mb-3 icon-navy"></i>
+                        <h4 class="h5 fw-bold text-dk">{{ $operation['title'] }}</h4>
+                        @if(filled($operation['description'] ?? null))
                         <p class="text-secondary small mb-0">
-                            Direct access to bid on thousands of vehicles passing through Japanese wholesale auctions daily.
+                            {{ $operation['description'] }}
                         </p>
+                        @endif
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="p-4 di-card h-100">
-                        <i class="bx bx-store-alt fs-1 mb-3 icon-navy"></i>
-                        <h4 class="h5 fw-bold text-dk">Dealer Yard Sourcing</h4>
-                        <p class="text-secondary small mb-0">
-                            Direct purchasing of hand-picked stock from dealership yards across Japan.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="p-4 di-card h-100">
-                        <i class="bx bx-ship fs-1 mb-3 icon-navy"></i>
-                        <h4 class="h5 fw-bold text-dk">Export & Logistics Management</h4>
-                        <p class="text-secondary small mb-0">
-                            Complete handling of Japanese export documentation, international shipping, and port logistics.
-                        </p>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
+        @endif
 
         <!-- Operational Facts Table -->
+        @if($facts->isNotEmpty())
         <div class="mb-5">
-            <h2 class="h3 fw-bold text-dk mb-4">Operational Facts</h2>
+            @if(filled($about->facts_title))
+            <h2 class="h3 fw-bold text-dk mb-4">{{ $about->facts_title }}</h2>
+            @endif
             <div class="table-responsive rounded border bg-white">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-header-navy">
@@ -231,79 +260,64 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($facts as $fact)
                         <tr>
-                            <td class="fw-bold"><i class="bx bx-check-circle me-2 icon-navy"></i>Licensed Dealer Status</td>
-                            <td>Fully registered and licensed motor vehicle trader in Japan.</td>
+                            <td class="fw-bold"><i class="{{ ($fact['icon'] ?? null) ?: 'bx bx-check-circle' }} me-2 icon-navy"></i>{{ $fact['feature'] }}</td>
+                            <td>{{ $fact['details'] ?? '' }}</td>
                         </tr>
-                        <tr>
-                            <td class="fw-bold"><i class="bx bx-dollar-circle me-2 icon-navy"></i>Direct JPY Pricing</td>
-                            <td>Vehicle listings display actual auction or dealer prices in Japanese Yen (JPY).</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"><i class="bx bx-search-alt me-2 icon-navy"></i>Expertly Assessed Listings</td>
-                            <td>25 years of experience, along with his technical qualifications, means Phil has a keen eye for good cars. He will tell you to think twice about buying certain vehicles—an insight that only comes from many years of hands-on experience.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"><i class="bx bx-receipt me-2 icon-navy"></i>Flat Service Fees</td>
-                            <td>We charge a clear handling fee to manage the purchase, paperwork, and transport, with zero vehicle price markups.</td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"><i class="bx bx-globe me-2 icon-navy"></i>Global Export Specialists</td>
-                            <td>We specialize in exporting vehicles to Australia, USA, UK, Ireland, Canada, and the Caribbean Islands.</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+        @endif
 
         <!-- Blog-Style Vehicles Sourced & Passion Section -->
         <div class="my-5 pt-3">
+            @if(filled($about->passion_title) || filled($about->passion_intro))
             <div class="text-center mx-auto mb-5 about-passion-header">
-                <h2 class="fw-bold text-dk">Our Passion: The Vehicles We Source</h2>
-                <p class="text-secondary">
-                    While we happily source commercial vehicles, SUVs, and reliable daily drivers for our clients, our <strong>true passion and absolute specialty lies in high-performance and modified vehicles</strong>. We don't just export these cars; we live and breathe JDM and Euro performance culture.
-                </p>
+                @if(filled($about->passion_title))
+                <h2 class="fw-bold text-dk">{{ $about->passion_title }}</h2>
+                @endif
+                @if(filled($about->passion_intro))
+                <div class="text-secondary">
+                    {!! $about->passion_intro !!}
+                </div>
+                @endif
             </div>
+            @endif
 
-            <!-- JDM Card with GT-R 32 V-Spec II -->
+            @foreach($passionCards as $card)
+            @php($cardImage = \App\Models\HomeSection::imageUrl($card['image'] ?? null))
             <div class="di-card mb-4 overflow-hidden">
-                <div class="row g-0 align-items-center">
+                <div class="row g-0 align-items-center @if($loop->even) flex-row-reverse @endif">
+                    @if($cardImage)
                     <div class="col-md-6">
-                        <img src="{{ asset('uploads/about_us/car_1785251750_6a68c7a61a8c1.webp') }}" alt="1994 Nissan Skyline GT-R V-Spec II" class="img-fluid h-100 w-100 about-card-img">
+                        <img src="{{ $cardImage }}" alt="{{ $card['title'] }}" class="img-fluid h-100 w-100 about-card-img">
                     </div>
-                    <div class="col-md-6">
+                    @endif
+                    <div class="{{ $cardImage ? 'col-md-6' : 'col-12' }}">
                         <div class="card-body p-4 p-lg-5">
-                            <span class="badge bg-light text-dk border mb-2">JDM Icons</span>
-                            <h3 class="h4 fw-bold text-dk mb-3">JDM Legends & Classics</h3>
+                            @if(filled($card['badge'] ?? null))
+                            <span class="badge bg-light text-dk border mb-2">{{ $card['badge'] }}</span>
+                            @endif
+                            <h3 class="h4 fw-bold text-dk mb-3">{{ $card['title'] }}</h3>
+                            @if(filled($card['description'] ?? null))
                             <p class="card-text text-secondary">
-                                Japan is the birthplace of some of the most iconic sports cars in automotive history. We have a deep-rooted love for the golden era of Japanese performance. Our true specialty is hunting down the best Nissan Skylines, Toyota Supras, and Nissan Silvias. Whether it’s a pristine, low-kilometer factory classic like a 1994 GT-R V-Spec II or a heavily modified track weapon, our technical expertise means we know exactly what to look for—and what to avoid—when evaluating these legendary machines.
+                                {!! nl2br(e($card['description'])) !!}
                             </p>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
+            @endforeach
 
-            <!-- Euro / BMW M Card -->
-            <div class="di-card mb-4 overflow-hidden">
-                <div class="row g-0 align-items-center flex-row-reverse">
-                    <div class="col-md-6">
-                        <img src="{{ asset('uploads/about_us/pexels-photo-170811.avif') }}" alt="BMW M Performance European Sports Car" class="img-fluid h-100 w-100 about-card-img">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card-body p-4 p-lg-5">
-                            <span class="badge bg-light text-dk border mb-2">European Performance</span>
-                            <h3 class="h4 fw-bold text-dk mb-3">European Precision & BMW M Cars</h3>
-                            <p class="card-text text-secondary">
-                                The Japanese market is a hidden goldmine for impeccably maintained European luxury and high-performance vehicles. We have a massive appreciation for the precision engineering of BMW M Cars and European classics. Because high-end Euro models are status symbols in Japan, they are often garaged, meticulously serviced, and driven sparingly. We leverage our years of experience on the ground to source the absolute best examples of European performance available.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            @if(filled($about->passion_button_text))
             <div class="text-center mt-5">
-                <a href="{{ route('car') }}" class="btn-di-navy">Search Live Auctions Now</a>
+                <a href="{{ route('car') }}" class="btn-di-navy">{{ $about->passion_button_text }}</a>
             </div>
+            @endif
         </div>
 
     </div>

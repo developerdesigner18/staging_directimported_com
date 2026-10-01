@@ -70,13 +70,20 @@ class CarSensorImportService
                 array_merge(
                     isset($scraped['image_urls']) ? (array) $scraped['image_urls'] : [],
                     isset($scraped['primary_image_url']) ? [$scraped['primary_image_url']] : []
-                )
+                ),
+                fn ($imageUrl) => is_string($imageUrl) && trim($imageUrl) !== ''
             );
             $imageUrls = array_values(array_unique($imageUrls));
 
+            // Only the first MAX_IMAGES photos are imported; say so instead of reporting them as failures
+            if (count($imageUrls) > CarSensorImageService::MAX_IMAGES) {
+                $manualReview[] = 'The listing has ' . count($imageUrls) . ' photos; only the first '
+                    . CarSensorImageService::MAX_IMAGES . ' were imported.';
+            }
+
             $imageResult = $this->imageService->downloadImages($imageUrls, $importId);
 
-            $totalImages   = count($imageUrls);
+            $totalImages   = min(count($imageUrls), CarSensorImageService::MAX_IMAGES);
             $successImages = count($imageResult['images']);
             $failedImages  = $imageResult['failed'];
 
@@ -88,6 +95,9 @@ class CarSensorImportService
             // 7. Build image payload for frontend (FilePond base64 JSON)
             $filepondImages = array_map(fn($img) => $img['filepond_json'], $imageResult['images']);
             $bannerImage    = $imageResult['banner'];
+
+            // The images now travel in the response; don't leave publicly reachable copies behind
+            $this->imageService->cleanup($importId);
 
             // 8. Update log to completed
             $durationMs = (int) round((microtime(true) - $startTime) * 1000);
@@ -119,7 +129,8 @@ class CarSensorImportService
                 ],
             ];
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            // Throwable (not just Exception) so a TypeError/Error still closes the log and removes temp files
             $durationMs = (int) round((microtime(true) - $startTime) * 1000);
             $this->updateLog($logId, 'failed', $e->getMessage(), 0, 0, [], $durationMs);
 

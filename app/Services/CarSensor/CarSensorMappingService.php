@@ -7,6 +7,7 @@ use App\Enum\VehicleStatus;
 use App\Models\AuctionGrade;
 use App\Models\Category;
 use App\Models\Manufacturer;
+use App\Services\HtmlSanitizer;
 
 class CarSensorMappingService
 {
@@ -38,6 +39,18 @@ class CarSensorMappingService
         'green'   => '#2E8B57',
         'dark green' => '#2E8B57',
     ];
+
+    /** Common wordings for the standard fuel/transmission options */
+    private const OPTION_SYNONYMS = [
+        'gasoline' => 'Petrol', 'gas' => 'Petrol', 'regular' => 'Petrol', 'premium' => 'Petrol',
+        'phev' => 'Hybrid', 'phv' => 'Hybrid', 'ev' => 'Electric',
+        'automatic' => 'Auto', 'at' => 'Auto', 'cvt' => 'Auto',
+        'manual' => 'MT', '5mt' => '5Spd', '6mt' => '6Spd', 'dual-clutch' => 'DCT',
+    ];
+
+    public function __construct(private HtmlSanitizer $sanitizer)
+    {
+    }
 
     /**
      * Map scraped data to form fields using live DB options.
@@ -74,7 +87,8 @@ class CarSensorMappingService
 
         // --- Year ---
         $year = isset($scraped['year']) ? (int) $scraped['year'] : null;
-        if ($year && ($year < 1970 || $year > (date('Y') + 2))) {
+        // Same range as the Year dropdown on the car form (1970 to next year)
+        if ($year && ($year < 1970 || $year > (date('Y') + 1))) {
             $needsManualReview[] = "Year {$year} appears out of range — please verify.";
             $year = null;
         }
@@ -119,14 +133,15 @@ class CarSensorMappingService
         $data['card_subtitle'] = $price ?? '';
 
         // --- Description ---
-        $description = $scraped['description'] ?? null;
+        $description = is_string($scraped['description'] ?? null) ? $scraped['description'] : null;
         if ($description) {
             // Wrap in paragraph if not already HTML
             if (!preg_match('/<[^>]+>/', $description)) {
                 $description = '<p>' . nl2br(htmlspecialchars($description, ENT_QUOTES, 'UTF-8')) . '</p>';
             }
         }
-        $data['description'] = $description;
+        // Text comes from a third-party page via AI and ends up on the public car page
+        $data['description'] = $this->sanitizer->clean($description);
 
         // --- Location ---
         $data['location'] = $scraped['location'] ?? null;
@@ -158,31 +173,21 @@ class CarSensorMappingService
         $data['exterior_grade'] = null;
 
         // --- Fuel type ---
-        $fuelMapped = $scraped['fuel_type'] ?? null;
-        $allowedFuelTypes = ['Petrol', 'Diesel', 'Hybrid', 'Electric'];
-        if ($fuelMapped && !in_array($fuelMapped, $allowedFuelTypes, true)) {
-            $data['fuel_type']        = null;
-            $data['fuel_type_custom'] = $fuelMapped;
-            $data['fuel_custom_option'] = '1';
-            $needsManualReview[] = "Fuel type '{$fuelMapped}' could not be mapped to a standard option and stored as custom wording.";
-        } else {
-            $data['fuel_type']        = $fuelMapped;
-            $data['fuel_type_custom'] = $scraped['fuel_type_raw'] ?? null;
-            $data['fuel_custom_option'] = !empty($data['fuel_type_custom']) ? '1' : '0';
+        $fuel = $this->mapOption($scraped['fuel_type'] ?? null, $scraped['fuel_type_raw'] ?? null, ['Petrol', 'Diesel', 'Hybrid', 'Electric'], 'Fuel type');
+        $data['fuel_type']          = $fuel['value'];
+        $data['fuel_type_custom']   = $fuel['custom'];
+        $data['fuel_custom_option'] = $fuel['custom'] !== null ? '1' : '0';
+        if ($fuel['review']) {
+            $needsManualReview[] = $fuel['review'];
         }
 
         // --- Transmission ---
-        $transMapped = $scraped['transmission'] ?? null;
-        $allowedTrans = ['Auto', 'MT', '5Spd', '6Spd', 'DCT', 'Other'];
-        if ($transMapped && !in_array($transMapped, $allowedTrans, true)) {
-            $data['transmission']        = null;
-            $data['transmission_custom'] = $transMapped;
-            $data['trans_custom_option'] = '1';
-            $needsManualReview[] = "Transmission '{$transMapped}' could not be mapped to a standard option and stored as custom wording.";
-        } else {
-            $data['transmission']        = $transMapped;
-            $data['transmission_custom'] = $scraped['transmission_raw'] ?? null;
-            $data['trans_custom_option'] = !empty($data['transmission_custom']) ? '1' : '0';
+        $trans = $this->mapOption($scraped['transmission'] ?? null, $scraped['transmission_raw'] ?? null, ['Auto', 'MT', '5Spd', '6Spd', 'DCT', 'Other'], 'Transmission');
+        $data['transmission']        = $trans['value'];
+        $data['transmission_custom'] = $trans['custom'];
+        $data['trans_custom_option'] = $trans['custom'] !== null ? '1' : '0';
+        if ($trans['review']) {
+            $needsManualReview[] = $trans['review'];
         }
 
         // --- Colors ---
@@ -208,6 +213,41 @@ class CarSensorMappingService
     }
 
     // ---------- Private helpers ----------
+
+    /**
+     * Map to a standard select option. Custom wording is used only when no standard option
+     * matches, and never in Japanese (it would be shown as-is on the English site).
+     *
+     * @return array{value: ?string, custom: ?string, review: ?string}
+     */
+    private function mapOption($mapped, $raw, array $allowed, string $label): array
+    {
+        if (is_string($mapped)) {
+            $key = strtolower(trim($mapped));
+            // Canonical option spelling (case-insensitive), then known synonyms
+            $mapped = collect($allowed)->first(fn ($option) => strtolower($option) === $key)
+                ?? self::OPTION_SYNONYMS[$key]
+                ?? $mapped;
+        }
+
+        if (is_string($mapped) && in_array($mapped, $allowed, true)) {
+            return ['value' => $mapped, 'custom' => null, 'review' => null];
+        }
+
+        // An unrecognised mapped value is the AI's own wording; otherwise fall back to the raw term
+        $candidate = collect([$mapped, $raw])->first(fn ($term) => is_string($term) && trim($term) !== '');
+        if ($candidate === null) {
+            return ['value' => null, 'custom' => null, 'review' => null];
+        }
+
+        $candidate = trim($candidate);
+
+        if (preg_match('/[\p{Hiragana}\p{Katakana}\p{Han}]/u', $candidate)) {
+            return ['value' => null, 'custom' => null, 'review' => "{$label} '{$candidate}' could not be translated — please select manually."];
+        }
+
+        return ['value' => null, 'custom' => $candidate, 'review' => "{$label} '{$candidate}' could not be mapped to a standard option and was stored as custom wording."];
+    }
 
     private function matchManufacturer(?string $scraped, $manufacturers): array
     {

@@ -15,5 +15,8 @@ class SiteSettings extends Model
         'admin_logo',
         'footer_logo',
         'favicon',
+        'services_page_badge',
+        'services_page_title',
+        'services_page_description',
     ];
 }

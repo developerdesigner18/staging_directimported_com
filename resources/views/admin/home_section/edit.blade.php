@@ -12,6 +12,14 @@
             transform: translateY(-2px);
         }
 
+        .repeater-row {
+            transition: all 0.3s ease;
+        }
+
+        .repeater-row:hover {
+            border-color: #405189 !important;
+        }
+
         .bg-light-subtle {
             background-color: rgba(var(--vz-light-rgb), .5) !important;
         }
@@ -63,6 +71,31 @@
                                 <i class="ri-list-check align-bottom me-1"></i> Feature Points
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#aboutHero" role="tab">
+                                <i class="ri-pages-line align-bottom me-1"></i> About Page: Hero
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#aboutStory" role="tab">
+                                <i class="ri-book-open-line align-bottom me-1"></i> Our Story
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#aboutOperations" role="tab">
+                                <i class="ri-apps-line align-bottom me-1"></i> Core Operations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#aboutFacts" role="tab">
+                                <i class="ri-table-line align-bottom me-1"></i> Operational Facts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#aboutPassion" role="tab">
+                                <i class="ri-car-line align-bottom me-1"></i> Vehicles We Source
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <div class="card-body p-4">
@@ -71,6 +104,7 @@
                         <div class="tab-content">
                             <!-- General Info Tab -->
                             <div class="tab-pane active" id="generalInfo" role="tabpanel">
+                                <div class="alert alert-light border mb-4 fs-13"><i class="ri-home-4-line me-1"></i> Shown in the About section on the homepage.</div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-4">
@@ -101,7 +135,7 @@
                                 <div class="d-flex align-items-center mb-4">
                                     <div class="flex-grow-1">
                                         <h6 class="fw-bold mb-1">Feature Points</h6>
-                                        <p class="text-muted mb-0">Add or manage key points for this section.</p>
+                                        <p class="text-muted mb-0">Add or manage key points for the homepage About section.</p>
                                     </div>
                                     <button type="button" class="btn btn-success btn-label waves-effect waves-light"
                                         id="addMorePoint">
@@ -146,6 +180,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @include('admin.home_section.partials.about-page-tabs')
                         </div>
 
                         <div class="mt-4 border-top border-top-dashed pt-4 text-end">
@@ -159,6 +195,16 @@
                             </button>
                         </div>
                     </form>
+
+                    <template id="operationRowTemplate">
+                        @include('admin.home_section.partials.operation-row', ['index' => '__INDEX__', 'item' => []])
+                    </template>
+                    <template id="factRowTemplate">
+                        @include('admin.home_section.partials.fact-row', ['index' => '__INDEX__', 'item' => []])
+                    </template>
+                    <template id="passionCardTemplate">
+                        @include('admin.home_section.partials.passion-card-row', ['index' => '__INDEX__', 'item' => []])
+                    </template>
                 </div>
             </div>
         </div>
@@ -168,7 +214,7 @@
 @section('script')
     <script>
         tinymce.init({
-            selector: '#short_description_editor',
+            selector: '#short_description_editor, #about_intro_editor, #founded_content_editor, #advantage_content_editor, #passion_intro_editor',
             height: 300,
             menubar: true,
             plugins: 'lists link image help wordcount code media table',
@@ -218,6 +264,18 @@
                 }
             });
 
+            // About page repeaters (cards / rows)
+            let rowIndex = Date.now();
+            $(document).on('click', '.add-row', function () {
+                const html = $($(this).data('template')).html().replace(/__INDEX__/g, rowIndex++);
+                $($(this).data('container')).append(html);
+            });
+
+            $(document).on('click', '.remove-row', function () {
+                $(this).closest('.repeater-row').remove();
+            });
+
+
             $("#editForm").validate({
                 rules: {
                     title: { required: true },
@@ -238,6 +296,11 @@
                 submitHandler: function (form, e) {
                     e.preventDefault();
 
+                    // Make sure the latest editor content is posted even if no change event fired yet
+                    tinymce.get().forEach(function (editor) {
+                        document.getElementById(editor.id.replace('_editor', '')).value = editor.getContent();
+                    });
+
                     $.ajax({
                         url: "{{ route('admin.home_section.update') }}",
                         method: "POST",
@@ -257,21 +320,28 @@
                         error: function (xhr) {
                             let data = xhr.responseJSON;
                             if (data.hasOwnProperty('error')) {
+                                let firstPane = null;
                                 $.each(data.error, function (key, value) {
+                                    let $target;
                                     // Handle array errors for points (e.g., points.0)
                                     if (key.startsWith('points.')) {
                                         let index = key.split('.')[1];
-                                        let $row = $('.point-row').eq(index);
-                                        $row.find('.point-error').html(value).show();
-
-                                        // Switch to points tab if there's an error there
-                                        $('.nav-tabs-custom a[href="#pointsInfo"]').tab('show');
+                                        $target = $('.point-row').eq(index).find('.point-error');
+                                    } else if (key.includes('.')) {
+                                        // Repeater fields, e.g. operations.3.title -> operations[3][title]
+                                        let parts = key.split('.');
+                                        let name = parts[0] + parts.slice(1).map(function (p) { return '[' + p + ']'; }).join('');
+                                        $target = $('[name="' + name + '"]').closest('.repeater-field').find('.field-error');
                                     } else {
-                                        $("#" + key + "-error").html(value).show();
-                                        // Switch to general tab if there's an error there
-                                        $('.nav-tabs-custom a[href="#generalInfo"]').tab('show');
+                                        $target = $("#" + key + "-error");
                                     }
+                                    $target.html(Array.isArray(value) ? value[0] : value).show();
+                                    firstPane = firstPane || $target.closest('.tab-pane').attr('id');
                                 });
+                                // Switch to the first tab that has an error
+                                if (firstPane) {
+                                    $('.nav-tabs-custom a[href="#' + firstPane + '"]').tab('show');
+                                }
                             } else if (data.hasOwnProperty('message')) {
                                 actionError(xhr, data.message);
                             } else {
@@ -287,4 +357,5 @@
             });
         });
     </script>
+    @include('admin.partials.icon-picker-modal')
 @endsection

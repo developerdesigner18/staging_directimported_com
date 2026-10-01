@@ -22,6 +22,8 @@
                 <div class="card-body">
                     <form id="editForm" enctype="multipart/form-data">
                         @csrf
+                        <h5 class="card-title mb-3">Service Information</h5>
+
                         <!-- Title -->
                         <div class="mb-3">
                             <label for="title"
@@ -31,11 +33,16 @@
                             <label id="title-error" class="text-danger error" style="display:none"></label>
                         </div>
 
+                        @include('admin.service.partials.homepage-fields')
+
+                        <h5 class="card-title mb-3 mt-4 pt-3 border-top">Service Page Content</h5>
+
                         <!-- Images -->
                         <div class="mb-3">
                             <label for="images"
                                 class="form-label">{{ admin_label('service_form', 'service_images', 'Service Images') }}</label>
                             <input type="file" class="filepond" id="images" name="images[]" multiple>
+                            <small class="text-muted d-block">The first image is shown on the Services page. Drag thumbnails to change the order.</small>
 
                             @if($service->images)
                                 <div id="sortable-images" class="d-flex flex-wrap">
@@ -68,6 +75,8 @@
                             <input type="hidden" id="description" name="description" value="{{ $service->description }}">
                             <label id="description-error" class="text-danger error" style="display:none"></label>
                         </div>
+
+                        @include('admin.service.partials.page-fields')
 
                         <button type="submit" class="btn btn-primary">Update</button>
 
@@ -275,4 +284,5 @@
             });
         });
     </script>
+    @include('admin.service.partials.page-fields-script')
 @endsection

@@ -271,6 +271,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::post('/update/{id}', 'update')->name('update');
         Route::post('/delete', 'delete')->name('delete');
         Route::post('/sort', 'updateSort')->name('sort');
+        Route::post('/page-header', 'updatePageHeader')->name('page_header.update');
     });
 
     // Home Section (About Us)

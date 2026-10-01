@@ -733,6 +733,12 @@
             color: #2a3547;
         }
 
+        .icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
         .icon svg {
             width: 48px;
             height: 48px;
@@ -1014,11 +1020,14 @@
         <div class="section-container">
             <h2 class="section-title">Our Services</h2>
 
+            @if($services->isNotEmpty())
             <div class="tiles-grid">
-                <!-- Tile 1 -->
+                @foreach($services as $service)
                 <div class="tile">
                     <div class="icon icon-dark">
-                        <!-- Document / List Icon -->
+                        @if($service->icon_url)
+                        <img src="{{ $service->icon_url }}" alt="{{ $service->title }}" loading="lazy">
+                        @else
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -1027,63 +1036,14 @@
                             <line x1="8" y1="17" x2="16" y2="17"></line>
                             <polyline points="10 9 9 9 8 9"></polyline>
                         </svg>
+                        @endif
                     </div>
-                    <h3 class="tile-title">Documentation for export</h3>
-                    <p class="tile-description">Complete support with export and import documentation, customs export
-                        clearance, to successfully export your vehicles without delay.</p>
+                    <h3 class="tile-title">{{ $service->title }}</h3>
+                    <p class="tile-description">{{ $service->excerpt }}</p>
                 </div>
-
-                <!-- Tile 2 -->
-                <div class="tile">
-                    <div class="icon icon-dark">
-                        <!-- Certificate / Ribbon Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="14" rx="2"></rect>
-                            <path d="M7 7h10"></path>
-                            <path d="M7 11h10"></path>
-                            <circle cx="16" cy="16" r="3"></circle>
-                            <path d="M14.5 18.5l-1 4 2.5-1.5 2.5 1.5-1-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="tile-title">Inspection and ODO Certification</h3>
-                    <p class="tile-description">Thorough inspection reports translated checked based on auction location and
-                        grading. Not all auctions are equal. ODO certification services from JEVIC to ensure genuine KLM</p>
-                </div>
-
-                <!-- Tile 3 -->
-                <div class="tile">
-                    <div class="icon icon-dark">
-                        <!-- Gear / Settings / Check Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path
-                                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
-                            </path>
-                            <path d="M9 12l2 2 4-4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="tile-title">Auction Inspection Services</h3>
-                    <p class="tile-description">Do we sit behind a computer NO!!! We provide detailed information,
-                        high-resolution photos, and condition reports for each vehicle at the auctions we attend.</p>
-                </div>
-
-                <!-- Tile 4 (NEW) -->
-                <div class="tile">
-                    <div class="icon icon-dark">
-                        <!-- Document + Shield/Compliance Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <path d="M12 18s5-2 5-6V9l-5-2-5 2v3c0 4 5 6 5 6z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="tile-title">Custom Import service for your country</h3>
-                    <p class="tile-description">Customs clearance and compliance assistance and or brokerage if required.
-                    </p>
-                </div>
+                @endforeach
             </div>
+            @endif
 
             <!-- READ MORE BUTTON -->
             {{-- <div class="button-wrapper">
@@ -1122,7 +1082,7 @@
                                 </div>
                             @endif
 
-                            <a href="#" class="btn-read-more">
+                            <a href="{{ route('about.us') }}" class="btn-read-more">
                                 READ MORE <i class='bx bx-right-arrow-alt'></i>
                             </a>
                         </div>

@@ -14,6 +14,9 @@ use App\Models\Category;
 use App\Models\HeroSlider;
 use App\Models\CarSpec;
 use App\Models\Manufacturer;
+use App\Services\Gemini\GeminiClient;
+use App\Services\Gemini\GeminiException;
+use App\Services\HtmlSanitizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -830,7 +833,7 @@ class CarController extends Controller
         }
     }
 
-    public function generateAiContent(Request $request)
+    public function generateAiContent(Request $request, GeminiClient $gemini, HtmlSanitizer $sanitizer)
     {
         $vehicleData = $request->input('vehicle_data', []);
         $userPrompt = trim((string) $request->input('prompt', ''));
@@ -901,106 +904,31 @@ class CarController extends Controller
             ]);
         }
 
-        $apiKey = config('services.gemini.key') ?? env('GEMINI_API_KEY');
+        // Retries on a busy AI service can take longer than the default PHP limit
+        @set_time_limit(240);
 
-        if (empty($apiKey)) {
-            return $this->sendError('Gemini API key is not configured.');
-        }
+        $systemPrompt = "You are an expert automotive copywriter for a Japanese vehicle import business (Direct Imported Japan). "
+            . "Write a detailed, captivating, and professional car listing description based only on the vehicle information provided. "
+            . "Do not invent specifications, features, mileage, condition, or any other information that is not provided. "
+            . "Format the output in clean HTML markup using <p>, <h3>, <ul>, <li>, <strong>, etc. "
+            . "The HTML should be suitable for display inside a rich text web editor. "
+            . "Do NOT wrap the response in markdown code blocks such as ```html ... ```.";
 
         try {
-            $systemPrompt = "You are an expert automotive copywriter for a Japanese vehicle import business (Direct Imported Japan). "
-                . "Write a detailed, captivating, and professional car listing description based only on the vehicle information provided. "
-                . "Do not invent specifications, features, mileage, condition, or any other information that is not provided. "
-                . "Format the output in clean HTML markup using <p>, <h3>, <ul>, <li>, <strong>, etc. "
-                . "The HTML should be suitable for display inside a rich text web editor. "
-                . "Do NOT wrap the response in markdown code blocks such as ```html ... ```.";
-
-            $fullPrompt = $systemPrompt . "\n\nVehicle Information:\n" . $vehicleInfoText;
-
-            $response = Http::withHeaders([
-                'x-goog-api-key' => $apiKey,
-                'Content-Type' => 'application/json',
-            ])->post(
-                    'https://generativelanguage.googleapis.com/v1beta/interactions',
-                    [
-                        'model' => 'gemini-3.6-flash',
-                        'input' => $fullPrompt,
-                    ]
-                );
-
-            if (!$response->successful()) {
-                $errorMessage = $response->json('error.message')
-                    ?? 'Failed to generate AI content.';
-
-                return $this->sendError(
-                    'Gemini API Error: ' . $errorMessage
-                );
-            }
-
-            $responseData = $response->json();
-
-            /*
-             * Extract generated text from the Interactions API response.
-             */
-            $generatedText = null;
-
-            foreach ($responseData['outputs'] ?? [] as $output) {
-                if (($output['type'] ?? null) === 'text') {
-                    $generatedText = $output['text'] ?? null;
-                    break;
-                }
-            }
-
-            /*
-             * Fallback in case the response structure contains
-             * model_output steps.
-             */
-            if (empty($generatedText)) {
-                foreach ($responseData['steps'] ?? [] as $step) {
-                    if (($step['type'] ?? null) === 'model_output') {
-                        $generatedText = $step['content'] ?? null;
-
-                        if (is_array($generatedText)) {
-                            $generatedText = $generatedText['text'] ?? null;
-                        }
-
-                        if (!empty($generatedText)) {
-                            break;
-                        }
-                    }
-                }
-            }
-
-            if (empty($generatedText)) {
-                return $this->sendError(
-                    'Gemini returned an empty response.'
-                );
-            }
-
-            // Remove markdown code fences if Gemini returns them.
-            $generatedText = preg_replace(
-                '/^```(?:html)?\s*/i',
-                '',
-                trim($generatedText)
-            );
-
-            $generatedText = preg_replace(
-                '/\s*```$/',
-                '',
-                $generatedText
-            );
-
-            return response()->json([
-                'status' => true,
-                'message' => 'AI Content generated successfully!',
-                'content' => trim($generatedText),
-            ]);
-
-        } catch (\Exception $e) {
-
-            return $this->sendError(
-                'AI Generation Exception: ' . $e->getMessage()
-            );
+            $generatedText = $gemini->generate($systemPrompt . "\n\nVehicle Information:\n" . $vehicleInfoText, 60);
+        } catch (GeminiException $e) {
+            return $this->sendError($e->getMessage());
         }
+
+        // Remove markdown code fences if Gemini returns them.
+        $generatedText = preg_replace('/^```(?:html)?\s*/i', '', trim($generatedText));
+        $generatedText = preg_replace('/\s*```$/', '', $generatedText);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'AI Content generated successfully!',
+            // AI output is published on the public car page, so only safe formatting tags are kept
+            'content' => $sanitizer->clean(trim($generatedText)),
+        ]);
     }
 }

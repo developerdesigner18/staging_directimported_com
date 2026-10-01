@@ -12,8 +12,9 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $service = Service::all();
-        return view("landing.pages.services", compact("service"));
+        $services = Service::ordered()->get();
+        $settings = getSetting();
+        return view("landing.pages.services", compact("services", "settings"));
     }
 
     /**

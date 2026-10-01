@@ -140,6 +140,10 @@
         margin: 0;
     }
 
+    .service-text p:last-child {
+        margin-bottom: 0;
+    }
+
     /* Feature Tags */
     .service-tags {
         display: flex;
@@ -204,231 +208,73 @@
     <div class="container">
 
         <!-- Modern Header Block -->
+        @if(filled($settings->services_page_badge) || filled($settings->services_page_title) || filled($settings->services_page_description))
         <div class="services-header">
+            @if(filled($settings->services_page_badge))
             <div class="services-pill-badge">
                 <i class="bx bx-shield-alt-2"></i>
-                Licensed Motor Vehicle Trader in Japan
+                {{ $settings->services_page_badge }}
             </div>
+            @endif
+            @if(filled($settings->services_page_title))
             <h1 class="services-main-title">
-                End-to-End Procurement & Export
+                {{ $settings->services_page_title }}
             </h1>
+            @endif
+            @if(filled($settings->services_page_description))
             <p class="services-main-desc">
-                Independent technical evaluations, zero sales-target bias, and flat-fee handling for buyers worldwide.
+                {{ $settings->services_page_description }}
             </p>
+            @endif
         </div>
+        @endif
 
         <!-- Alternating Split Showcase -->
         <div class="services-list">
 
-            <!-- Service 01: Auction Vehicle Bidding & Inspection -->
-            <div class="row align-items-center g-4 g-lg-5">
+            @forelse($services as $service)
+            <div class="row align-items-center g-4 g-lg-5 @if($loop->even) flex-column-reverse flex-lg-row-reverse @endif">
+                @if($service->image_url)
                 <div class="col-lg-6">
                     <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1503376780353-7e6692767b70.avif') }}" alt="Auction Vehicle Inspection" loading="lazy">
+                        <img src="{{ $service->image_url }}" alt="{{ $service->title }}" loading="lazy">
+                        @if(filled($service->image_badge))
                         <div class="service-img-badge">
-                            Hands-On Assessment
+                            {{ $service->image_badge }}
                         </div>
+                        @endif
                     </div>
                 </div>
+                @endif
                 <div class="col-lg-6">
                     <div class="service-content">
                         <div class="service-number-row">
-                            <span class="service-number">01</span>
+                            <span class="service-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
                             <span class="service-divider"></span>
                         </div>
                         <h2 class="service-title">
-                            Auction Vehicle Bidding & Inspection
+                            {{ $service->title }}
                         </h2>
-                        <p class="service-text">
-                            Trade-qualified Automotive Technician Phil Cathcart personally conducts physical inspections at Japanese wholesale auctions. With 30 years of vehicle assessment experience, he detects hidden rust, panel gaps, concealed repairs, and mechanical issues before you bid—delivering high-resolution photos and fully translated condition reports.
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-user-check"></i> Physical Checks
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-file"></i> Translated Sheets
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-camera"></i> High-Res Photos
-                            </span>
+                        @if(filled($service->description))
+                        <div class="service-text">
+                            {!! $service->description !!}
                         </div>
+                        @endif
+                        @if(!empty($service->features))
+                        <div class="service-tags">
+                            @foreach($service->features as $feature)
+                            <span class="feature-tag">
+                                <i class="{{ ($feature['icon'] ?? null) ?: 'bx bx-check-circle' }}"></i> {{ $feature['text'] ?? '' }}
+                            </span>
+                            @endforeach
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
-
-            <!-- Service 02: Dealer Yard Direct Sourcing (Reversed Direction) -->
-            <div class="row align-items-center g-4 g-lg-5 flex-column-reverse flex-lg-row-reverse">
-                <div class="col-lg-6">
-                    <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1563720223185-11003d516935.avif') }}" alt="Dealer Yard Sourcing" loading="lazy">
-                        <div class="service-img-badge">
-                            Direct Purchase Storefront
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-content">
-                        <div class="service-number-row">
-                            <span class="service-number">02</span>
-                            <span class="service-divider"></span>
-                        </div>
-                        <h2 class="service-title">
-                            Dealer Yard Direct Sourcing
-                        </h2>
-                        <p class="service-text">
-                            Direct purchasing of hand-picked stock from dealership yards across Japan. Operating under International Auto Select Japan LLC as a licensed motor vehicle dealer, we charge a transparent flat service fee with zero price markups—displaying actual wholesale prices in Japanese Yen (JPY).
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-tag"></i> Flat Service Fee
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-yen"></i> Direct JPY Cost
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-block"></i> Zero Sales Quotas
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 03: Inspection & ODO Certification -->
-            <div class="row align-items-center g-4 g-lg-5">
-                <div class="col-lg-6">
-                    <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1508974239320-0a029497e820.avif') }}" alt="Vehicle Digital Odometer Dashboard" loading="lazy">
-                        <div class="service-img-badge">
-                            Verified Integrity
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-content">
-                        <div class="service-number-row">
-                            <span class="service-number">03</span>
-                            <span class="service-divider"></span>
-                        </div>
-                        <h2 class="service-title">
-                            Inspection & ODO Certification
-                        </h2>
-                        <p class="service-text">
-                            Not all auction grades are equal, and high-volume inspectors miss critical details. We provide thorough independent inspections along with official ODO certification (including JEVIC) to verify genuine kilometer readings and protect buyers from altered odometers.
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-badge-check"></i> JEVIC Certified
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-shield-quarter"></i> Mileage Audit
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 04: Documentation & Export Clearance (Reversed Direction) -->
-            <div class="row align-items-center g-4 g-lg-5 flex-column-reverse flex-lg-row-reverse">
-                <div class="col-lg-6">
-                    <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1450133064473-71024230f91b.avif') }}" alt="Export Documentation" loading="lazy">
-                        <div class="service-img-badge">
-                            Full Customs Support
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-content">
-                        <div class="service-number-row">
-                            <span class="service-number">04</span>
-                            <span class="service-divider"></span>
-                        </div>
-                        <h2 class="service-title">
-                            Documentation & Export Clearance
-                        </h2>
-                        <p class="service-text">
-                            Complete support with Japanese export deregistrations, translated certificates, and official customs export clearance. We manage all administrative compliance so your vehicle exports smoothly without customs holds or import delays.
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-receipt"></i> Export Certificate
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-id-card"></i> English Translation
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 05: Global Shipping & Port Logistics -->
-            <div class="row align-items-center g-4 g-lg-5">
-                <div class="col-lg-6">
-                    <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1578575437130-527eed3abbec.avif') }}" alt="Worldwide Export Logistics" loading="lazy">
-                        <div class="service-img-badge">
-                            Worldwide Freight
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-content">
-                        <div class="service-number-row">
-                            <span class="service-number">05</span>
-                            <span class="service-divider"></span>
-                        </div>
-                        <h2 class="service-title">
-                            Global Shipping & Port Logistics
-                        </h2>
-                        <p class="service-text">
-                            Complete handling of internal Japanese port transport and international freight booking. We specialize in vehicle shipping routes to Australia, the USA, UK, Ireland, Canada, and the Caribbean Islands via secure RORO or container vessels.
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-globe"></i> AU, USA, UK, IE, CA & Caribbean
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-ship"></i> RORO & Container
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Service 06: High-Performance JDM & European Classics (Reversed Direction) -->
-            <div class="row align-items-center g-4 g-lg-5 flex-column-reverse flex-lg-row-reverse">
-                <div class="col-lg-6">
-                    <div class="service-img-frame">
-                        <img src="{{ asset('uploads/service_images/photo-1617814076367-b759c7d7e738.avif') }}" alt="JDM & Euro Performance Cars" loading="lazy">
-                        <div class="service-img-badge">
-                            Specialist Passion
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="service-content">
-                        <div class="service-number-row">
-                            <span class="service-number">06</span>
-                            <span class="service-divider"></span>
-                        </div>
-                        <h2 class="service-title">
-                            High-Performance JDM & European Classics
-                        </h2>
-                        <p class="service-text">
-                            Our specialty lies in high-performance and modified vehicles. We hunt down factory JDM classics like Skyline GT-Rs, Supras, and Silvias, alongside garaged European machinery like BMW M-cars. Phil's mechanical background guarantees expert inspection of tuning, aftermarket parts, and turbos.
-                        </p>
-                        <div class="service-tags">
-                            <span class="feature-tag">
-                                <i class="bx bx-car"></i> Skylines, Supras, Silvias
-                            </span>
-                            <span class="feature-tag">
-                                <i class="bx bx-tachometer"></i> BMW M Cars & Euro Classics
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @empty
+            <p class="services-main-desc text-center">No services available right now.</p>
+            @endforelse
 
         </div>
     </div>

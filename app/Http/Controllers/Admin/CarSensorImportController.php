@@ -37,6 +37,9 @@ class CarSensorImportController extends Controller
             return $this->sendValidationError($validator->errors());
         }
 
+        // Page fetch + AI extraction (with retries) + image downloads can exceed the default PHP limit
+        @set_time_limit(300);
+
         try {
             $adminId = null;
 
@@ -94,6 +97,14 @@ class CarSensorImportController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage() ?: 'An error occurred during import. Please try again.',
+            ], 500);
+
+        } catch (\Throwable $e) {
+            // Unexpected PHP errors: log the detail, return JSON instead of an HTML error page
+            report($e);
+            return response()->json([
+                'success' => false,
+                'message' => 'An unexpected error occurred during import. Please try again.',
             ], 500);
         }
     }

@@ -16,6 +16,44 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Services Page Header</h5>
+                    <p class="text-muted mb-0 fs-12">Heading shown at the top of the dedicated Services page. The services below are listed there in this order; the first 4 also appear on the homepage.</p>
+                </div>
+                <div class="card-body">
+                    <form id="pageHeaderForm">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="services_page_badge" class="form-label">{{ admin_label('service_form', 'page_badge', 'Badge Text') }}</label>
+                                <input type="text" class="form-control" id="services_page_badge" name="services_page_badge" maxlength="150"
+                                    value="{{ $settings->services_page_badge }}" placeholder="e.g. Licensed Motor Vehicle Trader in Japan">
+                                <label id="services_page_badge-error" class="text-danger error" style="display:none"></label>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="services_page_title" class="form-label">{{ admin_label('service_form', 'page_title', 'Page Title') }}</label>
+                                <input type="text" class="form-control" id="services_page_title" name="services_page_title" maxlength="255"
+                                    value="{{ $settings->services_page_title }}" placeholder="e.g. End-to-End Procurement & Export">
+                                <label id="services_page_title-error" class="text-danger error" style="display:none"></label>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="services_page_description" class="form-label">{{ admin_label('service_form', 'page_description', 'Page Description') }}</label>
+                                <textarea class="form-control" id="services_page_description" name="services_page_description" rows="2" maxlength="1000"
+                                    placeholder="Short introduction under the title">{{ $settings->services_page_description }}</textarea>
+                                <label id="services_page_description-error" class="text-danger error" style="display:none"></label>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary" id="btnPageHeader">Save Header</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row g-4 mb-3">
         <div class="col-sm-auto">
             <div>
@@ -42,6 +80,39 @@
 
 @section('script')
     <script>
+        $(document).on("submit", "#pageHeaderForm", function (e) {
+            e.preventDefault();
+            const $btn = $("#btnPageHeader");
+            $.ajax({
+                url: "{{ route('admin.service.page_header.update') }}",
+                method: "POST",
+                dataType: "json",
+                data: $(this).serialize(),
+                beforeSend: function () {
+                    $btn.attr("disabled", true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...');
+                    $("#pageHeaderForm .error").html("").hide();
+                },
+                success: function (result) {
+                    sendSuccess(result.message);
+                },
+                error: function (xhr) {
+                    let data = xhr.responseJSON;
+                    if (data && data.hasOwnProperty("error")) {
+                        $.each(data.error, function (key, value) {
+                            $("#" + key + "-error").html(Array.isArray(value) ? value[0] : value).show();
+                        });
+                    } else if (data && data.hasOwnProperty("message")) {
+                        actionError(xhr, data.message);
+                    } else {
+                        actionError(xhr);
+                    }
+                },
+                complete: function () {
+                    $btn.attr("disabled", false).html("Save Header");
+                }
+            });
+        });
+
         function deleteService(id, element) {
             Swal.fire({
                 title: "Are you sure?",

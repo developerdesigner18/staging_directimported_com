@@ -88,9 +88,10 @@
                     </table>
                 </div>
                 <div class="col-md-6" id="carsensor-review-col">
-                    <h6 class="text-muted text-uppercase small fw-bold mb-2 text-danger">Needs Manual Review</h6>
+                    <h6 class="text-muted text-uppercase small fw-bold mb-2 text-danger" id="carsensor-review-title">Needs Manual Review</h6>
                     <ul class="list-unstyled mb-0" id="carsensor-review-list">
                     </ul>
+                    <p class="text-success small d-none" id="carsensor-review-none"><i class="ri-checkbox-circle-line me-1"></i>All fields were mapped with high confidence.</p>
                 </div>
             </div>
         </div>

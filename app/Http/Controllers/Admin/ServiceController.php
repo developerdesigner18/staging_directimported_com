@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Service;
+use App\Models\SiteSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -55,7 +56,8 @@ class ServiceController extends Controller
                 ->make(true);
         }
 
-        return view('admin.service.index');
+        $settings = getSetting();
+        return view('admin.service.index', compact('settings'));
     }
 
     public function create()
@@ -70,12 +72,12 @@ class ServiceController extends Controller
             'images' => 'required|array',
             'images.*' => 'required',
             'description' => 'required|string',
-        ], [
+        ] + $this->pageContentRules(), [
             'title.required' => 'The service title is required.',
             'images.required' => 'Please upload at least one image.',
             'images.*.required' => 'The image is required.',
             'description.required' => 'Description is required.',
-        ]);
+        ] + $this->pageContentMessages());
 
         if ($validator->fails()) {
             return $this->sendValidationError($validator->errors());
@@ -91,6 +93,7 @@ class ServiceController extends Controller
             $service->sort_order = $sort_order + 1;
             $service->title = $request->title;
             $service->description = $request->description;
+            $this->fillPageContent($service, $request);
 
             $images = [];
             if ($request->images) {
@@ -127,7 +130,7 @@ class ServiceController extends Controller
             'removed_images' => 'nullable|string',
             'image_order' => 'nullable|string',
             'description' => 'required|string',
-        ]);
+        ] + $this->pageContentRules(), $this->pageContentMessages());
 
         if ($validator->fails()) {
             return $this->sendValidationError($validator->errors());
@@ -139,6 +142,7 @@ class ServiceController extends Controller
             $service = Service::findOrFail($id);
             $service->title = $request->title;
             $service->description = $request->description;
+            $this->fillPageContent($service, $request);
 
             $currentImages = $service->images ?? [];
 
@@ -226,6 +230,84 @@ class ServiceController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
+        }
+    }
+
+    public function updatePageHeader(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'services_page_badge' => 'nullable|string|max:150',
+            'services_page_title' => 'nullable|string|max:255',
+            'services_page_description' => 'nullable|string|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendValidationError($validator->errors());
+        }
+
+        try {
+            $settings = SiteSettings::first() ?? new SiteSettings();
+            $settings->services_page_badge = $request->services_page_badge;
+            $settings->services_page_title = $request->services_page_title;
+            $settings->services_page_description = $request->services_page_description;
+            $settings->save();
+
+            return $this->sendSuccess('Services page header updated successfully!');
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage());
+        }
+    }
+
+    /**
+     * Validation for the homepage tile and Services page fields.
+     */
+    private function pageContentRules(): array
+    {
+        return [
+            'short_description' => 'nullable|string|max:500',
+            'icon' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                $file = json_decode($value, true);
+                if (!isset($file['type'], $file['data']) || !in_array($file['type'], ['image/png', 'image/jpeg', 'image/webp', 'image/gif'])) {
+                    return $fail('The icon must be a PNG, JPG, WEBP or GIF image.');
+                }
+                if (strlen(base64_decode($file['data'])) > 2 * 1024 * 1024) {
+                    $fail('The icon may not be greater than 2 MB.');
+                }
+            }],
+            'remove_icon' => 'nullable|boolean',
+            'image_badge' => 'nullable|string|max:100',
+            'features' => 'nullable|array|max:10',
+            'features.*.icon' => ['nullable', 'string', 'max:100', 'regex:/^[a-z0-9\- ]+$/i'],
+            'features.*.text' => 'nullable|string|max:100',
+        ];
+    }
+
+    private function pageContentMessages(): array
+    {
+        return [
+            'features.max' => 'You may add up to 10 feature tags.',
+            'features.*.icon.regex' => 'Please choose a valid icon.',
+            'features.*.text.max' => 'Feature tag text may not be greater than 100 characters.',
+        ];
+    }
+
+    private function fillPageContent(Service $service, Request $request): void
+    {
+        $service->short_description = $request->short_description;
+        $service->image_badge = $request->image_badge;
+        $service->features = collect($request->input('features', []))
+            ->map(fn($feature) => [
+                'icon' => trim($feature['icon'] ?? ''),
+                'text' => trim($feature['text'] ?? ''),
+            ])
+            ->filter(fn($feature) => $feature['text'] !== '')
+            ->values()
+            ->all();
+
+        if ($request->filled('icon')) {
+            $service->icon = uploadFilepondEncodedFile($request->icon, SERVICE_PATH, 'service_icon_');
+        } elseif ($request->boolean('remove_icon')) {
+            $service->icon = null;
         }
     }
 }

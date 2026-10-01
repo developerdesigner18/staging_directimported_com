@@ -67,6 +67,15 @@
         };
     }
 
+    /**
+     * Escape text for safe insertion into HTML (imported values come from third-party pages).
+     */
+    function csEscape(value) {
+        return String(value === null || value === undefined ? '' : value).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
     $(document).ready(function () {
         // --- AI Content Generation Handler ---
         $('#btn-generate-ai').on('click', function (e) {
@@ -230,14 +239,7 @@
                                 sendSuccess('Listing import complete! Please review the form before {{ !empty($isEdit) ? "updating" : "creating" }} the car.');
                             }
                         } else if (result.duplicate) {
-                            var dupMsg = result.message || 'This listing has already been imported.';
-                            if (result.edit_url) {
-                                dupMsg += ' <a href="' + result.edit_url + '" target="_blank" class="alert-link">View existing vehicle &rarr;</a>';
-                            }
-                            if (typeof sendError === 'function') {
-                                sendError('Duplicate: ' + result.message);
-                            }
-                            alert('⚠️ Duplicate Detected\n\n' + result.message);
+                            csShowDuplicate(result.message, result.edit_url);
                         } else {
                             if (typeof sendError === 'function') {
                                 sendError(result.message || 'Import failed. Please try again.');
@@ -248,6 +250,8 @@
                     }, 600);
                 },
                 error: function (xhr) {
+                    clearInterval(csProgressTimer);
+                    $('#carsensor-progress-bar').css('width', '0%');
                     $('#btn-cancel-import').prop('disabled', false);
                     $btn.prop('disabled', false).html('<i class="ri-download-2-line me-1"></i> Import &amp; Fill Form');
                     $('#carsensor-progress').addClass('d-none');
@@ -257,7 +261,7 @@
 
                     if (xhr.status === 409 && data && data.duplicate) {
                         bootstrap.Modal.getInstance(document.getElementById('carSensorImportModal')).hide();
-                        alert('⚠️ Duplicate Detected\n\n' + (data.message || 'This listing has already been imported.'));
+                        csShowDuplicate(data.message, data.edit_url);
                         return;
                     }
 
@@ -282,21 +286,41 @@
             });
         });
 
-        // --- Animate progress bar ---
+        // --- Animate progress bar (one animation at a time, so it can be stopped on error) ---
+        var csProgressTimer = null;
+
         function csAnimateProgress(from, to, durationMs) {
+            clearInterval(csProgressTimer);
             var current = from;
             var steps = 30;
             var stepValue = (to - from) / steps;
             var stepDuration = durationMs / steps;
 
-            var interval = setInterval(function () {
+            csProgressTimer = setInterval(function () {
                 current += stepValue;
                 if (current >= to) {
                     current = to;
-                    clearInterval(interval);
+                    clearInterval(csProgressTimer);
                 }
                 $('#carsensor-progress-bar').css('width', current + '%');
             }, stepDuration);
+        }
+
+        // --- Duplicate listing warning, with a link to the existing vehicle ---
+        function csShowDuplicate(message, editUrl) {
+            var text = message || 'This listing has already been imported.';
+
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Duplicate listing',
+                    html: csEscape(text) + (editUrl
+                        ? '<br><br><a href="' + csEscape(editUrl) + '" target="_blank" rel="noopener">View existing vehicle &rarr;</a>'
+                        : ''),
+                });
+            } else {
+                alert('Duplicate Detected\n\n' + text + (editUrl ? '\n\nExisting vehicle: ' + editUrl : ''));
+            }
         }
 
         // --- Populate form with imported data ---
@@ -455,7 +479,8 @@
         function csLoadFilePondImages(filepondJsonArray) {
             if (!filepondJsonArray || filepondJsonArray.length === 0) return;
 
-            var inputEl = document.querySelector('input.filepond');
+            // Once initialised, FilePond replaces <input class="filepond"> with its own root element
+            var inputEl = document.querySelector('.filepond--root') || document.querySelector('input.filepond');
             if (!inputEl) {
                 console.warn('Listing Import: FilePond input element not found.');
                 return;
@@ -534,21 +559,27 @@
         }
 
         // --- Render the import summary panel ---
+        // All imported values are escaped: they originate from a third-party listing page.
         function csShowSummary(result) {
             var data = result.data || {};
             var raw = result.scraped_raw || {};
 
+            var sourceUrl = /^https?:\/\//i.test(result.source_url || '') ? result.source_url : '';
+            var sourceCell = sourceUrl
+                ? '<a href="' + csEscape(sourceUrl) + '" target="_blank" rel="noopener noreferrer" class="text-truncate d-inline-block" style="max-width:200px;">' + csEscape(result.source_id || sourceUrl) + '</a>'
+                : '-';
+
             var rows = [
-                ['Source URL', '<a href="' + (result.source_url || '') + '" target="_blank" class="text-truncate d-inline-block" style="max-width:200px;">' + (result.source_id || '') + '</a>'],
-                ['Listing ID', result.source_id || '-'],
-                ['Manufacturer', raw.manufacturer || '-'],
-                ['Model', data.model || '-'],
-                ['Year', raw.year || '-'],
+                ['Source URL', sourceCell],
+                ['Listing ID', csEscape(result.source_id || '-')],
+                ['Manufacturer', csEscape(raw.manufacturer || '-')],
+                ['Model', csEscape(data.model || '-')],
+                ['Year', csEscape(raw.year || '-')],
                 ['Price (JPY)', raw.vehicle_price ? '¥' + parseInt(raw.vehicle_price).toLocaleString() : '-'],
                 ['Odometer', raw.odometer ? parseInt(raw.odometer).toLocaleString() + ' km' : '-'],
-                ['Body Type', raw.body_type || '-'],
-                ['Location', raw.location || '-'],
-                ['Images Downloaded', (result.images_downloaded || 0) + ' of ' + (result.images_total || 0)],
+                ['Body Type', csEscape(raw.body_type || '-')],
+                ['Location', csEscape(raw.location || '-')],
+                ['Images Downloaded', (parseInt(result.images_downloaded) || 0) + ' of ' + (parseInt(result.images_total) || 0)],
             ];
 
             var tableHtml = '';
@@ -558,19 +589,14 @@
             $('#carsensor-summary-table').html(tableHtml);
 
             var reviewItems = result.needs_manual_review || [];
-            var $reviewCol = $('#carsensor-review-col');
-            var $reviewList = $('#carsensor-review-list');
-
-            if (reviewItems.length > 0) {
-                var reviewHtml = '';
-                reviewItems.forEach(function (item) {
-                    reviewHtml += '<li class="d-flex gap-2 mb-2 text-danger small"><i class="ri-error-warning-line flex-shrink-0 mt-1"></i><span>' + item + '</span></li>';
-                });
-                $reviewList.html(reviewHtml);
-                $reviewCol.show();
-            } else {
-                $reviewCol.html('<p class="text-success small"><i class="ri-checkbox-circle-line me-1"></i>All fields were mapped with high confidence.</p>');
-            }
+            var reviewHtml = '';
+            reviewItems.forEach(function (item) {
+                reviewHtml += '<li class="d-flex gap-2 mb-2 text-danger small"><i class="ri-error-warning-line flex-shrink-0 mt-1"></i><span>' + csEscape(item) + '</span></li>';
+            });
+            // Toggle instead of replacing the column, so a later import can still list review items
+            $('#carsensor-review-list').html(reviewHtml).toggle(reviewItems.length > 0);
+            $('#carsensor-review-title').toggle(reviewItems.length > 0);
+            $('#carsensor-review-none').toggleClass('d-none', reviewItems.length > 0);
 
             $('#carsensor-import-summary').removeClass('d-none');
             $('html, body').animate({ scrollTop: $('#carsensor-import-summary').offset().top - 20 }, 500);

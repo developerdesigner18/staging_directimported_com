@@ -30,7 +30,7 @@ class HomeController extends Controller
         $sliders = HeroSlider::orderBy('created_at', 'asc')->get();
         $gallery = Gallery::orderBy('created_at', 'desc')->get();
         $faqs = Faq::orderBy('created_at', 'desc')->get();
-        $services = Service::orderBy('created_at', 'desc')->limit(3)->get();
+        $services = Service::ordered()->limit(4)->get();
 
         $cars = Car::orderBy('created_at', 'desc')->limit(8)->get();
         $color = Color::first();
@@ -199,8 +199,10 @@ class HomeController extends Controller
 
     public function aboutUs()
     {
+        $homeSection = HomeSection::first();
+
         if (view()->exists('landing.pages.about-us')) {
-            return view('landing.pages.about-us');
+            return view('landing.pages.about-us', compact('homeSection'));
         }
         return view('about-us');
     }

@@ -106,6 +106,13 @@ class AdminLabelSeeder extends Seeder
             ['page' => 'service_form', 'key' => 'service_title', 'value' => 'Service Title'],
             ['page' => 'service_form', 'key' => 'service_images', 'value' => 'Service Images'],
             ['page' => 'service_form', 'key' => 'description', 'value' => 'Description'],
+            ['page' => 'service_form', 'key' => 'short_description', 'value' => 'Short Description'],
+            ['page' => 'service_form', 'key' => 'homepage_icon', 'value' => 'Homepage Icon'],
+            ['page' => 'service_form', 'key' => 'image_badge', 'value' => 'Image Badge'],
+            ['page' => 'service_form', 'key' => 'feature_tags', 'value' => 'Feature Tags'],
+            ['page' => 'service_form', 'key' => 'page_badge', 'value' => 'Badge Text'],
+            ['page' => 'service_form', 'key' => 'page_title', 'value' => 'Page Title'],
+            ['page' => 'service_form', 'key' => 'page_description', 'value' => 'Page Description'],
 
             // Accessory Form Input Labels
             ['page' => 'accessory_form', 'key' => 'accessory_type', 'value' => 'Accessory Type'],
@@ -154,6 +161,21 @@ class AdminLabelSeeder extends Seeder
             // Home Section Form Input Labels
             ['page' => 'home_section_form', 'key' => 'section_title', 'value' => 'Section Title'],
             ['page' => 'home_section_form', 'key' => 'short_description', 'value' => 'Short Description'],
+            ['page' => 'home_section_form', 'key' => 'about_badge', 'value' => 'Badge Text'],
+            ['page' => 'home_section_form', 'key' => 'about_button_text', 'value' => 'Button Text'],
+            ['page' => 'home_section_form', 'key' => 'about_title', 'value' => 'Page Title'],
+            ['page' => 'home_section_form', 'key' => 'about_intro', 'value' => 'Intro Content'],
+            ['page' => 'home_section_form', 'key' => 'about_hero_image', 'value' => 'Hero Image'],
+            ['page' => 'home_section_form', 'key' => 'founded_title', 'value' => 'Heading'],
+            ['page' => 'home_section_form', 'key' => 'founded_content', 'value' => 'Content'],
+            ['page' => 'home_section_form', 'key' => 'advantage_title', 'value' => 'Sub Heading'],
+            ['page' => 'home_section_form', 'key' => 'advantage_content', 'value' => 'Sub Content'],
+            ['page' => 'home_section_form', 'key' => 'operations_title', 'value' => 'Section Title'],
+            ['page' => 'home_section_form', 'key' => 'operations_subtitle', 'value' => 'Section Subtitle'],
+            ['page' => 'home_section_form', 'key' => 'facts_title', 'value' => 'Section Title'],
+            ['page' => 'home_section_form', 'key' => 'passion_title', 'value' => 'Section Title'],
+            ['page' => 'home_section_form', 'key' => 'passion_button_text', 'value' => 'Button Text'],
+            ['page' => 'home_section_form', 'key' => 'passion_intro', 'value' => 'Intro Content'],
 
             // Custom Mail Form Input Labels
             ['page' => 'custom_mail_form', 'key' => 'to_email', 'value' => 'To Email'],

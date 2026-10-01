@@ -47,6 +47,9 @@ if (!defined('CAR_PATH'))
 if (!defined('SERVICE_PATH'))
     define('SERVICE_PATH', 'uploads/service_images/');
 
+if (!defined('ABOUT_US_PATH'))
+    define('ABOUT_US_PATH', 'uploads/about_us/');
+
 if (!defined('DEFAULT_PATH'))
     define('DEFAULT_PATH', 'uploads/default/');
 
