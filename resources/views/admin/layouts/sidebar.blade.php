@@ -106,11 +106,30 @@
 
                 @if($user->hasRole('admin') || $user->can('services'))
                     <li class="nav-item">
-                        <a href="{{route('admin.service.index')}}"
-                            class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif">
+                        <a class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif" href="#sidebarServices"
+                            data-bs-toggle="collapse" role="button"
+                            aria-expanded="{{ request()->routeIs('admin.service.*') ? 'true' : 'false' }}"
+                            aria-controls="sidebarServices">
                             <i class="bx bx-layer"></i> <span
-                                data-key="t-dashboards">{{ admin_label('sidebar', 'services', 'Services') }}</span>
+                                data-key="t-services">{{ admin_label('sidebar', 'services', 'Services') }}</span>
                         </a>
+                        <div class="menu-dropdown collapse @if(request()->routeIs('admin.service.*')) show @endif"
+                            id="sidebarServices">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.service.index') }}"
+                                        class="nav-link @if(request()->routeIs('admin.service.index') || request()->routeIs('admin.service.create') || request()->routeIs('admin.service.edit')) active @endif">
+                                        Services Page
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.service.home') }}"
+                                        class="nav-link @if(request()->routeIs('admin.service.home')) active @endif">
+                                        Home Services Section
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 @endif
 

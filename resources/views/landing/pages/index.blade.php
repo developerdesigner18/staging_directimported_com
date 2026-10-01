@@ -747,6 +747,14 @@
             /* Slightly thinner stroke to match screenshot icons */
         }
 
+        .icon i {
+            font-size: 48px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         /* Title inside the card */
         .tile-title {
             font-size: 18px;
@@ -1018,15 +1026,22 @@
     <!-- SECTION 2: OUR SERVICES -->
     <section class="section-bg-white">
         <div class="section-container">
-            <h2 class="section-title">Our Services</h2>
+            <h2 class="section-title">{{ $homeSection->services_title ?? 'Our Services' }}</h2>
 
-            @if($services->isNotEmpty())
+            @php
+                $homeServices = $homeSection->services_items ?? [];
+            @endphp
+            @if(!empty($homeServices))
             <div class="tiles-grid">
-                @foreach($services as $service)
+                @foreach($homeServices as $service)
                 <div class="tile">
                     <div class="icon icon-dark">
-                        @if($service->icon_url)
-                        <img src="{{ $service->icon_url }}" alt="{{ $service->title }}" loading="lazy">
+                        @if(!empty($service['icon']))
+                            @if(str_starts_with($service['icon'], 'bx ') || str_starts_with($service['icon'], 'ri-') || str_starts_with($service['icon'], 'fa'))
+                                <i class="{{ $service['icon'] }}"></i>
+                            @else
+                                <img src="{{ asset($service['icon']) }}" alt="{{ $service['title'] ?? '' }}" loading="lazy">
+                            @endif
                         @else
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1038,17 +1053,12 @@
                         </svg>
                         @endif
                     </div>
-                    <h3 class="tile-title">{{ $service->title }}</h3>
-                    <p class="tile-description">{{ $service->excerpt }}</p>
+                    <h3 class="tile-title">{{ $service['title'] ?? '' }}</h3>
+                    <p class="tile-description">{{ $service['description'] ?? '' }}</p>
                 </div>
                 @endforeach
             </div>
             @endif
-
-            <!-- READ MORE BUTTON -->
-            {{-- <div class="button-wrapper">
-                <a href="#" class="btn-primary">READ MORE</a>
-            </div> --}}
 
         </div>
     </section>

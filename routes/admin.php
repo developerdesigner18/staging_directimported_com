@@ -265,6 +265,8 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
     // Services
     Route::controller(ServiceController::class)->prefix('service')->name('service.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/home-section', 'homeSection')->name('home');
+        Route::post('/home-section', 'updateHomeSection')->name('home.update');
         Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::get('/edit/{id}', 'edit')->name('edit');

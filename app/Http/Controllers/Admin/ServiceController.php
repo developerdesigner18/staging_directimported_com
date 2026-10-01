@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
+use App\Models\HomeSection;
 use App\Models\Service;
 use App\Models\SiteSettings;
 use Illuminate\Http\Request;
@@ -308,6 +309,73 @@ class ServiceController extends Controller
             $service->icon = uploadFilepondEncodedFile($request->icon, SERVICE_PATH, 'service_icon_');
         } elseif ($request->boolean('remove_icon')) {
             $service->icon = null;
+        }
+    }
+
+    public function homeSection()
+    {
+        $homeSection = HomeSection::first();
+        if (!$homeSection) {
+            $homeSection = HomeSection::create([
+                'title' => 'About Us',
+                'short_description' => 'Welcome to our website.',
+                'services_title' => 'Our Services',
+                'services_items' => [],
+            ]);
+        }
+
+        return view('admin.service.home', compact('homeSection'));
+    }
+
+    public function updateHomeSection(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'services_title' => 'required|string|max:255',
+            'services_items' => 'nullable|array|max:12',
+            'services_items.*.icon' => ['nullable', 'string', 'max:100', 'regex:/^[a-z0-9\- ]+$/i'],
+            'services_items.*.title' => 'required|string|max:150',
+            'services_items.*.description' => 'nullable|string|max:500',
+        ], [
+            'services_title.required' => 'The section title is required.',
+            'services_items.*.icon.regex' => 'Please select a valid icon.',
+            'services_items.*.title.required' => 'Each service card requires a title.',
+            'services_items.*.title.max' => 'Service title may not exceed 150 characters.',
+            'services_items.*.description.max' => 'Service description may not exceed 500 characters.',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendValidation($validator->errors());
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $homeSection = HomeSection::first();
+            if (!$homeSection) {
+                $homeSection = new HomeSection();
+            }
+
+            $homeSection->services_title = $request->input('services_title', 'Our Services');
+
+            $items = collect($request->input('services_items', []))
+                ->map(fn($item) => [
+                    'icon' => trim($item['icon'] ?? ''),
+                    'title' => trim($item['title'] ?? ''),
+                    'description' => trim($item['description'] ?? ''),
+                ])
+                ->filter(fn($item) => $item['title'] !== '')
+                ->values()
+                ->all();
+
+            $homeSection->services_items = $items;
+            $homeSection->save();
+
+            DB::commit();
+
+            return $this->sendSuccess('Home services section updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->sendFailed($e->getMessage());
         }
     }
 }

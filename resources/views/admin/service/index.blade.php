@@ -16,12 +16,26 @@
         </div>
     </div>
 
+    <!-- Navigation Pills Between Dedicated Services & Home Services -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{{ route('admin.service.index') }}" class="btn btn-primary">
+                    <i class="ri-list-settings-line align-bottom me-1"></i> Dedicated Services Page (/services)
+                </a>
+                <a href="{{ route('admin.service.home') }}" class="btn btn-outline-primary">
+                    <i class="ri-home-4-line align-bottom me-1"></i> Home Services Section
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">Services Page Header</h5>
-                    <p class="text-muted mb-0 fs-12">Heading shown at the top of the dedicated Services page. The services below are listed there in this order; the first 4 also appear on the homepage.</p>
+                    <p class="text-muted mb-0 fs-12">Heading shown at the top of the dedicated Services page (<code>/services</code>). Manage the detailed procurement services listed on the Services page below.</p>
                 </div>
                 <div class="card-body">
                     <form id="pageHeaderForm">

@@ -32,6 +32,8 @@ class HomeSection extends Model
         'passion_intro',
         'passion_cards',
         'passion_button_text',
+        'services_title',
+        'services_items',
     ];
 
     protected $casts = [
@@ -39,6 +41,7 @@ class HomeSection extends Model
         'operations' => 'array',
         'facts' => 'array',
         'passion_cards' => 'array',
+        'services_items' => 'array',
     ];
 
     public function points()
