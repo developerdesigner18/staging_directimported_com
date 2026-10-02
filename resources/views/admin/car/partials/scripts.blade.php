@@ -11,8 +11,8 @@
         var makeText = $('#manufacturer_id option:selected').text();
         var make = (makeText && makeText !== 'Select Make') ? makeText.trim() : '';
 
-        var categoryText = $('#category_id option:selected').text();
-        var category = (categoryText && categoryText !== 'Select Category') ? categoryText.trim() : '';
+        // var categoryText = $('#category_id option:selected').text();
+        // var category = (categoryText && categoryText !== 'Select Category') ? categoryText.trim() : '';
 
         var statusText = $('#status option:selected').text();
         var status = (statusText && statusText !== 'Select Status') ? statusText.trim() : '';
@@ -50,7 +50,7 @@
             price: ($('#vehicle_price').val() || '').trim(),
             stock_id: ($('#vehicle_id').val() || '').trim(),
             vin: ($('#vin').val() || '').trim(),
-            body_type: ($('#body_type').val() || '').trim(),
+            // body_type: ($('#body_type').val() || '').trim(),
             type: ($('#type').val() || '').trim(),
             steering: ($('#steering').val() || '').trim(),
             interior_grade: ($('#interior_grade').val() || '').trim(),
@@ -339,9 +339,9 @@
                 $('#year').val(data.year).trigger('change');
             }
 
-            if (data.category_id) {
-                $('#category_id').val(data.category_id).trigger('change');
-            }
+            // if (data.category_id) {
+            //     $('#category_id').val(data.category_id).trigger('change');
+            // }
 
             if (data.status) {
                 $('#status').val(data.status).trigger('change');
@@ -398,9 +398,9 @@
                 $('#vin').val(data.vin).trigger('input');
             }
 
-            if (data.body_type) {
-                $('#body_type').val(data.body_type).trigger('change');
-            }
+            // if (data.body_type) {
+            //     $('#body_type').val(data.body_type).trigger('change');
+            // }
 
             if (data.drive_type) {
                 $('#drive_type').val(data.drive_type).trigger('change');

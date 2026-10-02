@@ -110,7 +110,7 @@
 
                     <h3 class="mb-1">{{ $car->name }}</h3>
                     <div class="mb-3 mt-3">
-                        <span class="badge bg-primary me-2 ">{{ $car->category->name ?? 'No Category' }}</span>
+                        {{-- <span class="badge bg-primary me-2 ">{{ $car->category->name ?? 'No Category' }}</span> --}}
                         @if($car->is_recommended)
                             <span class="badge bg-success">Recommended</span>
                         @endif

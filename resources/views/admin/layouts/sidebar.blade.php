@@ -79,11 +79,12 @@
                                         class="nav-link @if(request()->routeIs('admin.car.index')) active @endif"
                                         data-key="t-level-1.1">{{ admin_label('sidebar', 'cars_list', 'Cars') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <a href="{{route('admin.category.car.index', ['type' => 'car'])}}"
                                         class="nav-link @if(request()->is('admin/car/category*')) active @endif"
-                                        data-key="t-level-1.1">{{ admin_label('sidebar', 'cars_categories', 'Cars Categories') }}</a>
-                                </li>
+                                        data-key="t-level-1.1">{{ admin_label('sidebar', 'cars_categories', 'Cars
+                                        Categories') }}</a>
+                                </li> --}}
                                 <li class="nav-item">
                                     <a href="{{route('admin.manufacturer.index')}}"
                                         class="nav-link @if(request()->routeIs('admin.manufacturer.index')) active @endif"
@@ -106,8 +107,8 @@
 
                 @if($user->hasRole('admin') || $user->can('services'))
                     <li class="nav-item">
-                        <a class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif" href="#sidebarServices"
-                            data-bs-toggle="collapse" role="button"
+                        <a class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif"
+                            href="#sidebarServices" data-bs-toggle="collapse" role="button"
                             aria-expanded="{{ request()->routeIs('admin.service.*') ? 'true' : 'false' }}"
                             aria-controls="sidebarServices">
                             <i class="bx bx-layer"></i> <span

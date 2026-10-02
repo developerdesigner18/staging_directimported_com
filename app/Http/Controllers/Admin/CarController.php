@@ -367,12 +367,12 @@ class CarController extends Controller
             'manufacturer_id' => 'required|exists:manufacturers,id',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            'category_id' => [
-                'required',
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->where('type', CategoryType::CAR);
-                })
-            ],
+            // 'category_id' => [
+            //     'required',
+            //     Rule::exists('categories', 'id')->where(function ($query) {
+            //         $query->where('type', CategoryType::CAR);
+            //     })
+            // ],
 
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'required|array',
@@ -415,7 +415,7 @@ class CarController extends Controller
             $car->year = $request->year;
             $car->slug = Str::slug($fullName);
             $car->name = $fullName;
-            $car->category_id = $request->category_id;
+            // $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
@@ -459,7 +459,7 @@ class CarController extends Controller
                 'car_id' => $car->id,
                 'make' => $manufacturer->name,
                 'exterior_color' => $request->exterior_color,
-                'body_type' => $request->body_type,
+                // 'body_type' => $request->body_type,
                 'type' => $request->type,
                 'fuel_type' => $request->fuel_type,
                 'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
@@ -505,12 +505,12 @@ class CarController extends Controller
             'manufacturer_id' => 'required|exists:manufacturers,id',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            'category_id' => [
-                'required',
-                Rule::exists('categories', 'id')->where(function ($query) {
-                    $query->where('type', CategoryType::CAR);
-                })
-            ],
+            // 'category_id' => [
+            //     'required',
+            //     Rule::exists('categories', 'id')->where(function ($query) {
+            //         $query->where('type', CategoryType::CAR);
+            //     })
+            // ],
 
             'is_recommended' => 'nullable|in:0,1',
             'images' => 'sometimes|array',
@@ -552,7 +552,7 @@ class CarController extends Controller
             $car->year = $request->year;
             $car->slug = Str::slug($fullName);
             $car->name = $fullName;
-            $car->category_id = $request->category_id;
+            // $car->category_id = $request->category_id;
 
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
@@ -658,7 +658,7 @@ class CarController extends Controller
                 [
                     'make' => $manufacturer->name,
                     'exterior_color' => $request->exterior_color,
-                    'body_type' => $request->body_type,
+                    // 'body_type' => $request->body_type,
                     'type' => $request->type,
                     'fuel_type' => $request->fuel_type,
                     'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
@@ -790,7 +790,7 @@ class CarController extends Controller
         $validator = Validator::make($request->all(), [
             'make' => 'nullable|string',
             'exterior_color' => 'nullable|string',
-            'body_type' => 'nullable|string',
+            // 'body_type' => 'nullable|string',
             'type' => 'nullable|string',
             'fuel_type' => 'nullable|string',
             'engine' => 'nullable|string',
@@ -848,30 +848,30 @@ class CarController extends Controller
         // Build structured vehicle details from submitted form fields
         $vehicleInfoLines = [];
         $fieldMap = [
-            'make'           => 'Make',
-            'model'          => 'Model',
-            'year'           => 'Year',
-            'category'       => 'Category',
-            'status'         => 'Status',
-            'auction_grade'  => 'Auction Grade',
-            'location'       => 'Location',
-            'price'          => 'Price (JPY)',
-            'stock_id'       => 'Stock / Vehicle ID',
-            'vin'            => 'VIN / Chassis No',
-            'body_type'      => 'Body Type',
-            'type'           => 'Type',
-            'steering'       => 'Steering',
+            'make' => 'Make',
+            'model' => 'Model',
+            'year' => 'Year',
+            'category' => 'Category',
+            'status' => 'Status',
+            'auction_grade' => 'Auction Grade',
+            'location' => 'Location',
+            'price' => 'Price (JPY)',
+            'stock_id' => 'Stock / Vehicle ID',
+            'vin' => 'VIN / Chassis No',
+            'body_type' => 'Body Type',
+            'type' => 'Type',
+            'steering' => 'Steering',
             'interior_grade' => 'Interior Grade',
             'exterior_grade' => 'Exterior Grade',
-            'drive_type'     => 'Drive Type',
-            'engine'         => 'Engine',
-            'fuel_type'      => 'Fuel Type',
-            'transmission'   => 'Transmission',
-            'odometer'       => 'Odometer / Mileage',
+            'drive_type' => 'Drive Type',
+            'engine' => 'Engine',
+            'fuel_type' => 'Fuel Type',
+            'transmission' => 'Transmission',
+            'odometer' => 'Odometer / Mileage',
             'exterior_color' => 'Exterior Color',
             'interior_color' => 'Interior Color',
-            'card_header'    => 'Card Title / Header',
-            'card_subtitle'  => 'Card Subtitle',
+            'card_header' => 'Card Title / Header',
+            'card_subtitle' => 'Card Subtitle',
         ];
 
         if (is_array($vehicleData)) {

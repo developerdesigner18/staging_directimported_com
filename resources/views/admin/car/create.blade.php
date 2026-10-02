@@ -116,7 +116,9 @@
 
                 <div class="page-title-right d-flex align-items-center gap-3">
                     {{-- CarSensor Import Button --}}
-                    <button type="button" id="btn-open-carsensor-modal" class="btn btn-warning d-flex align-items-center gap-2" title="Import vehicle data from any car listing website">
+                    <button type="button" id="btn-open-carsensor-modal"
+                        class="btn btn-warning d-flex align-items-center gap-2"
+                        title="Import vehicle data from any car listing website">
                         <i class="ri-import-line"></i>
                         <span>Import from Listing URL</span>
                     </button>
@@ -204,20 +206,20 @@
 
                         <!-- Category + Status + Auction Grade + Location -->
                         <div class="row g-3 mb-4">
-                            <div class="col-lg-3">
-                                <label for="category_id"
-                                    class="form-label mb-2">{{ admin_label('car_form', 'category', 'Category') }}</label>
+                            {{-- <div class="col-lg-3">
+                                <label for="category_id" class="form-label mb-2">{{ admin_label('car_form', 'category',
+                                    'Category') }}</label>
                                 <select class="form-select select2" id="category_id" name="category_id">
                                     <option value="">Select Category</option>
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                                 <label id="category_id-error" class="text-danger error" for="category_id"
                                     style="display: none"></label>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="status"
                                     class="form-label mb-2">{{ admin_label('car_form', 'status', 'Status') }}</label>
                                 <select class="form-select select2" id="status" name="status">
@@ -229,7 +231,7 @@
                                 <label id="status-error" class="text-danger error" style="display: none"></label>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="auction_grade_id"
                                     class="form-label mb-2">{{ admin_label('car_form', 'auction_grade', 'Auction Grade') }}</label>
                                 <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
@@ -243,7 +245,7 @@
                                 <label id="auction_grade_id-error" class="text-danger error" style="display: none"></label>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                                 <label for="location"
                                     class="form-label mb-2">{{ admin_label('car_form', 'location', 'Location') }}</label>
                                 <input type="text" class="form-control" id="location" name="location"
@@ -316,9 +318,9 @@
                                     placeholder="e.g. JTDKN36G000123">
                             </div>
 
-                            <div class="col-md-6 mb-3">
-                                <label for="body_type"
-                                    class="form-label">{{ admin_label('car_form', 'body_type', 'Body Type') }}</label>
+                            {{-- <div class="col-md-6 mb-3">
+                                <label for="body_type" class="form-label">{{ admin_label('car_form', 'body_type', 'Body
+                                    Type') }}</label>
                                 <select id="body_type" name="body_type" class="form-select select2">
                                     <option value="">Select Body Type</option>
                                     <option value="Motorcycle">Motorcycle</option>
@@ -331,7 +333,7 @@
                                     <option value="SUV">SUV</option>
                                     <option value="Hatchback">Hatchback</option>
                                 </select>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6 mb-3">
                                 <label for="type" class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
@@ -748,7 +750,7 @@
                     manufacturer_id: { required: true },
                     model: { required: true },
                     year: { required: true },
-                    category_id: { required: true },
+                    // category_id: { required: true },
                     vehicle_price: { digits: true },
                     vehicle_id: {
                         required: function () {
@@ -767,7 +769,7 @@
                     manufacturer_id: { required: "Please select a make." },
                     model: { required: "The model field is required." },
                     year: { required: "Please select a year." },
-                    category_id: { required: "Please select a category." },
+                    // category_id: { required: "Please select a category." },
                     vehicle_price: { digits: "The vehicle price must contain only numbers." },
                     vehicle_id: { required: "The Vehicle ID field is required." },
                     status: { required: "Please select a status." },

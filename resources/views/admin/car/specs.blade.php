@@ -38,11 +38,11 @@
                                     value="{{ $car->spec->exterior_color ?? '' }}" placeholder="e.g. Pearl White">
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            {{-- <div class="col-md-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'body_type', 'Body Type') }}</label>
                                 <input type="text" name="body_type" class="form-control"
                                     value="{{ $car->spec->body_type ?? '' }}" placeholder="e.g. SUV">
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
