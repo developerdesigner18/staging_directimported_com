@@ -415,7 +415,7 @@ class CarController extends Controller
             $car->year = $request->year;
             $car->slug = Str::slug($fullName);
             $car->name = $fullName;
-            // $car->category_id = $request->category_id;
+            $car->category_id = $request->category_id ?? null;
 
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
@@ -552,7 +552,7 @@ class CarController extends Controller
             $car->year = $request->year;
             $car->slug = Str::slug($fullName);
             $car->name = $fullName;
-            // $car->category_id = $request->category_id;
+            $car->category_id = $request->category_id ?? null;
 
             $car->is_recommended = $request->is_recommended ?? 0;
             $car->location_id = null;
