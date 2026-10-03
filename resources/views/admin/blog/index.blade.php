@@ -18,12 +18,16 @@
                         <!-- Featured Image Upload & Preview -->
                         <div class="mb-3">
                             <label for="editFeaturedImage" class="form-label fw-bold">Featured Image</label>
-                            <input type="file" class="form-control" id="editFeaturedImage" name="featured_image" accept=".webp">
-                            <small class="text-muted d-block mt-1">Leave blank to keep current image. Only <strong>.webp</strong> images are allowed (max 2MB).</small>
+                            <input type="file" class="form-control" id="editFeaturedImage" name="featured_image"
+                                accept="image/*">
+                            <small class="text-muted d-block mt-1">Leave blank to keep current image. Uploaded images will
+                                be automatically converted to <strong>.webp</strong> and compressed.</small>
                             <label id="featured_image-error" class="text-danger error" style="display: none"></label>
 
                             <div class="p-2 border rounded bg-light text-center mt-2" style="max-width: 300px;">
-                                <img id="editBlogImagePreview" src="" alt="Blog Featured Image" class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: cover; display: none;">
+                                <img id="editBlogImagePreview" src="" alt="Blog Featured Image"
+                                    class="img-fluid rounded shadow-sm"
+                                    style="max-height: 200px; object-fit: cover; display: none;">
                                 <div id="editBlogNoImage" class="text-muted py-3" style="display: none;">
                                     <i class="ri-image-line fs-24 d-block mb-1"></i>
                                     <span>No Featured Image Available</span>
@@ -33,14 +37,17 @@
 
                         <!-- Blog Title -->
                         <div class="mb-3">
-                            <label for="editTitle" class="form-label fw-bold">Blog Title <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="editTitle" name="title" placeholder="Enter blog title">
+                            <label for="editTitle" class="form-label fw-bold">Blog Title <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="editTitle" name="title"
+                                placeholder="Enter blog title">
                             <label id="title-error" class="text-danger error" style="display: none"></label>
                         </div>
 
                         <!-- Category -->
                         <div class="mb-3">
-                            <label for="editCategory" class="form-label fw-bold">Category <span class="text-danger">*</span></label>
+                            <label for="editCategory" class="form-label fw-bold">Category <span
+                                    class="text-danger">*</span></label>
                             <select class="form-select" id="editCategory" name="category">
                                 <option value="general">General Blogs Management</option>
                                 <option value="import_regulation">Import Regulation Blogs Management</option>
@@ -51,13 +58,15 @@
                         <!-- Description Excerpt -->
                         <div class="mb-3">
                             <label for="editDescription" class="form-label fw-bold">Short Description / Excerpt</label>
-                            <textarea class="form-control" id="editDescription" name="description" rows="3" placeholder="Enter short description"></textarea>
+                            <textarea class="form-control" id="editDescription" name="description" rows="3"
+                                placeholder="Enter short description"></textarea>
                             <label id="description-error" class="text-danger error" style="display: none"></label>
                         </div>
 
                         <!-- Full Content (TinyMCE) -->
                         <div class="mb-3">
-                            <label for="editContent" class="form-label fw-bold">Content <span class="text-danger">*</span></label>
+                            <label for="editContent" class="form-label fw-bold">Content <span
+                                    class="text-danger">*</span></label>
                             <textarea id="editContent" name="content" style="display:none;"></textarea>
                             <textarea class="tinymce_editor" id="edit_content_editor" rows="8"></textarea>
                             <label id="content-error" class="text-danger error" style="display: none"></label>
@@ -75,7 +84,8 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="submit" class="btn btn-primary" id="btnUpdateBlog">
                             <span class="d-flex align-items-center">
-                                <span class="d-none spinner-border spinner-border-sm me-2" id="editBlogSpinner" role="status"></span>
+                                <span class="d-none spinner-border spinner-border-sm me-2" id="editBlogSpinner"
+                                    role="status"></span>
                                 <span>Update Blog</span>
                             </span>
                         </button>
@@ -196,26 +206,17 @@
 
             window.blogDataTable = dataTable;
 
-            // Image input client-side webp validation & preview for Edit Blog
+            // Image input client-side preview for Edit Blog
             $('#editFeaturedImage').on('change', function () {
                 var file = this.files[0];
                 if (file) {
-                    var extension = file.name.split('.').pop().toLowerCase();
-                    if (extension !== 'webp') {
-                        $('#featured_image-error').html('Only .webp images are allowed.').show();
-                        $(this).val('');
-                    } else if (file.size > 2 * 1024 * 1024) {
-                        $('#featured_image-error').html('Image size must not exceed 2MB.').show();
-                        $(this).val('');
-                    } else {
-                        $('#featured_image-error').html('').hide();
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $('#editBlogImagePreview').attr('src', e.target.result).show();
-                            $('#editBlogNoImage').hide();
-                        };
-                        reader.readAsDataURL(file);
-                    }
+                    $('#featured_image-error').html('').hide();
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#editBlogImagePreview').attr('src', e.target.result).show();
+                        $('#editBlogNoImage').hide();
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
 
@@ -246,21 +247,6 @@
                     e.preventDefault();
                     if (typeof tinymce !== 'undefined' && tinymce.get('edit_content_editor')) {
                         $('#editContent').val(tinymce.get('edit_content_editor').getContent());
-                    }
-
-                    // Strict webp extension and size check if a new image file is selected
-                    var fileInput = $('#editFeaturedImage')[0];
-                    if (fileInput && fileInput.files.length > 0) {
-                        var file = fileInput.files[0];
-                        var ext = file.name.split('.').pop().toLowerCase();
-                        if (ext !== 'webp') {
-                            $('#featured_image-error').html('Only .webp images are allowed.').show();
-                            return false;
-                        }
-                        if (file.size > 2 * 1024 * 1024) {
-                            $('#featured_image-error').html('Image size must not exceed 2MB.').show();
-                            return false;
-                        }
                     }
 
                     $('.error').html('').hide();

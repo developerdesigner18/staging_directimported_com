@@ -104,16 +104,7 @@ class BlogController extends Controller
             'category' => 'required|in:general,import_regulation,General,Import Regulation',
             'description' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => [
-                'required',
-                'file',
-                'max:2048',
-                function ($attribute, $value, $fail) {
-                    if ($value && strtolower($value->getClientOriginalExtension()) !== 'webp') {
-                        $fail('Only .webp images are allowed.');
-                    }
-                }
-            ],
+            'featured_image' => 'required|image',
             'published_at' => 'nullable|date',
         ], [
             'title.required' => 'The blog title is required.',
@@ -121,8 +112,7 @@ class BlogController extends Controller
             'category.in' => 'Selected category is invalid.',
             'content.required' => 'The blog content is required.',
             'featured_image.required' => 'The blog featured image is required.',
-            'featured_image.file' => 'The featured image must be a file.',
-            'featured_image.max' => 'Image size must not exceed 2MB.',
+            'featured_image.image' => 'The featured image must be a valid image file.',
         ]);
 
         if ($validator->fails()) {
@@ -170,24 +160,14 @@ class BlogController extends Controller
             'category' => 'required|in:general,import_regulation,General,Import Regulation',
             'description' => 'nullable|string',
             'content' => 'required|string',
-            'featured_image' => [
-                'nullable',
-                'file',
-                'max:2048',
-                function ($attribute, $value, $fail) {
-                    if ($value && strtolower($value->getClientOriginalExtension()) !== 'webp') {
-                        $fail('Only .webp images are allowed.');
-                    }
-                }
-            ],
+            'featured_image' => 'nullable|image',
             'published_at' => 'nullable|date',
         ], [
             'title.required' => 'The blog title is required.',
             'category.required' => 'The blog category is required.',
             'category.in' => 'Selected category is invalid.',
             'content.required' => 'The blog content is required.',
-            'featured_image.file' => 'The featured image must be a file.',
-            'featured_image.max' => 'Image size must not exceed 2MB.',
+            'featured_image.image' => 'The featured image must be a valid image file.',
         ]);
 
         if ($validator->fails()) {
@@ -208,6 +188,9 @@ class BlogController extends Controller
             }
 
             if ($request->hasFile('featured_image')) {
+                if (!empty($blog->featured_image)) {
+                    deleteImage($blog->featured_image, BLOG_IMAGE_PATH);
+                }
                 $imageName = uploadFile($request->file('featured_image'), BLOG_IMAGE_PATH, 'blog_');
                 $blog->featured_image = asset(BLOG_IMAGE_PATH . $imageName);
             }
