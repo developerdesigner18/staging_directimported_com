@@ -20,7 +20,7 @@
         <div class="row nested-sortable g-3 car-sortable-group" id="car-sortable-{{ Str::slug($rangeName) }}">
             @foreach($carsInRange as $car)
                 <div class="col-xxl-3 col-lg-6 col-md-6 sortable-item" data-id="{{ $car->id }}" id="slider-card-{{$car->id}}">
-                    <div class="card overflow-hidden blog-grid-card list-group-item nested-1">
+                    <div class="card h-100 overflow-hidden blog-grid-card list-group-item nested-1">
                         <div class="position-relative overflow-hidden">
                             <a href="{{ route('admin.car.view', [$car->id])}}">
                                 @php
@@ -30,11 +30,12 @@
                                     class="blog-img object-fit-cover w-100" style="height: 200px;">
                             </a>
                         </div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $car->name }}</h5>
-                            <span class="text-muted">{{ dateToHuman($car->created_at) }}</span>
-                            <br>
-                            <div class="action-btn text-end">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title mb-1">{{ $car->name }}</h5>
+                                <span class="text-muted fs-12">{{ dateToHuman($car->created_at) }}</span>
+                            </div>
+                            <div class="action-btn text-end mt-2">
                                 <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}"
                                     data-bs-toggle="tooltip" title="Manage Specs">
                                     <i class="ri-settings-4-line"></i>

@@ -9,7 +9,7 @@
             <span class="logo-sm">
                 <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin dark logo" height="20"
                     width="200">
-            </span>2
+            </span>
             <span class="logo-lg">
                 <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin dark logo" height="100"
                     width="200">

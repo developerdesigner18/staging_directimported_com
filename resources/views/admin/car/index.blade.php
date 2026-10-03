@@ -2,19 +2,17 @@
 @section('title', 'Car')
 @push('modal')
     <!-- Modal -->
-    <!-- Modal -->
     <div class="modal fade" id="bannerModal" tabindex="-1" aria-labelledby="bannerModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content rounded-4 shadow-lg">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="bannerModalLabel">Upload Banner Image</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                <form id="bannerUploadForm" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="bannerModalLabel">Upload Banner Image</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
-                <div class="modal-body">
-                    <form id="bannerUploadForm" enctype="multipart/form-data">
-                        @csrf
-
+                    <div class="modal-body">
                         <!-- Banner Title -->
                         <div class="mb-3">
                             <label for="bannerTitle" class="form-label">Banner Title</label>
@@ -43,18 +41,16 @@
                                 <i class="ri-delete-bin-6-line"></i>
                             </button>
                         </div>
+                    </div>
 
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="uploadBannerBtn">Upload</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="uploadBannerBtn">Upload</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-
 @endpush
 @section('main')
     <div class="row">
@@ -85,48 +81,43 @@
         </div>
 
         <div class="col-sm">
-            {{-- <form method="GET" action="{{ route('admin.car.index') }}">--}}
-                <form id="gridSearchForm">
-                    <div class="d-flex justify-content-sm-end gap-2">
+            <form id="gridSearchForm">
+                <div class="d-flex justify-content-sm-end gap-2 flex-wrap">
 
-                        <div class="search-box ms-2" id="txtSearch">
-                            <input type="text" name="search" class="form-control" placeholder="Search..."
-                                value="{{ $search }}">
-                            <i class="ri-search-line search-icon"></i>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-info" id="btnSearch">Search</button>
-                        </div>
-                        <!-- Added dropdown menu here -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                {{ $range && $range != 'all' ? $range : 'Filter' }}
-                            </button>
-                            <div class="dropdown-menu dropdownmenu-danger">
-                                <a class="dropdown-item filter-range cursor-pointer" data-range="all">All</a>
-                                <a class="dropdown-item filter-range cursor-pointer" data-range="750-1300cc">750-1300cc</a>
-                                <!-- Hidden based on client request. -->
-                                {{-- <a class="dropdown-item filter-range cursor-pointer"
-                                    data-range="400-700cc">400-700cc</a> --}}
-                                <a class="dropdown-item filter-range cursor-pointer" data-range="150-350cc">150-350cc</a>
-                                <a class="dropdown-item filter-range cursor-pointer" data-range="0-125cc">0-125cc</a>
-                            </div>
-                        </div>
-
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Layout
-                            </button>
-                            <div class="dropdown-menu dropdownmenu-danger">
-                                <a class="dropdown-item" href="javascript:void(0)" id="gridViewBtn">Grid View</a>
-                                <a class="dropdown-item" href="javascript:void(0)" id="tableViewBtn">Table View</a>
-                            </div>
-                        </div>
-                        <!-- End dropdown menu -->
+                    <div class="search-box ms-2" id="txtSearch">
+                        <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ $search }}">
+                        <i class="ri-search-line search-icon"></i>
                     </div>
-                </form>
+                    <div>
+                        <button type="submit" class="btn btn-info" id="btnSearch">Search</button>
+                    </div>
+                    <!-- Added dropdown menu here -->
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            {{ $range && $range != 'all' ? $range : 'Filter' }}
+                        </button>
+                        <div class="dropdown-menu dropdownmenu-danger">
+                            <a class="dropdown-item filter-range cursor-pointer" data-range="all">All</a>
+                            <a class="dropdown-item filter-range cursor-pointer" data-range="750-1300cc">750-1300cc</a>
+                            <a class="dropdown-item filter-range cursor-pointer" data-range="150-350cc">150-350cc</a>
+                            <a class="dropdown-item filter-range cursor-pointer" data-range="0-125cc">0-125cc</a>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Layout
+                        </button>
+                        <div class="dropdown-menu dropdownmenu-danger">
+                            <a class="dropdown-item" href="javascript:void(0)" id="gridViewBtn">Grid View</a>
+                            <a class="dropdown-item" href="javascript:void(0)" id="tableViewBtn">Table View</a>
+                        </div>
+                    </div>
+                    <!-- End dropdown menu -->
+                </div>
+            </form>
         </div>
     </div>
 
@@ -322,8 +313,9 @@
                         @include('admin.car.grid_list')
                     </div>
 
-                    <div id="tableView" style="display:none;">
-                        <table class="table table-bordered" id="carTable">
+                    <div id="tableView" style="display:none;" class="table-responsive">
+                        <table id="carTable"
+                            class="listDatatable tableview table align-middle table-nowrap w-100 pt-2 datatable dataTable no-footer">
 
                         </table>
                     </div>
@@ -541,8 +533,8 @@
                             processing: processing,
                             emptyTable: emptyTable,
                             paginate: {
-                                next: '<i class="ri-arrow-right-s-line">',
-                                previous: '<i class="ri-arrow-left-s-line">',
+                                next: '<i class="ri-arrow-right-s-line"></i>',
+                                previous: '<i class="ri-arrow-left-s-line"></i>',
                             },
                         },
                         columns: [
@@ -572,6 +564,14 @@
                                 dataTableError("openCallTable", xhr.responseJSON.message);
                                 actionError(xhr);
                             },
+                        },
+                        responsive: {
+                            breakpoints: [
+                                { name: "desktop", width: Infinity },
+                                { name: "tablet", width: 1024 },
+                                { name: "fablet", width: 768 },
+                                { name: "phone", width: 480 },
+                            ],
                         },
                         rowId: 'id',
 
