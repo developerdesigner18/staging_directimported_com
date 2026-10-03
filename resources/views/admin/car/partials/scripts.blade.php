@@ -43,7 +43,7 @@
             make: make,
             model: ($('#model').val() || '').trim(),
             year: ($('#year').val() || '').trim(),
-            category: category,
+            // category: category,
             status: status,
             auction_grade: auctionGrade,
             location: ($('#location').val() || '').trim(),
