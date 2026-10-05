@@ -14,6 +14,7 @@ use App\Models\Category;
 use App\Models\HeroSlider;
 use App\Models\CarSpec;
 use App\Models\Manufacturer;
+use App\Models\CarType;
 use App\Services\Gemini\GeminiClient;
 use App\Services\Gemini\GeminiException;
 use App\Services\HtmlSanitizer;
@@ -348,7 +349,9 @@ class CarController extends Controller
         $locations = Location::all();
         $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
 
-        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers'));
+        $carTypes = CarType::orderBy('name', 'asc')->get();
+
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers', 'carTypes'));
     }
     public function view(Request $request)
     {
@@ -493,7 +496,8 @@ class CarController extends Controller
         $locations = Location::all();
         $auctionGrades = AuctionGrade::all();
         $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
-        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers'));
+        $carTypes = CarType::orderBy('name', 'asc')->get();
+        return view('admin.car.edit', compact('car', 'categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers', 'carTypes'));
     }
 
     public function update(Request $request, $id)
@@ -782,7 +786,8 @@ class CarController extends Controller
     public function specs($id)
     {
         $car = Car::with('spec')->findOrFail($id);
-        return view('admin.car.specs', compact('car'));
+        $carTypes = CarType::orderBy('name', 'asc')->get();
+        return view('admin.car.specs', compact('car', 'carTypes'));
     }
 
     public function updateSpecs(Request $request, $id)

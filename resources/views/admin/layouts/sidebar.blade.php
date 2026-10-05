@@ -64,14 +64,14 @@
 
                 @if($user->hasRole('admin') || $user->can('cars'))
                     <li class="nav-item">
-                        <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*')) active @endif"
+                        <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*') || request()->routeIs('admin.car-type.*')) active @endif"
                             href="#sidebarCars" data-bs-toggle="collapse" role="button"
-                            aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*')) ? 'true' : 'false' }}"
+                            aria-expanded="{{ (request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*') || request()->routeIs('admin.car-type.*')) ? 'true' : 'false' }}"
                             aria-controls="sidebarCars">
                             <i class="ri-car-line"></i> <span
                                 data-key="t-multi-level">{{ admin_label('sidebar', 'cars', 'Cars') }}</span>
                         </a>
-                        <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*')) show @endif"
+                        <div class="menu-dropdown collapse @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*') || request()->routeIs('admin.car-type.*')) show @endif"
                             id="sidebarCars">
                             <ul class="nav nav-sm flex-column">
                                 <li class="nav-item">
@@ -99,6 +99,11 @@
                                     <a href="{{route('admin.auctiongrade.auction-grade')}}"
                                         class="nav-link @if(request()->routeIs('admin.auctiongrade.*')) active @endif"
                                         data-key="t-level-1.1">{{ admin_label('sidebar', 'manage_auction_grades', 'Manage Auction Grades') }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{route('admin.car-type.index')}}"
+                                        class="nav-link @if(request()->routeIs('admin.car-type.*')) active @endif"
+                                        data-key="t-level-1.1">Manage Types</a>
                                 </li>
                             </ul>
                         </div>

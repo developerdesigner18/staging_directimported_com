@@ -47,14 +47,10 @@
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
                                 <select name="type" class="form-select">
-                                    <option value="">All Types</option>
-                                    <option value="coupe" {{ ($car->spec->type ?? '') == 'coupe' ? 'selected' : '' }}>Coupe
-                                    </option>
-                                    <option value="sedan" {{ ($car->spec->type ?? '') == 'sedan' ? 'selected' : '' }}>Sedan
-                                    </option>
-                                    <option value="hatchback" {{ ($car->spec->type ?? '') == 'hatchback' ? 'selected' : '' }}>
-                                        Hatchback</option>
-                                    <option value="convertible" {{ ($car->spec->type ?? '') == 'convertible' ? 'selected' : '' }}>Convertible</option>
+                                    <option value="">Select Type</option>
+                                    @foreach($carTypes ?? [] as $carType)
+                                        <option value="{{ $carType->name }}" {{ strcasecmp($car->spec->type ?? '', $carType->name) === 0 ? 'selected' : '' }}>{{ $carType->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

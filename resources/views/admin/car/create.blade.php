@@ -338,11 +338,10 @@
                             <div class="col-md-6 mb-3">
                                 <label for="type" class="form-label">{{ admin_label('car_form', 'type', 'Type') }}</label>
                                 <select id="type" name="type" class="form-select select2">
-                                    <option value="">All Types</option>
-                                    <option value="coupe">Coupe</option>
-                                    <option value="sedan">Sedan</option>
-                                    <option value="hatchback">Hatchback</option>
-                                    <option value="convertible">Convertible</option>
+                                    <option value="">Select Type</option>
+                                    @foreach($carTypes ?? [] as $carType)
+                                        <option value="{{ $carType->name }}">{{ $carType->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 
@@ -591,7 +590,7 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="d-flex justify-content-end mb-4">
+                <div class="d-flex justify-content-start mb-4">
                     <button type="submit" class="btn btn-primary px-4 py-2">Create Car</button>
                 </div>
             </form>

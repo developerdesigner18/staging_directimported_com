@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\ContactRequestController;
 use App\Http\Controllers\Admin\ManufacturerController;
+use App\Http\Controllers\Admin\CarTypeController;
 use App\Http\Controllers\Admin\LabelController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CarSensorImportController;
@@ -247,6 +248,15 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         });
 
         Route::controller(ManufacturerController::class)->prefix('car/manufacturer')->name('manufacturer.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/list', 'list')->name('list');
+            Route::post('/add', 'add')->name('add');
+            Route::post('/edit', 'edit')->name('edit');
+            Route::post('/update', 'update')->name('update');
+            Route::post('/delete', 'delete')->name('delete');
+        });
+
+        Route::controller(CarTypeController::class)->prefix('car/type')->name('car-type.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/list', 'list')->name('list');
             Route::post('/add', 'add')->name('add');
