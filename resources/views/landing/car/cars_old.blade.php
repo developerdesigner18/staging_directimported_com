@@ -308,7 +308,7 @@
             left: 0px;
             right: 0px;
             height: 420px;
-            background: url('{{ isset($banner) && $banner->image ? asset(CAR_PATH . $banner->image) : asset("assets/landing/images/hero-car.png") }}') center center / cover no-repeat;
+            background: url('{{ asset("assets/landing/images/hero-car.png") }}') center center / cover no-repeat;
             overflow: hidden;
         }
 
@@ -868,20 +868,7 @@
         }
 
         $(document).ready(function () {
-            loadBanner();
 
-            // Load current banner image
-            function loadBanner() {
-                $.get("{{ route('admin.banner.get') }}", function (response) {
-                    if (response.status) {
-                        let path = response.data.image_url;
-                        console.log(path)
-                        $('.hero-section').css(
-                            'background', 'url(' + path + ') center center / cover no-repeat'
-                        );
-                    }
-                });
-            }
             // Initialize slider
             updateSlider();
 

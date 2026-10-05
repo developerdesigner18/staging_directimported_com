@@ -19,7 +19,6 @@ use App\Http\Controllers\Admin\EmailTemplateController;
 use App\Http\Controllers\Admin\CustomMailController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\LocationController;
-use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\RentalPoliciesController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\UserPermissionController;
@@ -232,11 +231,6 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/change-background-color', 'updateColor')->name('update-color');
         });
 
-        Route::controller(BannerController::class)->prefix('banner')->name('banner.')->group(function () {
-            Route::post('/', 'add')->name('add');
-            Route::get('/get', 'getBanner')->name('get');
-            Route::post('/delete', 'deleteBanner')->name('delete');
-        });
 
         Route::group([
             'prefix' => 'car/category/{type}',

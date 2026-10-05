@@ -6,7 +6,6 @@ use App\Http\Traits\ResponseTrait;
 use App\Mail\bookingsQuoteMail;
 use App\Mail\RegisterMail;
 use App\Models\Accessories;
-use App\Models\Banner;
 use App\Models\Car;
 use App\Models\CarConfiguration;
 use App\Models\Booking;
@@ -57,9 +56,7 @@ class CarController extends Controller
         // Map categories to CC ranges
         $ccRanges = $this->mapCategoriesToRanges($categoryList);
 
-        $banner = Banner::first();
-
-        return view('landing.car.cars', compact('categoryList', 'carsList', 'carsGroupedByCategory', 'limit', 'totalPages', 'ccRanges', 'banner'));
+        return view('landing.car.cars', compact('categoryList', 'carsList', 'carsGroupedByCategory', 'limit', 'totalPages', 'ccRanges'));
     }
 
     public function pagination(Request $request)
@@ -212,7 +209,6 @@ class CarController extends Controller
             })
             ->firstOrFail();
         $carConf = CarConfiguration::get();
-        $banner = Banner::first();
 
         // Get 3 random cars excluding current car
         $relatedCars = Car::with('category')
@@ -221,7 +217,7 @@ class CarController extends Controller
             ->limit(3)
             ->get();
 
-        return view('landing.car.single', compact('car', 'carConf', 'banner', 'relatedCars'));
+        return view('landing.car.single', compact('car', 'carConf', 'relatedCars'));
     }
 
     public function requestQuote(Request $request)
