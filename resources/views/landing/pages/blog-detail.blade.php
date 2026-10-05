@@ -1,6 +1,41 @@
 @extends('landing.master')
 @section('title', $post->title)
 
+@section('meta')
+    @php
+        $ogTitle = $post->title ?? 'Blog Post';
+
+        $rawDescription = !empty($post->description) ? $post->description : ($post->content ?? '');
+        $cleanDescription = trim(preg_replace('/\s+/', ' ', strip_tags($rawDescription)));
+        $ogDescription = \Illuminate\Support\Str::limit($cleanDescription, 300);
+
+        $ogImage = null;
+        if (!empty($post->featured_image)) {
+            $ogImage = (str_starts_with($post->featured_image, 'http://') || str_starts_with($post->featured_image, 'https://') || str_starts_with($post->featured_image, '//'))
+                ? $post->featured_image
+                : asset($post->featured_image);
+        }
+
+        $ogUrl = url()->current();
+    @endphp
+
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{ $ogUrl }}">
+    <meta property="og:title" content="{{ $ogTitle }}">
+    <meta property="og:description" content="{{ $ogDescription }}">
+    @if($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}">
+        <meta property="og:image:secure_url" content="{{ $ogImage }}">
+    @endif
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $ogTitle }}">
+    <meta name="twitter:description" content="{{ $ogDescription }}">
+    @if($ogImage)
+        <meta name="twitter:image" content="{{ $ogImage }}">
+    @endif
+@endsection
+
 @push('style')
     <style>
         .blog-detail-container {
@@ -170,17 +205,19 @@
 
                         <div class="blog-meta-bar">
                             @if($post->published_at)
-                                <span><i class="far fa-calendar-alt mr-1"></i> {{ $post->published_at->format('d M, Y') }}</span>
+                                <span><i class="far fa-calendar-alt mr-1"></i>
+                                    {{ $post->published_at->format('d M, Y') }}</span>
                             @endif
                             @if($post->soro_url)
-                                <span><i class="fas fa-external-link-alt mr-1"></i> <a href="{{ $post->soro_url }}" target="_blank" rel="noopener noreferrer" class="text-muted">Original Post</a></span>
+                                <span><i class="fas fa-external-link-alt mr-1"></i> <a href="{{ $post->soro_url }}"
+                                        target="_blank" rel="noopener noreferrer" class="text-muted">Original Post</a></span>
                             @endif
                         </div>
 
                         @if($post->featured_image)
                             <div class="blog-detail-img-wrapper">
                                 <img src="{{ $post->featured_image }}" alt="{{ $post->title }}" class="blog-detail-img"
-                                     onerror="this.style.display='none';">
+                                    onerror="this.style.display='none';">
                             </div>
                         @endif
 
@@ -203,7 +240,7 @@
                                     @endphp
                                     <a href="{{ route('blog.detail', $recent->slug) }}">
                                         <img src="{{ $recentImg }}" alt="{{ $recent->title }}" class="recent-post-img"
-                                             onerror="this.onerror=null;this.src='{{ asset('assets/landing/images/blog/blog-no-sidebar.jpg') }}';">
+                                            onerror="this.onerror=null;this.src='{{ asset('assets/landing/images/blog/blog-no-sidebar.jpg') }}';">
                                     </a>
                                     <div>
                                         <a href="{{ route('blog.detail', $recent->slug) }}" class="recent-post-title">
