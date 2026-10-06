@@ -444,6 +444,20 @@
             });
         });
     </script>
+    @if(session('error'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                sendError("{{ session('error') }}");
+            });
+        </script>
+    @endif
+    @if(session('success'))
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                sendSuccess("{{ session('success') }}");
+            });
+        </script>
+    @endif
 </body>
 
 </html>

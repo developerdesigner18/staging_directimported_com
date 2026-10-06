@@ -39,6 +39,15 @@
         <div class="col-md-4">
             <div class="card shadow-sm mb-3">
                 <div class="card-body p-2">
+                    <div class="d-flex align-items-center justify-content-between p-2">
+                        <h6 class="text-muted mb-0">Vehicle Images</h6>
+                        @if(isset($car) && $car->id)
+                            <a href="{{ route('admin.car.download-images', $car->id) }}"
+                                class="btn btn-sm btn-success d-flex align-items-center gap-1">
+                                <i class="ri-download-cloud-2-line"></i> Download Images
+                            </a>
+                        @endif
+                    </div>
                     <div id="carCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             @if($car->images && count($car->images))

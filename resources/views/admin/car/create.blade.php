@@ -161,6 +161,14 @@
                                 data-allow-reorder="true">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
+
+                        <!-- Download Images Button -->
+                        <div class="text-center mt-3 pt-2">
+                            <button type="button" id="btn-download-pond-images"
+                                class="btn btn-success px-4 py-2 d-inline-flex align-items-center gap-2">
+                                <i class="ri-download-cloud-2-line"></i> Download Images
+                            </button>
+                        </div>
                     </div>
                 </div>
 

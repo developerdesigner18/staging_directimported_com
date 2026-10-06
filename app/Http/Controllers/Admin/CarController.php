@@ -946,4 +946,69 @@ class CarController extends Controller
             'content' => $sanitizer->clean(trim($generatedText)),
         ]);
     }
+
+    public function downloadImages($id)
+    {
+        $car = Car::findOrFail($id);
+
+        $images = is_array($car->images) ? array_values(array_filter($car->images)) : [];
+
+        if (!empty($car->banner) && !in_array($car->banner, $images)) {
+            array_unshift($images, $car->banner);
+        }
+
+        $existingFiles = [];
+        foreach ($images as $img) {
+            $path = public_path(CAR_PATH . $img);
+            if (file_exists($path)) {
+                $existingFiles[] = [
+                    'path' => $path,
+                    'name' => basename($img),
+                ];
+            }
+        }
+
+        if (empty($existingFiles)) {
+            return redirect()->back()->with('error', 'No vehicle images are available for download.');
+        }
+
+        $cleanName = preg_replace('/[^A-Za-z0-9_\-]/', '_', trim($car->name));
+        $cleanName = preg_replace('/_+/', '_', $cleanName);
+        $cleanName = trim($cleanName, '_');
+        if (empty($cleanName)) {
+            $cleanName = 'Vehicle_' . $car->id;
+        }
+
+        $zipFileName = $cleanName . '_' . date('Y-m-d') . '.zip';
+        $tempZipPath = storage_path('app/public/' . $zipFileName);
+
+        if (!file_exists(dirname($tempZipPath))) {
+            mkdir(dirname($tempZipPath), 0755, true);
+        }
+
+        $zip = new \ZipArchive();
+        if ($zip->open($tempZipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === true) {
+            $addedNames = [];
+            foreach ($existingFiles as $file) {
+                $baseName = $file['name'];
+                $info = pathinfo($baseName);
+                $ext = isset($info['extension']) ? '.' . $info['extension'] : '';
+                $filename = $info['filename'];
+
+                $counter = 1;
+                $finalName = $baseName;
+                while (in_array($finalName, $addedNames)) {
+                    $finalName = $filename . '_' . $counter . $ext;
+                    $counter++;
+                }
+                $addedNames[] = $finalName;
+                $zip->addFile($file['path'], $finalName);
+            }
+            $zip->close();
+        } else {
+            return redirect()->back()->with('error', 'Unable to create ZIP file.');
+        }
+
+        return response()->download($tempZipPath, $zipFileName)->deleteFileAfterSend(true);
+    }
 }

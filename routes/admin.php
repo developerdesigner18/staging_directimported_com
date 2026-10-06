@@ -214,6 +214,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
             Route::post('/generate-ai-content', 'generateAiContent')->name('generate-ai-content');
+            Route::get('/download-images/{id}', 'downloadImages')->name('download-images');
         });
 
         // CarSensor import (separate controller — never creates vehicle records)

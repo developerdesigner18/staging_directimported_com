@@ -155,8 +155,10 @@
                         </div>
 
                         <div>
-                            <label for="images"
-                                class="form-label">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label for="images"
+                                    class="form-label mb-0">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
+                            </div>
                             <div class="mb-3">
                                 <input type="file" class="filepond" id="images" name="images[]" multiple>
                             </div>
@@ -184,6 +186,13 @@
 
                             <input type="hidden" id="removed_images" name="removed_images">
                             <label id="images-error" class="text-danger error" style="display:none"></label>
+                        </div>
+
+                        <!-- Download Images Button -->
+                        <div class="text-center mt-3 pt-2">
+                            <button type="button" id="btn-download-pond-images" class="btn btn-success px-4 py-2 d-inline-flex align-items-center gap-2">
+                                <i class="ri-download-cloud-2-line"></i> Download Images
+                            </button>
                         </div>
                     </div>
                 </div>

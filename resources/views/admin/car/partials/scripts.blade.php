@@ -601,5 +601,159 @@
             $('#carsensor-import-summary').removeClass('d-none');
             $('html, body').animate({ scrollTop: $('#carsensor-import-summary').offset().top - 20 }, 500);
         }
+
+        // =====================================================================
+        // Download Images Handler (Client-side ZIP packaging via JSZip)
+        // =====================================================================
+        $(document).on('click', '#btn-download-pond-images', function (e) {
+            e.preventDefault();
+
+            var inputEl = document.querySelector('.filepond--root') || document.querySelector('input.filepond');
+            var pond = inputEl ? FilePond.find(inputEl) : null;
+            var pondFiles = pond ? pond.getFiles() : [];
+            var existingImgs = $('#sortable-images img');
+
+            // If no files in FilePond and no existing images in edit view
+            if (pondFiles.length === 0 && existingImgs.length === 0) {
+                if (typeof sendError === 'function') {
+                    sendError("No images available to download. Please upload or select images first.");
+                } else {
+                    alert("No images available to download. Please upload or select images first.");
+                }
+                return;
+            }
+
+            // Check if JSZip is available
+            if (typeof JSZip === 'undefined') {
+                if (typeof sendError === 'function') {
+                    sendError("JSZip library is not loaded. Cannot create zip file.");
+                } else {
+                    alert("JSZip library is not loaded. Cannot create zip file.");
+                }
+                return;
+            }
+
+            // Show Swal Loading modal
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Preparing Download...',
+                    text: 'Packaging images into ZIP file, please wait.',
+                    allowOutsideClick: false,
+                    didOpen: function () {
+                        Swal.showLoading();
+                    }
+                });
+            }
+
+            async function generateZip() {
+                try {
+                    var zip = new JSZip();
+                    var addedNames = {};
+
+                    // 1. Process FilePond files
+                    for (var i = 0; i < pondFiles.length; i++) {
+                        var item = pondFiles[i];
+                        var blob = null;
+
+                        if (item.file instanceof Blob || item.file instanceof File) {
+                            blob = item.file;
+                        } else if (typeof item.getFileEncodeDataURL === 'function' && item.getFileEncodeDataURL()) {
+                            var dataUrl = item.getFileEncodeDataURL();
+                            var res = await fetch(dataUrl);
+                            blob = await res.blob();
+                        } else if (typeof item.source === 'string') {
+                            try {
+                                var res = await fetch(item.source);
+                                blob = await res.blob();
+                            } catch (err) {
+                                console.warn("Could not fetch FilePond image source:", item.source);
+                            }
+                        }
+
+                        if (blob) {
+                            var name = item.filename || (item.file && item.file.name) || ('image_' + (i + 1) + '.jpg');
+                            var ext = name.indexOf('.') !== -1 ? name.substring(name.lastIndexOf('.')) : '.jpg';
+                            var baseName = name.indexOf('.') !== -1 ? name.substring(0, name.lastIndexOf('.')) : name;
+
+                            if (addedNames[name]) {
+                                addedNames[name]++;
+                                name = baseName + '_' + addedNames[name] + ext;
+                            } else {
+                                addedNames[name] = 1;
+                            }
+
+                            zip.file(name, blob);
+                        }
+                    }
+
+                    // 2. Process existing vehicle images if present
+                    if (existingImgs.length > 0) {
+                        for (var j = 0; j < existingImgs.length; j++) {
+                            var src = $(existingImgs[j]).attr('src');
+                            if (src) {
+                                try {
+                                    var imgRes = await fetch(src);
+                                    var imgBlob = await imgRes.blob();
+                                    var imgName = src.split('/').pop().split('?')[0] || ('existing_' + (j + 1) + '.jpg');
+                                    var imgExt = imgName.indexOf('.') !== -1 ? imgName.substring(imgName.lastIndexOf('.')) : '.jpg';
+                                    var imgBase = imgName.indexOf('.') !== -1 ? imgName.substring(0, imgName.lastIndexOf('.')) : imgName;
+
+                                    if (addedNames[imgName]) {
+                                        addedNames[imgName]++;
+                                        imgName = imgBase + '_' + addedNames[imgName] + imgExt;
+                                    } else {
+                                        addedNames[imgName] = 1;
+                                    }
+
+                                    zip.file(imgName, imgBlob);
+                                } catch (err) {
+                                    console.warn("Could not fetch existing image:", src);
+                                }
+                            }
+                        }
+                    }
+
+                    if (Object.keys(zip.files).length === 0) {
+                        if (typeof Swal !== 'undefined') Swal.close();
+                        if (typeof sendError === 'function') {
+                            sendError("No valid image data could be retrieved for download.");
+                        }
+                        return;
+                    }
+
+                    // Build ZIP filename: {VehicleName}_{YYYY-MM-DD}.zip
+                    var formData = collectCarFormData();
+                    var nameParts = [formData.make, formData.model, formData.year].filter(Boolean);
+                    var vehicleName = nameParts.length ? nameParts.join('_') : 'Vehicle';
+                    vehicleName = vehicleName.replace(/[^A-Za-z0-9_\-]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+                    if (!vehicleName) vehicleName = 'Vehicle';
+
+                    var today = new Date().toISOString().split('T')[0];
+                    var zipFileName = vehicleName + '_' + today + '.zip';
+
+                    var zipContent = await zip.generateAsync({ type: 'blob' });
+
+                    if (typeof Swal !== 'undefined') Swal.close();
+
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(zipContent);
+                    link.download = zipFileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
+
+                } catch (err) {
+                    if (typeof Swal !== 'undefined') Swal.close();
+                    if (typeof sendError === 'function') {
+                        sendError("Download failed: " + err.message);
+                    } else {
+                        alert("Download failed: " + err.message);
+                    }
+                }
+            }
+
+            generateZip();
+        });
     });
 </script>
