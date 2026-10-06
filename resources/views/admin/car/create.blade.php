@@ -361,7 +361,7 @@
                                 <select id="interior_grade" name="interior_grade" class="form-select select2">
                                     <option value="">Select Interior Grade</option>
                                     <option value="A">A</option>
-                                    <option value="B">B</option>
+                                    <option value="B" selected>B</option>
                                     <option value="C">C</option>
                                 </select>
                             </div>
@@ -372,7 +372,7 @@
                                 <select id="exterior_grade" name="exterior_grade" class="form-select select2">
                                     <option value="">Select Exterior Grade</option>
                                     <option value="A">A</option>
-                                    <option value="B">B</option>
+                                    <option value="B" selected>B</option>
                                     <option value="C">C</option>
                                 </select>
                             </div>

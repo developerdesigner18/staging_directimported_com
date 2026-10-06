@@ -208,6 +208,16 @@ class CarController extends Controller
 
                 ->addIndexColumn()
 
+                ->addColumn('image', function ($row) {
+                    $firstImg = (!empty($row->images) && is_array($row->images) && isset($row->images[0]) && !empty($row->images[0])) ? $row->images[0] : null;
+                    if ($firstImg) {
+                        $src = asset(CAR_PATH . $firstImg);
+                    } else {
+                        $src = asset('uploads/default/default.jpg');
+                    }
+                    return '<img src="' . e($src) . '" alt="' . e($row->name) . '" class="car-table-thumb rounded shadow-sm">';
+                })
+
                 ->addColumn('name', function ($row) {
 
                     return $row->name;
@@ -277,7 +287,7 @@ class CarController extends Controller
                 })
 
 
-                ->rawColumns(['action'])
+                ->rawColumns(['image', 'action'])
 
                 ->make(true);
 

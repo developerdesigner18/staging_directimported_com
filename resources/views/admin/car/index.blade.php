@@ -187,6 +187,12 @@
             background: #f3f4f6;
             color: #374151;
         }
+
+        .car-table-thumb {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
     </style>
 
     <div class="row" id="vfFilterCard">
@@ -467,6 +473,7 @@
                         },
                         columns: [
                             { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
+                            { data: 'image', name: 'image', title: 'Image', class: 'text-center', orderable: false, searching: false },
                             { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
                             { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
                             {
