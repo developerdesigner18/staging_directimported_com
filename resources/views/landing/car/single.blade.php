@@ -436,7 +436,7 @@
 
         /* -------------------------------------------------------------
 
-                                    /* Main Image Container & Watermark Display */
+                                                    /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -652,6 +652,47 @@
             color: var(--primary-blue);
         }
 
+        /* Specs Share Button & Description Internal CSS */
+        .specs-share-btn {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+        }
+
+        .specs-description-wrapper {
+            border-color: #e2e8f0 !important;
+        }
+
+        .specs-description-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        .specs-description-content {
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .specs-description-content p {
+            margin-bottom: 1.25rem;
+        }
+
+        .specs-description-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .specs-description-content ul,
+        .specs-description-content ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+
         .faq-header {
             font-size: 22px;
             font-weight: 900;
@@ -661,11 +702,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                                    display: flex;
-                                                                                    justify-content: space-between;
-                                                                                    align-items: center;
-                                                                                    margin-bottom: 12px;
-                                                                                } */
+                                                                                                    display: flex;
+                                                                                                    justify-content: space-between;
+                                                                                                    align-items: center;
+                                                                                                    margin-bottom: 12px;
+                                                                                                } */
 
         .sidebar-title {
             font-size: 24px;
@@ -1284,13 +1325,14 @@
                     <div class="photo-actions-group" style="display: flex; gap: 12px; align-items: center;">
                         <button id="viewAllBtn" class="view-all-btn" style="flex: 1;">
                             View All {{ count($car->images) }} Photos
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                 <polyline points="6 9 12 15 18 9"></polyline>
                             </svg>
                         </button>
                         <div class="share-container">
-                            <button type="button" id="shareCarBtnTop" class="view-all-btn share-car-trigger" style="width: auto; padding: 12px 20px; gap: 8px;">
+                            <button type="button" id="shareCarBtnTop" class="view-all-btn share-car-trigger"
+                                style="width: auto; padding: 12px 20px; gap: 8px;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                     viewBox="0 0 16 16" style="flex-shrink:0;">
                                     <path
@@ -1457,7 +1499,35 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="specs-item border-0">
+                            <span class="specs-label"></span>
+                            <div class="share-container">
+                                <button type="button"
+                                    class="share-car-trigger btn specs-share-btn d-inline-flex align-items-center gap-2 px-3 py-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        viewBox="0 0 16 16">
+                                        <path
+                                            d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                        <path
+                                            d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V10.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                    </svg>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
                     </div>
+
+                    @if(!empty($car->description))
+                        <div class="specs-description-wrapper mt-4 pt-4 border-top">
+                            <h4 class="specs-description-title d-flex align-items-center gap-2 mb-3">
+                                <span>📝</span> Description
+                            </h4>
+                            <div class="specs-description-content">
+                                {!! Str::contains($car->description, '<p>') ? $car->description : nl2br(e($car->description)) !!}
+                            </div>
+                        </div>
+                    @endif
 
 
                     <div id="shareMenu" class="share-menu" style="display: none; top: 100%; left: 0; margin-top: 8px;">
@@ -1966,7 +2036,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                    ];
+                                                    ];
 
         let currentIndex = 0;
         let gridExpanded = false;
