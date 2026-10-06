@@ -14,7 +14,9 @@ class CarSensorImportController extends Controller
 {
     use ResponseTrait;
 
-    public function __construct(private CarSensorImportService $importService) {}
+    public function __construct(private CarSensorImportService $importService)
+    {
+    }
 
     /**
      * Handle a CarSensor import request.
@@ -26,11 +28,11 @@ class CarSensorImportController extends Controller
     public function import(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'url'    => ['required', 'string', 'url', 'max:2048'],
+            'url' => ['required', 'string', 'url', 'max:2048'],
             'car_id' => ['nullable', 'integer'],
         ], [
             'url.required' => 'Please enter a CarSensor.net listing URL.',
-            'url.url'      => 'Please enter a valid URL.',
+            'url.url' => 'Please enter a valid URL.',
         ]);
 
         if ($validator->fails()) {
@@ -57,12 +59,12 @@ class CarSensorImportController extends Controller
             // Duplicate detected — stop before form population
             if (isset($result['duplicate']) && $result['duplicate']) {
                 return response()->json([
-                    'success'   => false,
+                    'success' => false,
                     'duplicate' => true,
-                    'message'   => $result['message'],
+                    'message' => $result['message'],
                     'source_id' => $result['source_id'],
-                    'car_id'    => $result['existing_car_id'] ?? null,
-                    'edit_url'  => $result['edit_url'] ?? null,
+                    'car_id' => $result['existing_car_id'] ?? null,
+                    'edit_url' => $result['edit_url'] ?? null,
                 ], 409);
             }
 
@@ -72,40 +74,59 @@ class CarSensorImportController extends Controller
             // the "Create Car" button on the form. This endpoint NEVER submits to car.store.
             // =====================
 
-            return response()->json([
-                'success'            => true,
-                'message'            => 'CarSensor data imported successfully. Please review all fields before creating the car.',
-                'source_url'         => $result['source_url'],
-                'source_id'          => $result['source_id'],
-                'import_id'          => $result['import_id'],
-                'data'               => $result['data'],
-                'filepond_images'    => $result['filepond_images'],
-                'banner_data'        => $result['banner_data'],
-                'images_total'       => $result['images_total'],
-                'images_downloaded'  => $result['images_downloaded'],
+            return response()->json($this->sanitizeUtf8([
+                'success' => true,
+                'message' => 'Vehicle data imported successfully. Please review all fields before creating the car.',
+                'source_url' => $result['source_url'],
+                'source_id' => $result['source_id'],
+                'import_id' => $result['import_id'],
+                'data' => $result['data'],
+                'filepond_images' => $result['filepond_images'],
+                'banner_data' => $result['banner_data'],
+                'images_total' => $result['images_total'],
+                'images_downloaded' => $result['images_downloaded'],
                 'needs_manual_review' => $result['needs_manual_review'],
-                'scraped_raw'        => $result['scraped_raw'],
-            ]);
+                'scraped_raw' => $result['scraped_raw'],
+            ]), 200, [], JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE);
 
         } catch (\InvalidArgumentException $e) {
-            return response()->json([
+            return response()->json($this->sanitizeUtf8([
                 'success' => false,
                 'message' => $e->getMessage(),
-            ], 422);
+            ]), 422, [], JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE);
 
         } catch (\Exception $e) {
-            return response()->json([
+            return response()->json($this->sanitizeUtf8([
                 'success' => false,
                 'message' => $e->getMessage() ?: 'An error occurred during import. Please try again.',
-            ], 500);
+            ]), 500, [], JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE);
 
         } catch (\Throwable $e) {
             // Unexpected PHP errors: log the detail, return JSON instead of an HTML error page
             report($e);
-            return response()->json([
+            return response()->json($this->sanitizeUtf8([
                 'success' => false,
                 'message' => 'An unexpected error occurred during import. Please try again.',
-            ], 500);
+            ]), 500, [], JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE);
         }
+    }
+
+    /**
+     * Recursively convert strings and array keys to valid UTF-8.
+     */
+    private function sanitizeUtf8(mixed $data): mixed
+    {
+        if (is_string($data)) {
+            return mb_convert_encoding($data, 'UTF-8', 'UTF-8');
+        }
+        if (is_array($data)) {
+            $sanitized = [];
+            foreach ($data as $key => $value) {
+                $sanitizedKey = is_string($key) ? mb_convert_encoding($key, 'UTF-8', 'UTF-8') : $key;
+                $sanitized[$sanitizedKey] = $this->sanitizeUtf8($value);
+            }
+            return $sanitized;
+        }
+        return $data;
     }
 }

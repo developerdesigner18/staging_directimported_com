@@ -9,12 +9,13 @@ use Illuminate\Support\Str;
 class CarSensorImportService
 {
     public function __construct(
-        private CarSensorUrlValidator   $urlValidator,
+        private CarSensorUrlValidator $urlValidator,
         private CarSensorDuplicateChecker $duplicateChecker,
         private CarSensorScraperService $scraper,
         private CarSensorMappingService $mapper,
-        private CarSensorImageService   $imageService
-    ) {}
+        private CarSensorImageService $imageService
+    ) {
+    }
 
     /**
      * Run the full import pipeline.
@@ -29,12 +30,12 @@ class CarSensorImportService
     public function run(string $rawUrl, ?int $adminId = null, ?int $ignoreCarId = null): array
     {
         $startTime = microtime(true);
-        $importId  = Str::uuid()->toString();
+        $importId = Str::uuid()->toString();
 
         // 1. Validate URL
         $validated = $this->urlValidator->validate($rawUrl);
-        $url       = $validated['url'];
-        $sourceId  = $validated['source_id'];
+        $url = $validated['url'];
+        $sourceId = $validated['source_id'];
 
         // 2. Log import start
         $logId = $this->logImport($importId, $adminId, $url, $sourceId, 'started');
@@ -45,12 +46,12 @@ class CarSensorImportService
             if ($duplicate['exists']) {
                 $this->updateLog($logId, 'failed', 'Duplicate detected', 0, 0);
                 return [
-                    'success'          => false,
-                    'duplicate'        => true,
-                    'source_id'        => $sourceId,
-                    'existing_car_id'  => $duplicate['car_id'],
-                    'edit_url'         => $duplicate['edit_url'],
-                    'message'          => "This CarSensor listing has already been imported. Vehicle ID: {$sourceId}",
+                    'success' => false,
+                    'duplicate' => true,
+                    'source_id' => $sourceId,
+                    'existing_car_id' => $duplicate['car_id'],
+                    'edit_url' => $duplicate['edit_url'],
+                    'message' => "This CarSensor listing has already been imported. Vehicle ID: {$sourceId}",
                 ];
             }
 
@@ -61,8 +62,8 @@ class CarSensorImportService
             // 5. Map data to form fields
             $this->updateLog($logId, 'mapping', null, 0, 0);
             $mappingResult = $this->mapper->map($scraped, $sourceId, $url);
-            $formData      = $mappingResult['data'];
-            $manualReview  = $mappingResult['needs_manual_review'];
+            $formData = $mappingResult['data'];
+            $manualReview = $mappingResult['needs_manual_review'];
 
             // 6. Download images
             $this->updateLog($logId, 'images', null, 0, 0);
@@ -71,7 +72,7 @@ class CarSensorImportService
                     isset($scraped['image_urls']) ? (array) $scraped['image_urls'] : [],
                     isset($scraped['primary_image_url']) ? [$scraped['primary_image_url']] : []
                 ),
-                fn ($imageUrl) => is_string($imageUrl) && trim($imageUrl) !== ''
+                fn($imageUrl) => is_string($imageUrl) && trim($imageUrl) !== ''
             );
             $imageUrls = array_values(array_unique($imageUrls));
 
@@ -83,9 +84,9 @@ class CarSensorImportService
 
             $imageResult = $this->imageService->downloadImages($imageUrls, $importId);
 
-            $totalImages   = min(count($imageUrls), CarSensorImageService::MAX_IMAGES);
+            $totalImages = min(count($imageUrls), CarSensorImageService::MAX_IMAGES);
             $successImages = count($imageResult['images']);
-            $failedImages  = $imageResult['failed'];
+            $failedImages = $imageResult['failed'];
 
             if (!empty($failedImages)) {
                 $failedNums = implode(', ', array_column($failedImages, 'index'));
@@ -94,7 +95,7 @@ class CarSensorImportService
 
             // 7. Build image payload for frontend (FilePond base64 JSON)
             $filepondImages = array_map(fn($img) => $img['filepond_json'], $imageResult['images']);
-            $bannerImage    = $imageResult['banner'];
+            $bannerImage = $imageResult['banner'];
 
             // The images now travel in the response; don't leave publicly reachable copies behind
             $this->imageService->cleanup($importId);
@@ -105,27 +106,27 @@ class CarSensorImportService
 
             // 9. Build final response
             return [
-                'success'            => true,
-                'source_url'         => $url,
-                'source_id'          => $sourceId,
-                'import_id'          => $importId,
-                'data'               => $formData,
-                'filepond_images'    => $filepondImages,
-                'banner_data'        => $bannerImage ? $bannerImage['filepond_json'] : null,
-                'images_meta'        => $imageResult['images'],
-                'images_total'       => $totalImages,
-                'images_downloaded'  => $successImages,
+                'success' => true,
+                'source_url' => $url,
+                'source_id' => $sourceId,
+                'import_id' => $importId,
+                'data' => $formData,
+                'filepond_images' => $filepondImages,
+                'banner_data' => $bannerImage ? $bannerImage['filepond_json'] : null,
+                'images_meta' => $imageResult['images'],
+                'images_total' => $totalImages,
+                'images_downloaded' => $successImages,
                 'needs_manual_review' => $manualReview,
-                'scraped_raw'        => [
-                    'manufacturer'  => $scraped['manufacturer'] ?? null,
-                    'model'         => $scraped['model'] ?? null,
-                    'year'          => $scraped['year'] ?? null,
+                'scraped_raw' => [
+                    'manufacturer' => $scraped['manufacturer'] ?? null,
+                    'model' => $scraped['model'] ?? null,
+                    'year' => $scraped['year'] ?? null,
                     'vehicle_price' => $scraped['vehicle_price'] ?? null,
-                    'odometer'      => $scraped['odometer'] ?? null,
-                    'body_type'     => $scraped['body_type'] ?? null,
-                    'location'      => $scraped['location'] ?? null,
-                    'exterior_color'=> $scraped['exterior_color'] ?? null,
-                    'interior_color'=> $scraped['interior_color'] ?? null,
+                    'odometer' => $scraped['odometer'] ?? null,
+                    'body_type' => $scraped['body_type'] ?? null,
+                    'location' => $scraped['location'] ?? null,
+                    'exterior_color' => $scraped['exterior_color'] ?? null,
+                    'interior_color' => $scraped['interior_color'] ?? null,
                 ],
             ];
 
@@ -146,11 +147,11 @@ class CarSensorImportService
     private function logImport(string $importId, ?int $adminId, string $url, string $sourceId, string $status): int
     {
         return DB::table('carsensor_import_logs')->insertGetId([
-            'import_id'  => $importId,
-            'admin_id'   => $adminId,
+            'import_id' => $importId,
+            'admin_id' => $adminId,
             'source_url' => $url,
-            'source_id'  => $sourceId,
-            'status'     => $status,
+            'source_id' => $sourceId,
+            'status' => $status,
             'started_at' => now(),
             'created_at' => now(),
             'updated_at' => now(),
@@ -167,11 +168,11 @@ class CarSensorImportService
         ?int $durationMs = null
     ): void {
         $data = [
-            'status'              => $status,
-            'image_count'         => $imageCount,
+            'status' => $status,
+            'image_count' => $imageCount,
             'image_success_count' => $imageSuccessCount,
-            'mapping_warnings'    => !empty($warnings) ? json_encode($warnings) : null,
-            'updated_at'          => now(),
+            'mapping_warnings' => !empty($warnings) ? json_encode($warnings, JSON_INVALID_UTF8_SUBSTITUTE | JSON_UNESCAPED_UNICODE) : null,
+            'updated_at' => now(),
         ];
 
         if ($error !== null) {

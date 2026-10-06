@@ -30,7 +30,7 @@ class CarSensorScraperService
         // complete, in listing order and in high quality. The AI's image list is the fallback.
         $gallery = $this->extractGalleryImages($body, $url);
         if (!empty($gallery)) {
-            $data['image_urls']        = $gallery;
+            $data['image_urls'] = $gallery;
             $data['primary_image_url'] = $gallery[0];
         }
 
@@ -123,11 +123,11 @@ class CarSensorScraperService
         try {
             // No explicit Accept-Encoding: the HTTP client advertises only encodings it can decode
             $response = Http::withHeaders([
-                'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'Accept-Language' => 'ja,en-US;q=0.7,en;q=0.3',
-                'DNT'             => '1',
-                'Connection'      => 'keep-alive',
+                'DNT' => '1',
+                'Connection' => 'keep-alive',
                 'Upgrade-Insecure-Requests' => '1',
             ])
                 ->withOptions($this->urlValidator->requestOptions($target))
@@ -146,6 +146,34 @@ class CarSensorScraperService
             if (empty(trim($body))) {
                 throw new \Exception('The listing page returned an empty response.');
             }
+
+            // Convert Japanese encodings (e.g. EUC-JP, Shift_JIS on Goo-net) to UTF-8
+            $contentType = $response->header('Content-Type');
+            $charset = null;
+            if ($contentType && preg_match('/charset=([\w\-]+)/i', $contentType, $m)) {
+                $charset = strtoupper($m[1]);
+            } elseif (preg_match('/<meta[^>]+charset=["\']?([\w\-]+)/i', $body, $m)) {
+                $charset = strtoupper($m[1]);
+            } elseif (preg_match('/<meta[^>]+content=["\'][^"\']*charset=([\w\-]+)/i', $body, $m)) {
+                $charset = strtoupper($m[1]);
+            }
+
+            if ($charset && !in_array($charset, ['UTF-8', 'UTF8'])) {
+                $converted = @mb_convert_encoding($body, 'UTF-8', $charset);
+                if ($converted !== false && !empty($converted)) {
+                    $body = $converted;
+                }
+            } else {
+                if (!mb_check_encoding($body, 'UTF-8')) {
+                    $converted = @mb_convert_encoding($body, 'UTF-8', 'EUC-JP, Shift_JIS, SJIS, ISO-2022-JP, ASCII, UTF-8');
+                    if ($converted !== false && !empty($converted)) {
+                        $body = $converted;
+                    }
+                }
+            }
+
+            // Clean any remaining invalid UTF-8 byte sequences
+            $body = mb_convert_encoding($body, 'UTF-8', 'UTF-8');
 
             return $body;
 
@@ -186,7 +214,7 @@ class CarSensorScraperService
         // Only a JSON object (not a list, string or number) can be mapped to the form
         if (json_last_error() !== JSON_ERROR_NONE || !is_array($data) || array_is_list($data)) {
             Log::warning('CarSensor/Import Gemini returned invalid JSON', [
-                'raw'   => substr($text, 0, 800),
+                'raw' => substr($text, 0, 800),
                 'error' => json_last_error_msg(),
             ]);
             throw new \Exception(
