@@ -214,6 +214,8 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::get('/configuration', 'configuration')->name('configuration');
             Route::post('/configuration', 'updateConfiguration')->name('configuration.update');
             Route::post('/generate-ai-content', 'generateAiContent')->name('generate-ai-content');
+            Route::post('/save-draft', 'saveDraft')->name('save-draft');
+            Route::get('/draft/{car}/edit', 'editDraft')->name('draft.edit');
             Route::get('/download-images/{id}', 'downloadImages')->name('download-images');
         });
 

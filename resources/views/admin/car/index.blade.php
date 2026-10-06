@@ -257,6 +257,80 @@
         </div>
     </div>
 
+    {{-- ===== DRAFTS SECTION ===== --}}
+    @if(isset($draftCars) && $draftCars->count() > 0)
+        <div class="row mb-4" id="draftsSection">
+            <div class="col-12">
+                <div class="card border-warning border-start border-4 shadow-sm">
+                    <div class="card-header bg-warning-subtle d-flex align-items-center justify-content-between py-3">
+                        <h5 class="card-title text-warning-emphasis mb-0 d-flex align-items-center gap-2">
+                            <i class="ri-draft-line fs-18"></i>
+                            <span>Car Drafts</span>
+                            <span class="badge bg-warning text-dark rounded-pill fs-12">{{ $draftCars->count() }}</span>
+                        </h5>
+                        <small class="text-muted">Auto-saved car drafts pending publication</small>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-hover table-nowrap mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col" style="width: 70px;" class="text-center">Image</th>
+                                        <th scope="col">Car Name</th>
+                                        <th scope="col">Vehicle ID</th>
+                                        <th scope="col" class="text-center">Status</th>
+                                        <th scope="col">Last Saved</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($draftCars as $draftItem)
+                                        @php
+                                            $dImg = (!empty($draftItem->images) && is_array($draftItem->images) && isset($draftItem->images[0]) && !empty($draftItem->images[0])) ? $draftItem->images[0] : null;
+                                            $dSrc = $dImg ? asset(CAR_PATH . $dImg) : asset('uploads/default/default.jpg');
+                                        @endphp
+                                        <tr id="slider-card-{{ $draftItem->id }}">
+                                            <td class="text-center">
+                                                <img src="{{ $dSrc }}" alt="Draft" class="car-table-thumb rounded shadow-sm">
+                                            </td>
+                                            <td>
+                                                <h6 class="fs-14 mb-0 fw-semibold">{{ $draftItem->name ?: 'Untitled Car Draft' }}</h6>
+                                                <small class="text-muted">{{ $draftItem->manufacturer->name ?? '' }} {{ $draftItem->model ?? '' }} {{ $draftItem->year ?? '' }}</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-light text-body fs-12">{{ $draftItem->vehicle_id ?: 'Pending' }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span class="badge bg-warning text-dark px-2 py-1 fs-12">
+                                                    <i class="ri-draft-line me-1"></i> {{ \App\Enum\CarStatus::DRAFT->label() }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $draftItem->updated_at ? $draftItem->updated_at->diffForHumans() : '-' }}</td>
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <a href="{{ route('admin.car.draft.edit', $draftItem) }}"
+                                                        class="btn btn-warning btn-sm d-inline-flex align-items-center gap-1 fw-medium me-1">
+                                                        <i class="ri-edit-box-line"></i> Continue Editing
+                                                    </a>
+                                                    <a href="{{ route('admin.car.edit', $draftItem->id) }}" class="btn btn-success btn-sm me-1" title="Edit">
+                                                        <i class="ri-pencil-line"></i>
+                                                    </a>
+                                                    <button class="btn btn-danger btn-sm" onclick="deleteCar({{ $draftItem->id }}, this)" title="Delete">
+                                                        <i class="ri-delete-bin-line"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -475,6 +549,7 @@
                             { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
                             { data: 'image', name: 'image', title: 'Image', class: 'text-center', orderable: false, searching: false },
                             { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
+                            { data: 'status', name: 'status', title: 'Status', class: 'text-center' },
                             { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
                             {
                                 data: 'action',
