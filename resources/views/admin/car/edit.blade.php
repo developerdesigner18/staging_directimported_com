@@ -105,6 +105,41 @@
         .select2-selection__clear {
             display: none !important;
         }
+
+        /* Banner Dropzone & Drag-and-Drop Styles */
+        .banner-dropzone {
+            transition: all 0.25s ease-in-out;
+            min-height: 120px;
+            background-color: #f8f9fa;
+            border-color: #cbd5e1;
+        }
+
+        .banner-dropzone.is-dragging-pond {
+            border-color: #1E50A2;
+            background-color: #edf2f7;
+            box-shadow: 0 0 12px rgba(30, 80, 162, 0.2);
+        }
+
+        .banner-dropzone.is-drag-over {
+            border-color: #0ab39c;
+            background-color: #e6f7f5;
+            transform: scale(1.005);
+            box-shadow: 0 0 16px rgba(10, 179, 156, 0.3);
+        }
+
+        .filepond--item {
+            cursor: grab;
+            -webkit-user-drag: element;
+        }
+
+        .filepond--item:active {
+            cursor: grabbing;
+        }
+
+        .image-preview-container {
+            cursor: grab;
+            -webkit-user-drag: element;
+        }
     </style>
 @endsection
 
@@ -140,16 +175,25 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="mb-4">
-                            <label for="banner" class="form-label">{{ admin_label('car_form', 'banner', 'Banner') }}</label>
-                            <label for="banner" class="custom-file-label w-100">
+                            <label for="banner" class="form-label d-flex align-items-center justify-content-between">
+                                <span>{{ admin_label('car_form', 'banner', 'Banner') }}</span>
+                                <small class="text-muted"><i class="ri-drag-drop-line me-1"></i>Drag image from Car Images below to set as Banner</small>
+                            </label>
+                            <label for="banner" id="banner-dropzone"
+                                class="custom-file-label w-100 banner-dropzone p-3 border border-2 border-dashed rounded position-relative transition-all d-block">
                                 <input type="file" id="banner" class="form-control file-preview" name="banner"
                                     accept="image/*">
                                 <label id="banner-error" class="text-danger error" style="display:none"></label>
-                                <div class="uploaded-preview mt-2" style="width: 240px;">
+                                <div class="uploaded-preview mt-2" style="max-width: 280px;">
                                     @if($car->banner)
                                         <img src="{{ asset(CAR_PATH . $car->banner) }}" alt=""
-                                            class="imgupload w-100 h-100 object-contain" id="product-img" />
+                                            class="imgupload w-100 h-100 object-contain rounded border shadow-sm" id="product-img" />
                                     @endif
+                                </div>
+                                <div class="banner-drop-overlay d-none position-absolute top-0 start-0 w-100 h-100 flex-column align-items-center justify-content-center bg-white bg-opacity-90 rounded" style="z-index: 10; pointer-events: none; backdrop-filter: blur(2px);">
+                                    <i class="ri-image-add-line fs-1 text-primary mb-1"></i>
+                                    <span class="fw-bold text-primary banner-drop-text">Drop here to set as Banner Image</span>
+                                    <small class="text-muted">Replaces banner preview instantly</small>
                                 </div>
                             </label>
                         </div>

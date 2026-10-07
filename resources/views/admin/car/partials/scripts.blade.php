@@ -755,5 +755,199 @@
 
             generateZip();
         });
+
+        // =====================================================================
+        // FilePond Drag & Drop to Banner Image Handler
+        // =====================================================================
+        var draggedBannerFile = null;
+        var draggedBannerSrc = null;
+
+        // Ensure FilePond items & thumbnails have draggable="true" enabled
+        $(document).on('mouseenter mousedown pointerdown', '.filepond--item, .image-preview-container', function () {
+            if (this.getAttribute('draggable') !== 'true') {
+                this.setAttribute('draggable', 'true');
+            }
+            var img = this.querySelector('img');
+            if (img && img.getAttribute('draggable') !== 'true') {
+                img.setAttribute('draggable', 'true');
+            }
+        });
+
+        // 1. Drag Start listener
+        $(document).on('dragstart', function (e) {
+            var origEvent = e.originalEvent || e;
+            var target = origEvent.target;
+
+            var pondItemEl = target.closest ? target.closest('.filepond--item') : null;
+            var existingItemEl = target.closest ? target.closest('.image-preview-container') : null;
+
+            if (!pondItemEl && !existingItemEl) return;
+
+            draggedBannerFile = null;
+            draggedBannerSrc = null;
+
+            if (pondItemEl) {
+                var inputEl = document.querySelector('.filepond--root') || document.querySelector('input.filepond');
+                var pond = inputEl ? FilePond.find(inputEl) : null;
+                if (pond) {
+                    var items = Array.from(document.querySelectorAll('.filepond--item'));
+                    var index = items.indexOf(pondItemEl);
+                    var pondFiles = pond.getFiles();
+                    if (index !== -1 && pondFiles[index]) {
+                        var item = pondFiles[index];
+                        if (item.file instanceof File) {
+                            draggedBannerFile = item.file;
+                        } else if (item.file instanceof Blob) {
+                            draggedBannerFile = new File([item.file], item.filename || 'banner.jpg', { type: item.file.type || 'image/jpeg' });
+                        }
+                    }
+                }
+                // Fallback: Check img/canvas inside FilePond item if File instance is not directly available
+                if (!draggedBannerFile) {
+                    var img = pondItemEl.querySelector('img');
+                    if (img && img.src) {
+                        draggedBannerSrc = img.src;
+                    }
+                }
+            } else if (existingItemEl) {
+                var img = existingItemEl.querySelector('img');
+                if (img && img.src) {
+                    draggedBannerSrc = img.src;
+                }
+            }
+
+            if (draggedBannerFile || draggedBannerSrc) {
+                if (origEvent.dataTransfer) {
+                    origEvent.dataTransfer.effectAllowed = 'copy';
+                    try {
+                        origEvent.dataTransfer.setData('text/plain', 'filepond-banner-image');
+                    } catch (err) { }
+                }
+
+                var $dropzone = $('#banner-dropzone');
+                if ($dropzone.length) {
+                    $dropzone.addClass('is-dragging-pond');
+                    $dropzone.find('.banner-drop-overlay').removeClass('d-none').addClass('d-flex');
+                }
+            }
+        });
+
+        // 2. Drag End listener
+        $(document).on('dragend', function (e) {
+            draggedBannerFile = null;
+            draggedBannerSrc = null;
+
+            var $dropzone = $('#banner-dropzone');
+            if ($dropzone.length) {
+                $dropzone.removeClass('is-dragging-pond is-drag-over');
+                $dropzone.find('.banner-drop-overlay').addClass('d-none').removeClass('d-flex');
+                $dropzone.find('.banner-drop-text').text('Drop here to set as Banner Image');
+                $dropzone.find('.banner-drop-overlay i').removeClass('text-success').addClass('text-primary');
+            }
+        });
+
+        // 3. Drag Over & Drag Enter listener on Banner Dropzone
+        $(document).on('dragover dragenter', '#banner-dropzone', function (e) {
+            var origEvent = e.originalEvent || e;
+            var dt = origEvent.dataTransfer;
+            var isExternalFile = dt && dt.types && (Array.from(dt.types).includes('Files') || Array.from(dt.types).includes('file'));
+
+            if (draggedBannerFile || draggedBannerSrc || isExternalFile) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (dt) dt.dropEffect = 'copy';
+
+                $(this).addClass('is-drag-over');
+                $(this).find('.banner-drop-text').text('Release to set as Banner!');
+                $(this).find('.banner-drop-overlay i').removeClass('text-primary').addClass('text-success');
+            }
+        });
+
+        // 4. Drag Leave listener on Banner Dropzone
+        $(document).on('dragleave', '#banner-dropzone', function (e) {
+            var rect = this.getBoundingClientRect();
+            var origEvent = e.originalEvent || e;
+            var x = origEvent.clientX;
+            var y = origEvent.clientY;
+
+            if (x <= rect.left || x >= rect.right || y <= rect.top || y >= rect.bottom) {
+                $(this).removeClass('is-drag-over');
+                $(this).find('.banner-drop-text').text('Drop here to set as Banner Image');
+                $(this).find('.banner-drop-overlay i').removeClass('text-success').addClass('text-primary');
+            }
+        });
+
+        // 5. Drop listener on Banner Dropzone
+        $(document).on('drop', '#banner-dropzone', function (e) {
+            var origEvent = e.originalEvent || e;
+            var dt = origEvent.dataTransfer;
+
+            var fileToSet = draggedBannerFile;
+            var srcToSet = draggedBannerSrc;
+
+            if (!fileToSet && !srcToSet && dt && dt.files && dt.files.length > 0) {
+                fileToSet = dt.files[0];
+            }
+
+            if (!fileToSet && !srcToSet) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var $dropzone = $(this);
+            $dropzone.removeClass('is-dragging-pond is-drag-over');
+            $dropzone.find('.banner-drop-overlay').addClass('d-none').removeClass('d-flex');
+
+            draggedBannerFile = null;
+            draggedBannerSrc = null;
+
+            if (fileToSet) {
+                applyBannerFile(fileToSet);
+            } else if (srcToSet) {
+                fetch(srcToSet)
+                    .then(function (res) { return res.blob(); })
+                    .then(function (blob) {
+                        var ext = (blob.type && blob.type.split('/')[1]) || 'jpg';
+                        var file = new File([blob], 'banner_image.' + ext, { type: blob.type || 'image/jpeg' });
+                        applyBannerFile(file);
+                    })
+                    .catch(function (err) {
+                        console.error("Error setting banner image from source:", err);
+                    });
+            }
+        });
+
+        function applyBannerFile(file) {
+            var bannerInput = document.getElementById('banner');
+            if (!bannerInput) return;
+
+            try {
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                bannerInput.files = dataTransfer.files;
+            } catch (err) {
+                console.warn("DataTransfer not supported:", err);
+            }
+
+            // Dispatch change event so UploadFileURL and other handlers run
+            bannerInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+            var previewContainer = $('label[for="banner"] .uploaded-preview, #banner-dropzone .uploaded-preview');
+            if (previewContainer.length) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    previewContainer.hide().html(
+                        '<img src="' + e.target.result + '" alt="Banner Preview" class="imgupload w-100 h-100 object-contain rounded border shadow-sm" id="product-img" />'
+                    ).fadeIn(300);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            $('#banner-error').hide();
+
+            if (typeof sendToast === 'function') {
+                sendToast('Banner image set successfully!', 'success');
+            }
+        }
     });
 </script>
