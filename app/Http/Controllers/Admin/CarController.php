@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enum\CarStatus;
 use App\Enum\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
@@ -287,7 +288,60 @@ class CarController extends Controller
                 })
 
 
-                ->rawColumns(['image', 'action'])
+                ->addColumn('status', function ($row) {
+                    if ($row->status === CarStatus::DRAFT) {
+                        return '<span class="badge bg-warning text-dark px-2 py-1 fs-12"><i class="ri-draft-line me-1"></i> ' . CarStatus::DRAFT->label() . '</span>';
+                    }
+                    return '<span class="badge bg-success px-2 py-1 fs-12"><i class="ri-checkbox-circle-line me-1"></i> ' . CarStatus::PUBLISHED->label() . '</span>';
+                })
+
+                ->addColumn('action', function ($row) {
+
+
+                    $editUrl = route('admin.car.edit', $row->id);
+                    $viewUrl = route('admin.car.view', $row->id);
+                    $continueEditUrl = route('admin.car.draft.edit', $row);
+
+                    $continueBtn = '';
+                    if ($row->status === CarStatus::DRAFT) {
+                        $continueBtn = '
+                    <li class="list-inline-item">
+                        <a href="' . $continueEditUrl . '" class="btn btn-warning btn-sm d-inline-flex align-items-center gap-1" title="Continue Editing">
+                            <i class="ri-edit-box-line"></i> Continue Editing
+                        </a>
+                    </li>';
+                    }
+
+                    return '
+                <ul class="list-inline mb-0 d-flex justify-content-center text-center gap-1">
+                    ' . $continueBtn . '
+                    <li class="list-inline-item">
+                        <a href="' . $viewUrl . '" class="btn btn-info btn-sm">
+                            <i class="ri-eye-line"></i>
+                        </a>
+                    </li>
+
+
+                    <li class="list-inline-item">
+                        <a href="' . $editUrl . '" class="btn btn-success btn-sm">
+                            <i class="ri-pencil-line"></i>
+                        </a>
+                    </li>
+
+
+                    <li class="list-inline-item">
+                        <button class="btn btn-danger btn-sm"
+                            onclick="deleteCar(' . $row->id . ', this)">
+                            <i class="ri-delete-bin-line"></i>
+                        </button>
+                    </li>
+
+                </ul>';
+
+                })
+
+
+                ->rawColumns(['image', 'status', 'action'])
 
                 ->make(true);
 
@@ -300,6 +354,7 @@ class CarController extends Controller
 
         $carsForGrid = $queryForGrid->get();
 
+        $draftCars = Car::where('status', CarStatus::DRAFT)->orderBy('id', 'desc')->get();
 
         // Pagination
         $cars = $cars->paginate(8);
@@ -313,6 +368,7 @@ class CarController extends Controller
             'search',
             'range',
             'carsForGrid',
+            'draftCars',
             'ccRanges',
             'manufacturers',
             'modelsList'
@@ -348,8 +404,13 @@ class CarController extends Controller
         return $candidate;
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        $draft = null;
+        if (!$request->has('new')) {
+            $draft = Car::with('spec')->where('status', CarStatus::DRAFT)->latest()->first();
+        }
+
         $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
 
         // Separate Free & Extra Accessories
@@ -361,7 +422,198 @@ class CarController extends Controller
 
         $carTypes = CarType::orderBy('name', 'asc')->get();
 
-        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers', 'carTypes'));
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers', 'carTypes', 'draft'));
+    }
+
+    public function editDraft(Car $car)
+    {
+        if ($car->status !== CarStatus::DRAFT) {
+            return redirect()->route('admin.car.index')->with('error', 'This car is not in draft status.');
+        }
+
+        $draft = $car->load('spec');
+
+        $categories = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
+
+        // Separate Free & Extra Accessories
+        $freeAccessories = Accessories::where('type', 'FREE')->get();
+        $extraAccessories = Accessories::where('type', 'EXTRA')->get();
+        $auctionGrades = AuctionGrade::all();
+        $locations = Location::all();
+        $manufacturers = Manufacturer::orderBy('name', 'asc')->get();
+
+        $carTypes = CarType::orderBy('name', 'asc')->get();
+
+        return view('admin.car.create', compact('categories', 'freeAccessories', 'extraAccessories', 'locations', 'auctionGrades', 'manufacturers', 'carTypes', 'draft'));
+    }
+
+    public function saveDraft(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+
+            $car = null;
+            if ($request->filled('car_id')) {
+                $car = Car::find($request->car_id);
+            }
+            if (!$car) {
+                $car = new Car();
+                $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
+                $car->sort_order = ($lastid->sort_order ?? 0) + 1;
+            }
+
+            $car->status = CarStatus::DRAFT;
+
+            if ($request->filled('manufacturer_id')) {
+                $car->manufacturer_id = $request->manufacturer_id;
+            }
+            if ($request->filled('model')) {
+                $car->model = $request->model;
+            }
+            if ($request->filled('year')) {
+                $car->year = $request->year;
+            }
+
+            $manufacturerName = '';
+            if ($car->manufacturer_id) {
+                $m = Manufacturer::find($car->manufacturer_id);
+                if ($m) {
+                    $manufacturerName = $m->name;
+                }
+            }
+            $fullName = trim($manufacturerName . ' ' . ($car->model ?? '') . ' ' . ($car->year ?? ''));
+            $car->name = $fullName ?: 'Untitled Draft';
+            if (empty($car->slug)) {
+                $car->slug = Str::slug(($fullName ?: 'draft') . '-' . time() . '-' . Str::random(5));
+            }
+
+            if ($request->filled('category_id')) {
+                $car->category_id = $request->category_id;
+            }
+            if ($request->has('is_recommended')) {
+                $car->is_recommended = $request->is_recommended ?? 0;
+            }
+            if ($request->filled('location')) {
+                $car->location = trim($request->location);
+            }
+            if ($request->filled('vehicle_price')) {
+                $car->vehicle_price = preg_replace('/[^0-9.]/', '', $request->vehicle_price);
+            }
+            if ($request->has('vin')) {
+                $car->vin = $request->vin;
+            }
+            if ($request->has('drive_type')) {
+                $car->drive_type = $request->drive_type;
+            }
+            if ($request->has('steering')) {
+                $car->steering = $request->steering;
+            }
+            if ($request->has('private_notes')) {
+                $car->private_notes = $request->private_notes;
+            }
+            if ($request->has('description')) {
+                $car->description = $request->description;
+            }
+            if ($request->has('card_header')) {
+                $car->card_header = $request->card_header;
+            }
+            if ($request->has('card_subtitle')) {
+                $car->card_subtitle = $request->card_subtitle;
+            }
+            if ($request->filled('auction_grade_id')) {
+                $car->auction_grade_id = $request->auction_grade_id;
+            }
+
+            if ($request->hasFile('banner')) {
+                $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
+            }
+
+            $car->images = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img))) : [];
+
+            if ($request->filled('removed_images')) {
+                $removedImages = array_filter(explode(',', $request->removed_images));
+                foreach ($removedImages as $removedImage) {
+                    if (($key = array_search($removedImage, $car->images)) !== false) {
+                        unset($car->images[$key]);
+                        deleteImage($removedImage, CAR_PATH);
+                    }
+                }
+                $car->images = array_values(array_filter($car->images, fn($img) => !empty($img)));
+            }
+
+            if ($request->images) {
+                $existingImages = $car->images;
+                $newImages = [];
+                foreach ($request->images as $image) {
+                    if (is_string($image) && (str_contains($image, 'data:image') || strlen($image) > 200)) {
+                        $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
+                        if ($thumbnail) {
+                            $newImages[] = $thumbnail;
+                        }
+                    } elseif (is_string($image)) {
+                        $newImages[] = $image;
+                    }
+                }
+                $car->images = !empty($newImages) ? array_values(array_unique(array_merge($existingImages, $newImages))) : $existingImages;
+            }
+
+            if ($request->filled('image_order')) {
+                $orderedImages = array_filter(explode(',', $request->image_order));
+                $orderedImages = array_values(array_filter($orderedImages, fn($img) => !empty($img) && in_array($img, $car->images)));
+                foreach ($car->images as $img) {
+                    if (!empty($img) && !in_array($img, $orderedImages)) {
+                        $orderedImages[] = $img;
+                    }
+                }
+                $car->images = array_values(array_filter($orderedImages, fn($img) => !empty($img)));
+            }
+
+            if (empty($car->vehicle_id)) {
+                if ($request->vehicle_id_type === 'manual' && $request->filled('vehicle_id')) {
+                    $car->vehicle_id = trim($request->vehicle_id);
+                } else {
+                    $car->vehicle_id = $this->generateNextVehicleId();
+                }
+            }
+
+            $car->save();
+
+            // Save Technical Specifications
+            CarSpec::updateOrCreate(
+                ['car_id' => $car->id],
+                [
+                    'make' => $manufacturerName ?: null,
+                    'exterior_color' => $request->exterior_color,
+                    'type' => $request->type,
+                    'fuel_type' => $request->fuel_type,
+                    'fuel_type_custom' => $request->filled('fuel_type_custom') ? trim($request->fuel_type_custom) : null,
+                    'engine' => $request->engine,
+                    'odometer' => $request->filled('odometer') ? preg_replace('/[^0-9]/', '', $request->odometer) : null,
+                    'model_year' => $request->year,
+                    'interior_color' => $request->interior_color,
+                    'transmission' => $request->transmission,
+                    'transmission_custom' => $request->filled('transmission_custom') ? trim($request->transmission_custom) : null,
+                    'vin' => $request->vin,
+                    'drive_type' => $request->drive_type,
+                    'steering' => $request->steering,
+                    'interior_grade' => $request->interior_grade ?: null,
+                    'exterior_grade' => $request->exterior_grade ?: null,
+                ]
+            );
+
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'car_id' => $car->id,
+                'message' => 'Draft saved successfully'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
     public function view(Request $request)
     {
@@ -374,34 +626,26 @@ class CarController extends Controller
     public function store(Request $request)
     {
         $isManual = $request->vehicle_id_type === 'manual';
-        $isManualLocation = $request->location_type === 'manual';
+
+        $carId = $request->car_id ?? null;
+        $existingCar = $carId ? Car::find($carId) : null;
+        $hasExistingImages = ($existingCar && !empty($existingCar->images) && is_array($existingCar->images) && count($existingCar->images) > 0);
 
         $validator = Validator::make($request->all(), [
             'manufacturer_id' => 'required|exists:manufacturers,id',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            // 'category_id' => [
-            //     'required',
-            //     Rule::exists('categories', 'id')->where(function ($query) {
-            //         $query->where('type', CategoryType::CAR);
-            //     })
-            // ],
-
             'is_recommended' => 'nullable|in:0,1',
-            'images' => 'required|array',
-            'images.*' => 'required',
+            'images' => $hasExistingImages ? 'nullable|array' : 'required|array',
             'description' => 'required',
             'location' => 'nullable|string|max:255',
             'banner' => 'nullable|image',
-
             'card_header' => 'required',
             'card_subtitle' => 'required',
             'vehicle_price' => 'nullable|numeric',
             'vehicle_id_type' => 'nullable|in:auto,manual',
-            'vehicle_id' => $isManual ? 'required|string|max:255|unique:cars,vehicle_id' : 'nullable|string|max:255',
-            'status' => 'required',
+            'vehicle_id' => $isManual ? ['required', 'string', 'max:255', Rule::unique('cars', 'vehicle_id')->ignore($carId)] : 'nullable|string|max:255',
             'auction_grade_id' => 'required',
-
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
             'vehicle_id.unique' => 'The entered Vehicle ID has already been taken. Please enter a unique Vehicle ID.',
@@ -415,14 +659,18 @@ class CarController extends Controller
         try {
             DB::beginTransaction();
 
-            $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
-            $sort_order = $lastid->sort_order ?? 0;
+            if ($existingCar) {
+                $car = $existingCar;
+            } else {
+                $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
+                $sort_order = $lastid->sort_order ?? 0;
+                $car = new Car();
+                $car->sort_order = $sort_order + 1;
+            }
 
             $manufacturer = Manufacturer::findOrFail($request->manufacturer_id);
             $fullName = $manufacturer->name . ' ' . $request->model . ' ' . $request->year;
 
-            $car = new Car();
-            $car->sort_order = $sort_order + 1;
             $car->manufacturer_id = $request->manufacturer_id;
             $car->model = $request->model;
             $car->year = $request->year;
@@ -443,54 +691,88 @@ class CarController extends Controller
                 $car->banner = uploadFile($request->banner, CAR_PATH, 'banner_');
             }
 
-            $images = [];
+            $currentImages = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img))) : [];
+
+            if ($request->filled('removed_images')) {
+                $removedImages = array_filter(explode(',', $request->removed_images));
+                foreach ($removedImages as $removedImage) {
+                    if (($key = array_search($removedImage, $currentImages)) !== false) {
+                        unset($currentImages[$key]);
+                        deleteImage($removedImage, CAR_PATH);
+                    }
+                }
+                $currentImages = array_values(array_filter($currentImages, fn($img) => !empty($img)));
+            }
+
             if ($request->images) {
                 foreach ($request->images as $image) {
-                    $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
-                    $images[] = $thumbnail;
+                    if (empty($image)) continue;
+                    if (is_string($image) && (str_contains($image, 'data:image') || strlen($image) > 200)) {
+                        $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
+                        if ($thumbnail) {
+                            $currentImages[] = $thumbnail;
+                        }
+                    } elseif (is_string($image)) {
+                        if (!in_array($image, $currentImages)) {
+                            $currentImages[] = $image;
+                        }
+                    }
                 }
             }
 
-            $car->images = $images;
+            if ($request->filled('image_order')) {
+                $orderedImages = array_filter(explode(',', $request->image_order));
+                $orderedImages = array_values(array_filter($orderedImages, fn($img) => !empty($img) && in_array($img, $currentImages)));
+                foreach ($currentImages as $img) {
+                    if (!empty($img) && !in_array($img, $orderedImages)) {
+                        $orderedImages[] = $img;
+                    }
+                }
+                $car->images = array_values(array_filter($orderedImages, fn($img) => !empty($img)));
+            } else {
+                $car->images = array_values(array_filter($currentImages, fn($img) => !empty($img)));
+            }
+
             $car->description = $request->description;
             $car->card_header = $request->card_header;
             $car->card_subtitle = $request->card_subtitle;
 
             if ($isManual && $request->filled('vehicle_id')) {
                 $car->vehicle_id = trim($request->vehicle_id);
-            } else {
+            } elseif (empty($car->vehicle_id)) {
                 $car->vehicle_id = $this->generateNextVehicleId();
             }
 
-            $car->status = $request->status;
+            $car->status = CarStatus::PUBLISHED;
             $car->auction_grade_id = $request->auction_grade_id;
 
             $car->save();
 
             // Save Technical Specifications
-            CarSpec::create([
-                'car_id' => $car->id,
-                'make' => $manufacturer->name,
-                'exterior_color' => $request->exterior_color,
-                // 'body_type' => $request->body_type,
-                'type' => $request->type,
-                'fuel_type' => $request->fuel_type,
-                'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
-                'engine' => $request->engine,
-                'odometer' => $request->odometer,
-                'model_year' => $request->year,
-                'interior_color' => $request->interior_color,
-                'transmission' => $request->transmission,
-                'transmission_custom' => $request->transmission_custom ? trim($request->transmission_custom) : null,
-                'vin' => $request->vin,
-                'drive_type' => $request->drive_type,
-                'steering' => $request->steering,
-                'interior_grade' => $request->interior_grade ?: null,
-                'exterior_grade' => $request->exterior_grade ?: null,
-            ]);
+            CarSpec::updateOrCreate(
+                ['car_id' => $car->id],
+                [
+                    'make' => $manufacturer->name,
+                    'exterior_color' => $request->exterior_color,
+                    'type' => $request->type,
+                    'fuel_type' => $request->fuel_type,
+                    'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
+                    'engine' => $request->engine,
+                    'odometer' => $request->odometer,
+                    'model_year' => $request->year,
+                    'interior_color' => $request->interior_color,
+                    'transmission' => $request->transmission,
+                    'transmission_custom' => $request->transmission_custom ? trim($request->transmission_custom) : null,
+                    'vin' => $request->vin,
+                    'drive_type' => $request->drive_type,
+                    'steering' => $request->steering,
+                    'interior_grade' => $request->interior_grade ?: null,
+                    'exterior_grade' => $request->exterior_grade ?: null,
+                ]
+            );
 
             DB::commit();
-            return $this->sendSuccess('Car added successfully!');
+            return $this->sendSuccess('Car published successfully!');
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -589,7 +871,7 @@ class CarController extends Controller
                 }
             }
 
-            $car->status = $request->status;
+            $car->status = CarStatus::PUBLISHED;
 
             // Banner upload
             if ($request->hasFile('banner')) {

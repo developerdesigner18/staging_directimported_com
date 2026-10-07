@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Enum\CarStatus;
 use App\Enum\VehicleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enum\CategoryType;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Enum\AccessoryType;
+use Illuminate\Support\Str;
 
 class Car extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
+        'uuid',
         'sort_order',
         'manufacturer_id',
         'model',
@@ -45,6 +48,21 @@ class Car extends Model
         'steering',
         'private_notes',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($car) {
+            if (empty($car->uuid)) {
+                $car->uuid = (string) Str::uuid();
+            }
+        });
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
 
     public function getNameAttribute()
     {
@@ -106,7 +124,7 @@ class Car extends Model
         'free_accessory' => 'array',
         'extra_accessory' => 'array',
 
-        'status' => VehicleStatus::class,
+        'status' => CarStatus::class,
     ];
 
 

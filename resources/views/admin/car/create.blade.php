@@ -150,6 +150,7 @@
                 <h4 class="mb-sm-0">Create Car</h4>
 
                 <div class="page-title-right d-flex align-items-center gap-3">
+                    <div id="auto-save-status" class="fs-13 fw-semibold text-muted" style="display:none;"></div>
                     {{-- CarSensor Import Button --}}
                     <button type="button" id="btn-open-carsensor-modal"
                         class="btn btn-warning d-flex align-items-center gap-2"
@@ -172,6 +173,20 @@
         <div class="col-12">
             <form id="addForm" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="car_id" id="draft_car_id" value="{{ optional($draft)->id }}">
+
+                @if(isset($draft) && $draft)
+                    <div class="alert alert-info alert-dismissible fade show d-flex align-items-center mb-4 shadow-sm" role="alert">
+                        <i class="ri-history-line fs-18 me-2"></i>
+                        <div>
+                            <strong>Draft Restored:</strong> Restored saved draft for
+                            <strong>{{ $draft->name ?: ($draft->model ?: 'Untitled Draft') }}</strong>
+                            (Saved {{ $draft->updated_at ? $draft->updated_at->diffForHumans() : 'recently' }}).
+                            <a href="{{ route('admin.car.create', ['new' => 1]) }}" class="btn btn-sm btn-outline-info ms-2 py-0">Start Fresh Listing</a>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
                 {{-- CarSensor Import Summary (populated by JS after import) --}}
                 {{-- NOTE: This panel is already rendered above the rows, keeping here as anchor --}}
@@ -202,10 +217,37 @@
                         </div>
 
                         <div>
-                            <label for="images"
-                                class="form-label">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
-                            <input type="file" class="filepond" id="images" name="images[]" multiple
-                                data-allow-reorder="true">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <label for="images"
+                                    class="form-label mb-0">{{ admin_label('car_form', 'car_images', 'Car Images') }}</label>
+                            </div>
+                            <div class="mb-3">
+                                <input type="file" class="filepond" id="images" name="images[]" multiple
+                                    data-allow-reorder="true">
+                            </div>
+
+                            @if(isset($draft) && $draft->images && count(array_filter($draft->images)))
+                                <div class="mt-4 pt-3 border-top">
+                                    <label class="form-label text-muted fw-semibold mb-2">Existing Car Images (Drag to reorder):</label>
+                                    <div id="sortable-images" class="d-flex flex-wrap gap-2">
+                                        @foreach($draft->images as $image)
+                                            @if(!empty($image))
+                                                <div class="image-preview-container me-2 mb-2 position-relative" data-image="{{ $image }}"
+                                                    style="cursor: grab;">
+                                                    <img src="{{ asset(CAR_PATH . $image) }}" class="img-thumbnail" style="height:100px;"
+                                                        draggable="false">
+                                                    <button type="button"
+                                                        class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0"
+                                                        data-image="{{ $image }}">×</button>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <input type="hidden" name="image_order" id="image_order">
+                                </div>
+                            @endif
+
+                            <input type="hidden" id="removed_images" name="removed_images">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
                         </div>
 
@@ -230,7 +272,8 @@
                                 <select class="form-select select2" id="manufacturer_id" name="manufacturer_id">
                                     <option value="">Select Make</option>
                                     @foreach($manufacturers ?? [] as $manufacturer)
-                                        <option value="{{ optional($manufacturer)->id }}">{{ optional($manufacturer)->name }}
+                                        <option value="{{ optional($manufacturer)->id }}" {{ (isset($draft) && $draft->manufacturer_id == optional($manufacturer)->id) ? 'selected' : '' }}>
+                                            {{ optional($manufacturer)->name }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -242,6 +285,7 @@
                                 <label for="model"
                                     class="form-label mb-2">{{ admin_label('car_form', 'model', 'Model') }}</label>
                                 <input type="text" class="form-control" id="model" name="model"
+                                    value="{{ old('model', optional($draft)->model) }}"
                                     placeholder="Enter model name">
                                 <label id="model-error" class="text-danger error" for="model" style="display: none"></label>
                             </div>
@@ -252,7 +296,7 @@
                                 <select class="form-select select2" id="year" name="year">
                                     <option value="">Select Year</option>
                                     @for($y = date('Y') + 1; $y >= 1970; $y--)
-                                        <option value="{{ $y }}">{{ $y }}</option>
+                                        <option value="{{ $y }}" {{ (isset($draft) && $draft->year == $y) ? 'selected' : '' }}>{{ $y }}</option>
                                     @endfor
                                 </select>
                                 <label id="year-error" class="text-danger error" for="year" style="display: none"></label>
@@ -261,26 +305,13 @@
 
                         <!-- Category + Status + Auction Grade + Location -->
                         <div class="row g-3 mb-4">
-                            {{-- <div class="col-lg-3">
-                                <label for="category_id" class="form-label mb-2">{{ admin_label('car_form', 'category',
-                                    'Category') }}</label>
-                                <select class="form-select select2" id="category_id" name="category_id">
-                                    <option value="">Select Category</option>
-                                    @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endforeach
-                                </select>
-                                <label id="category_id-error" class="text-danger error" for="category_id"
-                                    style="display: none"></label>
-                            </div> --}}
-
                             <div class="col-lg-4">
                                 <label for="status"
                                     class="form-label mb-2">{{ admin_label('car_form', 'status', 'Status') }}</label>
                                 <select class="form-select select2" id="status" name="status">
                                     <option value="">Select Status</option>
-                                    @foreach(\App\Enum\VehicleStatus::cases() as $status)
-                                        <option value="{{ $status->value }}">{{ $status->label() }}</option>
+                                    @foreach(\App\Enum\CarStatus::cases() as $status)
+                                        <option value="{{ $status->value }}" {{ (isset($draft) && $draft->status === $status) ? 'selected' : '' }}>{{ $status->label() }}</option>
                                     @endforeach
                                 </select>
                                 <label id="status-error" class="text-danger error" style="display: none"></label>
@@ -292,8 +323,8 @@
                                 <select class="form-select select2" id="auction_grade_id" name="auction_grade_id">
                                     <option value="">Select Auction Grade</option>
                                     @foreach($auctionGrades ?? [] as $grade)
-                                        <option value="{{ optional($grade)->id }}">{{ optional($grade)->grade }}
-                                            {{ optional($grade)->remarks }}
+                                        <option value="{{ optional($grade)->id }}" {{ (isset($draft) && $draft->auction_grade_id == optional($grade)->id) ? 'selected' : '' }}>
+                                            {{ optional($grade)->grade }} {{ optional($grade)->remarks }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -304,6 +335,7 @@
                                 <label for="location"
                                     class="form-label mb-2">{{ admin_label('car_form', 'location', 'Location') }}</label>
                                 <input type="text" class="form-control" id="location" name="location"
+                                    value="{{ old('location', optional($draft)->location) }}"
                                     placeholder="e.g. Japan">
                                 <label id="location-error" class="text-danger error" style="display: none"></label>
                             </div>
@@ -315,6 +347,7 @@
                                 <label for="vehicle_price"
                                     class="form-label mb-2">{{ admin_label('car_form', 'vehicle_price', 'Vehicle Price (¥)') }}</label>
                                 <input type="text" class="form-control" id="vehicle_price" name="vehicle_price"
+                                    value="{{ old('vehicle_price', optional($draft)->vehicle_price) }}"
                                     placeholder="e.g. 15000000">
                                 <label id="vehicle_price-error" class="text-danger error" style="display: none"></label>
                             </div>
@@ -328,20 +361,21 @@
                                 <div class="d-flex align-items-center gap-4 py-1">
                                     <div class="form-check me-2">
                                         <input class="form-check-input" type="radio" name="vehicle_id_type"
-                                            id="vehicle_id_type_auto" value="auto" checked>
+                                            id="vehicle_id_type_auto" value="auto" {{ (!isset($draft) || empty($draft->vehicle_id)) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="vehicle_id_type_auto">Auto Generate</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="vehicle_id_type"
-                                            id="vehicle_id_type_manual" value="manual">
+                                            id="vehicle_id_type_manual" value="manual" {{ (isset($draft) && !empty($draft->vehicle_id)) ? 'checked' : '' }}>
                                         <label class="form-check-label" for="vehicle_id_type_manual">Manual Entry</label>
                                     </div>
                                 </div>
 
-                                <div id="vehicle_id_container" class="mt-3" style="display: none;">
+                                <div id="vehicle_id_container" class="mt-3" style="{{ (isset($draft) && !empty($draft->vehicle_id)) ? '' : 'display: none;' }}">
                                     <label for="vehicle_id"
                                         class="form-label mb-2">{{ admin_label('car_form', 'vehicle_id', 'Vehicle ID / Chassis No') }}</label>
                                     <input type="text" class="form-control" id="vehicle_id" name="vehicle_id"
+                                        value="{{ old('vehicle_id', optional($draft)->vehicle_id) }}"
                                         placeholder="Enter Vehicle ID">
                                     <label id="vehicle_id-error" class="text-danger error" style="display: none"></label>
                                 </div>
@@ -618,6 +652,7 @@
                             <label for="card_header"
                                 class="form-label">{{ admin_label('car_form', 'card_header', 'Card Header') }}</label>
                             <input type="text" class="form-control" id="card_header" name="card_header"
+                                value="{{ old('card_header', optional($draft)->card_header) }}"
                                 placeholder="Enter card title (Frontend)">
                             <label id="card_header-error" class="text-danger error" style="display: none"></label>
                         </div>
@@ -626,6 +661,7 @@
                             <label for="card_subtitle"
                                 class="form-label">{{ admin_label('car_form', 'card_subtitle', 'Card Subtitle') }}</label>
                             <input type="text" class="form-control" id="card_subtitle" name="card_subtitle"
+                                value="{{ old('card_subtitle', optional($draft)->card_subtitle) }}"
                                 placeholder="Enter card subtitle (Frontend)">
                             <label id="card_subtitle-error" class="text-danger error" style="display: none"></label>
                         </div>
@@ -640,7 +676,7 @@
                     <div class="card-body">
                         <label for="private_notes" class="form-label">Source URL & Location Details</label>
                         <textarea class="form-control" id="private_notes" name="private_notes" rows="4"
-                            placeholder="Add web addresses, specific physical locations, or internal notes here. These will not be visible on the frontend website."></textarea>
+                            placeholder="Add web addresses, specific physical locations, or internal notes here. These will not be visible on the frontend website.">{{ old('private_notes', optional($draft)->private_notes) }}</textarea>
                     </div>
                 </div>
 
@@ -799,6 +835,40 @@
                 }
             });
 
+            const sortableContainer = document.getElementById('sortable-images');
+            if (sortableContainer && typeof Sortable !== 'undefined') {
+                new Sortable(sortableContainer, {
+                    animation: 150,
+                    ghostClass: 'sortable-ghost',
+                    onEnd: function () {
+                        let order = [];
+                        document.querySelectorAll('#sortable-images .image-preview-container')
+                            .forEach(function (el) {
+                                order.push(el.getAttribute('data-image'));
+                            });
+                        document.getElementById('image_order').value = order.join(',');
+                        triggerAutoSave();
+                    }
+                });
+            }
+
+            $(document).on('click', '.remove-image', function () {
+                const imagePath = $(this).data('image');
+                $(this).closest('.image-preview-container').remove();
+
+                let removedImages = $('#removed_images').val();
+                removedImages = removedImages ? removedImages.split(',') : [];
+                removedImages.push(imagePath);
+                $('#removed_images').val(removedImages.join(','));
+
+                let order = [];
+                $('#sortable-images .image-preview-container').each(function () {
+                    order.push($(this).data('image'));
+                });
+                $('#image_order').val(order.join(','));
+                triggerAutoSave();
+            });
+
             $("#addForm").validate({
                 rules: {
                     manufacturer_id: { required: true },
@@ -813,7 +883,11 @@
                     },
                     status: { required: true },
                     auction_grade_id: { required: true },
-                    'images[]': { required: true },
+                    'images[]': {
+                        required: function () {
+                            return $('#sortable-images .image-preview-container').length === 0;
+                        }
+                    },
                     description: { required: true },
                     card_header: { required: true },
                     card_subtitle: { required: true },
@@ -843,6 +917,7 @@
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
+                    isFinalSubmitting = true;
 
                     $.ajax({
                         url: "{{ route('admin.car.store') }}",
@@ -857,16 +932,19 @@
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
                         },
                         success: function (result) {
-                            sendSuccess(result.message || 'Car created successfully!');
+                            sendSuccess(result.message || 'Car published successfully!');
                             form.reset();
                             const pond = FilePond.find(document.querySelector('input.filepond'));
                             if (pond) {
                                 pond.removeFiles();
                             }
-                            tinymce.get('description_editor').setContent('');
+                            if (tinymce.get('description_editor')) {
+                                tinymce.get('description_editor').setContent('');
+                            }
                             window.location.href = "{{route('admin.car.index')}}";
                         },
                         error: function (xhr) {
+                            isFinalSubmitting = false;
                             let data = xhr.responseJSON;
                             if (data && data.hasOwnProperty('error')) {
                                 $.each(data.error, function (key, value) {
@@ -894,6 +972,68 @@
                 }
             });
 
+            // ============ AUTO-SAVE LOGIC ============
+            let autoSaveTimer = null;
+            let isAutoSaving = false;
+            let isFinalSubmitting = false;
+
+            function triggerAutoSave() {
+                if (isFinalSubmitting) return;
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(function () {
+                    performAutoSave();
+                }, 1500);
+            }
+
+            function performAutoSave() {
+                if (isAutoSaving || isFinalSubmitting) return;
+                isAutoSaving = true;
+
+                $('#auto-save-status').removeClass('text-success text-danger').addClass('text-muted')
+                    .html('<i class="ri-loader-4-line spinner-border spinner-border-sm me-1"></i> Saving...').show();
+
+                if (typeof tinymce !== 'undefined' && tinymce.get('description_editor')) {
+                    tinymce.get('description_editor').save();
+                }
+
+                let formEl = document.getElementById('addForm');
+                let formData = new FormData(formEl);
+
+                $.ajax({
+                    url: "{{ route('admin.car.save-draft') }}",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (response) {
+                        isAutoSaving = false;
+                        if (response.car_id) {
+                            $('#draft_car_id').val(response.car_id);
+                        }
+                        let now = new Date();
+                        let timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                        $('#auto-save-status').removeClass('text-muted text-danger').addClass('text-success')
+                            .html('<i class="ri-check-line me-1"></i> Saved (' + timeStr + ')').show();
+                    },
+                    error: function (xhr) {
+                        isAutoSaving = false;
+                        $('#auto-save-status').removeClass('text-muted text-success').addClass('text-danger')
+                            .html('<i class="ri-error-warning-line me-1"></i> Save failed').show();
+                    }
+                });
+            }
+
+            $('#addForm').on('input change keyup', 'input, select, textarea', function () {
+                triggerAutoSave();
+            });
+
+            $(document).on('change select2:select select2:unselect', '.select2', function () {
+                triggerAutoSave();
+            });
+
             // Custom Wording Radio Toggles
             $(document).on('change', 'input[name="fuel_custom_option"]', function () {
                 if ($(this).val() == '1') {
@@ -917,5 +1057,5 @@
 
         });
     </script>
-    @include('admin.car.partials.scripts', ['isEdit' => false, 'carId' => null])
+    @include('admin.car.partials.scripts', ['isEdit' => false, 'carId' => optional($draft)->id])
 @endsection

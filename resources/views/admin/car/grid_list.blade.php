@@ -29,13 +29,26 @@
                                 <img src="{{ $firstImg ? asset(CAR_PATH . $firstImg) : asset('uploads/user_documents/default.jpg') }}" alt="{{ $car->name }}"
                                     class="blog-img object-fit-cover w-100" style="height: 200px;">
                             </a>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                @if($car->status === \App\Enum\CarStatus::DRAFT)
+                                    <span class="badge bg-warning text-dark shadow-sm"><i class="ri-draft-line me-1"></i> {{ \App\Enum\CarStatus::DRAFT->label() }}</span>
+                                @else
+                                    <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ \App\Enum\CarStatus::PUBLISHED->label() }}</span>
+                                @endif
+                            </div>
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div>
-                                <h5 class="card-title mb-1">{{ $car->name }}</h5>
+                                <h5 class="card-title mb-1">{{ $car->name ?: 'Untitled Draft' }}</h5>
                                 <span class="text-muted fs-12">{{ dateToHuman($car->created_at) }}</span>
                             </div>
                             <div class="action-btn text-end mt-2">
+                                @if($car->status === \App\Enum\CarStatus::DRAFT)
+                                    <a class="btn btn-warning btn-sm me-1" href="{{ route('admin.car.draft.edit', $car) }}"
+                                        data-bs-toggle="tooltip" title="Continue Editing">
+                                        <i class="ri-edit-box-line me-1"></i> Continue Editing
+                                    </a>
+                                @endif
                                 <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}"
                                     data-bs-toggle="tooltip" title="Manage Specs">
                                     <i class="ri-settings-4-line"></i>
