@@ -18,6 +18,7 @@ use League\HTMLToMarkdown\HtmlConverter;
 use App\Models\EmailTemplates;
 use App\Models\RentalPolicies;
 use App\Models\HomeSection;
+use App\Enum\CarStatus;
 use App\Models\BlogPost;
 use App\Models\ContactRequest;
 
@@ -49,6 +50,10 @@ class HomeController extends Controller
     private function buildVehicleQuery(?Request $request = null)
     {
         $query = Car::with(['category', 'spec', 'manufacturer', 'auctionGrade'])
+            ->where(function ($q) {
+                $q->where('status', '!=', CarStatus::DRAFT->value)
+                    ->orWhereNull('status');
+            })
             ->orderBy('created_at', 'desc');
 
         if (!$request) {

@@ -28,35 +28,7 @@ class CarController extends Controller
 
     public function index()
     {
-
-        $categoryList = Category::all();
-
-        $limit = 8;
-        $offset = 0;
-
-        // Get all cars. We'll sort them in memory since CC is in category name.
-        //        $allCars = Car::all()->sort(function($a, $b) {
-        //            preg_match('/(\d+)/', $a->category->name ?? '', $aMatches);
-        //            preg_match('/(\d+)/', $b->category->name ?? '', $bMatches);
-        //            $aCC = isset($aMatches[1]) ? (int)$aMatches[1] : 0;
-        //            $bCC = isset($bMatches[1]) ? (int)$bMatches[1] : 0;
-        //            return $bCC <=> $aCC; // Decreasing order
-        //        });
-        $allCars = Car::with('category')
-            ->orderBy('id', 'desc')
-            ->get();
-
-        $carsGroupedByCategory = $allCars->groupBy('category_id');
-
-        // For initial page load, get paginated cars
-        $totalRows = count($allCars);
-        $carsList = $allCars->slice($offset, $limit);
-        $totalPages = ceil($totalRows / $limit);
-
-        // Map categories to CC ranges
-        $ccRanges = $this->mapCategoriesToRanges($categoryList);
-
-        return view('landing.car.cars', compact('categoryList', 'carsList', 'carsGroupedByCategory', 'limit', 'totalPages', 'ccRanges'));
+        return redirect()->away('https://auc.directimported.com/');
     }
 
     public function pagination(Request $request)
