@@ -682,7 +682,7 @@
 
                 <!-- Submit Button -->
                 <div class="d-flex justify-content-start mb-4">
-                    <button type="submit" class="btn btn-primary px-4 py-2">Create Car</button>
+                    <button type="submit" class="btn btn-primary px-4 py-2">Create Vehicle</button>
                 </div>
             </form>
         </div>

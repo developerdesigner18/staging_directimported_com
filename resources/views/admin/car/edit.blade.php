@@ -673,8 +673,8 @@
                 </div>
 
                 <!-- Submit Button -->
-                <div class="d-flex justify-content-end mb-4">
-                    <button type="submit" class="btn btn-primary px-4 py-2">Update Car</button>
+                <div class="d-flex mb-4">
+                    <button type="submit" class="btn btn-primary px-4 py-2">Publish Vehicle</button>
                 </div>
             </form>
         </div>
