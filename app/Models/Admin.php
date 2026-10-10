@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, SoftDeletes,HasRoles;
+    use HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     protected $guard_name = 'admin';
 
@@ -28,7 +28,7 @@ class Admin extends Authenticatable
     ];
     function getProfileImgAttribute($image)
     {
-        $outputImage = asset('assets/admin/images/users/avatar-9.jpg');
+        $outputImage = asset('uploads/default/default.jpg');
 
         if ($image && $image != null && $image != '') {
             if (file_exists(public_path(ADMIN_PROFILE_IMAGE_PATH) . $image)) {

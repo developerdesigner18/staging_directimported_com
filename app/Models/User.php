@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -54,7 +55,7 @@ class User extends Authenticatable
 
     function getProfileImgAttribute($image)
     {
-        $outputImage = asset('assets/admin/images/users/avatar-9.jpg');
+        $outputImage = asset('uploads/default/default.jpg');
 
         if ($image && $image != null && $image != '') {
             if (file_exists(public_path(USER_PROFILE_IMAGE_PATH) . $image)) {

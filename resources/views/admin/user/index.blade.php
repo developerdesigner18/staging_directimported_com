@@ -1,6 +1,7 @@
 
 @extends('admin.master')
 @section('title','User')
+@section('style')
 <style>
     #docPreviewModal {
         z-index: 1065;
@@ -10,6 +11,7 @@
         z-index: 1060;
     }
 </style>
+@endsection
 @push('modal')
     <!-- Modal -->
     <div class="modal fade" id="sectionsModal" tabindex="-1" aria-labelledby="sectionsModalLabel" aria-hidden="true">
@@ -116,6 +118,68 @@
             </div>
         </div>
     </div>
+    <!-- User Add/Edit Modal -->
+    <div class="modal fade" id="userMD" tabindex="-1" aria-labelledby="userMDLabel" aria-modal="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalTitle">Add User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="javascript:void(0);" id="userForm">
+                        @csrf
+                        <input type="hidden" name="id" id="user_id">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div>
+                                    <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" maxlength="191">
+                                    <label id="first_name-error" class="text-danger error" for="first_name" style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" maxlength="191">
+                                    <label id="last_name-error" class="text-danger error" for="last_name" style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="userEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="userEmail" name="email" placeholder="Enter email address" maxlength="191">
+                                    <label id="email-error" class="text-danger error" for="userEmail" style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div>
+                                    <label for="userMobile" class="form-label">Mobile Number</label>
+                                    <input type="text" class="form-control" id="userMobile" name="mobile" placeholder="Enter mobile number" maxlength="20">
+                                    <label id="mobile-error" class="text-danger error" for="userMobile" style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-12" id="passwordFieldGroup">
+                                <div>
+                                    <label for="userPassword" class="form-label">Password <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" id="userPassword" name="password" placeholder="Enter password (min. 8 characters)" minlength="8" maxlength="191">
+                                    <label id="password-error" class="text-danger error" for="userPassword" style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mt-4">
+                                <div class="hstack gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary" id="userSubmitBtn">
+                                        <i class="bx bx-loader spinner me-2" style="display: none" id="userBtnSpinner"></i>Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endpush
 
 @section('main')
@@ -142,11 +206,15 @@
                 <div class="card-header rounded-0">
                     <div class="row align-items-center gy-3">
                         <div class="col-sm">
-                            <h5 class="card-title mb-0"></h5>
+                            <h5 class="card-title mb-0">User List</h5>
                         </div>
                         <div class="col-sm-auto">
                             <div class="d-flex gap-1 flex-wrap">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#sectionsModal" data-bs-toggle="tooltip" title="Set Permission">
+                                {{-- <button onclick="openAddModal();" type="button" class="btn btn-primary">
+                                    <i class="ri-add-line align-bottom"></i>
+                                    <span class="d-none d-sm-inline-block">Add User</span>
+                                </button> --}}
+                                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#sectionsModal" data-bs-toggle="tooltip" title="Set Permission">
                                     <i class="ri-mail-send-line align-bottom"></i>
                                     <span class="d-none d-sm-inline-block">Set Permission</span>
                                 </button>
@@ -188,12 +256,14 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center'},
-                {data: 'image', name: 'image', title: 'image', class: 'text-center'},
-                {data: 'name', name: 'name', title: 'Name', class: 'text-center'},
-                {data: 'email', name: 'email', title: 'Email', class: 'text-center'},
-                {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
+                { data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center' },
+                { data: 'image', name: 'image', title: 'Image', class: 'text-center', orderable: false, searchable: false },
+                { data: 'name', name: 'name', title: 'Name', class: 'text-center' },
+                { data: 'email', name: 'email', title: 'Email', class: 'text-center' },
+                { data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center' },
+                { data: 'action', name: 'action', title: 'Actions', class: 'text-center', orderable: false, searchable: false },
             ],
+            order: [[0, 'desc']],
             ajax: {
                 url: '{{ route("admin.user.list") }}',
                 type: "POST",
@@ -215,6 +285,119 @@
                 ],
             },
         });
+
+        function resetUserForm() {
+            $("#userForm").trigger('reset');
+            $("#user_id").val('');
+            $("#userForm label.error").hide().text('');
+            $("#userModalTitle").text("Add User");
+            $("#passwordFieldGroup").show();
+            $("#userPassword").prop('disabled', false);
+            $("#userSubmitBtn").html('<i class="bx bx-loader spinner me-2" style="display: none" id="userBtnSpinner"></i>Submit');
+            $("#userSubmitBtn").removeClass('btn-warning').addClass('btn-primary');
+        }
+
+        function openAddModal() {
+            resetUserForm();
+            $("#userMD").modal('show');
+        }
+
+        function editUser(id, element) {
+            $.ajax({
+                url: "{{ route('admin.user.edit') }}",
+                dataType: "JSON",
+                method: "POST",
+                data: {
+                    "id": id,
+                    "_token": "{{ csrf_token() }}",
+                },
+                beforeSend: function () {
+                    $(element).html('<i class="spinner-border fs-10 spinner-border-sm m-1 mx-0"></i>');
+                    $(element).attr('disabled', true);
+                },
+                success: function (data) {
+                    resetUserForm();
+                    let u = data.data;
+                    $("#user_id").val(u.id);
+                    $("#first_name").val(u.first_name);
+                    $("#last_name").val(u.last_name);
+                    $("#userEmail").val(u.email);
+                    $("#userMobile").val(u.mobile || '');
+                    $("#passwordFieldGroup").hide();
+                    $("#userPassword").val('').prop('disabled', true);
+                    $("#userModalTitle").text("Edit User");
+                    $("#userSubmitBtn").removeClass('btn-primary').addClass('btn-warning');
+                    $("#userSubmitBtn").html('<i class="bx bx-loader spinner me-2" style="display: none" id="userBtnSpinner"></i>Save Changes');
+                    $("#userMD").modal('show');
+                },
+                error: function (xhr) {
+                    let data = xhr.responseJSON;
+                    if (data && data.hasOwnProperty('error')) {
+                        if (data.error.hasOwnProperty('id')) {
+                            sendError(data.error.id);
+                        }
+                    } else if (data && data.hasOwnProperty('message')) {
+                        actionError(xhr, data.message);
+                    } else {
+                        actionError(xhr);
+                    }
+                },
+                complete: function () {
+                    $(element).attr('disabled', false);
+                    $(element).html('<i class="ri-pencil-fill fs-16"></i>');
+                }
+            });
+        }
+
+        function deleteUser(id, element) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "Are you sure you want to delete this user?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete",
+                cancelButtonText: "No, cancel!",
+                confirmButtonClass: "btn btn-danger mt-2 text-white rounded px-4 fs-16",
+                cancelButtonClass: "btn btn-light ms-2 mt-2 border rounded px-4 fs-16",
+                buttonsStyling: false,
+            }).then(function (t) {
+                if (t.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.user.delete') }}",
+                        dataType: "JSON",
+                        method: "POST",
+                        data: {
+                            "id": id,
+                            "_token": "{{ csrf_token() }}",
+                        },
+                        beforeSend: function () {
+                            $(element).html('<i class="spinner-border fs-10 spinner-border-sm m-1 mx-0"></i>');
+                            $(element).attr('disabled', true);
+                        },
+                        success: function (data) {
+                            sendSuccess(data.message);
+                            dataTable.ajax.reload();
+                        },
+                        error: function (xhr) {
+                            let data = xhr.responseJSON;
+                            if (data && data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    sendError(Array.isArray(value) ? value[0] : value);
+                                });
+                            } else if (data && data.hasOwnProperty('message')) {
+                                actionError(xhr, data.message);
+                            } else {
+                                actionError(xhr);
+                            }
+                        },
+                        complete: function () {
+                            $(element).attr('disabled', false);
+                            $(element).html('<i class="ri-delete-bin-5-fill fs-16"></i>');
+                        }
+                    });
+                }
+            });
+        }
 
         function getDetails(id, element) {
                 $.ajax({
@@ -465,7 +648,123 @@ function verifyDocument(id, field, element) {
                 $('body').addClass('modal-open');
             });
 
-            
+            $("#userForm").validate({
+                rules: {
+                    first_name: {
+                        required: true,
+                        maxlength: 191
+                    },
+                    last_name: {
+                        required: true,
+                        maxlength: 191
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                        maxlength: 191
+                    },
+                    mobile: {
+                        maxlength: 20
+                    },
+                    password: {
+                        required: function() {
+                            return !$("#user_id").val();
+                        },
+                        minlength: {
+                            param: 8,
+                            depends: function() {
+                                return !$("#user_id").val();
+                            }
+                        },
+                        maxlength: 191
+                    }
+                },
+                messages: {
+                    first_name: {
+                        required: "The first name field is required.",
+                        maxlength: "The first name must not exceed 191 characters."
+                    },
+                    last_name: {
+                        required: "The last name field is required.",
+                        maxlength: "The last name must not exceed 191 characters."
+                    },
+                    email: {
+                        required: "The email field is required.",
+                        email: "Please enter a valid email address.",
+                        maxlength: "The email must not exceed 191 characters."
+                    },
+                    mobile: {
+                        maxlength: "The mobile number must not exceed 20 characters."
+                    },
+                    password: {
+                        required: "The password field is required.",
+                        minlength: "The password must be at least 8 characters.",
+                        maxlength: "The password must not exceed 191 characters."
+                    }
+                },
+                errorClass: 'text-danger error',
+                errorPlacement: function (error, element) {
+                    let name = element.attr("name");
+                    let errorLabel = $("#" + name + "-error");
+                    if (errorLabel.length) {
+                        errorLabel.html(error.text()).show();
+                    } else {
+                        element.after(error);
+                    }
+                },
+                submitHandler: function (form, e) {
+                    e.preventDefault();
+
+                    let id = $("#user_id").val();
+                    let url = id ? "{{ route('admin.user.update') }}" : "{{ route('admin.user.add') }}";
+
+                    // Clear any previous error messages
+                    $("#userForm label.error").hide().text('');
+
+                    $.ajax({
+                        url: url,
+                        method: "POST",
+                        dataType: "JSON",
+                        data: new FormData(form),
+                        processData: false,
+                        contentType: false,
+                        cache: false,
+                        beforeSend: function () {
+                            $('#userSubmitBtn').attr('disabled', true);
+                            $("#userBtnSpinner").show();
+                        },
+                        success: function (result) {
+                            sendSuccess(result.message);
+                            dataTable.ajax.reload();
+                            $("#userMD").modal('hide');
+                            resetUserForm();
+                        },
+                        error: function (xhr) {
+                            let data = xhr.responseJSON;
+                            if (data && data.hasOwnProperty('error')) {
+                                $.each(data.error, function (key, value) {
+                                    let msg = Array.isArray(value) ? value[0] : value;
+                                    let errorLabel = $("#" + key + "-error");
+                                    if (errorLabel.length) {
+                                        errorLabel.html(msg).show();
+                                    } else {
+                                        sendError(msg);
+                                    }
+                                });
+                            } else if (data && data.hasOwnProperty('message')) {
+                                actionError(xhr, data.message);
+                            } else {
+                                actionError(xhr);
+                            }
+                        },
+                        complete: function () {
+                            $('#userSubmitBtn').attr('disabled', false);
+                            $("#userBtnSpinner").hide();
+                        }
+                    });
+                }
+            });
+
         });
 
 

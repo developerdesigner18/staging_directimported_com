@@ -68,6 +68,10 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::controller(UserController::class)->prefix('user')->name('user.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/list', 'listUser')->name('list');
+            Route::post('/add', 'add')->name('add');
+            Route::post('/edit', 'edit')->name('edit');
+            Route::post('/update', 'update')->name('update');
+            Route::post('/delete', 'delete')->name('delete');
             Route::post('/details', 'details')->name('details');
             Route::post('/status/verify', 'verifySingleDocument')->name('status.verify');
             Route::post('/status/verified', 'statusVerified')->name('status.verified');

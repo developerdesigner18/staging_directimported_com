@@ -11,8 +11,10 @@ use App\Models\UserDetail;
 use App\Models\UserPermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 use App\Mail\Documentverification;
 
@@ -31,16 +33,24 @@ class UserController extends Controller
     {
         try {
 
-            $response = User::with('bookings')->latest();
+            $response = User::with('bookings');
 
             return DataTables::eloquent($response)
                 ->addIndexColumn()
+
+                // ---------------- ID -------------------
+                ->addColumn('id', function ($row) {
+                    return $row->id;
+                })
+                ->orderColumn('id', function ($query, $order) {
+                    $query->orderBy('users.id', $order);
+                })
 
                 // ---------------- IMAGE ----------------
                 ->addColumn('image', function ($row) {
 
                     if (!$row->profile_img) {
-                        return '<img src="' . asset('assets/admin/images/users/avatar-9.jpg') . '" width="50">';
+                        return '<img src="' . asset('uploads/default/default.jpg') . '" width="50">';
                     }
 
                     return '
@@ -51,13 +61,31 @@ class UserController extends Controller
 
                 // --------------- NAME -------------------
                 ->addColumn('name', function ($row) {
-                    $fname = $row->first_name ?? '-';
-                    $lname = $row->last_name ?? '-';
-                    return "$fname $lname";
+                    $fname = $row->first_name ?? '';
+                    $lname = $row->last_name ?? '';
+                    $name = trim("$fname $lname");
+                    return $name !== '' ? $name : '-';
+                })
+                ->orderColumn('name', function ($query, $order) {
+                    $query->orderBy('first_name', $order)->orderBy('last_name', $order);
+                })
+                ->filterColumn('name', function ($query, $keyword) {
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('first_name', 'LIKE', "%{$keyword}%")
+                            ->orWhere('last_name', 'LIKE', "%{$keyword}%")
+                            ->orWhereRaw("CONCAT_WS(' ', first_name, last_name) LIKE ?", ["%{$keyword}%"]);
+                    });
                 })
 
-                ->filterColumn('name', function ($query, $keyword) {
-                    $query->where('first_name', 'LIKE', "%{$keyword}%");
+                // --------------- EMAIL ------------------
+                ->addColumn('email', function ($row) {
+                    return $row->email ?? '-';
+                })
+                ->orderColumn('email', function ($query, $order) {
+                    $query->orderBy('email', $order);
+                })
+                ->filterColumn('email', function ($query, $keyword) {
+                    $query->where('email', 'LIKE', "%{$keyword}%");
                 })
 
                 // ------------- CREATED AT ---------------
@@ -66,13 +94,183 @@ class UserController extends Controller
                         ? $row->created_at->format('d M Y')
                         : '-';
                 })
+                ->orderColumn('created_at', function ($query, $order) {
+                    $query->orderBy('created_at', $order);
+                })
 
+                // ------------- ACTIONS ------------------
+                ->addColumn('action', function ($row) {
+                    return '<ul class="list-inline mb-0 d-flex justify-content-center text-center">
+                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Edit">
+                            <button type="button" onclick="editUser(' . $row->id . ', this)" class="btn btn-outline-info btn-icon waves-effect waves-light material-shadow-none">
+                                <i class="ri-pencil-fill fs-16"></i>
+                            </button>
+                        </li>
+                        <li class="list-inline-item" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-placement="top" title="Delete">
+                            <button type="button" onclick="deleteUser(' . $row->id . ', this)" class="btn btn-outline-danger btn-icon waves-effect waves-light material-shadow-none">
+                                <i class="ri-delete-bin-5-fill fs-16"></i>
+                            </button>
+                        </li>
+                    </ul>';
+                })
 
-                ->rawColumns(['image'])
+                ->rawColumns(['image', 'action'])
                 ->make(true);
 
         } catch (\Exception $exception) {
             return $this->sendDataTableError(ERROR_500, [], 500);
+        }
+    }
+
+    public function add(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'first_name' => ['required', 'string', 'max:191'],
+                'last_name' => ['required', 'string', 'max:191'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:191',
+                    Rule::unique('users', 'email')->whereNull('deleted_at')
+                ],
+                'mobile' => ['nullable', 'string', 'max:20'],
+                'password' => ['required', 'string', 'min:8', 'max:191'],
+            ], [
+                'first_name.required' => 'The first name field is required.',
+                'first_name.max' => 'The first name must not exceed 191 characters.',
+                'last_name.required' => 'The last name field is required.',
+                'last_name.max' => 'The last name must not exceed 191 characters.',
+                'email.required' => 'The email field is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'email.unique' => 'This email address is already in use.',
+                'email.max' => 'The email must not exceed 191 characters.',
+                'mobile.max' => 'The mobile number must not exceed 20 characters.',
+                'password.required' => 'The password field is required.',
+                'password.min' => 'The password must be at least 8 characters.',
+                'password.max' => 'The password must not exceed 191 characters.',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendValidationError($validator->errors());
+            }
+
+            $user = new User();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->mobile = $request->mobile;
+            $user->password = Hash::make($request->password);
+            $user->password_set_at = now();
+            $user->save();
+
+            return $this->sendSuccess("User has been added successfully");
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), 500);
+        }
+    }
+
+    public function edit(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => ['required', Rule::exists('users', 'id')->whereNull('deleted_at')],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendValidationError($validator->errors());
+            }
+
+            $user = User::find($request->id);
+
+            if ($user) {
+                return $this->sendResponse("User details", [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                    'mobile' => $user->mobile,
+                ]);
+            }
+
+            return $this->sendError("User not found");
+        } catch (\Exception $exception) {
+            return $this->sendError(ERROR_500, 500);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => ['required', Rule::exists('users', 'id')->whereNull('deleted_at')],
+                'first_name' => ['required', 'string', 'max:191'],
+                'last_name' => ['required', 'string', 'max:191'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:191',
+                    Rule::unique('users', 'email')->whereNull('deleted_at')->ignore($request->id)
+                ],
+                'mobile' => ['nullable', 'string', 'max:20'],
+            ], [
+                'id.required' => 'User ID is required.',
+                'id.exists' => 'Selected user does not exist.',
+                'first_name.required' => 'The first name field is required.',
+                'first_name.max' => 'The first name must not exceed 191 characters.',
+                'last_name.required' => 'The last name field is required.',
+                'last_name.max' => 'The last name must not exceed 191 characters.',
+                'email.required' => 'The email field is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'email.unique' => 'This email address is already in use.',
+                'email.max' => 'The email must not exceed 191 characters.',
+                'mobile.max' => 'The mobile number must not exceed 20 characters.',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendValidationError($validator->errors());
+            }
+
+            $user = User::find($request->id);
+            if (!$user) {
+                return $this->sendError("User not found");
+            }
+
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->mobile = $request->mobile;
+            $user->save();
+
+            return $this->sendSuccess("User has been updated successfully");
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), 500);
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'id' => ['required', Rule::exists('users', 'id')->whereNull('deleted_at')],
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendValidationError($validator->errors());
+            }
+
+            $user = User::find($request->id);
+            if (!$user) {
+                return $this->sendError("User not found");
+            }
+
+            $user->delete();
+
+            return $this->sendSuccess("User has been removed successfully");
+        } catch (\Exception $exception) {
+            return $this->sendError($exception->getMessage(), 500);
         }
     }
     //    function details(Request $request)
