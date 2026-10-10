@@ -303,8 +303,11 @@
                                     class="form-label mb-2">{{ admin_label('car_form', 'status', 'Status') }}</label>
                                 <select class="form-select select2" id="status" name="status">
                                     <option value="">Select Status</option>
-                                    @foreach(\App\Enum\VehicleStatus::cases() as $status)
-                                        <option value="{{ $status->value }}" {{ (isset($car->status) && (is_object($car->status) ? $car->status->value : $car->status) == $status->value) ? 'selected' : '' }}>
+                                    @php
+                                        $currentCarStatus = isset($car->status) ? (is_object($car->status) ? $car->status->value : (string)$car->status) : '';
+                                    @endphp
+                                    @foreach(\App\Enum\CarStatus::cases() as $status)
+                                        <option value="{{ $status->value }}" {{ strtolower($currentCarStatus) == strtolower($status->value) ? 'selected' : '' }}>
                                             {{ $status->label() }}
                                         </option>
                                     @endforeach
@@ -673,8 +676,12 @@
                 </div>
 
                 <!-- Submit Button -->
+                @php
+                    $currentCarStatusVal = isset($car->status) ? (is_object($car->status) ? $car->status->value : (string)$car->status) : '';
+                    $isDraftCar = (strtolower($currentCarStatusVal) === 'draft');
+                @endphp
                 <div class="d-flex mb-4">
-                    <button type="submit" class="btn btn-primary px-4 py-2">Publish Vehicle</button>
+                    <button type="submit" class="btn btn-primary px-4 py-2">{{ $isDraftCar ? 'Publish Vehicle' : 'Update Vehicle' }}</button>
                 </div>
             </form>
         </div>
@@ -911,11 +918,14 @@
                         contentType: false,
                         cache: false,
                         beforeSend: function () {
+                            var isDraftStatus = ($('#status').val() || '').toString().toLowerCase() === 'draft';
+                            var loadingText = isDraftStatus ? 'Publishing...' : 'Updating...';
                             $('button[type="submit"]').attr('disabled', true);
-                            $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
+                            $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ' + loadingText);
                         },
                         success: function (result) {
-                            sendSuccess(result.message || 'Car updated successfully!');
+                            var isDraftStatus = ($('#status').val() || '').toString().toLowerCase() === 'draft';
+                            sendSuccess(result.message || (isDraftStatus ? 'Car published successfully!' : 'Car updated successfully!'));
                             window.location.href = "{{ route('admin.car.index') }}";
                         },
                         error: function (xhr) {
@@ -940,11 +950,28 @@
                         },
                         complete: function () {
                             $('button[type="submit"]').attr('disabled', false);
-                            $('button[type="submit"]').html('Update Car');
+                            updateSubmitButtonText();
                         }
                     });
                 }
             });
+
+            function updateSubmitButtonText() {
+                var selectedStatus = ($('#status').val() || '').toString().toLowerCase().trim();
+                if (!selectedStatus) {
+                    selectedStatus = '{{ strtolower(is_object($car->status ?? null) ? $car->status->value : (string)($car->status ?? "")) }}';
+                }
+                var btnText = (selectedStatus === 'draft') ? 'Publish Vehicle' : 'Update Vehicle';
+                $('button[type="submit"]').text(btnText);
+            }
+
+            // Update submit button text dynamically when status dropdown changes
+            $('#status').on('change select2:select select2:clear', function () {
+                updateSubmitButtonText();
+            });
+
+            // Initialize submit button text on load
+            updateSubmitButtonText();
 
             // Custom Wording Radio Toggles
             $(document).on('change', 'input[name="fuel_custom_option"]', function () {

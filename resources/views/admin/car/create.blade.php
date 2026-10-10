@@ -681,8 +681,12 @@
                 </div>
 
                 <!-- Submit Button -->
+                @php
+                    $draftStatusVal = isset($draft) && isset($draft->status) ? (is_object($draft->status) ? $draft->status->value : (string)$draft->status) : '';
+                    $isDraftState = (strtolower($draftStatusVal) === 'draft');
+                @endphp
                 <div class="d-flex justify-content-start mb-4">
-                    <button type="submit" class="btn btn-primary px-4 py-2">Create Vehicle</button>
+                    <button type="submit" class="btn btn-primary px-4 py-2">{{ $isDraftState ? 'Publish Vehicle' : (isset($draft) ? 'Update Vehicle' : 'Create Vehicle') }}</button>
                 </div>
             </form>
         </div>
@@ -928,8 +932,10 @@
                         contentType: false,
                         cache: false,
                         beforeSend: function () {
+                            var currentStatus = ($('#status').val() || '').toString().toLowerCase();
+                            var loadingMsg = (currentStatus === 'draft') ? 'Publishing...' : 'Loading...';
                             $('button[type="submit"]').attr('disabled', true);
-                            $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...');
+                            $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ' + loadingMsg);
                         },
                         success: function (result) {
                             sendSuccess(result.message || 'Car published successfully!');
@@ -966,11 +972,34 @@
                         },
                         complete: function () {
                             $('button[type="submit"]').attr('disabled', false);
-                            $('button[type="submit"]').html('Create Car');
+                            updateSubmitButtonText();
                         }
                     });
                 }
             });
+
+            function updateSubmitButtonText() {
+                var selectedStatus = ($('#status').val() || '').toString().toLowerCase().trim();
+                if (!selectedStatus) {
+                    selectedStatus = '{{ strtolower(isset($draft) && isset($draft->status) ? (is_object($draft->status) ? $draft->status->value : (string)$draft->status) : "") }}';
+                }
+                var hasExistingDraft = {{ isset($draft) ? 'true' : 'false' }};
+                var btnText;
+                if (selectedStatus === 'draft') {
+                    btnText = 'Publish Vehicle';
+                } else if (hasExistingDraft) {
+                    btnText = 'Update Vehicle';
+                } else {
+                    btnText = 'Create Vehicle';
+                }
+                $('button[type="submit"]').text(btnText);
+            }
+
+            $('#status').on('change select2:select select2:clear', function () {
+                updateSubmitButtonText();
+            });
+
+            updateSubmitButtonText();
 
             // ============ AUTO-SAVE LOGIC ============
             let autoSaveTimer = null;

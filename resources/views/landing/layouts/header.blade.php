@@ -88,8 +88,8 @@
                                         class="@if(request()->is('about-us')) active @endif">About Us</a></li>
                                 {{-- <li class="list-inline-item"><a href="{{ route('car') }}"
                                         class="@if(request()->is('car')) active @endif">Cars</a></li> --}}
-                                <li class="list-inline-item"><a href="{{ route('car') }}"
-                                        class="@if(request()->is('car')) active @endif">Auction Access</a></li>
+                                <li class="list-inline-item"><a href="https://auc.directimported.com/"
+                                        target="_blank">Auction Access</a></li>
                                 <li class="list-inline-item"><a href="{{ route('available.vehicles') }}"
                                         class="@if(request()->is('available-vehicles')) active @endif">Available
                                         Vehicles</a></li>
