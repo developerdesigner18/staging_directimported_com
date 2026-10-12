@@ -282,6 +282,14 @@
             },
         });
 
+        // Re-initialize Bootstrap tooltips after each DataTable redraw
+        $('#employeeDT').on('draw.dt', function () {
+            var tooltipEls = [].slice.call(document.querySelectorAll('#employeeDT [data-bs-toggle="tooltip"]'));
+            tooltipEls.forEach(function (el) {
+                new bootstrap.Tooltip(el, { trigger: 'hover' });
+            });
+        });
+
         $(document).ready(function () {
 
             // Initialize Select2 for permissions dropdowns

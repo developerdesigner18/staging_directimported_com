@@ -29,7 +29,7 @@
 
         .auth-image {
             background: linear-gradient(45deg, rgba(243, 54, 79, 0.9), rgba(243, 54, 79, 0.7)),
-            url("{{asset('assets/logo/main.png')}}") center/cover;
+            url("{{asset('assets/logo/back-main.png')}}") center/cover;
             min-height: 700px;
             display: flex;
             align-items: center;

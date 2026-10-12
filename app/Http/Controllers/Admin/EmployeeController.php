@@ -97,6 +97,9 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-info btn-icon"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Edit Employee"
                                onclick="editEmployee(' . $row->id . ',this)">
                                 <i class="bx bx-pencil fs-16"></i>
                             </a>
@@ -105,6 +108,9 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-danger btn-icon"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Delete Employee"
                                onclick="removeEmployee(' . $row->id . ',this)">
                                 <i class="bx bx-trash fs-16"></i>
                             </a>
@@ -113,6 +119,9 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-info btn-icon"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="Send Login Details"
                                onclick="sendLoginDetail(' . $row->id . ',this)">
                                 <i class="bx bx-envelope"></i>
                             </a>
