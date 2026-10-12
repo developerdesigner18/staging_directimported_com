@@ -13,8 +13,15 @@ class Employee extends Authenticatable
 
     protected $fillable = [
         'first_name',
+        'last_name',
         'lastname',
         'email',
         'password',
+        'plain_password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'plain_password',
     ];
 }

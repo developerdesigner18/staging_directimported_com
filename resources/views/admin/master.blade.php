@@ -21,7 +21,7 @@
         /* Select2 Style Overrides to make it look exactly like Velzon theme inputs */
         .select2-container {
             display: block;
-            width: 100% !important;
+            /* width: 100% !important; */
         }
 
         .select2-container--default .select2-selection--single {

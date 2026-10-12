@@ -15,14 +15,16 @@ class CheckPermission
      */
     public function handle(Request $request, Closure $next, $permission): Response
     {
-        $user = $request->user();
+        $user = $request->user() ?? auth('admin')->user() ?? auth('employee')->user();
 
         if (!$user) {
             abort(403, 'Unauthorized');
         }
 
-        // If user is Admin (has role 'admin') OR has the specific permission
-        if ($user->hasRole('admin') || $user->can($permission)) {
+        // If user is Admin (has role 'admin' or logged in via admin guard) OR has the specific permission
+        $isAdmin = auth('admin')->check() || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
+
+        if ($isAdmin || $user->can($permission)) {
             return $next($request);
         }
 

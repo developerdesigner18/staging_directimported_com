@@ -1,5 +1,6 @@
 @php
-    $user = auth()->user();
+    $user = Auth::guard('admin')->user() ?? Auth::guard('employee')->user();
+    $isAdmin = Auth::guard('admin')->check() || ($user && method_exists($user, 'hasRole') && $user->hasRole('admin'));
 @endphp
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
@@ -39,7 +40,7 @@
             </div>
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">{{ admin_label('sidebar', 'menu', 'Menu') }}</span></li>
-                @if($user->hasRole('admin') || $user->can('dashboard'))
+                @if($isAdmin || ($user && $user->can('dashboard')))
 
                     <li class="nav-item">
                         <a href="{{route('admin.dashboard')}}"
@@ -52,7 +53,7 @@
 
 
 
-                @if($user->hasRole('admin') || $user->can('emails'))
+                @if($isAdmin || ($user && $user->can('contact_requests')))
                     <li class="nav-item">
                         <a href="{{route('admin.contact_requests.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.contact_requests.*')) active @endif">
@@ -62,7 +63,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('cars'))
+                @if($isAdmin || ($user && $user->can('cars')))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->is('admin/car*') || request()->is('admin/car/category*') || request()->routeIs('admin.manufacturer.*') || request()->routeIs('admin.auctiongrade.*') || request()->routeIs('admin.car-type.*')) active @endif"
                             href="#sidebarCars" data-bs-toggle="collapse" role="button"
@@ -110,7 +111,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('services'))
+                @if($isAdmin || ($user && $user->can('services')))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->routeIs('admin.service.*')) active @endif"
                             href="#sidebarServices" data-bs-toggle="collapse" role="button"
@@ -139,7 +140,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('about_us'))
+                @if($isAdmin || ($user && $user->can('about_us')))
                     <li class="nav-item">
                         <a href="{{route('admin.home_section.edit')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.home_section.*')) active @endif">
@@ -149,7 +150,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('blogs'))
+                @if($isAdmin || ($user && $user->can('blogs')))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->is('admin/blogs*')) active @endif" href="#sidebarBlogs"
                             data-bs-toggle="collapse" role="button"
@@ -185,7 +186,7 @@
 
 
 
-                {{-- @if($user->hasRole('admin') || $user->can('accessories_equipments'))
+                {{-- @if($isAdmin || ($user && $user->can('accessories_equipments')))
                 <li class="nav-item">
                     <a href="{{route('admin.accessory.index')}}"
                         class="nav-link menu-link @if(request()->routeIs('admin.accessory.*')) active @endif">
@@ -195,7 +196,7 @@
                 </li>
                 @endif --}}
 
-                {{-- @if($user->hasRole('admin') || $user->can('location'))
+                {{-- @if($isAdmin || ($user && $user->can('location')))
 
                 <li class="nav-item">
                     <a href="{{route('admin.location.index')}}"
@@ -206,7 +207,7 @@
                 </li>
                 @endif --}}
 
-                @if($user->hasRole('admin') || $user->can('users'))
+                @if($isAdmin || ($user && $user->can('users')))
                     <li class="nav-item">
                         <a href="{{route('admin.user.index')}}"
                             class="nav-link menu-link @if(request()->routeIs('admin.user.*')) active @endif">
@@ -215,7 +216,7 @@
                         </a>
                     </li>
                 @endif
-                @if($user->hasRole('admin') || $user->can('employee'))
+                @if($isAdmin || ($user && $user->can('employee')))
 
                     <li class="nav-item">
                         <a href="{{route('admin.employee.index')}}"
@@ -226,7 +227,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('gallery'))
+                @if($isAdmin || ($user && $user->can('gallery')))
 
                     <li class="nav-item">
                         <a href="{{route('admin.gallery.index')}}"
@@ -237,7 +238,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('bookings'))
+                @if($isAdmin || ($user && $user->can('slider')))
 
                     <li class="nav-item">
                         <a href="{{route('admin.slider.index')}}"
@@ -248,7 +249,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('manage_information'))
+                @if($isAdmin || ($user && $user->can('manage_information')))
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->routeIs('admin.rental-policies.*') || request()->routeIs('admin.faq.*')) active @endif"
                             href="#sidebarInfo" data-bs-toggle="collapse" role="button"
@@ -275,17 +276,9 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('newsletters'))
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link menu-link">
-                            <i class="bx bx-mail-send"></i> <span
-                                data-key="t-dashboards">{{ admin_label('sidebar', 'newsletters', 'Newsletters') }}</span>
-                        </a>
-                    </li>
-                @endif
 
-                @if($user->hasRole('admin') || $user->can('emails'))
+                @if($isAdmin || ($user && $user->can('emails')))
 
                     <li class="nav-item">
                         <a class="nav-link menu-link @if(request()->routeIs('admin.email.*') || request()->routeIs('admin.custom-mails.*')) active @endif"
@@ -326,7 +319,7 @@
                     </li>
                 @endif
 
-                @if($user->hasRole('admin') || $user->can('system_settings'))
+                @if($isAdmin || ($user && $user->can('system_settings')))
 
                     <li class="nav-item">
                         <a href="{{route('admin.system.settings')}}"

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use League\HTMLToMarkdown\HtmlConverter;
 use Mockery\Exception;
 use Spatie\Permission\Models\Permission;
@@ -28,8 +29,32 @@ class EmployeeController extends Controller
     use ResponseTrait;
     public function index()
     {
-        $AllPermissions=Permission::where('guard_name','employee')->get();
-        return view('admin.employee.index',compact('AllPermissions'));
+        $sidebarOrder = [
+            'dashboard',
+            'contact_requests',
+            'cars',
+            'services',
+            'about_us',
+            'blogs',
+            'users',
+            'employee',
+            'gallery',
+            'slider',
+            'manage_information',
+            'newsletters',
+            'emails',
+            'system_settings',
+        ];
+
+        $AllPermissions = Permission::where('guard_name', 'employee')
+            ->whereIn('name', $sidebarOrder)
+            ->get()
+            ->sortBy(function ($perm) use ($sidebarOrder) {
+                return array_search($perm->name, $sidebarOrder);
+            })
+            ->values();
+
+        return view('admin.employee.index', compact('AllPermissions'));
     }
     public function list(Request $request)
     {
@@ -72,7 +97,7 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-info btn-icon"
-                               onclick="editEmployee('.$row->id.',this)">
+                               onclick="editEmployee(' . $row->id . ',this)">
                                 <i class="bx bx-pencil fs-16"></i>
                             </a>
                         </li>
@@ -80,7 +105,7 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-danger btn-icon"
-                               onclick="removeEmployee('.$row->id.',this)">
+                               onclick="removeEmployee(' . $row->id . ',this)">
                                 <i class="bx bx-trash fs-16"></i>
                             </a>
                         </li>
@@ -88,7 +113,7 @@ class EmployeeController extends Controller
                         <li class="list-inline-item">
                             <a href="javascript:void(0);"
                                class="btn btn-outline-info btn-icon"
-                               onclick="sendLoginDetail('.$row->id.',this)">
+                               onclick="sendLoginDetail(' . $row->id . ',this)">
                                 <i class="bx bx-envelope"></i>
                             </a>
                         </li>
@@ -109,20 +134,26 @@ class EmployeeController extends Controller
             return $this->sendDataTableError(ERROR_500, [], 500);
         }
     }
-    public function create(Request $request){
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'permission' => 'required',
-        ],
+    public function create(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'first_name' => 'required',
+                'last_name' => 'required',
+                'email' => 'required|email|unique:employees,email',
+                'password' => 'required|string|min:6',
+                'permission' => 'required',
+            ],
             [
                 'first_name.required' => 'The name field is required.',
                 'last_name.required' => 'The name field is required.',
-
                 'email.required' => 'The email field is required.',
+                'email.email' => 'Please enter a valid email address.',
+                'email.unique' => 'This email is already registered with another employee.',
+                'password.required' => 'The password field is required.',
+                'password.min' => 'The password must be at least 6 characters.',
                 'permission.required' => 'Please select the permission',
-
             ]
         );
 
@@ -134,18 +165,29 @@ class EmployeeController extends Controller
 
             $employee = new Employee();
 
-            $employee->first_name=$request->first_name;
-            $employee->last_name=$request->last_name;
-            $employee->email=$request->email;
-
+            $employee->first_name = $request->first_name;
+            $employee->last_name = $request->last_name;
+            $employee->email = $request->email;
+            $employee->password = Hash::make($request->password);
+            $employee->plain_password = $request->password;
 
             $employee->save();
 
-            if($request->has('permission')){
-                $permissions = Permission::whereIn('id', $request->permission)->get();
-                $employee->syncPermissions($permissions);            }
+            if ($request->has('permission')) {
+                $permissions = Permission::whereIn('id', (array) $request->permission)
+                    ->where('guard_name', 'employee')
+                    ->get();
+                $employee->syncPermissions($permissions);
+            }
+            app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
             DB::commit();
-            return $this->sendSuccess('Permission added successfully!');
+            return $this->sendSuccess('Employee added successfully!');
+        } catch (\Illuminate\Database\QueryException $exception) {
+            DB::rollBack();
+            if (isset($exception->errorInfo[1]) && $exception->errorInfo[1] == 1062) {
+                return $this->sendValidationError(['email' => ['This email is already registered with another employee.']]);
+            }
+            return $this->sendError($exception->getMessage());
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -163,7 +205,7 @@ class EmployeeController extends Controller
                     'first_name' => $employee->first_name,
                     'last_name' => $employee->last_name,
                     'email' => $employee->email,
-                    'permissions' => $employee->permissions->pluck('id'), // important!
+                    'permissions' => $employee->permissions->pluck('id')->toArray(), // important!
                 ]);
             } else {
                 return $this->sendError("Employee not found");
@@ -174,17 +216,35 @@ class EmployeeController extends Controller
     }
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'edit_first_name' => 'required',
             'edit_last_name' => 'required',
-            'edit_email' => 'required|email',
+            'edit_email' => [
+                'required',
+                'email',
+                Rule::unique('employees', 'email')->ignore($request->employee_id),
+            ],
             'edit_permission' => 'required|array',
-        ], [
+        ];
+
+        $messages = [
             'edit_first_name.required' => 'The first name field is required.',
             'edit_last_name.required' => 'The last name field is required.',
             'edit_email.required' => 'The email field is required.',
+            'edit_email.email' => 'Please enter a valid email address.',
+            'edit_email.unique' => 'This email is already registered with another employee.',
             'edit_permission.required' => 'Please select the permission',
-        ]);
+        ];
+
+        if ($request->filled('edit_password')) {
+            $rules['edit_password'] = 'string|min:6';
+            $messages['edit_password.min'] = 'The password must be at least 6 characters.';
+        } elseif ($request->filled('password')) {
+            $rules['password'] = 'string|min:6';
+            $messages['password.min'] = 'The password must be at least 6 characters.';
+        }
+
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return $this->sendValidationError($validator->errors());
@@ -197,15 +257,34 @@ class EmployeeController extends Controller
             $employee->first_name = $request->edit_first_name;
             $employee->last_name = $request->edit_last_name;
             $employee->email = $request->edit_email;
+
+            $password = $request->filled('edit_password') ? $request->edit_password : ($request->filled('password') ? $request->password : null);
+            if (!empty($password)) {
+                $employee->password = Hash::make($password);
+                $employee->plain_password = $password;
+            }
+
             $employee->save();
 
-            if ($request->has('edit_permission')) {
-                $permissions = Permission::whereIn('id', $request->edit_permission)->get();
+            if ($request->has('edit_permission') && is_array($request->edit_permission)) {
+                $permissions = Permission::whereIn('id', $request->edit_permission)
+                    ->where('guard_name', 'employee')
+                    ->get();
                 $employee->syncPermissions($permissions);
+            } else {
+                $employee->syncPermissions([]);
             }
+
+            app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
             DB::commit();
             return $this->sendSuccess('Employee updated successfully!');
+        } catch (\Illuminate\Database\QueryException $exception) {
+            DB::rollBack();
+            if (isset($exception->errorInfo[1]) && $exception->errorInfo[1] == 1062) {
+                return $this->sendValidationError(['edit_email' => ['This email is already registered with another employee.']]);
+            }
+            return $this->sendError($exception->getMessage());
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());
@@ -238,16 +317,21 @@ class EmployeeController extends Controller
                 return $this->sendError('Employee not found', 404);
             }
 
-            $temp_pwd = generateTemporaryPassword($employee->first_name, $employee->last_name, '');
-            $employee->password = Hash::make($temp_pwd);
-            $employee->save();
+            $currentPassword = $employee->plain_password;
 
-            if (sendDynamicEmail($employee->email, 'LoginDetailsMail', [
-                'name' => $employee->first_name,
-                'email' => $employee->email,
-                'tempPassword' => $temp_pwd,
-                'loginurl' => route('admin.login'),
-            ])) {
+            if (empty($currentPassword)) {
+                return $this->sendError('Current password is not available for this employee. Please edit the employee to set a password first.', 400);
+            }
+
+            if (
+                sendDynamicEmail($employee->email, 'LoginDetailsMail', [
+                    'name' => $employee->first_name,
+                    'email' => $employee->email,
+                    'tempPassword' => $currentPassword,
+                    'password' => $currentPassword,
+                    'loginurl' => route('admin.login'),
+                ])
+            ) {
                 return $this->sendSuccess('Login credentials sent successfully');
             }
 

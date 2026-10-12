@@ -57,10 +57,10 @@ You can pay securely using <strong>Squareup</strong> or choose <strong>WISE</str
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'LoginDetailsMail'],
             [
-                'subject' => 'Your Booking Login Details',
+                'subject' => 'Your  Login Details',
                 'body' => "<h1>Login Details</h1>
 <p>Hello {{ \$name }},</p>
-<p>Your booking has been confirmed. Here are your details:</p>
+<p>Your has been confirmed. Here are your details:</p>
 <ul>
     <li><strong>Email:</strong> {{ \$email }}</li>
     <li><strong>Temporary Password:</strong> {{ \$tempPassword }}</li>

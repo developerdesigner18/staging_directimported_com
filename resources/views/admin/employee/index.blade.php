@@ -6,7 +6,7 @@
     <!-- Modal: Add Employee -->
     <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" id="frmAddEmp">
+            <form action="javascript:void(0);" method="POST" id="frmAddEmp">
                 @csrf
                 <div class="modal-content">
                     <div class="modal-header">
@@ -34,14 +34,52 @@
                             <input type="email" class="form-control" id="employee_email" name="email">
                         </div>
 
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="employee_password"
+                                class="form-label">{{ admin_label('employee_form', 'password', 'Password') }}</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="employee_password" name="password"
+                                    placeholder="Enter password">
+                                <button type="button" class="btn btn-outline-secondary toggle-password-btn"
+                                    data-target="#employee_password" title="Show/Hide Password">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary btn-generate-password"
+                                    data-target="#employee_password">
+                                    <i class="ri-key-2-line me-1"></i>Generate Password
+                                </button>
+                            </div>
+                        </div>
+
                         <!-- Role/Department Select -->
                         <div class="mb-3">
                             <label for="employee_permissions"
                                 class="form-label">{{ admin_label('employee_form', 'permissions', 'Permissions') }}</label>
                             <select class="form-select select2-multiple" id="employee_permissions" name="permission[]"
                                 multiple>
+                                @php
+                                    $permissionTitles = [
+                                        'dashboard' => 'Dashboards',
+                                        'contact_requests' => 'Contact Requests',
+                                        'cars' => 'Cars',
+                                        'services' => 'Services',
+                                        'about_us' => 'About Us',
+                                        'blogs' => 'Blogs',
+                                        'users' => 'Users',
+                                        'employee' => 'Employee',
+                                        'gallery' => 'Gallery',
+                                        'slider' => 'Slider',
+                                        'manage_information' => 'Manage Information',
+                                        'newsletters' => 'Newsletters',
+                                        'emails' => 'Emails',
+                                        'system_settings' => 'System Settings',
+                                    ];
+                                @endphp
                                 @foreach($AllPermissions as $acc)
-                                    <option value="{{ $acc->id }}">{{ $acc->name }}</option>
+                                    <option value="{{ $acc->id }}">
+                                        {{ $permissionTitles[$acc->name] ?? ucwords(str_replace('_', ' ', $acc->name)) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -65,7 +103,7 @@
     <div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" id="frmEditEmp">
+            <form action="javascript:void(0);" method="POST" id="frmEditEmp">
                 @csrf
                 <input type="hidden" name="employee_id" id="edit_employee_id">
                 <div class="modal-content">
@@ -94,6 +132,25 @@
                             <input type="email" class="form-control" id="edit_employee_email" name="edit_email">
                         </div>
 
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="edit_employee_password"
+                                class="form-label">{{ admin_label('employee_form', 'password', 'Password') }}</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="edit_employee_password" name="edit_password"
+                                    placeholder="Leave blank to keep current password">
+                                <button type="button" class="btn btn-outline-secondary toggle-password-btn"
+                                    data-target="#edit_employee_password" title="Show/Hide Password">
+                                    <i class="ri-eye-line"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-primary btn-generate-password"
+                                    data-target="#edit_employee_password">
+                                    <i class="ri-key-2-line me-1"></i>Generate Password
+                                </button>
+                            </div>
+                            <small class="text-muted d-block mt-1">Leave empty to keep existing password.</small>
+                        </div>
+
                         <!-- Permissions -->
                         <div class="mb-3">
                             <label for="edit_employee_permissions"
@@ -101,7 +158,9 @@
                             <select class="form-select select2-multiple" name="edit_permission[]"
                                 id="edit_employee_permissions" multiple>
                                 @foreach($AllPermissions as $acc)
-                                    <option value="{{ $acc->id }}">{{ $acc->name }}</option>
+                                    <option value="{{ $acc->id }}">
+                                        {{ $permissionTitles[$acc->name] ?? ucwords(str_replace('_', ' ', $acc->name)) }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -242,36 +301,134 @@
                 dropdownAutoWidth: true
             });
 
-            // Reset Select2 when modals are hidden
+            // Reset Select2 and password fields when modals are hidden
             $('#addEmployeeModal').on('hidden.bs.modal', function () {
+                $('#frmAddEmp')[0].reset();
                 $('#employee_permissions').val(null).trigger('change');
+                $('#employee_password').val('').attr('type', 'password');
+                $('#addEmployeeModal .toggle-password-btn i').removeClass('ri-eye-off-line').addClass('ri-eye-line');
+                if ($('#frmAddEmp').data('validator')) {
+                    $('#frmAddEmp').data('validator').resetForm();
+                }
+                $('#frmAddEmp label.error').hide().text('');
             });
 
             $('#editEmployeeModal').on('hidden.bs.modal', function () {
+                $('#frmEditEmp')[0].reset();
                 $('#edit_employee_permissions').val(null).trigger('change');
+                $('#edit_employee_password').val('').attr('type', 'password');
+                $('#editEmployeeModal .toggle-password-btn i').removeClass('ri-eye-off-line').addClass('ri-eye-line');
+                if ($('#frmEditEmp').data('validator')) {
+                    $('#frmEditEmp').data('validator').resetForm();
+                }
+                $('#frmEditEmp label.error').hide().text('');
+            });
+
+            // Password Generator helper
+            function generateRandomPassword(length) {
+                length = length || 12;
+                var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var lowercase = "abcdefghijklmnopqrstuvwxyz";
+                var numbers = "0123456789";
+                var special = "!@#$%^&*";
+                var allChars = uppercase + lowercase + numbers + special;
+
+                var chars = [
+                    uppercase.charAt(Math.floor(Math.random() * uppercase.length)),
+                    lowercase.charAt(Math.floor(Math.random() * lowercase.length)),
+                    numbers.charAt(Math.floor(Math.random() * numbers.length)),
+                    special.charAt(Math.floor(Math.random() * special.length))
+                ];
+
+                while (chars.length < length) {
+                    chars.push(allChars.charAt(Math.floor(Math.random() * allChars.length)));
+                }
+
+                for (var i = chars.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var temp = chars[i];
+                    chars[i] = chars[j];
+                    chars[j] = temp;
+                }
+
+                return chars.join('');
+            }
+
+            // Generate password button click handler
+            $(document).on('click', '.btn-generate-password', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var targetSelector = $(this).data('target');
+                var $input = $(targetSelector);
+                var pwd = generateRandomPassword(12);
+
+                $input.val(pwd).attr('type', 'text').trigger('change').trigger('input');
+
+                // Switch toggle button icon to visible
+                var $toggleBtn = $(this).siblings('.toggle-password-btn');
+                $toggleBtn.find('i').removeClass('ri-eye-line').addClass('ri-eye-off-line');
+
+                // Clear any validation error on the input
+                var name = $input.attr('name');
+                $('#' + name + '-error').hide().text('');
+                $input.removeClass('error');
+            });
+
+            // Toggle password visibility handler
+            $(document).on('click', '.toggle-password-btn', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var targetSelector = $(this).data('target');
+                var $input = $(targetSelector);
+                var $icon = $(this).find('i');
+
+                if ($input.attr('type') === 'password') {
+                    $input.attr('type', 'text');
+                    $icon.removeClass('ri-eye-line').addClass('ri-eye-off-line');
+                } else {
+                    $input.attr('type', 'password');
+                    $icon.removeClass('ri-eye-off-line').addClass('ri-eye-line');
+                }
             });
 
             $("#frmAddEmp").validate({
+                ignore: ":hidden:not(.select2-multiple)",
                 rules: {
                     first_name: { required: true },
                     last_name: { required: true },
-                    permission: { required: true },
-
+                    email: { required: true, email: true },
+                    password: { required: true, minlength: 6 },
+                    "permission[]": { required: true },
                 },
                 messages: {
-                    first_name: { required: "The name field is required." },
-                    last_name: { required: "The email field is required." },
-                    permission: { required: "Please select the permission" },
+                    first_name: { required: "The first name field is required." },
+                    last_name: { required: "The last name field is required." },
+                    email: {
+                        required: "The email field is required.",
+                        email: "Please enter a valid email address."
+                    },
+                    password: {
+                        required: "The password field is required.",
+                        minlength: "The password must be at least 6 characters."
+                    },
+                    "permission[]": { required: "Please select the permission" },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
-                    element.after(error);
+                    if (element.parent('.input-group').length) {
+                        element.parent('.input-group').after(error);
+                    } else if (element.hasClass('select2-multiple') || element.hasClass('select2-hidden-accessible')) {
+                        element.next('.select2-container').after(error);
+                    } else {
+                        element.after(error);
+                    }
                 },
-                submitHandler: function (form, e) {
-                    e.preventDefault();
+                submitHandler: function (form) {
                     $.ajax({
                         url: "{{ route('admin.employee.create') }}",
-                        method: "post",
+                        method: "POST",
                         dataType: "json",
                         data: new FormData(form),
                         processData: false,
@@ -282,22 +439,30 @@
                             $("#btnAddEmpSpinner").removeClass('d-none');
                         },
                         success: function (result) {
-                            sendSuccess(result.message).then((result) => {
+                            sendSuccess(result.message).then(() => {
                                 $('#frmAddEmp')[0].reset();
-                                $('#employee_permissions').val(null).trigger('change'); // Reset Select2
-                                dataTable.ajax.reload(null, false); // false preserves the current page
+                                $('#employee_permissions').val(null).trigger('change');
+                                $('#employee_password').val('').attr('type', 'password');
+                                $('#addEmployeeModal .toggle-password-btn i').removeClass('ri-eye-off-line').addClass('ri-eye-line');
+                                dataTable.ajax.reload(null, false);
                                 $('#addEmployeeModal').modal('hide');
-
                             });
-
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('error')) {
+                            if (data && data.error) {
+                                let errorObj = {};
+                                let firstMsg = null;
                                 $.each(data.error, function (key, value) {
-                                    $("#" + key + "-error").html(value).show();
+                                    let msg = Array.isArray(value) ? value[0] : value;
+                                    errorObj[key] = msg;
+                                    if (!firstMsg) firstMsg = msg;
                                 });
-                            } else if (data.hasOwnProperty('message')) {
+                                $("#frmAddEmp").validate().showErrors(errorObj);
+                                if (firstMsg) {
+                                    sendError(firstMsg);
+                                }
+                            } else if (data && data.message) {
                                 actionError(xhr, data.message);
                             } else {
                                 actionError(xhr);
@@ -308,71 +473,88 @@
                             $("#btnAddEmpSpinner").addClass('d-none');
                         },
                     });
+                    return false;
                 }
             });
-            $("#frmEditEmp").validate({
 
+            $("#frmEditEmp").validate({
+                ignore: ":hidden:not(.select2-multiple)",
                 rules: {
                     edit_first_name: { required: true },
                     edit_last_name: { required: true },
-                    edit_email: { required: true },
-                    edit_permission: { required: true },
-
+                    edit_email: { required: true, email: true },
+                    edit_password: { minlength: 6 },
+                    "edit_permission[]": { required: true },
                 },
                 messages: {
-                    edit_first_name: { required: "The name field is required." },
-                    edit_last_name: { required: "The email field is required." },
-                    edit_email: { required: "The email field is required." },
-                    edit_permission: { required: "Please select the permission" },
+                    edit_first_name: { required: "The first name field is required." },
+                    edit_last_name: { required: "The last name field is required." },
+                    edit_email: {
+                        required: "The email field is required.",
+                        email: "Please enter a valid email address."
+                    },
+                    edit_password: { minlength: "The password must be at least 6 characters." },
+                    "edit_permission[]": { required: "Please select the permission" },
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
-                    element.after(error);
+                    if (element.parent('.input-group').length) {
+                        element.parent('.input-group').after(error);
+                    } else if (element.hasClass('select2-multiple') || element.hasClass('select2-hidden-accessible')) {
+                        element.next('.select2-container').after(error);
+                    } else {
+                        element.after(error);
+                    }
                 },
-                submitHandler: function (form, e) {
-                    e.preventDefault();
+                submitHandler: function (form) {
                     $.ajax({
                         url: "{{ route('admin.employee.updates') }}",
                         method: "POST",
+                        dataType: "json",
                         data: new FormData(form),
                         processData: false,
                         contentType: false,
                         cache: false,
                         beforeSend: function () {
-                            // Disable the button and show spinner
                             $('#btnEditEmp').attr('disabled', true);
-                            $("#btnEditEmpSpinner").show();
+                            $("#btnEditEmpSpinner").removeClass('d-none');
                         },
                         success: function (result) {
-                            // Show success message
-                            sendSuccess(result.message);
-
-                            // Reload DataTable
-                            dataTable.ajax.reload(null, false); // false preserves the current page
-
-                            // Reset form and hide modal
-                            $('#frmEditEmp')[0].reset();
-                            $('#editEmployeeModal').modal('hide');
+                            sendSuccess(result.message).then(() => {
+                                $('#frmEditEmp')[0].reset();
+                                $('#edit_employee_permissions').val(null).trigger('change');
+                                $('#edit_employee_password').val('').attr('type', 'password');
+                                $('#editEmployeeModal .toggle-password-btn i').removeClass('ri-eye-off-line').addClass('ri-eye-line');
+                                dataTable.ajax.reload(null, false);
+                                $('#editEmployeeModal').modal('hide');
+                            });
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
-                            if (data.hasOwnProperty('error')) {
+                            if (data && data.error) {
+                                let errorObj = {};
+                                let firstMsg = null;
                                 $.each(data.error, function (key, value) {
-                                    $("#" + key + "-error").html(value).show();
+                                    let msg = Array.isArray(value) ? value[0] : value;
+                                    errorObj[key] = msg;
+                                    if (!firstMsg) firstMsg = msg;
                                 });
-                            } else if (data.hasOwnProperty('message')) {
-                                actionError(xhr, data.message)
+                                $("#frmEditEmp").validate().showErrors(errorObj);
+                                if (firstMsg) {
+                                    sendError(firstMsg);
+                                }
+                            } else if (data && data.message) {
+                                actionError(xhr, data.message);
                             } else {
                                 actionError(xhr);
                             }
                         },
                         complete: function () {
-                            // Always re-enable button and hide spinner (even on error)
                             $('#btnEditEmp').attr('disabled', false);
-                            $("#btnEditEmpSpinner").hide();
-                            $('#editEmployeeModal').modal('hide');
+                            $("#btnEditEmpSpinner").addClass('d-none');
                         }
                     });
+                    return false;
                 }
             });
 
@@ -390,7 +572,8 @@
                     $('#edit_employee_first_name').val(response.data.first_name);
                     $('#edit_employee_last_name').val(response.data.last_name);
                     $('#edit_employee_email').val(response.data.email);
-                    // $('#edit_employee_permissions').val(response.data.google_map_link);
+                    $('#edit_employee_password').val('').attr('type', 'password');
+                    $('#editEmployeeModal .toggle-password-btn i').removeClass('ri-eye-off-line').addClass('ri-eye-line');
                     $('#edit_employee_permissions').val(response.data.permissions).trigger('change');
 
                     // Open the modal
@@ -410,16 +593,16 @@
             var originalHtml = $(element).html();
             Swal.fire({
                 title: "Are you sure?",
-                text: "Are you sure you want to remove this category?",
+                text: "Are you sure you want to delete the employee record?",
                 icon: "warning",
-                showCancelButton: !0,
-                confirmButtonText: "Yes, remove",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete",
                 cancelButtonText: "No, cancel!",
                 confirmButtonClass: "btn btn-danger mt-2 text-white rounded px-4 fs-16",
                 cancelButtonClass: "btn btn-light ms-2 mt-2 border rounded px-4 fs-16",
-                buttonsStyling: !1,
+                buttonsStyling: false,
             }).then(function (t) {
-                if (t.value) {
+                if (t.isConfirmed || t.value) {
                     $.ajax({
                         url: "{{route('admin.employee.delete')}}",
                         dataType: "JSON",
@@ -434,10 +617,7 @@
                         },
                         success: function (data) {
                             sendSuccess(data.message);
-                            setTimeout(function () {
-                                location.reload();
-                            }, 2500);
-
+                            dataTable.ajax.reload(null, false);
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;

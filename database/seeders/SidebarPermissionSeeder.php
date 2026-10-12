@@ -17,21 +17,31 @@ class SidebarPermissionSeeder extends Seeder
     {
         $permissions = [
             'dashboard',
+            'contact_requests',
+            'cars',
+            'services',
+            'about_us',
+            'blogs',
             'users',
             'employee',
-            'manage_information',
-            'bookings',
-            'slider',
-            'accessories_equipments',
-            'location',
             'gallery',
-            'newsletters',
-            'manage_information_extra',
+            'slider',
+            'manage_information',
+
+            'emails',
+            'system_settings',
+        ];
+
+        // Clean up obsolete permissions if they exist
+        $obsolete = [
             'bikes',
             'tours',
-            'system_settings',
-            'emails',
+            'bookings',
+            'manage_information_extra',
+            'accessories_equipments',
+            'location',
         ];
+        Permission::whereIn('name', $obsolete)->delete();
 
         // -----------------------------
         // Admin Permissions & Role
@@ -48,11 +58,13 @@ class SidebarPermissionSeeder extends Seeder
             'guard_name' => 'admin',
         ]);
 
-        $adminRole->syncPermissions($permissions);
+        $adminRole->syncPermissions(Permission::where('guard_name', 'admin')->get());
 
-        $admin = Admin::first(); // ya Admin::find(1)
-        if ($admin) {
-            $admin->assignRole('admin');
+        $admins = Admin::all();
+        foreach ($admins as $admin) {
+            if (!$admin->hasRole('admin')) {
+                $admin->assignRole('admin');
+            }
         }
 
         // -----------------------------
@@ -70,11 +82,6 @@ class SidebarPermissionSeeder extends Seeder
             'guard_name' => 'employee',
         ]);
 
-        $employeeRole->syncPermissions($permissions);
-
-        $employee = Employee::first(); // agar koi employee hai
-        if ($employee) {
-            $employee->assignRole('employee');
-        }
+        $employeeRole->syncPermissions(Permission::where('guard_name', 'employee')->get());
     }
 }
