@@ -9,6 +9,75 @@
             font-size: 15px !important;
             margin-right: 20px !important;
         }
+
+        .rid-contact .contact-form {
+            border: 1px solid #dedede;
+            padding: 40px 30px;
+            border-radius: 6px;
+            background: #ffffff;
+        }
+
+        .rid-contact .contact-form .form-control {
+            border: 1px solid #dedede;
+            border-radius: 4px;
+            font-size: 16px;
+            padding: 12px 16px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .rid-contact .contact-form .form-control:focus {
+            border-color: var(--primary-color, #053C7C);
+            box-shadow: 0 0 0 3px rgba(5, 60, 124, 0.15);
+        }
+
+        .rid-contact .contact-form .recaptcha-wrapper {
+            margin-bottom: 24px;
+        }
+
+        .rid-contact .contact-form .submit-btn-wrapper {
+            margin-bottom: 14px;
+        }
+
+        .rid-contact .contact-form .btn {
+            background-color: var(--primary-color, #053C7C);
+            color: #ffffff;
+            padding: 12px 32px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: var(--font-weight-bold, 700);
+            margin-right: 0;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .rid-contact .contact-form .btn:hover {
+            background-color: #042c5c;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(5, 60, 124, 0.25);
+        }
+
+        .rid-contact .contact-form .contact-reply-note {
+            display: block;
+            margin-top: 4px;
+            font-size: 15px;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        .rid-contact .contact-form .contact-reply-note strong {
+            color: var(--secondary-color, #343434);
+            font-weight: 600;
+        }
+
+        .rid-contact .contact-form .contact-reply-note i {
+            font-size: 17px;
+            vertical-align: -2px;
+            margin-right: 4px;
+            color: var(--primary-color, #053C7C);
+        }
     </style>
 @endpush
 @section('main')
@@ -84,12 +153,17 @@
                                 <textarea class="form-control" rows="4" placeholder="Write Your Message"
                                     name="message"></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="recaptcha-wrapper mb-4">
                                 <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
                                     data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                             </div>
-                            <button class="btn" type="submit">Send Message</button>
-                            <span><strong>All queries are replied</strong> usually within 24hrs.</span>
+                            <div class="submit-btn-wrapper mb-3">
+                                <button class="btn" type="submit">Send Message</button>
+                            </div>
+                            <div class="contact-reply-note">
+                                <span><i class="bx bx-time-five"></i><strong>All queries are replied</strong> usually within
+                                    24hrs.</span>
+                            </div>
                         </form>
 
                     </div>
