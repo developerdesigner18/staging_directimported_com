@@ -77,7 +77,7 @@
                                     ];
                                 @endphp
                                 @foreach($AllPermissions as $acc)
-                                    <option value="{{ $acc->id }}">
+                                    <option value="{{ $acc->id }}" {{ $acc->name === 'dashboard' ? 'selected' : '' }}>
                                         {{ $permissionTitles[$acc->name] ?? ucwords(str_replace('_', ' ', $acc->name)) }}
                                     </option>
                                 @endforeach

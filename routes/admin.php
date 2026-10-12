@@ -54,13 +54,11 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         '/login-as-user/{id}',
         [\App\Http\Controllers\Admin\AuthController::class, 'loginAsUser']
     )->name('loginAsUser');
-    // Dashboard
-    Route::group(['middleware' => ['check_permission:dashboard']], function () {
-        Route::controller(DashboardController::class)->group(function () {
-            Route::get('/', 'index')->name('dashboard');
-            Route::post('/upload-tinymce-image', 'uploadImage')->name('tinymce.image.upload');
-            Route::post('/upload-tinymce-file', 'uploadFile')->name('tinymce.file.upload');
-        });
+    // Dashboard & Global TinyMCE Uploads
+    Route::controller(DashboardController::class)->group(function () {
+        Route::get('/', 'index')->name('dashboard');
+        Route::post('/upload-tinymce-image', 'uploadImage')->name('tinymce.image.upload');
+        Route::post('/upload-tinymce-file', 'uploadFile')->name('tinymce.file.upload');
     });
 
     // Users

@@ -1,4 +1,5 @@
 @extends('landing.master')
+
 @section('title','Register')
 @push('style-src')
     <script src='https://www.google.com/recaptcha/api.js'></script>

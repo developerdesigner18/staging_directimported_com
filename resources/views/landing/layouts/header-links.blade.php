@@ -2,6 +2,12 @@
 <link rel="shortcut icon" href="{{asset('assets/logo/' . getSetting()->favicon)}}">
 <link rel="icon" href="{{asset('assets/logo/' . getSetting()->favicon)}}">
 
+<!--canonical-->
+<link rel="canonical" href="{{ rtrim(config('app.url'), '/') . '/' . ltrim(request()->path(), '/') }}">
+@if(request()->is('login', 'register', 'forgot-password', 'reset-password/*'))
+    <meta name="robots" content="noindex, follow">
+@endif
+
 <!-- Inject:css -->
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/landing/css/bootstrap.min.css')}}">

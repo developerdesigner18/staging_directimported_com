@@ -273,3 +273,42 @@ function admin_label($page, $key, $default = null)
 
     return $val;
 }
+
+function getFirstAccessibleAdminRoute($user = null)
+{
+    if (!$user) {
+        $user = auth('admin')->user() ?? auth('employee')->user();
+    }
+
+    if (!$user) {
+        return null;
+    }
+
+    $isAdmin = ($user instanceof \App\Models\Admin) || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
+    if ($isAdmin || $user->can('dashboard')) {
+        return 'admin.dashboard';
+    }
+
+    $permissionRouteMap = [
+        'cars' => 'admin.car.index',
+        'services' => 'admin.service.index',
+        'contact_requests' => 'admin.contact_requests.index',
+        'about_us' => 'admin.home_section.edit',
+        'blogs' => 'admin.blogs.general',
+        'users' => 'admin.user.index',
+        'employee' => 'admin.employee.index',
+        'gallery' => 'admin.gallery.index',
+        'slider' => 'admin.slider.index',
+        'manage_information' => 'admin.rental-policies.index',
+        'emails' => 'admin.email.index',
+        'system_settings' => 'admin.system.settings',
+    ];
+
+    foreach ($permissionRouteMap as $permission => $routeName) {
+        if ($user->can($permission)) {
+            return $routeName;
+        }
+    }
+
+    return null;
+}

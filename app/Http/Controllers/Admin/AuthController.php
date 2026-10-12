@@ -59,7 +59,9 @@ class AuthController extends Controller
 
         if (Auth::guard('employee')->attempt($credentials, $rememberToken)) {
             $request->session()->regenerate();
-            return redirect()->route('admin.dashboard')->with('success', 'Login successful!');
+            $employee = Auth::guard('employee')->user();
+            $targetRoute = getFirstAccessibleAdminRoute($employee) ?? 'admin.dashboard';
+            return redirect()->route($targetRoute)->with('success', 'Login successful!');
         }
 
         return redirect()->back()

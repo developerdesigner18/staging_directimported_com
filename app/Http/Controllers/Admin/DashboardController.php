@@ -17,10 +17,21 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $user = auth('admin')->user() ?? auth('employee')->user();
+        $isAdmin = auth('admin')->check() || ($user && method_exists($user, 'hasRole') && $user->hasRole('admin'));
+
+        if (!$isAdmin && $user && !$user->can('dashboard')) {
+            $fallbackRoute = getFirstAccessibleAdminRoute($user);
+            if ($fallbackRoute && $fallbackRoute !== 'admin.dashboard') {
+                return redirect()->route($fallbackRoute);
+            }
+            abort(403, 'Unauthorized Access - You do not have permissions for any module. Please contact an administrator.');
+        }
+
         $totalCars = Car::all()->count();
         $totalUsers = User::all()->count();
         $totalBooking = Booking::all()->count();
-        return view('admin.dashboard.index',compact('totalCars','totalUsers', 'totalBooking'));
+        return view('admin.dashboard.index', compact('totalCars', 'totalUsers', 'totalBooking'));
     }
 
     public function uploadImage(Request $request)

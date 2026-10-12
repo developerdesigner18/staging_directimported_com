@@ -26,7 +26,8 @@ class RedirectIfAuthenticated extends MiddlewareRedirectIfAuthenticated
                         return redirect()->route('admin.dashboard');
                         break;
                     case 'employee':
-                        return redirect()->route('admin.dashboard');
+                        $targetRoute = getFirstAccessibleAdminRoute(Auth::guard('employee')->user()) ?? 'admin.dashboard';
+                        return redirect()->route($targetRoute);
                         break;
                     default:
                         return redirect()->route('landing');

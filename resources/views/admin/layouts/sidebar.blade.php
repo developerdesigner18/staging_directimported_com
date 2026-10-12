@@ -1,12 +1,13 @@
 @php
     $user = Auth::guard('admin')->user() ?? Auth::guard('employee')->user();
     $isAdmin = Auth::guard('admin')->check() || ($user && method_exists($user, 'hasRole') && $user->hasRole('admin'));
+    $homeRoute = getFirstAccessibleAdminRoute($user) ?? 'admin.dashboard';
 @endphp
 <div class="app-menu navbar-menu">
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="{{route('admin.dashboard')}}" class="logo logo-dark">
+        <a href="{{route($homeRoute)}}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin dark logo" height="20"
                     width="200">
@@ -17,7 +18,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="{{route('admin.dashboard')}}" class="logo logo-light">
+        <a href="{{route($homeRoute)}}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{asset('assets/logo/' . getSetting()->admin_logo)}}" alt="admin light logo" height="20"
                     width="200">
