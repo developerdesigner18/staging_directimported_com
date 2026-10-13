@@ -63,6 +63,7 @@
                                 <option value="">Select Category</option>
                                 <option value="general">General Blogs Management</option>
                                 <option value="import_regulation">Import Regulation Blogs Management</option>
+                                <option value="unicorn_cars">Unicorn Cars Blogs Management</option>
                             </select>
                             <label id="category-error" class="text-danger error" style="display: none"></label>
                         </div>
@@ -200,6 +201,8 @@
                                 var selectedCat = $('#addCategory').val();
                                 if (selectedCat === 'import_regulation') {
                                     window.location.href = "{{ route('admin.blogs.import_regulation') }}";
+                                } else if (selectedCat === 'unicorn_cars') {
+                                    window.location.href = "{{ route('admin.blogs.unicorn_cars') }}";
                                 } else {
                                     window.location.href = "{{ route('admin.blogs.general') }}";
                                 }

@@ -178,6 +178,11 @@
                                         class="nav-link @if(request()->routeIs('admin.blogs.import_regulation')) active @endif"
                                         data-key="t-level-1.1">{{ admin_label('sidebar', 'import_regulation_blogs', 'Import Regulation Blogs') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.blogs.unicorn_cars') }}"
+                                        class="nav-link @if(request()->routeIs('admin.blogs.unicorn_cars')) active @endif"
+                                        data-key="t-level-1.1">{{ admin_label('sidebar', 'unicorn_cars_blogs', 'Unicorn Cars Blogs') }}</a>
+                                </li>
 
                             </ul>
                         </div>

@@ -29,6 +29,13 @@ class BlogController extends Controller
         return view('admin.blog.index', compact('category', 'pageTitle'));
     }
 
+    public function unicornCars()
+    {
+        $category = 'unicorn_cars';
+        $pageTitle = 'Unicorn Cars Blogs Management';
+        return view('admin.blog.index', compact('category', 'pageTitle'));
+    }
+
     public function create()
     {
         $pageTitle = 'Add Custom Blog';
@@ -44,6 +51,8 @@ class BlogController extends Controller
                 $q->whereIn('category', ['general', 'General', ''])
                     ->orWhereNull('category');
             })->latest();
+        } elseif (in_array(strtolower($category), ['unicorn_cars', 'unicorn cars'])) {
+            $query = BlogPost::whereIn('category', ['unicorn_cars', 'Unicorn Cars', 'unicorn cars'])->latest();
         } else {
             $query = BlogPost::whereIn('category', ['import_regulation', 'Import Regulation', 'import regulation'])->latest();
         }
@@ -101,7 +110,7 @@ class BlogController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'category' => 'required|in:general,import_regulation,General,Import Regulation',
+            'category' => 'required|in:general,import_regulation,unicorn_cars,General,Import Regulation,Unicorn Cars',
             'description' => 'nullable|string',
             'content' => 'required|string',
             'featured_image' => 'required|image',
@@ -157,7 +166,7 @@ class BlogController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:blog_posts,id',
             'title' => 'required|string|max:255',
-            'category' => 'required|in:general,import_regulation,General,Import Regulation',
+            'category' => 'required|in:general,import_regulation,unicorn_cars,General,Import Regulation,Unicorn Cars',
             'description' => 'nullable|string',
             'content' => 'required|string',
             'featured_image' => 'nullable|image',

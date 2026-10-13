@@ -51,6 +51,7 @@
                             <select class="form-select" id="editCategory" name="category">
                                 <option value="general">General Blogs Management</option>
                                 <option value="import_regulation">Import Regulation Blogs Management</option>
+                                <option value="unicorn_cars">Unicorn Cars Blogs Management</option>
                             </select>
                             <label id="category-error" class="text-danger error" style="display: none"></label>
                         </div>
@@ -308,6 +309,8 @@
                         var cat = blog.category ? blog.category.toLowerCase() : 'general';
                         if (cat.includes('import')) {
                             $('#editCategory').val('import_regulation');
+                        } else if (cat.includes('unicorn')) {
+                            $('#editCategory').val('unicorn_cars');
                         } else {
                             $('#editCategory').val('general');
                         }

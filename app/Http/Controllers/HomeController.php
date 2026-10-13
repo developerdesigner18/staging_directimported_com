@@ -249,6 +249,8 @@ class HomeController extends Controller
                 $q->whereIn('category', ['general', 'General', ''])
                     ->orWhereNull('category');
             });
+        } elseif (in_array(strtolower($category), ['unicorn_cars', 'unicorn cars'])) {
+            $query->whereIn('category', ['unicorn_cars', 'Unicorn Cars', 'unicorn cars']);
         } else {
             $query->whereIn('category', ['import_regulation', 'Import Regulation', 'import regulation', 'regulations']);
         }

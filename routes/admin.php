@@ -274,6 +274,7 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         Route::controller(BlogController::class)->prefix('blogs')->name('blogs.')->group(function () {
             Route::get('/general', 'general')->name('general');
             Route::get('/import-regulation', 'importRegulation')->name('import_regulation');
+            Route::get('/unicorn-cars', 'unicornCars')->name('unicorn_cars');
             Route::get('/create', 'create')->name('create');
             Route::get('/list', 'list')->name('list');
             Route::post('/store', 'store')->name('store');

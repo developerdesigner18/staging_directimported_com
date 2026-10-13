@@ -8,7 +8,8 @@
 <article class="blog-card" onclick="window.location.href='{{ $detailUrl }}';">
     <!-- Uniform Image Box with Hover Zoom & Link -->
     <a href="{{ $detailUrl }}" class="blog-card-img-wrap" onclick="event.stopPropagation();">
-        <img src="{{ $image }}" alt="{{ $post->title }}" class="blog-card-img" loading="lazy" onerror="this.onerror=null;this.src='{{ asset('assets/landing/images/blog/blog-no-sidebar.jpg') }}';">
+        <img src="{{ $image }}" alt="{{ $post->title }}" class="blog-card-img" loading="lazy"
+            onerror="this.onerror=null;this.src='{{ asset('assets/landing/images/blog/blog-no-sidebar.jpg') }}';">
         <span class="blog-card-badge">
             {{ $badge }}
         </span>
