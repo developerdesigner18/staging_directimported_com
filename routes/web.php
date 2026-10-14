@@ -36,6 +36,8 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/blog', 'blog')->name('blog');
     Route::get('/blog/{slug}', 'blogDetail')->name('blog.detail');
     Route::get('/faqs', 'faqs')->name('faqs');
+    Route::get('/shipping-and-logistics', 'shippingAndLogistics')->name('shipping.and.logistics');
+    Route::get('/vehicle-inspection-info', 'vehicleInspectionInfo')->name('vehicle.inspection.info');
 });
 Route::controller(ServiceController::class)->prefix('services')->name('services.')->group(function () {
     Route::get('/', 'index')->name('view');

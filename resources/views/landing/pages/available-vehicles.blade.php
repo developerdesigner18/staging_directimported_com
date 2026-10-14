@@ -27,6 +27,12 @@
             width: 100%;
         }
 
+        /* Reset container width inside header so nav links are not squeezed */
+        #header .container {
+            max-width: 1230px !important;
+            width: 100% !important;
+        }
+
         .search-card {
             margin-top: 20px;
         }
@@ -548,6 +554,7 @@
             margin-bottom: 15px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 15px;
+            align-items: center;
         }
 
         .vehicle-title {
@@ -769,27 +776,18 @@
             border: 1px solid var(--border-color);
         }
 
-        @media (max-width: 800px) {
+        /* ================================================
+                                   TABLET — max 768px
+                                   ================================================ */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+
+            /* Search form: single column on tablet */
             .search-grid {
                 grid-template-columns: 1fr;
-            }
-
-            .listing-card {
-                flex-direction: column;
-            }
-
-            .gallery {
-                flex: none;
-                width: 100%;
-            }
-
-            .price-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .price-slider-container {
-                width: 100%;
             }
 
             .search-footer {
@@ -803,12 +801,226 @@
                 width: 100%;
             }
 
+            .price-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .price-slider-container {
+                width: 100%;
+            }
+
+            /* Listing card: stack vertically on tablet */
+            .listing-card {
+                flex-direction: column;
+                padding: 16px;
+                gap: 16px;
+            }
+
+            .gallery {
+                flex: none;
+                width: 100%;
+            }
+
+            .main-img-anchor {
+                height: 220px;
+            }
+
+            .thumbnail-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .thumb-img {
+                height: 52px;
+            }
+
+            /* Specs: 4 columns on tablet — gives 4+3 rows (clean) */
+            .specs-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+                margin-bottom: 18px;
+            }
+
+            .spec-label {
+                font-size: 0.72rem;
+                height: auto;
+                margin-bottom: 4px;
+            }
+
+            .spec-value {
+                font-size: 0.85rem;
+            }
+
+            /* Action area: price on top, buttons fill row */
+            .action-area {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                min-height: auto;
+            }
+
+            .buttons-section {
+                width: 100%;
+            }
+
+            .btn-quote {
+                flex: 1;
+            }
+
+            /* Controls bar: stack display + pagination vertically, centered */
             .controls-bar {
                 flex-direction: column;
-                gap: 10px;
-                align-items: stretch;
+                gap: 12px;
+                align-items: center;
+                padding: 14px 12px;
+            }
+
+            .display-controls {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .display-select {
+                min-width: 70px;
+                padding: 6px 10px;
+                font-size: 0.88rem;
+            }
+
+            /* Pagination: center-align on tablet */
+            .pagination-wrapper {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .pagination-wrapper .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 4px;
+            }
+
+            .pagination-wrapper .page-item .page-link {
+                min-width: 34px;
+                height: 34px;
+                font-size: 0.82rem;
+                padding: 0 8px;
+            }
+
+            /* Evaluation row */
+            .evaluation-row {
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: center;
             }
         }
+
+        /* ================================================
+                                   MOBILE — max 480px
+                                   ================================================ */
+        @media (max-width: 480px) {
+
+            .search-header {
+                padding: 12px 16px;
+            }
+
+            .search-body {
+                padding: 16px;
+                gap: 14px;
+            }
+
+            .search-grid {
+                gap: 14px;
+            }
+
+            .search-grid > div:empty {
+                display: none;
+            }
+
+            .btn-quote .btn-text-main {
+
+                font-size: 12px;
+
+            }
+
+            .listing-card {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .main-img-anchor {
+                height: 180px;
+            }
+
+            .thumbnail-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .thumb-img {
+                height: 46px;
+            }
+
+            .vehicle-title {
+                font-size: 1.05rem;
+            }
+
+            .status-badge {
+                font-size: 0.75rem;
+                padding: 4px 10px;
+            }
+
+            .price-value {
+                font-size: 1.7rem;
+            }
+
+            /* Specs: keep 4 columns even on small phones (4+3) */
+            .specs-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 5px;
+            }
+
+            .spec-label {
+                font-size: 0.65rem;
+            }
+
+            .spec-value {
+                font-size: 0.75rem;
+            }
+
+            .fine-print {
+                font-size: 0.78rem;
+            }
+
+            /* Form group: label on top row, input on next row */
+            .form-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+                width: 100%;
+                min-width: 0;
+            }
+
+            .form-group label {
+                width: auto;
+                font-size: 0.88rem;
+            }
+
+            .form-group input[type="text"],
+            .form-group select {
+                width: 100%;
+                min-width: 0;
+                box-sizing: border-box;
+            }
+
+            .range-group {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .range-group select {
+                min-width: 0;
+                box-sizing: border-box;
+            }
+        }
+
 
         #listings-container.is-loading {
             opacity: 0.5;
@@ -1208,12 +1420,12 @@
             const closeTabBtn = document.createElement('div');
             closeTabBtn.className = 'close-dropdown-tab';
             closeTabBtn.innerHTML = `
-                                                                <span>Close Search</span>
-                                                                <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
-                                                                    <polyline points="6 7 12 13 18 7"></polyline>
-                                                                    <polyline points="6 13 12 19 18 13"></polyline>
-                                                                </svg>
-                                                            `;
+                                                                    <span>Close Search</span>
+                                                                    <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+                                                                        <polyline points="6 7 12 13 18 7"></polyline>
+                                                                        <polyline points="6 13 12 19 18 13"></polyline>
+                                                                    </svg>
+                                                                `;
             closeTabBtn.onclick = closeDropdown;
             dropdownPanel.appendChild(closeTabBtn);
         }

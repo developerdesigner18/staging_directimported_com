@@ -23,6 +23,7 @@ config.bat
 .env
 /public/uploads
 /public/assets/
-.gitignore
 .vscode/
+/public_
+public_/
 AI_PROMPT_FOR_SCRAPING.md

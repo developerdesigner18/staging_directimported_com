@@ -1,268 +1,130 @@
-{{--<div class="sk-ww-google-reviews" data-embed-id="25653006"></div>--}}
-{{--
-<script src="https://widgets.sociablekit.com/google-reviews/widget.js" defer></script>--}}
-<!-- Google Reviews Section Starts-->
+<footer class="site-footer">
+    <div class="container">
 
-<!-- Google Reviews Section Ends-->
-<footer class="rid-footer-1">
+        <div class="footer-grid">
 
-    <div class="footer-top">
-        <div class="container">
-            <div class="row justify-content-between">
-                <!-- Company Info & Social -->
-                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                    <a href="{{route('landing')}}" class="d-inline-block mb-3">
-                        <img src="{{asset('assets/logo/' . getSetting()->footer_logo)}}" alt="IAS JAPAN Footer Logo"
-                            style="max-height: 60px;" loading="lazy">
+            <!-- Column 1: Brand & Bio -->
+            <div class="footer-col--brand">
+                <div class="footer-logo">
+                    <a href="{{ route('landing') }}">
+                        <img src="{{ getSetting()->logo ? asset('assets/logo/' . getSetting()->logo) : asset('assets/logo/direct-imported-logo-red.png') }}"
+                            alt="Direct Imported Logo">
                     </a>
-                    <p class="rid-footer-info mb-4">
-                        By 2003, we identified a critical need for accessible data and Auction Services and shifted our
-                        focus to provide professional English-language auction and export services for JDM Cars. Today,
-                        we proudly serve all English-speaking nations and specialize in Australia and USA, by
-                        streamlining the sourcing of high-quality vehicles directly from Japan.
-                    </p>
-                    <p class="rid-footer-info mb-4">
-                        With over 25 years of specialized expertise And Mechanical Qualifications, we remain dedicated
-                        to helping our clients secure premium inventory with absolute transparency and professional
-                        integrity.
-                    </p>
-
-                    <div class="social-icon-box">
-                        <a href="https://wa.me/818033441177" target="_blank" aria-label="WhatsApp">
-                            <i class='bxl bx-whatsapp'></i>
-                        </a>
-                        <a href="#" target="_blank" aria-label="Facebook">
-                            <i class='bxl bx-facebook'></i>
-                        </a>
-                        <a href="#" target="_blank" aria-label="Instagram">
-                            <i class='bxl bx-instagram'></i>
-                        </a>
-                        <a href="#" target="_blank" aria-label="YouTube">
-                            <i class='bxl bx-youtube'></i>
-                        </a>
-                    </div>
                 </div>
+                <div class="footer-bio">
+                    <p class="footer-bio-text">By 2003, we identified a critical need for accessible data and auction
+                        services and shifted our
+                        focus to provide professional English-language auction and export services for JDM cars. Today,
+                        we proudly serve all English-speaking nations and specialize in Australia and the USA by
+                        streamlining the sourcing of high-quality vehicles directly from Japan.</p>
+                    <p class="footer-bio-text">With over 25 years of specialized expertise and mechanical
+                        qualifications, we remain dedicated to
+                        helping our clients secure premium inventory with absolute transparency and professional
+                        integrity.</p>
+                </div>
+            </div>
 
-                <!-- Quick Links -->
-                <div class="col-lg-2 col-md-6 mb-4 mb-md-0 px-lg-4">
-                    <h4 class="footer-title">Quick Links</h4>
-                    <ul class="footer-list">
-                        <li><a href="{{ route('landing') }}#auction">Auction</a></li>
-                        <li><a href="{{ route('available.vehicles') }}">Available Cars</a></li>
-                        <li><a href="{{ route('blog') }}">Blog</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                        <li><a href="{{ route('faqs') }}">FAQs</a></li>
-                        <li><a href="{{ route('about.us') }}">About us</a></li>
-                        <li><a href="{{ route('rental.policies') }}">Terms & Conditions</a></li>
+            <!-- Column 2: Company -->
+            <div class="footer-col--company">
+                <h3 class="brand-heading-uppercase footer-heading">Company</h3>
+                <nav aria-label="Company links">
+                    <ul class="footer-links">
+                        <li><a href="{{ route('about.us') }}" class="footer-link">About us</a></li>
+                        <li><a href="{{ route('services.view') }}" class="footer-link">What we offer</a></li>
+                        <li><a href="{{ route('faqs') }}" class="footer-link">FAQ</a></li>
+                        <li><a href="{{ route('contact') }}" class="footer-link">Contact Us</a></li>
+                        <li><a href="{{ route('blog') }}" class="footer-link">Blogs</a></li>
                     </ul>
-                </div>
+                </nav>
+            </div>
 
-                <!-- Business Hours -->
-                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                    <h4 class="footer-title">Business Hours</h4>
-                    <div class="bh-table">
-                        <div class="bh-row-item">
-                            <span class="day">Monday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Tuesday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Wednesday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Thursday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Friday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Saturday</span>
-                            <span class="status">OPEN</span>
-                        </div>
-                        <div class="bh-row-item">
-                            <span class="day">Sunday</span>
-                            <span class="status text-danger">CLOSED</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Column 3: Services -->
+            <div class="footer-col--services">
+                <h3 class="brand-heading-uppercase footer-heading">Services</h3>
+                <nav aria-label="Services links">
+                    <ul class="footer-links">
+                        <li><a href="{{ route('available.vehicles') }}" class="footer-link">Available Vehicles</a></li>
+                        <li><a href="{{ route('blog') }}" class="footer-link">How to Import</a></li>
+                        <li><a href="{{ route('vehicle.inspection.info') }}" class="footer-link">Vehicle Inspection
+                                Info</a></li>
+                        <li><a href="{{ route('shipping.and.logistics') }}" class="footer-link">Shipping and
+                                Logistics</a></li>
+                    </ul>
+                </nav>
+            </div>
 
-                <!-- Contact Us -->
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="footer-title">Contact us</h4>
-                    <div class="contact-list">
-                        <div class="contact-item mb-3">
-                            <i class='bx bxs-envelope'></i>
-                            <a href="mailto:IAS@directimported.com">sales@directimported.com</a>
-                        </div>
-                        <div class="contact-item mb-3">
-                            <i class='bxl bx-whatsapp'></i>
-                            <a href="https://wa.me/818033441177" target="_blank">Whatsapp +81 8033441177</a>
-                        </div>
-                        <div class="contact-item mb-3">
-                            <i class='bx bx-globe'></i>
-                            <a href="https://www.directimported.com" target="_blank">www.directimported.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class='bx bxs-location-plus'></i>
-                            <span>Osaka, Japan</span>
-                        </div>
-                    </div>
+            <!-- Column 4: Policies -->
+            <div class="footer-col--policies">
+                <h3 class="brand-heading-uppercase footer-heading">Policies</h3>
+                <nav aria-label="Policy links">
+                    <ul class="footer-links">
+                        <li><a href="{{ route('rental.policies') }}" class="footer-link">Terms and Conditions</a></li>
+                        <li><a href="javascript:void(0);" class="footer-link">Privacy policy</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Column 5: Contact Us & Socials -->
+            <div class="footer-col--contact">
+                <h3 class="brand-heading-uppercase footer-heading">Contact Us</h3>
+                <ul class="contact-list">
+                    <li class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:sales@directimported.com" class="contact-link break-all">sales<span
+                                style="display:none;">bot-trap</span>@directimported.com</a>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <a href="https://wa.me/818033441177" target="_blank" class="contact-link">+81 8033441177</a>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <a href="https://www.directimported.com" target="_blank"
+                            class="contact-link">www.directimported.com</a>
+                    </li>
+                    <li class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="contact-text">Osaka, Japan</span>
+                    </li>
+                </ul>
+
+                <div class="social-icons social-icons--footer">
+                    <a href="https://wa.me/818033441177" target="_blank" aria-label="WhatsApp"
+                        class="social-icon social-icon--md"><i class="fab fa-whatsapp"></i></a>
+                    <a href="{{ getSetting()->facebook_url }}" target="_blank" aria-label="Facebook"
+                        class="social-icon social-icon--md"><i class="fab fa-facebook-f"></i></a>
+                    <a href="{{ getSetting()->instagram_url }}" target="_blank" aria-label="Instagram"
+                        class="social-icon social-icon--md"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ getSetting()->youtube_url }}" target="_blank" aria-label="YouTube"
+                        class="social-icon social-icon--md"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom__logo">
+                <img src="{{ asset('assets/logo/footer_logo_1776338594_69e0c6a2f0279.webp') }}" alt="IAS Japan Logo">
+            </div>
+
+            <p class="footer-copy">
+                Copyright &copy; International Auto Select Japan {{ date('Y') }}. All rights reserved.
+            </p>
+
+            <div class="hours">
+                <span class="brand-heading-uppercase hours__label">HOURS:</span>
+                <div class="hours__item">
+                    <span>Mon - Sat</span>
+                    <span class="badge badge--open">OPEN</span>
+                </div>
+                <span class="hours__divider"></span>
+                <div class="hours__item">
+                    <span>Sunday</span>
+                    <span class="badge badge--closed">CLOSED</span>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container footer-bottom">
-        <hr class="footer-divider">
-        <div class="row">
-            <div class="col-12 text-center copyright-text py-4">
-                <p class="mb-0">Copyright © International Auto Select Japan 2026.</p>
-            </div>
-        </div>
     </div>
 </footer>
-
-<style>
-    .rid-footer-1 {
-        background: radial-gradient(circle at center, #0a3366 0%, #000b21 100%);
-        color: #ffffff;
-        padding-top: 80px;
-        font-family: 'Poppins', sans-serif;
-    }
-
-    .footer-top {
-        padding-bottom: 60px;
-    }
-
-    .rid-footer-info {
-        font-size: 14px;
-        line-height: 1.7;
-        color: #f1f1f1;
-        font-weight: 300;
-        margin-top: 20px;
-        max-width: 330px;
-        /* Matching the narrow column in image */
-        text-align: left;
-    }
-
-    .footer-title {
-        font-size: 19px;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 40px;
-        /* Increased space below headings */
-        letter-spacing: 0.5px;
-    }
-
-    .footer-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .footer-list li {
-        margin-bottom: 15px;
-    }
-
-    .footer-list li a {
-        color: #f1f1f1;
-        text-decoration: none;
-        font-size: 15px;
-        transition: 0.3s;
-        font-weight: 400;
-        opacity: 0.85;
-    }
-
-    .footer-list li a:hover {
-        color: #ffffff;
-        opacity: 1;
-        padding-left: 5px;
-    }
-
-    .bh-table {
-        min-width: 200px;
-        max-width: 220px;
-    }
-
-    .bh-row-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        font-size: 15px;
-    }
-
-    .bh-row-item .day {
-        color: #f1f1f1;
-        opacity: 0.85;
-    }
-
-    .bh-row-item .status {
-        color: #ffffff;
-        font-weight: 500;
-        text-align: right;
-    }
-
-    .contact-list .contact-item {
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-    }
-
-    .contact-list .contact-item i {
-        margin-right: 15px;
-        font-size: 18px;
-        color: #ffffff;
-    }
-
-    .contact-list .contact-item a,
-    .contact-list .contact-item span {
-        color: #f1f1f1;
-        text-decoration: none;
-        opacity: 0.85;
-    }
-
-    .contact-list .contact-item a:hover {
-        opacity: 1;
-        color: #ffffff;
-    }
-
-    .social-icon-box {
-        display: flex;
-        gap: 25px;
-        margin-top: 30px;
-    }
-
-    .social-icon-box a {
-        color: #ffffff;
-        font-size: 24px;
-        transition: 0.3s;
-        opacity: 0.9;
-    }
-
-    .social-icon-box a:hover {
-        transform: translateY(-5px);
-        opacity: 1;
-    }
-
-    .footer-divider {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-bottom: 20px;
-    }
-
-    .copyright-text p {
-        font-size: 14px;
-        color: #f1f1f1;
-        opacity: 0.8;
-        font-weight: 300;
-    }
-
-    .text-danger {
-        color: #ff5252 !important;
-        opacity: 1 !important;
-    }
-</style>

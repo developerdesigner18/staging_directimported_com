@@ -52,222 +52,25 @@
             /* Others */
             --transition: 0.3s;
             --footer-text-color: #8c8d8f;
+
+            /* Header & Footer Variables - from Master */
+            --navy-900: #020813;
+            --navy-800: #0c213d;
+            --theme-red: var(--primary-hover-color, #de2b43);
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --font-body: var(--body-font, 'Poppins', sans-serif);
+            --font-heading: var(--title-font, 'Poppins', sans-serif);
         }
-
-        /*#loader-overlay {*/
-        /*    display: none; !* hidden by default *!*/
-        /*    position: fixed;*/
-        /*    top: 0;*/
-        /*    left: 0;*/
-        /*    width: 100vw;*/
-        /*    height: 100vh;*/
-        /*    background: rgba(0,0,0,0.4); !* semi-transparent overlay *!*/
-        /*    z-index: 9999;*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*    align-items: center;*/
-        /*}*/
-        .rid-social-links .social-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            font-size: 24px;
-            color: white;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            padding: 0px 0px 5px 0px;
-        }
-
-        .rid-social-links .social-icon:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Facebook */
-        .rid-social-links .social-icon.facebook {
-            background-color: #3b5998;
-        }
-
-        /* Instagram */
-        .rid-social-links .social-icon.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        /* YouTube */
-        .rid-social-links .social-icon.youtube {
-            background-color: #ff0000;
-        }
-
-        /* Optional: Add margin between icons */
-        .rid-social-links .list-inline-item:not(:last-child) {
-            margin-right: 15px;
-        }
-
-        .rid-menubar ul li a {
-            font-size: 15px !important;
-            margin-right: 35px !important;
-            white-space: nowrap !important;
-        }
-
-        .rid-menubar ul li:last-child a {
-            margin-right: 0 !important;
-        }
-
-        .logo-container,
-        .col-lg-3.col-md-8.col-sm-8.col-6.logo-container {
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-
-        .logo {
-            padding: 0 !important;
-        }
-
-        .rid-menubar .dropdown-menu li a {
-            font-size: 16px !important;
-            color: #050B20 !important;
-            font-weight: 500 !important;
-        }
-
-        .loader-container {
-            display: flex;
-            /* visible by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        /*     .progress-container { */
-        /*         display: none; */
-        /*     } */
-        .sticky_header {
-            position: fixed;
-            width: 100%;
-            z-index: 9999;
-            top: 0;
-            background-color: white;
-            box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Header Responsiveness Fixes for Small to Medium Screens */
-        @media (max-width: 991px) {
-            .rid-header-top {
-                display: none !important;
-            }
-
-            .rid-header-style-1 .rid-header-bottom [class*="col-"] {
-                width: auto !important;
-                flex: 1 !important;
-            }
-
-            .rid-header-bottom .col-lg-2 {
-                max-width: 60% !important;
-                flex: 0 0 60% !important;
-                text-align: left !important;
-            }
-
-            .rid-header-bottom .col-lg-10 {
-                max-width: 40% !important;
-                flex: 0 0 40% !important;
-                display: flex !important;
-                justify-content: flex-end !important;
-                align-items: center !important;
-            }
-
-            .rid-header-bottom [class*="col-8"] {
-                margin-top: 0 !important;
-            }
-
-            .rid-header-style-1 .rid-header-bottom {
-                padding: 10px 15px !important;
-            }
-
-            .logo {
-                margin-left: 0 !important;
-                margin-right: auto !important;
-                max-width: 156px !important;
-                padding: 0 !important;
-            }
-
-            .rid-header-bottom .rid-offcanvas-btn {
-                display: block !important;
-                margin: 0 !important;
-            }
-
-            .rid-header-bottom .rid-offcanvas-btn span {
-                background-color: #050b20 !important;
-            }
-        }
-
-        /* Mobile Offcanvas Menu Design Fixes */
-        .rid-offcanvas-sidebar {
-            background-color: #121418 !important;
-        }
-
-        .rid-offcanvas-sidebar .rid-menu ul li a {
-            color: rgba(255, 255, 255, 0.75) !important;
-            font-size: 20px !important;
-            font-weight: 500 !important;
-            text-decoration: none !important;
-            transition: all 0.2s ease;
-        }
-
-        .rid-offcanvas-sidebar .rid-menu ul li a:hover,
-        .rid-offcanvas-sidebar .rid-menu ul li a.active {
-            color: #ffffff !important;
-            font-weight: 700 !important;
-            opacity: 1 !important;
-        }
-
-        .rid-offcanvas-sidebar .rid-menu ul li {
-            padding: 12px 10px !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .rid-offcanvas-sidebar .rid-social-links .social-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff !important;
-            font-size: 20px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            padding: 0px 0px 5px 0px;
-        }
-
-        .rid-offcanvas-sidebar .rid-social-links .social-icon.facebook {
-            background-color: #3b5998;
-        }
-
-        .rid-offcanvas-sidebar .rid-social-links .social-icon.instagram {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-        }
-
-        .rid-offcanvas-sidebar .rid-social-links .social-icon.youtube {
-            background-color: #ff0000;
-        }
-
-        .rid-offcanvas-sidebar .rid-social-links .list-inline-item:not(:last-child) {
-            margin-right: 15px;
-        }
-
 
         /* Full Page Loader */
         .loader-container {
             display: flex;
-            /* visible by default */
             position: fixed;
             top: 0;
             left: 0;
@@ -277,22 +80,11 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-        }
-
-        /* Sticky header */
-        .sticky_header {
-            position: fixed;
-            width: 100%;
-            z-index: 9999;
-            top: 0;
-            background-color: white;
-            box-shadow: 0 4px 6px -2px rgba(0, 0, 0, 0.2);
         }
 
         /* AJAX Loader */
         .progress-container {
             display: flex;
-            /* keep flex always */
             justify-content: center;
             align-items: center;
             position: fixed;
@@ -302,7 +94,6 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.2);
             z-index: 10000;
-            /* higher than header */
             visibility: hidden;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -363,39 +154,6 @@
                 background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
             }
         }
-
-        .quick-links-style {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .quick-links-style li {
-            margin-bottom: 1px;
-
-        }
-
-        .quick-links-style li a {
-            color: #ffffff;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.3s ease;
-        }
-
-        .quick-links-style li a i {
-            font-size: 16px;
-            color: #9aa5b1;
-            transition: 0.3s ease;
-        }
-
-        .quick-links-style li a:hover i {
-            transform: translateX(4px);
-        }
-
-        .quick-links-style li a:hover {
-            opacity: 0.85;
-        }
     </style>
 </head>
 
@@ -421,84 +179,6 @@
     @include('landing.layouts.footer')
     <!-- Footer Section End -->
 
-    <div class="rid-offcanvas-sidebar">
-
-        <button class="rid-offcanvas-btn" aria-label="Main Menu Icon">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-        <!--        -->
-        <a href="{{route('landing')}}">
-            <img src="{{asset('assets/logo/' . getSetting()->logo)}}" alt="ridexo footer logo" loading="lazy">
-        </a>
-
-        <!--   Rid Menu     -->
-        <div class="rid-menu d-flex justify-content-center text-center">
-            <ul>
-                <li><a class="active home" style="color:white !important;" href="{{route('landing')}}">Home</a></li>
-                <li><a href="{{ route('about.us') }}">About Us</a></li>
-                <li><a href="{{route('contact')}}">Contact</a></li>
-                <li><a href="{{ route('car') }}">Auction Access</a></li>
-                <li><a href="{{ route('available.vehicles') }}">Available Vehicles</a></li>
-                <li><a href="{{ route('services.view') }}">Services</a></li>
-                <li><a href="{{ route('blog') }}">Blog</a></li>
-                {{-- <li class="dropdown">
-                    <a href="javascript:void (0);" class="dropdown-toggle" data-bs-toggle="dropdown">Bookings</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('my.bookings') }}">Request a Quote</a></li>
-                    </ul>
-                </li> --}}
-
-                @if(!Auth::guard('web')->check())
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                    <li><a href="{{ route('login') }}">Log in</a></li>
-                    <li><a href="{{route('faqs')}}">FAQs</a></li>
-                @endif
-
-                {{-- <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">More</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('rental.policies') }}">Rental Policies</a></li>
-                        <li><a href="{{ route('licence.requirement') }}">Licence Requirement</a></li>
-                        <li><a href="{{ route('about.our.cars') }}">About Our Cars</a></li>
-                        <li><a href="{{ route('useful.links') }}">Useful Links</a></li>
-                        <li><a href="{{ route('japan.law') }}">Car Laws in Japan</a></li>
-                        <li><a href="{{ route('ride.japan.law') }}">How to Ride Safe in Japan</a></li>
-                    </ul>
-                </li> --}}
-                @if (Auth::check())
-
-                    <li><a href="{{route('logout')}}">Logout</a></li>
-                @endif
-            </ul>
-        </div>
-        <!-- Social Icons inside offcanvas menu for mobile/small screen -->
-        <div class="rid-social-links d-flex justify-content-center mt-4">
-            <ul class="list-inline d-flex mb-0">
-                <li class="list-inline-item mx-1">
-                    <a href="{{ getSetting()->facebook_url }}" target="_blank" class="social-icon facebook">
-                        <i class="bxl bx-facebook"></i>
-                    </a>
-                </li>
-                <li class="list-inline-item mx-1">
-                    <a href="{{ getSetting()->instagram_url }}" target="_blank" class="social-icon instagram">
-                        <i class="bxl bx-instagram"></i>
-                    </a>
-                </li>
-                <li class="list-inline-item mx-1">
-                    <a href="{{ getSetting()->youtube_url }}" target="_blank" class="social-icon youtube">
-                        <i class="bxl bx-youtube"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    {{--<div id="loader-overlay">--}}
-        {{-- <lottie-player--}} {{-- src="{{ asset('js/loaded.json') }}" --}} {{-- background="transparent" --}} {{--
-            speed="1" --}} {{-- style="width:150px; height:150px;" --}} {{-- loop--}} {{-- autoplay>--}}
-            {{-- </lottie-player>--}}
-            {{--</div>--}}
     <div id="toTop">
         <i class="bx bx-chevron-up"></i>
     </div>
@@ -512,18 +192,39 @@
     <script !src="">
         $(window).on("scroll", function () {
             if ($(this).scrollTop() > 50) {
-                $(".rid-header-bottom").addClass("sticky_header");
+                $(".navbar").addClass("sticky_header");
             } else {
-                $(".rid-header-bottom").removeClass("sticky_header");
+                $(".navbar").removeClass("sticky_header");
             }
         });
+
         $(window).on("load", function () {
             setTimeout(function () {
                 $(".loader-container").fadeOut("slow");
             }, 1000); // Optional delay
         });
-        document.addEventListener('DOMContentLoaded', function () {
 
+        // Mobile Menu Toggle
+        (function () {
+            var btn = document.getElementById('menuToggle');
+            var menu = document.getElementById('mobileMenu');
+            if (btn && menu) {
+                btn.addEventListener('click', function () {
+                    var open = menu.classList.toggle('is-open');
+                    btn.classList.toggle('is-active', open);
+                    btn.setAttribute('aria-expanded', open);
+                });
+                window.addEventListener('resize', function () {
+                    if (window.innerWidth >= 1024) {
+                        menu.classList.remove('is-open');
+                        btn.classList.remove('is-active');
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
             function updateTokyoTime() {
                 // Options for date display
                 const dateOptions = {
@@ -548,13 +249,19 @@
                 // Get formatted date and time
                 const tokyoDate = now.toLocaleDateString('en-US', dateOptions);
                 const tokyoTime = now.toLocaleTimeString('en-US', timeOptions);
-
-                // Combine date and time for display
                 const fullDateTime = `${tokyoDate}, ${tokyoTime}`;
 
-                // Update both mobile and desktop elements
-                document.getElementById('tokyo-time-mobile').textContent = fullDateTime;
-                document.getElementById('tokyo-time-desktop').textContent = fullDateTime;
+                // Update reference header elements
+                const dateEl = document.getElementById('tokyo-date');
+                const timeEl = document.getElementById('tokyo-time');
+                if (dateEl) dateEl.textContent = tokyoDate;
+                if (timeEl) timeEl.textContent = ', ' + tokyoTime;
+
+                // Update legacy elements if any
+                const mobileEl = document.getElementById('tokyo-time-mobile');
+                const desktopEl = document.getElementById('tokyo-time-desktop');
+                if (mobileEl) mobileEl.textContent = fullDateTime;
+                if (desktopEl) desktopEl.textContent = fullDateTime;
 
                 // Update tooltip with just the time
                 const clockIcons = document.querySelectorAll('.bx-time');

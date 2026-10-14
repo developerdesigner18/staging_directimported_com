@@ -227,6 +227,16 @@ class HomeController extends Controller
         return view('landing.pages.ride-japan-law');
     }
 
+    public function shippingAndLogistics()
+    {
+        return view('landing.pages.shipping-and-logistics');
+    }
+
+    public function vehicleInspectionInfo()
+    {
+        return view('landing.pages.vehicle-inspection-info');
+    }
+
     public function contact()
     {
         return view('landing.pages.contact');

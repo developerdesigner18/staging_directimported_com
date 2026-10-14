@@ -1,6 +1,6 @@
 @extends('landing.master')
 
-@section('title','Register')
+@section('title', 'Register')
 @push('style-src')
     <script src='https://www.google.com/recaptcha/api.js'></script>
 @endpush
@@ -10,6 +10,7 @@
             font-size: 15px !important;
             margin-right: 20px !important;
         }
+
         .auth-section {
             min-height: 100vh;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -29,7 +30,7 @@
 
         .auth-image {
             background: linear-gradient(45deg, rgba(243, 54, 79, 0.9), rgba(243, 54, 79, 0.7)),
-            url("{{asset('assets/logo/back-main.png')}}") center/cover;
+                url("{{asset('assets/logo/back-main.png')}}") center/cover;
             min-height: 700px;
             display: flex;
             align-items: center;
@@ -267,148 +268,116 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="first_name" class="form-label">First Name</label>
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="first_name"
-                                                   name="first_name"
-                                                   value="{{ old('first_name') }}"
-                                                   autocomplete="given-name"
-                                                   autofocus
-                                                   placeholder="First name">
+                                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                                value="{{ old('first_name') }}" autocomplete="given-name" autofocus
+                                                placeholder="First name">
                                             <label id="first_name-error" class="text-danger error" for="first_name"
-                                                   style="display: none"></label>
+                                                style="display: none"></label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="last_name" class="form-label">Last Name</label>
-                                            <input type="text"
-                                                   class="form-control"
-                                                   id="last_name"
-                                                   name="last_name"
-                                                   value="{{ old('last_name') }}"
-                                                   autocomplete="family-name"
-                                                   placeholder="Last name">
+                                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                                value="{{ old('last_name') }}" autocomplete="family-name"
+                                                placeholder="Last name">
                                             <label id="last_name-error" class="text-danger error" for="last_name"
-                                                   style="display: none"></label>
+                                                style="display: none"></label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="reg_email" class="form-label">Email Address</label>
-                                    <input type="email"
-                                           class="form-control"
-                                           id="reg_email"
-                                           name="email"
-                                           value="{{ old('email') }}"
-                                           autocomplete="email"
-                                           placeholder="Enter your email address">
+                                    <input type="email" class="form-control" id="reg_email" name="email"
+                                        value="{{ old('email') }}" autocomplete="email"
+                                        placeholder="Enter your email address">
                                     <label id="reg_email-error" class="text-danger error" for="reg_email"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel"
-                                           class="form-control"
-                                           id="phone"
-                                           name="phone"
-                                           value="{{ old('phone') }}"
-                                           autocomplete="tel"
-                                           placeholder="Enter your phone number">
+                                    <input type="tel" class="form-control" id="phone" name="phone"
+                                        value="{{ old('phone') }}" autocomplete="tel" placeholder="Enter your phone number">
                                     <label id="phone-error" class="text-danger error" for="phone"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="address" class="form-label">Address</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="address"
-                                           name="address"
-                                           value="{{ old('address') }}"
-                                           autocomplete="address"
-                                           placeholder="Enter your address">
+                                    <input type="text" class="form-control" id="address" name="address"
+                                        value="{{ old('address') }}" autocomplete="address"
+                                        placeholder="Enter your address">
                                     <label id="address-error" class="text-danger error" for="address"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="country" class="form-label">Country</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           id="country"
-                                           name="country"
-                                           value="{{ old('country') }}"
-                                           autocomplete="country"
-                                           placeholder="Enter your country">
+                                    <input type="text" class="form-control" id="country" name="country"
+                                        value="{{ old('country') }}" autocomplete="country"
+                                        placeholder="Enter your country">
                                     <label id="country-error" class="text-danger error" for="country"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="align-items-baseline d-flex justify-content-between">
                                         <label for="reg_password" class="form-label">Password</label>
-                                        <button type="button" class="btn btn-primary text-capitalize fs-6 p-2" onclick="generatePassword()">Suggest Password</button>
+                                        <button type="button" class="btn btn-primary text-capitalize fs-6 p-2"
+                                            onclick="generatePassword()">Suggest Password</button>
                                     </div>
                                     <div class="input-group">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="reg_password"
-                                               name="password"
-                                               autocomplete="new-password"
-                                               placeholder="Create a strong password">
-                                        <button type="button" class="bg-transparent border btn btn-outline-secondary text-black" onclick="togglePassword('reg_password', this)">
+                                        <input type="password" class="form-control" id="reg_password" name="password"
+                                            autocomplete="new-password" placeholder="Create a strong password">
+                                        <button type="button"
+                                            class="bg-transparent border btn btn-outline-secondary text-black"
+                                            onclick="togglePassword('reg_password', this)">
                                             <i class="bx bx-eye"></i>
                                         </button>
                                     </div>
                                     <label id="reg_password-error" class="text-danger error" for="reg_password"
-                                           style="display: none"></label>
+                                        style="display: none"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password_confirmation" class="form-label">Confirm Password</label>
                                     <div class="input-group">
-                                        <input type="password"
-                                               class="form-control"
-                                               id="password_confirmation"
-                                               name="password_confirmation"
-                                               autocomplete="new-password"
-                                               placeholder="Confirm your password">
-                                        <button type="button" class="bg-transparent border btn btn-outline-secondary text-black" onclick="togglePassword('password_confirmation', this)">
+                                        <input type="password" class="form-control" id="password_confirmation"
+                                            name="password_confirmation" autocomplete="new-password"
+                                            placeholder="Confirm your password">
+                                        <button type="button"
+                                            class="bg-transparent border btn btn-outline-secondary text-black"
+                                            onclick="togglePassword('password_confirmation', this)">
                                             <i class="bx bx-eye"></i>
                                         </button>
                                     </div>
                                     <label id="password_confirmation-error" class="text-danger error"
-                                           for="password_confirmation" style="display: none"></label>
+                                        for="password_confirmation" style="display: none"></label>
                                 </div>
 
                                 <div class="terms-checkbox">
                                     <div class="form-check">
-                                        <input class="form-check-input"
-                                               type="checkbox"
-                                               name="terms"
-                                               id="terms">
+                                        <input class="form-check-input" type="checkbox" name="terms" id="terms">
                                         <label class="form-check-label" for="terms">
                                             I agree to the <a href="#" target="_blank">Terms of Service</a> and
-                                            <a href="#" target="_blank">Privacy Policy</a>
+                                            <a href="javascript:void(0);" target="_blank">Privacy Policy</a>
                                         </label>
                                         <label id="terms-error" class="text-danger error" for="terms"
-                                               style="display: none"></label>
+                                            style="display: none"></label>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <span id="g-recaptcha-response-error" class="text-danger error"
-                                          style="display: none">BUND</span>
+                                        style="display: none">BUND</span>
                                     <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
-                                         data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
+                                        data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary w-100" id="registerBtn">
-                                    <i class="bx bx-loader spinner me-2" style="display: none"
-                                       id="registerBtnSpinner"></i>
+                                    <i class="bx bx-loader spinner me-2" style="display: none" id="registerBtnSpinner"></i>
                                     Create Account
                                 </button>
                             </form>
@@ -535,7 +504,7 @@
                             setTimeout(function () {
                                 window.location.href = "{{route('login')}}";
                             }, 2000);
-                            
+
                         },
                         error: function (xhr) {
                             let data = xhr.responseJSON;
@@ -597,4 +566,3 @@
         }
     </script>
 @endsection
-
