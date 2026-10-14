@@ -29,11 +29,11 @@
                 <h3 class="brand-heading-uppercase footer-heading">Company</h3>
                 <nav aria-label="Company links">
                     <ul class="footer-links">
-                        <li><a href="{{ route('about.us') }}" class="footer-link">About us</a></li>
-                        <li><a href="{{ route('services.view') }}" class="footer-link">What we offer</a></li>
-                        <li><a href="{{ route('faqs') }}" class="footer-link">FAQ</a></li>
-                        <li><a href="{{ route('contact') }}" class="footer-link">Contact Us</a></li>
-                        <li><a href="{{ route('blog') }}" class="footer-link">Blogs</a></li>
+                        <li><a href="{{ route('about.us') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>About us</span></a></li>
+                        <li><a href="{{ route('services.view') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>What we offer</span></a></li>
+                        <li><a href="{{ route('faqs') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>FAQ</span></a></li>
+                        <li><a href="{{ route('contact') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Contact Us</span></a></li>
+                        <li><a href="{{ route('blog') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Blogs</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -43,12 +43,10 @@
                 <h3 class="brand-heading-uppercase footer-heading">Services</h3>
                 <nav aria-label="Services links">
                     <ul class="footer-links">
-                        <li><a href="{{ route('available.vehicles') }}" class="footer-link">Available Vehicles</a></li>
-                        <li><a href="{{ route('blog') }}" class="footer-link">How to Import</a></li>
-                        <li><a href="{{ route('vehicle.inspection.info') }}" class="footer-link">Vehicle Inspection
-                                Info</a></li>
-                        <li><a href="{{ route('shipping.and.logistics') }}" class="footer-link">Shipping and
-                                Logistics</a></li>
+                        <li><a href="{{ route('available.vehicles') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Available Vehicles</span></a></li>
+                        <li><a href="{{ route('blog') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>How to Import</span></a></li>
+                        <li><a href="{{ route('vehicle.inspection.info') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Vehicle Inspection Info</span></a></li>
+                        <li><a href="{{ route('shipping.and.logistics') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Shipping and Logistics</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -58,8 +56,8 @@
                 <h3 class="brand-heading-uppercase footer-heading">Policies</h3>
                 <nav aria-label="Policy links">
                     <ul class="footer-links">
-                        <li><a href="{{ route('rental.policies') }}" class="footer-link">Terms and Conditions</a></li>
-                        <li><a href="javascript:void(0);" class="footer-link">Privacy policy</a></li>
+                        <li><a href="{{ route('rental.policies') }}" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Terms and Conditions</span></a></li>
+                        <li><a href="javascript:void(0);" class="footer-link"><i class="fas fa-chevron-right footer-link-icon"></i> <span>Privacy policy</span></a></li>
                     </ul>
                 </nav>
             </div>
