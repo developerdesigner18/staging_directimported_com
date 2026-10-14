@@ -88,7 +88,7 @@
                     </li>
                 </ul>
 
-                <div class="social-icons social-icons--footer">
+                <div class="social-icons social-icons--footer mt-4">
                     <a href="https://wa.me/818033441177" target="_blank" aria-label="WhatsApp"
                         class="social-icon social-icon--md"><i class="fab fa-whatsapp"></i></a>
                     <a href="{{ getSetting()->facebook_url }}" target="_blank" aria-label="Facebook"

@@ -33,7 +33,14 @@ class HomeController extends Controller
         $faqs = Faq::orderBy('created_at', 'desc')->get();
         $services = Service::ordered()->limit(4)->get();
 
-        $cars = Car::orderBy('created_at', 'desc')->limit(8)->get();
+        $cars = Car::with(['category', 'spec'])
+            ->where(function ($q) {
+                $q->where('status', '!=', CarStatus::DRAFT->value)
+                    ->orWhereNull('status');
+            })
+            ->orderBy('created_at', 'desc')
+            ->limit(8)
+            ->get();
         $color = Color::first();
         $homeSection = HomeSection::with('points')->first();
 
