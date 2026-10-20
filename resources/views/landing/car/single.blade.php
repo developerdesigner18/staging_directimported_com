@@ -841,6 +841,14 @@
             letter-spacing: 0.5px;
         }
 
+        .btn-submit-quote:disabled {
+            opacity: 0.65;
+            cursor: not-allowed !important;
+            pointer-events: none;
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
         #contactRequestForm .recaptcha-wrapper {
             margin-bottom: 16px;
         }
@@ -1945,9 +1953,9 @@
                         </div>
 
                         <!-- Popping Red Gradient Button -->
-                        <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
-                            <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
-                            Request Details & Quote
+                        <button type="submit" id="submitRequestBtn" class="btn-submit-quote d-flex align-items-center justify-content-center">
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" style="display: none;" id="submitRequestBtnSpinner"></span>
+                            <span id="submitRequestBtnText">Request Details & Quote</span>
                         </button>
                     </form>
                 </div>
@@ -2305,6 +2313,10 @@
                     }
                     $('#g-recaptcha-response-error').hide().text('');
 
+                    $('#submitRequestBtn').prop('disabled', true);
+                    $("#submitRequestBtnSpinner").show();
+                    $('#submitRequestBtnText').text('Sending...');
+
                     $.ajax({
                         url: "{{ route('contact.request.store') }}",
                         method: "POST",
@@ -2314,8 +2326,9 @@
                         contentType: false,
                         cache: false,
                         beforeSend: function () {
-                            $('#submitRequestBtn').attr('disabled', true);
+                            $('#submitRequestBtn').prop('disabled', true);
                             $("#submitRequestBtnSpinner").show();
+                            $('#submitRequestBtnText').text('Sending...');
                             $('.text-danger.error').hide().text('');
                         },
                         success: function (result) {
@@ -2345,8 +2358,9 @@
                             }
                         },
                         complete: function () {
-                            $('#submitRequestBtn').attr('disabled', false);
+                            $('#submitRequestBtn').prop('disabled', false);
                             $("#submitRequestBtnSpinner").hide();
+                            $('#submitRequestBtnText').text('Request Details & Quote');
                         },
                     });
                 }
