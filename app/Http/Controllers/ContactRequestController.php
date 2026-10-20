@@ -25,7 +25,7 @@ class ContactRequestController extends Controller
             'message' => 'nullable|string',
             'g-recaptcha-response' => 'required',
         ], [
-            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification',
+            'g-recaptcha-response.required' => 'Please verified',
         ]);
 
         if ($validator->fails()) {
@@ -41,7 +41,9 @@ class ContactRequestController extends Controller
         $response = json_decode($response);
 
         if (!$response || !$response->success) {
-            return $this->sendError('reCAPTCHA verification failed. Please try again.');
+            return $this->sendValidationError([
+                'g-recaptcha-response' => ['Please verified']
+            ]);
         }
 
         try {

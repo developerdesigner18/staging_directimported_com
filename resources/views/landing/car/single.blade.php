@@ -440,7 +440,7 @@
 
         /* -------------------------------------------------------------
 
-                                                    /* Main Image Container & Watermark Display */
+                                                            /* Main Image Container & Watermark Display */
         .open-gallery-btn {
             position: relative;
             background-color: #e2e8f0;
@@ -706,11 +706,11 @@
 
         /* Sidebar Title, Status & Pricing section style elements */
         /* .sidebar-header {
-                                                                                                    display: flex;
-                                                                                                    justify-content: space-between;
-                                                                                                    align-items: center;
-                                                                                                    margin-bottom: 12px;
-                                                                                                } */
+                                                                                                            display: flex;
+                                                                                                            justify-content: space-between;
+                                                                                                            align-items: center;
+                                                                                                            margin-bottom: 12px;
+                                                                                                        } */
 
         .sidebar-title {
             font-size: 24px;
@@ -843,6 +843,14 @@
 
         #contactRequestForm .recaptcha-wrapper {
             margin-bottom: 16px;
+        }
+
+        #contactRequestForm #g-recaptcha-response-error {
+            display: block;
+            margin-top: 6px;
+            font-size: 11px;
+            color: var(--primary-red);
+            font-weight: 700;
         }
 
         @media (max-width: 360px) {
@@ -1903,7 +1911,7 @@
                                 <label>Country <span class="required-asterisk">*</span></label>
                                 <input list="countryList" name="destination_country" id="destination_country" required
                                     placeholder="Select Country..." class="form-input">
-                                <datalist id="countryList">
+                                {{-- <datalist id="countryList">
                                     <option value="USA"></option>
                                     <option value="UK"></option>
                                     <option value="Australia"></option>
@@ -1916,7 +1924,7 @@
                                     <option value="Japan"></option>
                                     <option value="Singapore"></option>
                                     <option value="South Africa"></option>
-                                </datalist>
+                                </datalist> --}}
                             </div>
 
                             <div class="form-col">
@@ -1926,12 +1934,12 @@
                             </div>
                         </div>
 
-                        <label>Message <span class="required-asterisk">*</span></label>
-                        <textarea name="message" id="message" required rows="3" placeholder="Your Message"
+                        <label>Message</label>
+                        <textarea name="message" id="message" rows="3" placeholder="Your Message"
                             class="form-input textarea-message"></textarea>
 
                         <div class="recaptcha-wrapper mb-3">
-                            <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
+                            <div data-callback="contactValidationCorrect" data-expired-callback="contactValidationExpired" class="g-recaptcha custom-width"
                                 data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                             <span id="g-recaptcha-response-error" class="text-danger error" style="display: none;"></span>
                         </div>
@@ -2057,7 +2065,7 @@
                     "{{ asset(CAR_PATH . $image) }}",
                 @endforeach
             @endif
-                                                    ];
+                                                            ];
 
         let currentIndex = 0;
         let gridExpanded = false;
@@ -2247,8 +2255,7 @@
                     phone_number: { required: true },
                     preferred_contact_method: { required: true },
                     destination_country: { required: true },
-                    nearest_port_or_postal_code: { required: true },
-                    message: { required: true }
+                    nearest_port_or_postal_code: { required: true }
                 },
                 messages: {
                     full_name: { required: "Please enter your full name", minlength: "Name must be at least 2 characters" },
@@ -2256,18 +2263,35 @@
                     phone_number: { required: "Please enter your phone number" },
                     preferred_contact_method: { required: "Please select preferred contact method" },
                     destination_country: { required: "Please select destination country" },
-                    nearest_port_or_postal_code: { required: "Please fill this field" },
-                    message: { required: "Please leave us a short message" }
+                    nearest_port_or_postal_code: { required: "Please fill this field" }
                 },
                 errorClass: 'text-danger error',
                 errorPlacement: function (error, element) {
-                    element.after(error);
+                    if (element.next('.select2-container').length > 0) {
+                        element.next('.select2-container').after(error);
+                    } else if (element.siblings('.select2-container').length > 0) {
+                        element.siblings('.select2-container').after(error);
+                    } else {
+                        element.after(error);
+                    }
                 },
                 highlight: function (element) {
                     $(element).addClass('flash-error');
+                    if ($(element).hasClass('select2-hidden-accessible')) {
+                        $(element).next('.select2-container').find('.select2-selection').addClass('flash-error');
+                    }
                 },
                 unhighlight: function (element) {
                     $(element).removeClass('flash-error');
+                    if ($(element).hasClass('select2-hidden-accessible')) {
+                        $(element).next('.select2-container').find('.select2-selection').removeClass('flash-error');
+                    }
+                },
+                invalidHandler: function (event, validator) {
+                    var recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+                    if (!recaptchaResponse || recaptchaResponse.length === 0) {
+                        $('#g-recaptcha-response-error').text("Please verified").show();
+                    }
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
@@ -2275,9 +2299,11 @@
                     // Verify reCAPTCHA first
                     var recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
                     if (!recaptchaResponse || recaptchaResponse.length === 0) {
-                        sendToast("Please complete the reCAPTCHA verification", 'danger');
+                        $('#g-recaptcha-response-error').text("Please verified").show();
+                        sendToast("Please verified", 'danger');
                         return false;
                     }
+                    $('#g-recaptcha-response-error').hide().text('');
 
                     $.ajax({
                         url: "{{ route('contact.request.store') }}",
@@ -2295,6 +2321,7 @@
                         success: function (result) {
                             sendSuccess(result.message);
                             form.reset();
+                            $('#preferred_contact_method').val('').trigger('change.select2');
                             if (typeof grecaptcha !== 'undefined') {
                                 grecaptcha.reset();
                             }
@@ -2324,10 +2351,19 @@
                     });
                 }
             });
+
+            // Re-validate preferred_contact_method on Select2 change
+            $('#preferred_contact_method').on('change', function () {
+                $(this).valid();
+            });
         });
 
         function contactValidationCorrect() {
             $('#g-recaptcha-response-error').hide().text('');
+        }
+
+        function contactValidationExpired() {
+            $('#g-recaptcha-response-error').text("Please verified").show();
         }
 
         const shareTriggers = document.querySelectorAll('.share-car-trigger');
