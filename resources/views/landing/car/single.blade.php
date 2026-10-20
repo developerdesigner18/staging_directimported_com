@@ -1,6 +1,10 @@
 @extends('landing.master')
 @section('title', $car->name)
 
+@push('style-src')
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+@endpush
+
 @push('style')
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
@@ -835,6 +839,17 @@
             box-shadow: 0 5px 12px rgba(238, 28, 37, 0.25);
             transition: transform 0.2s, box-shadow 0.2s;
             letter-spacing: 0.5px;
+        }
+
+        #contactRequestForm .recaptcha-wrapper {
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 360px) {
+            #contactRequestForm .g-recaptcha {
+                transform: scale(0.85);
+                transform-origin: 0 0;
+            }
         }
 
         .red-separator-line {
@@ -1915,6 +1930,12 @@
                         <textarea name="message" id="message" required rows="3" placeholder="Your Message"
                             class="form-input textarea-message"></textarea>
 
+                        <div class="recaptcha-wrapper mb-3">
+                            <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
+                                data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
+                            <span id="g-recaptcha-response-error" class="text-danger error" style="display: none;"></span>
+                        </div>
+
                         <!-- Popping Red Gradient Button -->
                         <button type="submit" id="submitRequestBtn" class="btn-submit-quote">
                             <i class="bx bx-loader spinner me-2" style="display: none" id="submitRequestBtnSpinner"></i>
@@ -2250,6 +2271,14 @@
                 },
                 submitHandler: function (form, e) {
                     e.preventDefault();
+
+                    // Verify reCAPTCHA first
+                    var recaptchaResponse = typeof grecaptcha !== 'undefined' ? grecaptcha.getResponse() : '';
+                    if (!recaptchaResponse || recaptchaResponse.length === 0) {
+                        sendToast("Please complete the reCAPTCHA verification", 'danger');
+                        return false;
+                    }
+
                     $.ajax({
                         url: "{{ route('contact.request.store') }}",
                         method: "POST",
@@ -2266,10 +2295,16 @@
                         success: function (result) {
                             sendSuccess(result.message);
                             form.reset();
+                            if (typeof grecaptcha !== 'undefined') {
+                                grecaptcha.reset();
+                            }
                             // Reset select2 / input validation states
                             $('.flash-error').removeClass('flash-error');
                         },
                         error: function (xhr) {
+                            if (typeof grecaptcha !== 'undefined') {
+                                grecaptcha.reset();
+                            }
                             let data = xhr.responseJSON;
                             if (data && data.hasOwnProperty('error')) {
                                 $.each(data.error, function (key, value) {
@@ -2290,6 +2325,10 @@
                 }
             });
         });
+
+        function contactValidationCorrect() {
+            $('#g-recaptcha-response-error').hide().text('');
+        }
 
         const shareTriggers = document.querySelectorAll('.share-car-trigger');
         const shareMenu = document.getElementById('shareMenu');

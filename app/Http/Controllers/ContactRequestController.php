@@ -23,10 +23,25 @@ class ContactRequestController extends Controller
             'destination_country' => 'nullable|string',
             'nearest_port_or_postal_code' => 'nullable|string',
             'message' => 'nullable|string',
+            'g-recaptcha-response' => 'required',
+        ], [
+            'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification',
         ]);
 
         if ($validator->fails()) {
             return $this->sendValidationError($validator->errors());
+        }
+
+        // Verify reCAPTCHA
+        $recaptcha = $request->input('g-recaptcha-response');
+        $secret_key = config('services.recaptcha.secret_key');
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $recaptcha;
+
+        $response = file_get_contents($url);
+        $response = json_decode($response);
+
+        if (!$response || !$response->success) {
+            return $this->sendError('reCAPTCHA verification failed. Please try again.');
         }
 
         try {
