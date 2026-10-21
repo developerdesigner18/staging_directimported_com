@@ -7,7 +7,6 @@ use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPassword\ForgotPasswordController;
 use App\Http\Controllers\ForgotPassword\ResetPasswordController;
-use Laravel\SerializableClosure\Contracts\Serializable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
