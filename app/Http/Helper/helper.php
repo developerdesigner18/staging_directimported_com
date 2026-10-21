@@ -98,15 +98,6 @@ function generateBookingId()
 
     return 'BK' . $today . $random;
 }
-function diffInDays($date1, $date2)
-{
-    $start_date = Carbon::parse(date('Y-m-d', strtotime($date1)));
-    $end_date = Carbon::parse(date('Y-m-d', strtotime($date2)));
-
-    $days = $start_date->diffInDays($end_date);
-
-    return $days;
-}
 
 function totalBookingDays($startDate, $endDate, $endTime = null)
 {

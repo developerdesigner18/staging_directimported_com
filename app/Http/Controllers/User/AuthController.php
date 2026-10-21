@@ -37,26 +37,6 @@ class AuthController extends Controller
         return view('landing.auth.register');
     }
 
-//    public function loginAction(Request $request)
-//    {
-//        $validator = Validator::make($request->all(), [
-//            'email' => 'required|email',
-//            'password' => 'required'
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return $this->sendValidationError($validator->errors());
-//        }
-//
-//        $rememberToken = $request->has('remember_me') ? true : false;
-//
-//        if (Auth::guard('web')->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $rememberToken) || ) {
-//            return $this->sendSuccess('login successful');
-//        } else {
-//            return $this->sendError('Invalid email or password');
-//        }
-//    }
-
     public function userBookings(Request $request)
     {
         try {
