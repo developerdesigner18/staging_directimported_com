@@ -295,23 +295,6 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
         });
     });
 
-    // Tours
-    Route::group(['middleware' => ['check_permission:tours']], function () {
-        Route::group([
-            'prefix' => 'tour/category/{type}',
-            'where' => ['type' => 'tour'],
-            'as' => 'category.tour.',
-            'controller' => CategoryController::class
-        ], function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/list', 'listCategory')->name('list');
-            Route::post('/add', 'addCategory')->name('add');
-            Route::post('/edit', 'editCategory')->name('edit');
-            Route::post('/update', 'updateCategory')->name('update');
-            Route::post('/delete', 'deleteCategory')->name('delete');
-        });
-    });
-
     // Accessories
     Route::group(['middleware' => ['check_permission:accessories_equipments']], function () {
         Route::controller(AccessoryController::class)->prefix('accessory')->name('accessory.')->group(function () {

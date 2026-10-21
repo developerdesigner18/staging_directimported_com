@@ -22,12 +22,6 @@ class Category extends Model
     ];
 
 
-    // using scope demo with the model Category::tourCategory();
-    public function scopeTourCategory($query)
-    {
-        return $query->where('type', CategoryType::TOUR);
-    }
-
     public function scopeGalleryCategory($query)
     {
         return $query->where('type', CategoryType::GALLERY);
