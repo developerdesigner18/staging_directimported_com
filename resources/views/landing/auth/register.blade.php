@@ -430,8 +430,7 @@
                         email: true
                     },
                     phone: {
-                        required: true,
-                        minlength: 10
+                        required: true
                     },
                     password: {
                         required: true,
@@ -459,8 +458,7 @@
                         email: "Please enter a valid email address."
                     },
                     phone: {
-                        required: "The phone number field is required.",
-                        minlength: "Phone number must be at least 10 digits."
+                        required: "The phone number field is required."
                     },
                     password: {
                         required: "The password field is required.",

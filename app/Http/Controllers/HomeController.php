@@ -336,8 +336,15 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|min:2',
             'email' => 'required|email',
-            'contactNumber' => 'required|digits_between:10,15',
-            'message' => 'required|string|min:10',
+            'contactNumber' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (str_contains($value, '-') || (is_numeric($value) && $value < 0)) {
+                        $fail('Contact number cannot be negative.');
+                    }
+                }
+            ],
+            'message' => 'required|string',
             'g-recaptcha-response' => 'required'
         ], [
             'name.required' => 'Please enter your name',
@@ -345,9 +352,7 @@ class HomeController extends Controller
             'email.required' => 'Please enter your email address',
             'email.email' => 'Please enter a valid email address',
             'contactNumber.required' => 'Please enter your contact number',
-            'contactNumber.digits_between' => 'Contact number must be between 10-15 digits',
             'message.required' => 'Please enter your message',
-            'message.min' => 'Message must be at least 10 characters',
             'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification'
         ]);
 

@@ -27,3 +27,14 @@ config.bat
 /public_
 public_/
 AI_PROMPT_FOR_SCRAPING.md
+
+# AI & Agent Tooling
+.agents/
+.claude/
+.kilo/
+.opencode/
+.planning/CODE_REVIEW_RESOLUTION.md
+
+# OS files
+.DS_Store
+Thumbs.db

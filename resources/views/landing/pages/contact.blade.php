@@ -78,6 +78,17 @@
             margin-right: 4px;
             color: var(--primary-color, #053C7C);
         }
+
+        /* Hide stepper arrows / spinners on number inputs */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 @endpush
 @section('main')
@@ -137,7 +148,7 @@
                 <div class="col-lg-7">
                     <div class="contact-form">
                         <h4>Write a Message</h4>
-                        <p>You have any questions or need additional information? <strong>Register.</strong></p>
+                        {{-- <p>You have any questions or need additional information? <strong>Register.</strong></p> --}}
                         <form id="contactUs">
                             @csrf
                             <div class="mb-4">
@@ -147,7 +158,9 @@
                                 <input type="email" class="form-control" placeholder="Email" name="email">
                             </div>
                             <div class="mb-4">
-                                <input type="number" class="form-control" placeholder="Contact Number" name="contactNumber">
+                                <input type="tel" class="form-control" placeholder="Contact Number" name="contactNumber"
+                                    id="contactNumber" min="0" onkeydown="if(event.key === '-') return false;"
+                                    oninput="if(this.value.includes('-')) this.value = this.value.replace(/-/g, '')">
                             </div>
                             <div class="mb-4">
                                 <textarea class="form-control" rows="4" placeholder="Write Your Message"
@@ -175,6 +188,10 @@
 @section('script')
     <script !src="">
         $(document).ready(function () {
+            $.validator.addMethod("nonNegative", function (value, element) {
+                return this.optional(element) || (!value.includes('-') && (isNaN(value) || Number(value) >= 0));
+            }, "Contact number cannot be negative");
+
             $("#contactUs").validate({
                 rules: {
                     name: {
@@ -187,13 +204,10 @@
                     },
                     contactNumber: {
                         required: true,
-                        digits: true,
-                        minlength: 10,
-                        maxlength: 15
+                        nonNegative: true
                     },
                     message: {
-                        required: true,
-                        minlength: 10
+                        required: true
                     }
                 },
                 messages: {
@@ -207,13 +221,10 @@
                     },
                     contactNumber: {
                         required: "Please enter your contact number",
-                        digits: "Please enter only digits",
-                        minlength: "Contact number must be at least 10 digits",
-                        maxlength: "Contact number cannot exceed 15 digits"
+                        nonNegative: "Contact number cannot be negative"
                     },
                     message: {
-                        required: "Please enter your message",
-                        minlength: "Message must be at least 10 characters long"
+                        required: "Please enter your message"
                     }
                 },
                 errorClass: 'text-danger error',

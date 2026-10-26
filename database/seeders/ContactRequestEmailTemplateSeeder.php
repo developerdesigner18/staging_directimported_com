@@ -16,7 +16,7 @@ class ContactRequestEmailTemplateSeeder extends Seeder
             ['key' => 'ContactRequestMail'],
             [
                 'subject' => 'New Vehicle Details & Quote Request',
-                'placeholder' => 'full_name, email, phone, method, vehicle, country, port, message_body',
+                'placeholder' => 'full_name, email, phone, method, vehicle, vehicle_url, country, port, message_body',
                 'body' => '
 <h2>New Contact Request Received</h2>
 <p>A user has submitted a request for vehicle details and a quote.</p>
@@ -39,7 +39,7 @@ class ContactRequestEmailTemplateSeeder extends Seeder
     </tr>
     <tr>
         <td style="padding: 8px; border: 1px solid #ddd;"><strong>Vehicle ID:</strong></td>
-        <td style="padding: 8px; border: 1px solid #ddd;">{{ $vehicle }}</td>
+        <td style="padding: 8px; border: 1px solid #ddd;"><a href="{{ $vehicle_url ?? url(\'/car/\' . $vehicle) }}" target="_blank">{{ $vehicle }}</a></td>
     </tr>
     <tr>
         <td style="padding: 8px; border: 1px solid #ddd;"><strong>Destination Country:</strong></td>

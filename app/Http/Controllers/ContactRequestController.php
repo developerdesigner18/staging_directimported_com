@@ -53,6 +53,9 @@ class ContactRequestController extends Controller
 
             DB::commit();
 
+            $vehicleId = $contactRequest->vehicle_id;
+            $vehicleUrl = $vehicleId ? route('car.single', ['slug' => $vehicleId]) : '#';
+
             // Send Email to Admin
             sendDynamicEmail(env('RECEIVER_MAIL'), 'ContactRequestMail', [
                 'full_name' => $contactRequest->full_name,
@@ -60,6 +63,7 @@ class ContactRequestController extends Controller
                 'phone' => $contactRequest->phone_number,
                 'method' => $contactRequest->preferred_contact_method,
                 'vehicle' => $contactRequest->vehicle_id,
+                'vehicle_url' => $vehicleUrl,
                 'country' => $contactRequest->destination_country,
                 'port' => $contactRequest->nearest_port_or_postal_code,
                 'message_body' => $contactRequest->message,

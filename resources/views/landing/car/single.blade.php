@@ -1882,10 +1882,10 @@
                         @csrf
                         <h2 class="contact-form-title">Contact Us</h2>
 
-                        <input type="hidden" name="vehicle_id" value="{{ $car->name }}">
+                        <input type="hidden" name="vehicle_id" value="{{ $car->vehicle_id ?? $car->stock_id }}">
 
                         <label>Vehicle Stock #</label>
-                        <input type="text" value="{{ $car->vehicle_id ?? $car->name ?? '' }}" readonly
+                        <input type="text" value="{{ $car->vehicle_id ?? $car->stock_id ?? '' }}" readonly
                             class="form-input form-readonly-input">
 
                         <label>Full Name <span class="required-asterisk">*</span></label>

@@ -24,7 +24,11 @@
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent mb-3">
                 <h4 class="mb-sm-0">Car Details</h4>
-                <div class="page-title-right">
+                <div class="page-title-right d-flex align-items-center gap-3">
+                    <a href="{{ route('car.single', ['slug' => $car->stock_id]) }}" target="_blank"
+                        class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+                        <i class="ri-external-link-line"></i> View Vehicle Details
+                    </a>
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.car.index') }}">Cars</a></li>
                         <li class="breadcrumb-item active">{{ $car->name }}</li>
