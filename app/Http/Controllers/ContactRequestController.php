@@ -17,7 +17,7 @@ class ContactRequestController extends Controller
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone_number' => 'required|string|max:20',
+            'phone_number' => 'required|regex:/^[0-9]+$/|max:20',
             'preferred_contact_method' => 'nullable|string',
             'vehicle_id' => 'nullable|string',
             'destination_country' => 'nullable|string',
@@ -25,6 +25,8 @@ class ContactRequestController extends Controller
             'message' => 'nullable|string',
             'g-recaptcha-response' => 'required',
         ], [
+            'phone_number.required' => 'Please enter your phone number',
+            'phone_number.regex' => 'Please enter digits only',
             'g-recaptcha-response.required' => 'Please verified',
         ]);
 

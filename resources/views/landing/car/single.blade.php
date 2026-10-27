@@ -2270,7 +2270,7 @@
                 rules: {
                     full_name: { required: true, minlength: 2 },
                     email: { required: true, email: true },
-                    phone_number: { required: true },
+                    phone_number: { required: true, digits: true },
                     preferred_contact_method: { required: true },
                     destination_country: { required: true },
                     nearest_port_or_postal_code: { required: true }
@@ -2278,7 +2278,10 @@
                 messages: {
                     full_name: { required: "Please enter your full name", minlength: "Name must be at least 2 characters" },
                     email: { required: "Please enter your email", email: "Please enter a valid email address" },
-                    phone_number: { required: "Please enter your phone number" },
+                    phone_number: {
+                        required: "Please enter your phone number",
+                        digits: "Please enter digits only"
+                    },
                     preferred_contact_method: { required: "Please select preferred contact method" },
                     destination_country: { required: "Please select destination country" },
                     nearest_port_or_postal_code: { required: "Please fill this field" }

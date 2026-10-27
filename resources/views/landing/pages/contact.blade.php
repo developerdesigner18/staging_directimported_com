@@ -158,9 +158,7 @@
                                 <input type="email" class="form-control" placeholder="Email" name="email">
                             </div>
                             <div class="mb-4">
-                                <input type="tel" class="form-control" placeholder="Contact Number" name="contactNumber"
-                                    id="contactNumber" min="0" onkeydown="if(event.key === '-') return false;"
-                                    oninput="if(this.value.includes('-')) this.value = this.value.replace(/-/g, '')">
+                                <input type="tel" class="form-control" placeholder="Contact Number" name="contactNumber" id="contactNumber">
                             </div>
                             <div class="mb-4">
                                 <textarea class="form-control" rows="4" placeholder="Write Your Message"
@@ -188,10 +186,6 @@
 @section('script')
     <script !src="">
         $(document).ready(function () {
-            $.validator.addMethod("nonNegative", function (value, element) {
-                return this.optional(element) || (!value.includes('-') && (isNaN(value) || Number(value) >= 0));
-            }, "Contact number cannot be negative");
-
             $("#contactUs").validate({
                 rules: {
                     name: {
@@ -204,7 +198,7 @@
                     },
                     contactNumber: {
                         required: true,
-                        nonNegative: true
+                        digits: true
                     },
                     message: {
                         required: true
@@ -221,7 +215,7 @@
                     },
                     contactNumber: {
                         required: "Please enter your contact number",
-                        nonNegative: "Contact number cannot be negative"
+                        digits: "Please enter digits only"
                     },
                     message: {
                         required: "Please enter your message"

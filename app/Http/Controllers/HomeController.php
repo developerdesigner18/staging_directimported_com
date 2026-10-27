@@ -338,11 +338,7 @@ class HomeController extends Controller
             'email' => 'required|email',
             'contactNumber' => [
                 'required',
-                function ($attribute, $value, $fail) {
-                    if (str_contains($value, '-') || (is_numeric($value) && $value < 0)) {
-                        $fail('Contact number cannot be negative.');
-                    }
-                }
+                'regex:/^[0-9]+$/',
             ],
             'message' => 'required|string',
             'g-recaptcha-response' => 'required'
@@ -352,6 +348,7 @@ class HomeController extends Controller
             'email.required' => 'Please enter your email address',
             'email.email' => 'Please enter a valid email address',
             'contactNumber.required' => 'Please enter your contact number',
+            'contactNumber.regex' => 'Please enter digits only',
             'message.required' => 'Please enter your message',
             'g-recaptcha-response.required' => 'Please complete the reCAPTCHA verification'
         ]);
