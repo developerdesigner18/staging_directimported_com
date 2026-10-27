@@ -373,7 +373,7 @@
                                     <span id="g-recaptcha-response-error" class="text-danger error"
                                         style="display: none">BUND</span>
                                     <div data-callback="contactValidationCorrect" class="g-recaptcha custom-width"
-                                        data-sitekey="{{env('CAPTCHA_SITE_KEY')}}"></div>
+                                        data-sitekey="{{ config('services.recaptcha.site_key') }}"></div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary w-100" id="registerBtn">

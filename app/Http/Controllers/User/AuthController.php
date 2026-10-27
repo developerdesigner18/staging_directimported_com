@@ -137,7 +137,7 @@ class AuthController extends Controller
 
         // Verify reCAPTCHA
         $recaptcha = $request->input('g-recaptcha-response');
-        $secret_key = env('CAPTCHA_SECRET_KEY');
+        $secret_key = config('services.recaptcha.secret_key');
         $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $recaptcha;
 
         $response = file_get_contents($url);
@@ -346,7 +346,7 @@ class AuthController extends Controller
 
             if ($isUpdated) {
                 $user->userDetail()->update(['status' => DocumentStatus::PENDING]);
-                sendDynamicEmail(env('RECEIVER_MAIL'), 'AdminDocumentNotificationMail', [
+                sendDynamicEmail(config('services.receiver_mail'), 'AdminDocumentNotificationMail', [
                     'name' => $user->first_name . ' ' . $user->last_name,
                     'email' => $user->email,
                     'admin_url' => url('admin/user/' . $userId),

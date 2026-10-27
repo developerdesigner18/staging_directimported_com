@@ -59,7 +59,7 @@ class ContactRequestController extends Controller
             $vehicleUrl = $vehicleId ? route('car.single', ['slug' => $vehicleId]) : '#';
 
             // Send Email to Admin
-            sendDynamicEmail(env('RECEIVER_MAIL'), 'ContactRequestMail', [
+            sendDynamicEmail(config('services.receiver_mail'), 'ContactRequestMail', [
                 'full_name' => $contactRequest->full_name,
                 'email' => $contactRequest->email,
                 'phone' => $contactRequest->phone_number,

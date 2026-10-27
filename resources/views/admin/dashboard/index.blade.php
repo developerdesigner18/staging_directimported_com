@@ -27,7 +27,7 @@
                                     {{Auth::guard('admin')->user()->name ?? Auth::guard('employee')->user()->first_name }}!
                                 </h4>
                                 <p class="text-muted mb-0">
-                                    Here's what's happening with {{env('APP_NAME')}}.
+                                    Here's what's happening with {{ config('app.name') }}.
                                 </p>
                             </div>
                         </div>

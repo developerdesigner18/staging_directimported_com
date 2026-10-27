@@ -29,7 +29,7 @@
                             <label for="RECEIVER_MAIL"
                                 class="form-label">{{ admin_label('settings_form', 'receiver_mail', 'System Receiver Mail') }}</label>
                             <input type="text" class="form-control" id="RECEIVER_MAIL" name="RECEIVER_MAIL"
-                                placeholder="Enter reciver email of system" value="{{ env('RECEIVER_MAIL') }}">
+                                placeholder="Enter reciver email of system" value="{{ config('services.receiver_mail') }}">
                             <label id="RECEIVER_MAIL-error" class="text-danger error" for="RECEIVER_MAIL"
                                 style="display: none"></label>
                         </div>
@@ -39,7 +39,7 @@
                             <label for="MAIL_HOST"
                                 class="form-label">{{ admin_label('settings_form', 'mail_host', 'Mail Host') }}</label>
                             <input type="text" class="form-control" id="MAIL_HOST" name="MAIL_HOST"
-                                placeholder="Enter mail host (e.g., smtp.mailtrap.io)" value="{{ env('MAIL_HOST') }}">
+                                placeholder="Enter mail host (e.g., smtp.mailtrap.io)" value="{{ config('mail.mailers.smtp.host') }}">
                             <label id="MAIL_HOST-error" class="text-danger error" for="MAIL_HOST"
                                 style="display: none"></label>
                         </div>
@@ -49,7 +49,7 @@
                             <label for="MAIL_PORT"
                                 class="form-label">{{ admin_label('settings_form', 'mail_port', 'Mail Port') }}</label>
                             <input type="number" class="form-control" id="MAIL_PORT" name="MAIL_PORT"
-                                placeholder="Enter mail port (e.g., 2525)" value="{{ env('MAIL_PORT') }}">
+                                placeholder="Enter mail port (e.g., 2525)" value="{{ config('mail.mailers.smtp.port') }}">
                             <label id="MAIL_PORT-error" class="text-danger error" for="MAIL_PORT"
                                 style="display: none"></label>
                         </div>
@@ -59,7 +59,7 @@
                             <label for="MAIL_USERNAME"
                                 class="form-label">{{ admin_label('settings_form', 'mail_username', 'Mail Username') }}</label>
                             <input type="text" class="form-control" id="MAIL_USERNAME" name="MAIL_USERNAME"
-                                placeholder="Enter mail username" value="{{ env('MAIL_USERNAME') }}">
+                                placeholder="Enter mail username" value="{{ config('mail.mailers.smtp.username') }}">
                             <label id="MAIL_USERNAME-error" class="text-danger error" for="MAIL_USERNAME"
                                 style="display: none"></label>
                         </div>
@@ -69,7 +69,7 @@
                             <label for="MAIL_PASSWORD"
                                 class="form-label">{{ admin_label('settings_form', 'mail_password', 'Mail Password') }}</label>
                             <input type="password" class="form-control" id="MAIL_PASSWORD" name="MAIL_PASSWORD"
-                                placeholder="Enter mail password" value="{{ env('MAIL_PASSWORD') }}">
+                                placeholder="Enter mail password" value="{{ config('mail.mailers.smtp.password') }}">
                             <label id="MAIL_PASSWORD-error" class="text-danger error" for="MAIL_PASSWORD"
                                 style="display: none"></label>
                         </div>
@@ -79,9 +79,9 @@
                             <label for="MAIL_ENCRYPTION"
                                 class="form-label">{{ admin_label('settings_form', 'mail_encryption', 'Mail Encryption') }}</label>
                             <select class="form-control" id="MAIL_ENCRYPTION" name="MAIL_ENCRYPTION">
-                                <option value="tls" {{ env('MAIL_ENCRYPTION') == 'tls' ? 'selected' : '' }}>TLS</option>
-                                <option value="ssl" {{ env('MAIL_ENCRYPTION') == 'ssl' ? 'selected' : '' }}>SSL</option>
-                                <option value="" {{ empty(env('MAIL_ENCRYPTION')) ? 'selected' : '' }}>None</option>
+                                <option value="tls" {{ config('mail.mailers.smtp.encryption') == 'tls' ? 'selected' : '' }}>TLS</option>
+                                <option value="ssl" {{ config('mail.mailers.smtp.encryption') == 'ssl' ? 'selected' : '' }}>SSL</option>
+                                <option value="" {{ empty(config('mail.mailers.smtp.encryption')) ? 'selected' : '' }}>None</option>
                             </select>
                             <label id="MAIL_ENCRYPTION-error" class="text-danger error" for="MAIL_ENCRYPTION"
                                 style="display: none"></label>
@@ -93,7 +93,7 @@
                                 class="form-label">{{ admin_label('settings_form', 'from_address', 'From Address') }}</label>
                             <input type="email" class="form-control" id="MAIL_FROM_ADDRESS" name="MAIL_FROM_ADDRESS"
                                 placeholder="Enter from address (e.g., no-reply@example.com)"
-                                value="{{ env('MAIL_FROM_ADDRESS') }}">
+                                value="{{ config('mail.from.address') }}">
                             <label id="MAIL_FROM_ADDRESS-error" class="text-danger error" for="MAIL_FROM_ADDRESS"
                                 style="display: none"></label>
                         </div>
@@ -103,7 +103,7 @@
                             <label for="MAIL_FROM_NAME"
                                 class="form-label">{{ admin_label('settings_form', 'from_name', 'From Name') }}</label>
                             <input type="text" class="form-control" id="MAIL_FROM_NAME" name="MAIL_FROM_NAME"
-                                placeholder="Enter from name (e.g., Your App Name)" value="{{ env('MAIL_FROM_NAME') }}">
+                                placeholder="Enter from name (e.g., Your App Name)" value="{{ config('mail.from.name') }}">
                             <label id="MAIL_FROM_NAME-error" class="text-danger error" for="MAIL_FROM_NAME"
                                 style="display: none"></label>
                         </div>
