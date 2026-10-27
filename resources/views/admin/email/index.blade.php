@@ -11,33 +11,36 @@
             <div class="modal-body">
                 <div class="viewEmailData">
 
-                    <!-- Name Section -->
+                    <!-- Template Name & Key Section -->
                     <div class="mb-3">
-                        <label class="form-label"><strong>Name:</strong></label>
-                        <div class="d-flex align-items-center">
-                            <p id="key" class="fs-5 text-muted"></p>
-                            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="The name of the recipient or user associated with the booking">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                        <label class="form-label text-muted fs-12 text-uppercase mb-1">Template Name</label>
+                        <div>
+                            <h5 id="template_name" class="fw-bold text-dark mb-1"></h5>
+                            <span class="badge bg-light text-primary border">Key: <code id="template_key" class="text-primary"></code></span>
                         </div>
                     </div>
 
                     <!-- Subject Section -->
                     <div class="mb-3">
-                        <label class="form-label"><strong>Subject:</strong></label>
-                        <div class="d-flex align-items-center">
-                            <p id="subject_name" class="fs-5 text-muted"></p>
-                            <span class="ms-2" data-bs-toggle="tooltip" data-bs-placement="top" title="The subject of the email for reference">
-                                <i class="bi bi-info-circle"></i>
-                            </span>
+                        <label class="form-label text-muted fs-12 text-uppercase mb-1">Subject</label>
+                        <div>
+                            <p id="subject_name" class="fs-14 fw-semibold text-secondary mb-0"></p>
+                        </div>
+                    </div>
+
+                    <!-- Placeholders Section -->
+                    <div class="mb-3">
+                        <label class="form-label text-muted fs-12 text-uppercase mb-1">Available Placeholders</label>
+                        <div class="p-2 border rounded bg-light">
+                            <code id="placeholders" class="text-info fs-12"></code>
                         </div>
                     </div>
 
                     <!-- Description Section -->
                     <div class="mb-3">
-                        <label class="form-label"><strong>Description:</strong></label>
+                        <label class="form-label text-muted fs-12 text-uppercase mb-1">Email Body Preview</label>
                         <div id="description" class="p-3 border rounded bg-light">
-                            <!-- Use div for HTML formatting, you can dynamically load content here -->
+                            <!-- Dynamically loaded content -->
                         </div>
                     </div>
 
@@ -109,9 +112,9 @@
                 },
             },
             columns: [
-                {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center'},
-                {data: 'email', name: 'email', title: 'Email', class: 'text-center'},
-                {data: 'subject', name: 'subject', title: 'subject', class: 'text-center'},
+                {data: 'DT_RowIndex', name: 'id', title: 'ID', class: 'text-center', width: '5%'},
+                {data: 'name', name: 'name', title: 'Template Name', class: 'text-start'},
+                {data: 'subject', name: 'subject', title: 'Subject', class: 'text-start'},
                 {data: 'created_at', name: 'created_at', title: 'Created At', class: 'text-center'},
                 {data: 'updated_at', name: 'updated_at', title: 'Updated At', class: 'text-center'},
                 {data: 'action', name: 'action', title: 'Action', class: 'text-center', searching: false},
@@ -141,16 +144,18 @@
             let emailId = $(this).data('id');
 
             $.ajax({
-                url: "{{ route('admin.email.view') }}", // Your route
+                url: "{{ route('admin.email.view') }}",
                 method: "GET",
                 dataType: "json",
                 data: { id: emailId },
                 success: function(result) {
                     if (result.data) {
                         // Populate modal fields
-                        $("#key").text(result.data.key || '-');
+                        $("#template_name").text(result.data.name || result.data.key || '-');
+                        $("#template_key").text(result.data.key || '-');
                         $("#subject_name").text(result.data.subject || '-');
-              $("#description").html(result.data.body || '-');
+                        $("#placeholders").text(result.data.placeholder || 'None');
+                        $("#description").html(result.data.body || '-');
 
                         // Show the modal
                         $('#viewModal').modal('show');

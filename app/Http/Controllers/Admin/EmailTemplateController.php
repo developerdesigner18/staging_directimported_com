@@ -27,11 +27,17 @@ class EmailTemplateController extends Controller
 
             return DataTables::eloquent($response)
                 ->addIndexColumn()
-                ->addColumn('email', function ($row) {
-                    return $row->key ?? '-';
+                ->addColumn('name', function ($row) {
+                    return '<div><span class="fw-semibold text-dark fs-14">' . e($row->name) . '</span><br><code class="text-muted fs-11">' . e($row->key) . '</code></div>';
                 })
-                ->filterColumn('email', function ($query, $keyword) {
-                    $query->where('key', 'LIKE', "%{$keyword}%");
+                ->filterColumn('name', function ($query, $keyword) {
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('name', 'LIKE', "%{$keyword}%")
+                          ->orWhere('key', 'LIKE', "%{$keyword}%");
+                    });
+                })
+                ->addColumn('email', function ($row) {
+                    return '<div><span class="fw-semibold text-dark fs-14">' . e($row->name) . '</span><br><code class="text-muted fs-11">' . e($row->key) . '</code></div>';
                 })
                 ->addColumn('subject', function ($row) {
                     return $row->subject ?? '-';
@@ -62,7 +68,7 @@ class EmailTemplateController extends Controller
 
         </ul>';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['name', 'email', 'action'])
                 ->make(true);
 
         } catch (\Exception $exception) {
@@ -75,9 +81,10 @@ class EmailTemplateController extends Controller
         return view('admin.email.edit',compact('data'));
     }
 
-        public function updateEmail(Request $request)
+    public function updateEmail(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
             'subject_name' => 'required',
             'description' => 'required',
         ], [
@@ -94,6 +101,9 @@ class EmailTemplateController extends Controller
 
             $email = EmailTemplates::findOrFail($request->id);
 
+            if ($request->filled('name')) {
+                $email->name = $request->name;
+            }
             $email->subject = $request->subject_name;
             $email->body = $request->description;
             $email->updated_at = now();
@@ -101,7 +111,7 @@ class EmailTemplateController extends Controller
             $email->save();
 
             DB::commit();
-            return $this->sendSuccess(__($email->key .'  Email updated successfully!'));
+            return $this->sendSuccess(__($email->name . ' updated successfully!'));
         } catch (\Exception $exception) {
             DB::rollBack();
             return $this->sendError($exception->getMessage());

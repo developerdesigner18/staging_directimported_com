@@ -28,13 +28,17 @@
                         <div class="mb-3">
                             <input type="hidden" class="form-control" name="id" value="{{ $data->id ?? '-' }}">
                         </div>
-                        <!-- Name (Disabled, not editable) -->
+                        <!-- Template Name (Editable) -->
                         <div class="mb-3">
-                            <label class="form-label">{{ admin_label('email_form', 'name', 'Name') }}</label>
-                            <input type="text" class="form-control" name="key" value="{{ $data->key ?? '-' }}" disabled>
+                            <label for="name" class="form-label">Template Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ $data->name ?? '' }}" required>
                         </div>
 
-
+                        <!-- Key Identifier (Disabled, not editable) -->
+                        <div class="mb-3">
+                            <label class="form-label">Template Key <small class="text-muted">(System Identifier - Read Only)</small></label>
+                            <input type="text" class="form-control bg-light" value="{{ $data->key ?? '-' }}" readonly>
+                        </div>
 
                         <!-- Subject (Editable) -->
                         <div class="mb-3">
@@ -95,10 +99,12 @@
             let id = $('#id').val();
             $("#editForm").validate({
                 rules: {
+                    name: { required: true },
                     subject_name: { required: true },
                     description: { required: true },
                 },
                 messages: {
+                    name: { required: "The Template Name is required." },
                     subject_name: { required: "The Subject is required." },
                     description: { required: "The Description is required." },
                 },
@@ -122,7 +128,7 @@
                             $('button[type="submit"]').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Updating...');
                         },
                         success: function (result) {
-                            sendSuccess(result.message || 'Car updated successfully!').then(() => {
+                            sendSuccess(result.message || 'Email template updated successfully!').then(() => {
                                 window.location.href = "{{ route('admin.email.index') }}";
                             });
                         },

@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use League\HTMLToMarkdown\HtmlConverter;
 
 class EmailTemplatePlaceholdersSeeder extends Seeder
 {
@@ -14,28 +12,37 @@ class EmailTemplatePlaceholdersSeeder extends Seeder
      */
     public function run(): void
     {
-
+        // 1. ContactRequestMail (Vehicle Inquiry)
         DB::table('email_templates')->updateOrInsert(
-            ['key' => 'ApprovedMail'],
+            ['key' => 'ContactRequestMail'],
             [
-                'subject' => 'Your Booking Has Been Approved',
-                'body' => "<h1>Your Booking Has Been Approved</h1>
-<p>Hello <strong>{{ \$name }}</strong>,</p>
-<p>Your booking request (<strong>Booking ID: {{ \$booking_id }}</strong>) has been approved.<br>
-We’ve created your account so you can manage your booking and complete the payment.</p>
-<p><strong>Next Step</strong><br>
-Please log in to your account to complete the payment and confirm your booking.<br>
-You can pay securely using <strong>Squareup</strong> or choose <strong>WISE</strong> to save fees.</p>
-<p>Thank you,<br><strong>Bike Rental Japan</strong></p>",
-                'placeholder' => '{{ $name }}, {{ $email }}, {{ $booking_id }}',
+                'name' => 'Vehicle Details & Quote Request',
+                'subject' => 'New Vehicle Details & Quote Request',
+                'body' => "<h1>New Contact Request Received</h1>
+<p>A user has submitted a request for vehicle details and a quote.</p>
+<ul>
+    <li><strong>Name:</strong> {{ \$full_name }}</li>
+    <li><strong>Email:</strong> {{ \$email }}</li>
+    <li><strong>Phone:</strong> {{ \$phone }}</li>
+    <li><strong>Preferred Method:</strong> {{ \$method }}</li>
+    <li><strong>Vehicle:</strong> {{ \$vehicle }} (<a href='{{ \$vehicle_url }}'>View Vehicle</a>)</li>
+    <li><strong>Country:</strong> {{ \$country }}</li>
+    <li><strong>Port:</strong> {{ \$port }}</li>
+</ul>
+<p><strong>Message:</strong></p>
+<p>{{ \$message_body }}</p>
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
+                'placeholder' => '{{ $full_name }}, {{ $email }}, {{ $phone }}, {{ $method }}, {{ $vehicle }}, {{ $vehicle_url }}, {{ $country }}, {{ $port }}, {{ $message_body }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
+        // 2. ContactUsMail (General Contact)
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'ContactUsMail'],
             [
+                'name' => 'Contact Us Form Submission',
                 'subject' => 'New Contact Form Submission',
                 'body' => "<h1>New Contact Form Submission</h1>
 <p><strong>Name:</strong> {{ \$name }}</p>
@@ -47,20 +54,22 @@ You can pay securely using <strong>Squareup</strong> or choose <strong>WISE</str
         Reply to {{ \$name }}
     </a>
 </p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
                 'placeholder' => '{{ $name }}, {{ $email }}, {{ $contactNumber }}, {{ $messageContent }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
+        // 3. LoginDetailsMail (Employee / Staff login)
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'LoginDetailsMail'],
             [
-                'subject' => 'Your  Login Details',
+                'name' => 'Staff / Employee Login Credentials',
+                'subject' => 'Your Direct Imported Japan Login Details',
                 'body' => "<h1>Login Details</h1>
 <p>Hello {{ \$name }},</p>
-<p>Your has been confirmed. Here are your details:</p>
+<p>Your staff account has been created. Here are your login details:</p>
 <ul>
     <li><strong>Email:</strong> {{ \$email }}</li>
     <li><strong>Temporary Password:</strong> {{ \$tempPassword }}</li>
@@ -72,18 +81,20 @@ For security, we recommend changing your password after logging in.</p>
     Login Now
 </a>
 </p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
                 'placeholder' => '{{ $name }}, {{ $email }}, {{ $tempPassword }}, {{ $loginurl }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
+        // 4. RegisterMail (User welcome)
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'RegisterMail'],
             [
-                'subject' => 'Welcome to Bike Rental Japan!',
-                'body' => "<h1>Welcome to Bike Rental Japan</h1>
+                'name' => 'User Registration Welcome',
+                'subject' => 'Welcome to Direct Imported Japan!',
+                'body' => "<h1>Welcome to Direct Imported Japan</h1>
 <p>Hello <strong>{{ \$fname }} {{ \$lname }}</strong>,</p>
 <p>Here are your details:</p>
 <ul>
@@ -91,16 +102,18 @@ For security, we recommend changing your password after logging in.</p>
     <li><strong>Mobile:</strong> {{ \$mobile }}</li>
 </ul>
 <p>We’re excited to have you join us!</p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
                 'placeholder' => '{{ $fname }}, {{ $lname }}, {{ $email }}, {{ $mobile }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
+        // 5. ForgotPasswordMail
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'ForgotPasswordMail'],
             [
+                'name' => 'Password Reset Request',
                 'subject' => 'Password Reset Request',
                 'body' => "<h1>Password Reset Request</h1>
 <p>Hello <strong>{{ \$name }}</strong>,</p>
@@ -113,70 +126,36 @@ For security, we recommend changing your password after logging in.</p>
     </a>
 </p>
 <p>If you didn’t request a password reset, no further action is required.</p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
                 'placeholder' => '{{ $name }}, {{ $reset_url }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
-        DB::table('email_templates')->updateOrInsert(
-            ['key' => 'BookingConfirmationMail'],
-            [
-                'subject' => 'Booking Details Update',
-                'body' => "<h1>Booking Details Update</h1>
-<p>Hello {{ \$name }},</p>
-<p>Please check the updated booking details below.</p>
-<p>{{ \$email_comment }}</p>
-<div style='margin-top: 20px;'>
-    {!! \$booking_details !!}
-</div>
-<p>If you would like to make any changes, please reply to this email.</p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
-                'placeholder' => '{{ $name }}, {{ $email_comment }}, {!! $booking_details !!}',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
-        DB::table('email_templates')->updateOrInsert(
-            ['key' => 'PaymentRequestMail'],
-            [
-                'subject' => 'Action Required: Complete Your Payment',
-                'body' => "<h1>Payment Requested</h1>
-<p>Hello {{ \$name }},</p>
-<p>Your booking is ready for payment. Please use the link below to complete your booking.</p>
-<p>
-    <a href='{{ \$payment_url }}' style='display:inline-block;padding:10px 15px;background-color:#3490dc;color:#fff;text-decoration:none;border-radius:5px;'>
-        Complete Payment
-    </a>
-</p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
-                'placeholder' => '{{ $name }}, {{ $payment_url }}',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
+        // 6. DocumentRejectedMail
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'DocumentRejectedMail'],
             [
+                'name' => 'Document Verification Rejected',
                 'subject' => 'Documents Verification Rejected',
                 'body' => "<h1>Documents Verification Rejected</h1>
 <p>Hello {{ \$name }},</p>
 <p>Unfortunately, your document verification has been rejected.</p>
 <p><strong>Reason:</strong> {{ \$reason }}</p>
-<p>Please log in to your account and upload valid documents to proceed with your booking.</p>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
+<p>Please log in to your account and upload valid documents to proceed with your account verification.</p>
+<p>Thanks,<br><strong>Direct Imported Japan</strong></p>",
                 'placeholder' => '{{ $name }}, {{ $reason }}',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
         );
 
+        // 7. AdminDocumentNotificationMail
         DB::table('email_templates')->updateOrInsert(
             ['key' => 'AdminDocumentNotificationMail'],
             [
+                'name' => 'Admin Document Verification Notification',
                 'subject' => 'User Submitted New Verification Documents',
                 'body' => "<h1>New Document Submission</h1>
 <p><strong>User:</strong> {{ \$name }}</p>
@@ -193,21 +172,12 @@ For security, we recommend changing your password after logging in.</p>
             ]
         );
 
-        DB::table('email_templates')->updateOrInsert(
-            ['key' => 'BookingQuoteMail'],
-            [
-                'subject' => 'Your Booking Quote From Bike Rental Japan',
-                'body' => "<h1>Your Booking Quote</h1>
-<p>Hello {{ \$name }},</p>
-<p>Thank you for your interest. Here are your booking quote details:</p>
-<div style='margin-top: 20px;'>
-    {!! \$booking_details !!}
-</div>
-<p>Thanks,<br><strong>Bike Rental Japan</strong></p>",
-                'placeholder' => '{{ $name }}, {!! $booking_details !!}',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
+        // Remove obsolete legacy rental templates
+        DB::table('email_templates')->whereIn('key', [
+            'ApprovedMail',
+            'BookingConfirmationMail',
+            'PaymentRequestMail',
+            'BookingQuoteMail',
+        ])->delete();
     }
 }
