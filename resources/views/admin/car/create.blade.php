@@ -308,10 +308,13 @@
                             <div class="col-lg-4">
                                 <label for="status"
                                     class="form-label mb-2">{{ admin_label('car_form', 'status', 'Status') }}</label>
+                                @php
+                                    $currentCarStatus = old('status', (isset($draft) && $draft->status && $draft->status !== \App\Enum\CarStatus::DRAFT) ? (is_object($draft->status) ? $draft->status->value : (string)$draft->status) : \App\Enum\CarStatus::AVAILABLE->value);
+                                @endphp
                                 <select class="form-select select2" id="status" name="status">
                                     <option value="">Select Status</option>
                                     @foreach(\App\Enum\CarStatus::cases() as $status)
-                                        <option value="{{ $status->value }}" {{ (isset($draft) && $draft->status === $status) ? 'selected' : '' }}>{{ $status->label() }}</option>
+                                        <option value="{{ $status->value }}" {{ strtolower($currentCarStatus) == strtolower($status->value) ? 'selected' : '' }}>{{ $status->label() }}</option>
                                     @endforeach
                                 </select>
                                 <label id="status-error" class="text-danger error" style="display: none"></label>

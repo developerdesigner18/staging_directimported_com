@@ -122,8 +122,21 @@
                 <div class="card-body">
 
                     <h3 class="mb-1">{{ $car->name }}</h3>
-                    <div class="mb-3 mt-3">
-                        {{-- <span class="badge bg-primary me-2 ">{{ $car->category->name ?? 'No Category' }}</span> --}}
+                    <div class="mb-3 mt-3 d-flex align-items-center gap-2">
+                        @php
+                            $vStatus = is_object($car->status) ? $car->status->value : (string) $car->status;
+                            $vLabel = is_object($car->status) ? $car->status->label() : ucfirst($vStatus ?: 'Available');
+                        @endphp
+                        @if($vStatus === 'draft')
+                            <span class="badge bg-warning text-dark"><i class="ri-draft-line me-1"></i> Draft</span>
+                        @elseif($vStatus === 'sold')
+                            <span class="badge bg-danger"><i class="ri-close-circle-line me-1"></i> SOLD</span>
+                        @elseif($vStatus === 'under_offer')
+                            <span class="badge text-white" style="background-color: #fd7e14;"><i class="ri-time-line me-1"></i> Under Offer</span>
+                        @else
+                            <span class="badge bg-success"><i class="ri-checkbox-circle-line me-1"></i> {{ $vLabel }}</span>
+                        @endif
+
                         @if($car->is_recommended)
                             <span class="badge bg-success">Recommended</span>
                         @endif

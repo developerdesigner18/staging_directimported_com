@@ -32,8 +32,16 @@
                             <div class="position-absolute top-0 start-0 m-2">
                                 @if($car->status === \App\Enum\CarStatus::DRAFT)
                                     <span class="badge bg-warning text-dark shadow-sm"><i class="ri-draft-line me-1"></i> {{ \App\Enum\CarStatus::DRAFT->label() }}</span>
-                                @else
+                                @elseif($car->status === \App\Enum\CarStatus::AVAILABLE)
+                                    <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ \App\Enum\CarStatus::AVAILABLE->label() }}</span>
+                                @elseif($car->status === \App\Enum\CarStatus::PUBLISHED)
                                     <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ \App\Enum\CarStatus::PUBLISHED->label() }}</span>
+                                @elseif($car->status === \App\Enum\CarStatus::UNDER_OFFER)
+                                    <span class="badge text-white shadow-sm" style="background-color: #fd7e14;"><i class="ri-time-line me-1"></i> {{ \App\Enum\CarStatus::UNDER_OFFER->label() }}</span>
+                                @elseif($car->status === \App\Enum\CarStatus::SOLD)
+                                    <span class="badge bg-danger shadow-sm"><i class="ri-close-circle-line me-1"></i> {{ \App\Enum\CarStatus::SOLD->label() }}</span>
+                                @else
+                                    <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ is_object($car->status) ? $car->status->label() : 'Available' }}</span>
                                 @endif
                             </div>
                         </div>

@@ -1870,8 +1870,18 @@
                         <div class="d-flex align-items-center justify-content-between mt-2">
                             <span class="pricing-value">¥{{ $formattedPrice }}</span>
                             @if(!empty($car->status))
-                                <span class="status-badge">
-                                    {{ strtoupper($car->status->value ?? $car->status) }}
+                                @php
+                                    $sVal = is_object($car->status) ? $car->status->value : (string) $car->status;
+                                    $sLabel = ($sVal === 'published') ? 'Available' : (is_object($car->status) ? $car->status->label() : str_replace('_', ' ', $sVal));
+                                    $singleBadgeStyle = match($sVal) {
+                                        'sold' => 'background: #dc3545; color: #fff;',
+                                        'under_offer' => 'background: #fd7e14; color: #fff;',
+                                        'draft' => 'background: #ffc107; color: #000;',
+                                        default => 'background: #198754; color: #fff;',
+                                    };
+                                @endphp
+                                <span class="status-badge" style="{{ $singleBadgeStyle }}">
+                                    {{ strtoupper($sLabel) }}
                                 </span>
                             @endif
                         </div>

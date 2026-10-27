@@ -3,7 +3,7 @@
 namespace App\Services\CarSensor;
 
 use App\Enum\CategoryType;
-use App\Enum\VehicleStatus;
+use App\Enum\CarStatus;
 use App\Models\AuctionGrade;
 use App\Models\Category;
 use App\Models\Manufacturer;
@@ -68,7 +68,7 @@ class CarSensorMappingService
         // --- Load live DB options ---
         $manufacturers = Manufacturer::orderBy('name')->get();
         $categories    = Category::select('id', 'name')->where('type', CategoryType::CAR->value)->get();
-        $statuses      = VehicleStatus::cases();
+        $statuses      = CarStatus::cases();
         $auctionGrades = AuctionGrade::all();
 
         // --- Manufacturer ---
@@ -305,7 +305,7 @@ class CarSensorMappingService
     {
         // Default to AVAILABLE for used-car listings
         foreach ($statuses as $status) {
-            if ($status->value === VehicleStatus::AVAILABLE->value) {
+            if ($status->value === CarStatus::AVAILABLE->value) {
                 return ['value' => $status->value, 'review' => null];
             }
         }

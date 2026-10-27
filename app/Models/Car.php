@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Enum\CarStatus;
-use App\Enum\VehicleStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enum\CategoryType;

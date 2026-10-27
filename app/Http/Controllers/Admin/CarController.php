@@ -289,10 +289,15 @@ class CarController extends Controller
 
 
                 ->addColumn('status', function ($row) {
-                    if ($row->status === CarStatus::DRAFT) {
-                        return '<span class="badge bg-warning text-dark px-2 py-1 fs-12"><i class="ri-draft-line me-1"></i> ' . CarStatus::DRAFT->label() . '</span>';
+                    $status = $row->status;
+                    if ($status instanceof CarStatus) {
+                        return $status->badgeHtml();
                     }
-                    return '<span class="badge bg-success px-2 py-1 fs-12"><i class="ri-checkbox-circle-line me-1"></i> ' . CarStatus::PUBLISHED->label() . '</span>';
+                    $enumStatus = CarStatus::tryFrom((string) $status);
+                    if ($enumStatus) {
+                        return $enumStatus->badgeHtml();
+                    }
+                    return '<span class="badge bg-success px-2 py-1 fs-12"><i class="ri-checkbox-circle-line me-1"></i> ' . ucfirst((string) $status ?: 'Available') . '</span>';
                 })
 
                 ->addColumn('action', function ($row) {
@@ -645,6 +650,7 @@ class CarController extends Controller
             'vehicle_price' => 'nullable|numeric',
             'vehicle_id_type' => 'nullable|in:auto,manual',
             'vehicle_id' => $isManual ? ['required', 'string', 'max:255', Rule::unique('cars', 'vehicle_id')->ignore($carId)] : 'nullable|string|max:255',
+            'status' => 'nullable',
             'auction_grade_id' => 'required',
         ], [
             'vehicle_id.required' => 'The Vehicle ID field is required when Manual Entry is selected.',
@@ -743,7 +749,11 @@ class CarController extends Controller
                 $car->vehicle_id = $this->generateNextVehicleId();
             }
 
-            $car->status = CarStatus::PUBLISHED;
+            if ($request->filled('status')) {
+                $car->status = CarStatus::tryFrom($request->status) ?? $request->status;
+            } else {
+                $car->status = CarStatus::AVAILABLE;
+            }
             $car->auction_grade_id = $request->auction_grade_id;
 
             $car->save();
@@ -871,7 +881,9 @@ class CarController extends Controller
                 }
             }
 
-            $car->status = CarStatus::PUBLISHED;
+            if ($request->filled('status')) {
+                $car->status = CarStatus::tryFrom($request->status) ?? $request->status;
+            }
 
             // Banner upload
             if ($request->hasFile('banner')) {

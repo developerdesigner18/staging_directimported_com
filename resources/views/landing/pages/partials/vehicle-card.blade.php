@@ -27,8 +27,22 @@
     }
 
     $inspection = 'Available';
+    $badgeStyle = 'background-color: #198754; color: #ffffff;';
     if ($car->status) {
-        $inspection = is_object($car->status) ? $car->status->label() : (string) $car->status;
+        $statusVal = is_object($car->status) ? $car->status->value : (string) $car->status;
+        if ($statusVal === 'under_offer') {
+            $inspection = 'Under Offer';
+            $badgeStyle = 'background-color: #fd7e14; color: #ffffff;';
+        } elseif ($statusVal === 'sold') {
+            $inspection = 'SOLD';
+            $badgeStyle = 'background-color: #dc3545; color: #ffffff;';
+        } elseif ($statusVal === 'draft') {
+            $inspection = 'Draft';
+            $badgeStyle = 'background-color: #ffc107; color: #000000;';
+        } else {
+            $inspection = ($statusVal === 'published') ? 'Available' : (is_object($car->status) ? $car->status->label() : 'Available');
+            $badgeStyle = 'background-color: #198754; color: #ffffff;';
+        }
     }
 
     $gradeStr = $car->auctionGrade->grade ?? '';
@@ -77,7 +91,7 @@
             <h2 class="vehicle-title">
                 <a href="{{ $detailUrl }}">{{ $displayName }}</a>
             </h2>
-            <div class="status-badge">{{ $inspection }}</div>
+            <div class="status-badge" style="{{ $badgeStyle }}">{{ $inspection }}</div>
         </div>
 
         <div class="specs-grid">
