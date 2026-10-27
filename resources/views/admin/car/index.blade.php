@@ -193,6 +193,19 @@
             height: 50px;
             object-fit: cover;
         }
+
+        .car-name-link {
+            color: #212529;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s ease-in-out, text-decoration 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .car-name-link:hover {
+            color: #405189 !important;
+            text-decoration: underline !important;
+        }
     </style>
 
     <div class="row" id="vfFilterCard">
@@ -294,7 +307,11 @@
                                                 <img src="{{ $dSrc }}" alt="Draft" class="car-table-thumb rounded shadow-sm">
                                             </td>
                                             <td>
-                                                <h6 class="fs-14 mb-0 fw-semibold">{{ $draftItem->name ?: 'Untitled Car Draft' }}</h6>
+                                                <h6 class="fs-14 mb-0 fw-semibold">
+                                                    <a href="{{ route('admin.car.view', $draftItem->id) }}" class="car-name-link" title="View Car">
+                                                        {{ $draftItem->name ?: 'Untitled Car Draft' }}
+                                                    </a>
+                                                </h6>
                                                 <small class="text-muted">{{ $draftItem->manufacturer->name ?? '' }} {{ $draftItem->model ?? '' }} {{ $draftItem->year ?? '' }}</small>
                                             </td>
                                             <td>

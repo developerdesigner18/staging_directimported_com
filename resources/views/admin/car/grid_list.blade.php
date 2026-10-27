@@ -47,7 +47,11 @@
                         </div>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div>
-                                <h5 class="card-title mb-1">{{ $car->name ?: 'Untitled Draft' }}</h5>
+                                <h5 class="card-title mb-1">
+                                    <a href="{{ route('admin.car.view', $car->id) }}" class="car-name-link">
+                                        {{ $car->name ?: 'Untitled Draft' }}
+                                    </a>
+                                </h5>
                                 <span class="text-muted fs-12">{{ dateToHuman($car->created_at) }}</span>
                             </div>
                             <div class="action-btn text-end mt-2">
@@ -57,10 +61,16 @@
                                         <i class="ri-edit-box-line me-1"></i> Continue Editing
                                     </a>
                                 @endif
+                                <a class="btn btn-info btn-sm" href="{{ route('admin.car.view', $car->id) }}"
+                                    data-bs-toggle="tooltip" title="View Car">
+                                    <i class="ri-eye-line"></i>
+                                </a>
+                                {{--
                                 <a class="btn btn-primary btn-sm" href="{{ route('admin.car.specs', $car->id) }}"
                                     data-bs-toggle="tooltip" title="Manage Specs">
                                     <i class="ri-settings-4-line"></i>
                                 </a>
+                                --}}
                                 <a class="btn btn-success btn-sm" href="{{ route('admin.car.edit', $car->id) }}"
                                     data-bs-toggle="tooltip" title="Edit Car">
                                     <i class="ri-pencil-line"></i>

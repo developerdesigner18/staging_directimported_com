@@ -24,17 +24,26 @@
         <div class="col-12">
             <div class="page-title-box d-sm-flex align-items-center justify-content-between bg-galaxy-transparent mb-3">
                 <h4 class="mb-sm-0">Car Details</h4>
-                <div class="page-title-right d-flex align-items-center gap-3">
-                    <a href="{{ route('car.single', ['slug' => $car->stock_id]) }}" target="_blank"
-                        class="btn btn-sm btn-primary d-flex align-items-center gap-1">
-                        <i class="ri-external-link-line"></i> View Vehicle Details
-                    </a>
+                <div class="page-title-right">
                     <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item"><a href="{{ route('admin.car.index') }}">Cars</a></li>
                         <li class="breadcrumb-item active">{{ $car->name }}</li>
                     </ol>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-end align-items-center gap-2">
+            <a href="{{ route('admin.car.edit', $car->id) }}"
+                class="btn btn-sm btn-success d-flex align-items-center gap-1">
+                <i class="ri-pencil-line"></i> Edit Vehicle
+            </a>
+            <a href="{{ route('car.single', ['slug' => $car->stock_id]) }}" target="_blank"
+                class="btn btn-sm btn-primary d-flex align-items-center gap-1">
+                <i class="ri-external-link-line"></i> View Vehicle Details
+            </a>
         </div>
     </div>
 
@@ -209,97 +218,26 @@
             </div>
 
         </div>
-        <div cass="col-12">
+        <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h5>Description</h5>
                     <div class="ck-content mb-4">
                         {!! $car->description ?? '<p class="text-muted">No description available.</p>' !!}
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <h5 class="mb-4">Technical Specifications</h5>
-
-                    <div class="row">
-
-                        <!-- Engine -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-speed-up-line fs-3 text-danger"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">ENGINE</small>
-                                    <h6 class="mb-0">{{ $car->engine ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Power -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-flashlight-line fs-3 text-warning"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">POWER</small>
-                                    <h6 class="mb-0">{{ $car->power ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seat Height -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-ruler-line fs-3 text-primary"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">SEAT HEIGHT</small>
-                                    <h6 class="mb-0">{{ $car->seat_height ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Weight -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-scales-2-line fs-3 text-success"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">WEIGHT</small>
-                                    <h6 class="mb-0">{{ $car->weight ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tank Capacity -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-gas-station-line fs-3 text-info"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">TANK CAPACITY</small>
-                                    <h6 class="mb-0">{{ $car->tank_capacity ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Luggage -->
-                        <div class="col-md-4 mb-4">
-                            <div class="border rounded p-3 h-100 d-flex align-items-center">
-                                <div class="me-3">
-                                    <i class="ri-briefcase-4-line fs-3 text-dark"></i>
-                                </div>
-                                <div>
-                                    <small class="text-muted">LUGGAGE</small>
-                                    <h6 class="mb-0">{{ $car->luggage ?? '-' }}</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+        <div class="col-12 mt-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">🔒 Private Notes (Internal Use Only)</h5>
+                </div>
+                <div class="card-body">
+                    <label for="private_notes" class="form-label">Source URL & Location Details</label>
+                    <textarea class="form-control" id="private_notes" rows="4" readonly
+                        placeholder="Add web addresses, specific physical locations, or internal notes here. These will not be visible on the frontend website.">{{ $car->private_notes ?? '' }}</textarea>
                 </div>
             </div>
         </div>

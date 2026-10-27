@@ -220,9 +220,9 @@ class CarController extends Controller
                 })
 
                 ->addColumn('name', function ($row) {
-
-                    return $row->name;
-
+                    $viewUrl = route('admin.car.view', $row->id);
+                    $name = $row->name ?: 'Untitled Car';
+                    return '<a href="' . $viewUrl . '" class="car-name-link" title="View Car">' . e($name) . '</a>';
                 })
 
 
@@ -346,7 +346,7 @@ class CarController extends Controller
                 })
 
 
-                ->rawColumns(['image', 'status', 'action'])
+                ->rawColumns(['image', 'name', 'status', 'action'])
 
                 ->make(true);
 
