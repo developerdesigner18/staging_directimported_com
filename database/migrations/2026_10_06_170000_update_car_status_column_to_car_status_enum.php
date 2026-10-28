@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Update existing car records with non-draft/published statuses to 'published'
+        // Update existing car records with non-draft/available statuses to 'available'
         DB::table('cars')
-            ->whereNotIn('status', [CarStatus::DRAFT->value, CarStatus::PUBLISHED->value])
+            ->whereNotIn('status', [CarStatus::DRAFT->value, CarStatus::AVAILABLE->value])
             ->orWhereNull('status')
-            ->update(['status' => CarStatus::PUBLISHED->value]);
+            ->update(['status' => CarStatus::AVAILABLE->value]);
 
         Schema::table('cars', function (Blueprint $table) {
             $table->string('status')->default(CarStatus::DRAFT->value)->change();

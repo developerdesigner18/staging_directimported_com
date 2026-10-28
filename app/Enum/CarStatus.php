@@ -8,7 +8,6 @@ enum CarStatus: string
     case UNDER_OFFER = 'under_offer';
     case SOLD = 'sold';
     case DRAFT = 'draft';
-    case PUBLISHED = 'published';
 
     public function label(): string
     {
@@ -17,14 +16,13 @@ enum CarStatus: string
             self::UNDER_OFFER => 'Under Offer',
             self::SOLD => 'SOLD',
             self::DRAFT => 'Draft',
-            self::PUBLISHED => 'Published',
         };
     }
 
     public function badgeClass(): string
     {
         return match ($this) {
-            self::PUBLISHED, self::AVAILABLE => 'badge bg-success',
+            self::AVAILABLE => 'badge bg-success',
             self::SOLD => 'badge bg-danger',
             self::DRAFT => 'badge bg-warning text-dark',
             self::UNDER_OFFER => 'badge text-white',

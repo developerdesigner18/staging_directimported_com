@@ -514,8 +514,8 @@
         }
 
         /* =========================
-                                                                                               How It Works & Our Services Cards
-                                                                                            ========================= */
+                                                                                                                                                           How It Works & Our Services Cards
+                                                                                                                                                        ========================= */
 
         .rid-how-it-work {
             padding: 80px 0;
@@ -1032,32 +1032,32 @@
                 $homeServices = $homeSection->services_items ?? [];
             @endphp
             @if(!empty($homeServices))
-            <div class="tiles-grid">
-                @foreach($homeServices as $service)
-                <div class="tile">
-                    <div class="icon icon-dark">
-                        @if(!empty($service['icon']))
-                            @if(str_starts_with($service['icon'], 'bx ') || str_starts_with($service['icon'], 'ri-') || str_starts_with($service['icon'], 'fa'))
-                                <i class="{{ $service['icon'] }}"></i>
-                            @else
-                                <img src="{{ asset($service['icon']) }}" alt="{{ $service['title'] ?? '' }}" loading="lazy">
-                            @endif
-                        @else
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="8" y1="13" x2="16" y2="13"></line>
-                            <line x1="8" y1="17" x2="16" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        @endif
-                    </div>
-                    <h3 class="tile-title">{{ $service['title'] ?? '' }}</h3>
-                    <p class="tile-description">{{ $service['description'] ?? '' }}</p>
+                <div class="tiles-grid">
+                    @foreach($homeServices as $service)
+                        <div class="tile">
+                            <div class="icon icon-dark">
+                                @if(!empty($service['icon']))
+                                    @if(str_starts_with($service['icon'], 'bx ') || str_starts_with($service['icon'], 'ri-') || str_starts_with($service['icon'], 'fa'))
+                                        <i class="{{ $service['icon'] }}"></i>
+                                    @else
+                                        <img src="{{ asset($service['icon']) }}" alt="{{ $service['title'] ?? '' }}" loading="lazy">
+                                    @endif
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="8" y1="13" x2="16" y2="13"></line>
+                                        <line x1="8" y1="17" x2="16" y2="17"></line>
+                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                    </svg>
+                                @endif
+                            </div>
+                            <h3 class="tile-title">{{ $service['title'] ?? '' }}</h3>
+                            <p class="tile-description">{{ $service['description'] ?? '' }}</p>
+                        </div>
+                    @endforeach
                 </div>
-                @endforeach
-            </div>
             @endif
 
         </div>
@@ -1201,14 +1201,14 @@
                 <div class="col-lg-6">
                     <h2 class="who-title">Who We Are</h2>
                     <p class="who-desc">
-                        Welcome to International Auto Select Japan (IAS). Since the early 1990s, IAS has grown through close
+                        Welcome to Direct Imported Japan. Since the early 1990s, our team has grown through close
                         collaborations with partners, consistently upholding principles of honesty, integrity, and
                         commitment. Over the years, this approach has allowed us to gain valuable experience and specialized
                         insight into the JDM market. Through hard work and a focus on building strong relationships, we have
                         established ourselves as a reliable resource in the industry. Our expertise enables us to navigate
                         the complexities of the JDM market effectively, providing dependable solutions for our clients. At
-                        IAS, we continue to adapt to the changing needs of the industry while staying true to the values
-                        that have shaped our journey.
+                        Direct Imported Japan, we continue to adapt to the changing needs of the industry while staying true
+                        to the values that have shaped our journey.
                     </p>
 
                     <div class="who-points">
@@ -1226,13 +1226,13 @@
                                 <i class='bx bx-check'></i>
                             </div>
                             <p class="who-point-text">
-                                At IAS Japan, we strive to deliver a seamless and trustworthy car buying experience, making
-                                us your trusted partner in the global automotive market.
+                                At Direct Imported Japan, we strive to deliver a seamless and trustworthy car buying
+                                experience, making us your trusted partner in the global automotive market
                             </p>
                         </div>
                     </div>
 
-                    <a href="#" class="btn-read-more">
+                    <a href="{{ route('about.us') }}" class="btn-read-more">
                         READ MORE <i class='bx bx-right-arrow-alt'></i>
                     </a>
                 </div>

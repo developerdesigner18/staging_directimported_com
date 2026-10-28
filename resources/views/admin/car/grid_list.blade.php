@@ -34,8 +34,6 @@
                                     <span class="badge bg-warning text-dark shadow-sm"><i class="ri-draft-line me-1"></i> {{ \App\Enum\CarStatus::DRAFT->label() }}</span>
                                 @elseif($car->status === \App\Enum\CarStatus::AVAILABLE)
                                     <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ \App\Enum\CarStatus::AVAILABLE->label() }}</span>
-                                @elseif($car->status === \App\Enum\CarStatus::PUBLISHED)
-                                    <span class="badge bg-success shadow-sm"><i class="ri-checkbox-circle-line me-1"></i> {{ \App\Enum\CarStatus::PUBLISHED->label() }}</span>
                                 @elseif($car->status === \App\Enum\CarStatus::UNDER_OFFER)
                                     <span class="badge text-white shadow-sm" style="background-color: #fd7e14;"><i class="ri-time-line me-1"></i> {{ \App\Enum\CarStatus::UNDER_OFFER->label() }}</span>
                                 @elseif($car->status === \App\Enum\CarStatus::SOLD)

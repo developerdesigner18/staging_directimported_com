@@ -103,6 +103,11 @@
             color: #ffffff;
         }
 
+        .blog-view-btn.active {
+            background-color: #0B437C;
+            color: #ffffff;
+        }
+
         .blog-meta-bar {
             display: flex;
             align-items: center;
@@ -494,11 +499,19 @@
                         class="blog-search-input">
                 </div>
 
-                <!-- Navigation Buttons: shown when in blog view (two buttons); shown as Back when in secondary view -->
+                <!-- Navigation Buttons: General Blogs page, Unicorn Cars, Import Regulations -->
                 <div id="viewNavBtnGroup" style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                    <!-- Unicorn Cars Button (visible in blog view) -->
-                    <button id="unicornCarsBtn" type="button" onclick="switchView('unicorn_cars')" class="blog-view-btn"
-                        style="display:none;">
+                    <!-- General Blogs Button (before Unicorn Cars) -->
+                    <button id="generalBlogBtn" type="button" onclick="switchView('blog')" class="blog-view-btn">
+                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11a2 2 0 002-2v-.055M11 20.055V18a2 2 0 002-2h1a2 2 0 002-2v-1a2 2 0 012-2h2.945M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                        General Blogs page
+                    </button>
+                    <!-- Unicorn Cars Button -->
+                    <button id="unicornCarsBtn" type="button" onclick="switchView('unicorn_cars')" class="blog-view-btn">
                         <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z">
@@ -506,9 +519,8 @@
                         </svg>
                         Unicorn Cars
                     </button>
-                    <!-- Import Regulations Button (visible in blog view) -->
-                    <button id="regulationsBtn" type="button" onclick="switchView('regulations')" class="blog-view-btn"
-                        style="display:none;">
+                    <!-- Import Regulations Button -->
+                    <button id="regulationsBtn" type="button" onclick="switchView('regulations')" class="blog-view-btn">
                         <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2h1.5a2.5 2.5 0 002.5-2.5V11a2 2 0 002-2v-.055M11 20.055V18a2 2 0 002-2h1a2 2 0 002-2v-1a2 2 0 012-2h2.945M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
@@ -516,52 +528,21 @@
                         </svg>
                         Import Regulations
                     </button>
-                    <!-- Back to Blog Button (visible in secondary views) -->
-                    <button id="backToBlogBtn" type="button" onclick="switchView('blog')" class="blog-view-btn"
-                        style="display:none;">
-                        <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        Back to News &amp; Articles
-                    </button>
                 </div>
             </div>
 
-            <!-- Page Info & Items Per Page Dropdown -->
+            <!-- Page Info -->
             <div class="blog-meta-bar">
                 <p id="pageCounter" class="blog-page-counter"></p>
-
-                <div class="blog-per-page-group">
-                    <label for="itemsPerPageSelect" class="blog-per-page-label">Initial Display:</label>
-                    <select id="itemsPerPageSelect" onchange="handleItemsPerPageChange()" class="blog-per-page-select">
-                        <option value="10" selected>10 per page</option>
-                        <option value="20">20 per page</option>
-                        <option value="30">30 per page</option>
-                    </select>
-                </div>
             </div>
 
             <!-- Dynamic Tiles Container -->
             <div id="postsContainer" class="blog-posts-list">
-                @forelse($posts->take(10) as $post)
+                @forelse($posts as $post)
                     @include('landing.pages.partials.blog-card', ['post' => $post])
                 @empty
                     <p class="blog-no-posts">No articles found.</p>
                 @endforelse
-            </div>
-
-            <!-- Downward Arrow: Load 10 More Articles -->
-            <div id="loadMoreContainer" class="blog-load-more-wrapper" style="display: none;">
-                <button type="button" onclick="loadMoreTen()" class="blog-load-more-btn">
-                    <span id="loadMoreText">Load 10 More Articles</span>
-                    <div class="blog-load-more-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7">
-                            </path>
-                        </svg>
-                    </div>
-                </button>
             </div>
 
             <!-- Bottom Page Number Navigation -->
@@ -576,8 +557,6 @@
         let activeView = 'blog'; // 'blog', 'regulations', or 'unicorn_cars'
         let currentPage = 1;
         let itemsPerPage = 10;
-        let currentlyVisibleCount = 10;
-        const maxPageCap = 50;
         let searchQuery = '';
         let fetchedCards = [];
         let totalMatchingRecords = 0;
@@ -586,58 +565,41 @@
 
         function renderHeaderButton() {
             const searchInput = document.getElementById('searchInput');
+            const generalBtn = document.getElementById('generalBlogBtn');
             const unicornBtn = document.getElementById('unicornCarsBtn');
             const regulationsBtn = document.getElementById('regulationsBtn');
-            const backBtn = document.getElementById('backToBlogBtn');
+
+            if (generalBtn) generalBtn.classList.toggle('active', activeView === 'blog');
+            if (unicornBtn) unicornBtn.classList.toggle('active', activeView === 'unicorn_cars');
+            if (regulationsBtn) regulationsBtn.classList.toggle('active', activeView === 'regulations');
 
             if (activeView === 'blog') {
                 searchInput.placeholder = "Search articles...";
-                unicornBtn.style.display = 'inline-flex';
-                regulationsBtn.style.display = 'inline-flex';
-                backBtn.style.display = 'none';
             } else if (activeView === 'regulations') {
                 searchInput.placeholder = "Search import regulations...";
-                unicornBtn.style.display = 'none';
-                regulationsBtn.style.display = 'none';
-                backBtn.style.display = 'inline-flex';
             } else {
                 // unicorn_cars
                 searchInput.placeholder = "Search Unicorn Cars articles...";
-                unicornBtn.style.display = 'none';
-                regulationsBtn.style.display = 'none';
-                backBtn.style.display = 'inline-flex';
             }
         }
 
         function switchView(view) {
             activeView = view;
             currentPage = 1;
-            currentlyVisibleCount = itemsPerPage;
             document.getElementById('searchInput').value = '';
             searchQuery = '';
             renderApp();
         }
 
-        function handleItemsPerPageChange() {
-            itemsPerPage = parseInt(document.getElementById('itemsPerPageSelect').value);
-            currentlyVisibleCount = itemsPerPage;
-            currentPage = 1;
-            fetchPosts();
-        }
-
-        function loadMoreTen() {
-            if (currentlyVisibleCount < maxPageCap) {
-                currentlyVisibleCount = Math.min(currentlyVisibleCount + 10, maxPageCap);
-                renderPosts();
-            }
-        }
 
         function changePage(page) {
-            if (page < 1 || page > totalServerPages) return;
+            if (page < 1 || page > totalServerPages || page === currentPage) return;
             currentPage = page;
-            currentlyVisibleCount = itemsPerPage;
             fetchPosts();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const target = document.querySelector('.blog-header-row') || document.querySelector('.blog-container');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         function handleSearch() {
@@ -645,7 +607,6 @@
             searchTimer = setTimeout(function () {
                 searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
                 currentPage = 1;
-                currentlyVisibleCount = itemsPerPage;
                 fetchPosts();
             }, 300);
         }
@@ -657,7 +618,7 @@
                 data: {
                     category: activeView,
                     page: currentPage,
-                    per_page: maxPageCap,
+                    per_page: itemsPerPage,
                     search: searchQuery
                 },
                 success: function (response) {
@@ -665,9 +626,10 @@
                         fetchedCards = response.cards || [];
                         totalMatchingRecords = response.total;
                         totalServerPages = response.lastPage;
+                        currentPage = response.currentPage;
 
                         renderHeaderButton();
-                        renderPosts();
+                        renderPosts(response);
                     }
                 },
                 error: function (xhr) {
@@ -676,48 +638,33 @@
             });
         }
 
-        function renderPosts() {
+        function renderPosts(response) {
             const container = document.getElementById('postsContainer');
             const pageCounter = document.getElementById('pageCounter');
-            const loadMoreContainer = document.getElementById('loadMoreContainer');
-            const loadMoreText = document.getElementById('loadMoreText');
 
             container.innerHTML = '';
-
-            const availableOnThisPage = fetchedCards;
-            const displayCount = Math.min(currentlyVisibleCount, availableOnThisPage.length);
-            const visibleItems = availableOnThisPage.slice(0, displayCount);
 
             const typeLabel = activeView === 'blog' ? 'articles' : (activeView === 'regulations' ? 'regulations' : 'unicorn cars articles');
 
             if (totalMatchingRecords > 0) {
-                pageCounter.innerText = `Showing ${visibleItems.length} of ${availableOnThisPage.length} ${typeLabel} on Page ${currentPage} (${totalMatchingRecords} total)`;
+                const firstItem = (response && response.firstItem !== undefined) ? response.firstItem : ((currentPage - 1) * itemsPerPage + 1);
+                const lastItem = (response && response.lastItem !== undefined) ? response.lastItem : Math.min(currentPage * itemsPerPage, totalMatchingRecords);
+                pageCounter.innerText = `Showing ${firstItem} to ${lastItem} of ${totalMatchingRecords} ${typeLabel} on Page ${currentPage} (${totalMatchingRecords} total)`;
             } else {
                 pageCounter.innerText = `0 ${typeLabel} found`;
             }
 
-            if (visibleItems.length === 0) {
+            if (fetchedCards.length === 0) {
                 container.innerHTML = `<p class="blog-no-posts">No ${typeLabel} found.</p>`;
-                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                 renderPagination();
                 return;
             }
 
             let cardsHtml = '';
-            visibleItems.forEach(item => {
+            fetchedCards.forEach(item => {
                 cardsHtml += item.html;
             });
             container.innerHTML = cardsHtml;
-
-            // Downward arrow visible if articles remain on current page & below max cap (50)
-            if (displayCount < availableOnThisPage.length && displayCount < maxPageCap) {
-                if (loadMoreText) {
-                    loadMoreText.innerText = `Load 10 More ${activeView === 'blog' ? 'Articles' : (activeView === 'regulations' ? 'Regulations' : 'Unicorn Cars')}`;
-                }
-                if (loadMoreContainer) loadMoreContainer.style.display = 'flex';
-            } else {
-                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
-            }
 
             renderPagination();
         }
@@ -733,27 +680,27 @@
             // Prev Button
             const isPrevDisabled = currentPage <= 1;
             pagination.innerHTML += `
-                    <button onclick="changePage(${currentPage - 1})" ${isPrevDisabled ? 'disabled class="blog-page-btn"' : 'class="blog-page-btn"'}>
-                        Prev
-                    </button>
-                `;
+                <button type="button" onclick="changePage(${currentPage - 1})" ${isPrevDisabled ? 'disabled class="blog-page-btn"' : 'class="blog-page-btn"'}>
+                    Prev
+                </button>
+            `;
 
             // Page Numbers
             for (let i = 1; i <= totalPages; i++) {
                 pagination.innerHTML += `
-                        <button onclick="changePage(${i})" class="blog-page-btn ${currentPage === i ? 'active' : ''}">
-                            ${i}
-                        </button>
-                    `;
+                    <button type="button" onclick="changePage(${i})" class="blog-page-btn ${currentPage === i ? 'active' : ''}">
+                        ${i}
+                    </button>
+                `;
             }
 
             // Next Button
             const isNextDisabled = currentPage >= totalPages;
             pagination.innerHTML += `
-                    <button onclick="changePage(${currentPage + 1})" ${isNextDisabled ? 'disabled class="blog-page-btn"' : 'class="blog-page-btn"'}>
-                        Next
-                    </button>
-                `;
+                <button type="button" onclick="changePage(${currentPage + 1})" ${isNextDisabled ? 'disabled class="blog-page-btn"' : 'class="blog-page-btn"'}>
+                    Next
+                </button>
+            `;
         }
 
         function renderApp() {
