@@ -280,7 +280,18 @@ class HomeController extends Controller
             });
         }
 
-        $posts = $query->orderBy('published_at', 'desc')->paginate($perPage)->withQueryString();
+        // Deduplicate by slug — keep only the earliest (lowest id) record per slug
+        // to prevent duplicate blog posts from data-import issues showing on the page.
+        $posts = $query
+            ->whereIn('id', function ($sub) {
+                $sub->selectRaw('MIN(id)')
+                    ->from('blog_posts')
+                    ->whereNull('deleted_at')
+                    ->groupBy('slug');
+            })
+            ->orderBy('published_at', 'desc')
+            ->paginate($perPage)
+            ->withQueryString();
 
         if ($request->ajax()) {
             $cards = [];
@@ -307,8 +318,18 @@ class HomeController extends Controller
 
     public function blogDetail($slug)
     {
-        $post = BlogPost::where('slug', $slug)->firstOrFail();
+        // Use the earliest (canonical) record for this slug
+        $post = BlogPost::where('slug', $slug)
+            ->orderBy('id', 'asc')
+            ->firstOrFail();
+
         $recentPosts = BlogPost::where('id', '!=', $post->id)
+            ->whereIn('id', function ($sub) {
+                $sub->selectRaw('MIN(id)')
+                    ->from('blog_posts')
+                    ->whereNull('deleted_at')
+                    ->groupBy('slug');
+            })
             ->orderBy('published_at', 'desc')
             ->take(5)
             ->get();

@@ -27,4 +27,15 @@ class BlogPost extends Model
     protected $casts = [
         'published_at' => 'datetime',
     ];
+
+    /**
+     * Scope a query to only include published blog posts for sitemap.
+     */
+    public function scopePublishedForSitemap($query)
+    {
+        return $query->whereNotNull('published_at')
+            ->where('published_at', '<=', now())
+            ->whereNotNull('slug')
+            ->where('slug', '!=', '');
+    }
 }

@@ -200,4 +200,21 @@ class Car extends Model
         return $this->belongsTo(Manufacturer::class);
     }
 
+    /**
+     * Scope a query to only include eligible vehicles for sitemap.
+     */
+    public function scopeEligibleForSitemap($query, ?bool $includeSold = null)
+    {
+        $includeSold = $includeSold ?? config('sitemap.include_sold_vehicles', true);
+
+        return $query->where(function ($q) use ($includeSold) {
+            if ($includeSold) {
+                $q->where('status', '!=', CarStatus::DRAFT->value)
+                  ->orWhereNull('status');
+            } else {
+                $q->whereIn('status', [CarStatus::AVAILABLE->value, CarStatus::UNDER_OFFER->value])
+                  ->orWhereNull('status');
+            }
+        });
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPassword\ForgotPasswordController;
 use App\Http\Controllers\ForgotPassword\ResetPasswordController;
+use App\Http\Controllers\SitemapController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -88,5 +89,9 @@ Route::group(['middleware' => 'auth:web'], function () {
 });
 
 Route::post('contact-request', [\App\Http\Controllers\ContactRequestController::class, 'store'])->name('contact.request.store');
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.xml');
+Route::get('/sitemap', [SitemapController::class, 'index'])->name('sitemap');
+
 
 
