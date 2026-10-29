@@ -34,7 +34,6 @@ class BlogPost extends Model
     public function scopePublishedForSitemap($query)
     {
         return $query->whereNotNull('published_at')
-            ->where('published_at', '<=', now())
             ->whereNotNull('slug')
             ->where('slug', '!=', '');
     }
