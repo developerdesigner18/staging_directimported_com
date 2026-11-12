@@ -514,8 +514,8 @@
         }
 
         /* =========================
-                                                                                                                                                           How It Works & Our Services Cards
-                                                                                                                                                        ========================= */
+                                                                                                                                                                                       How It Works & Our Services Cards
+                                                                                                                                                                                    ========================= */
 
         .rid-how-it-work {
             padding: 80px 0;
@@ -1138,7 +1138,10 @@
                                     </div>
                                     <h4 class="feature-title">English speakers</h4>
                                     <p class="feature-text">
-                                        English is important to communicate most of our people english is our 1st language.
+                                        {{-- English is important to communicate most of our people english is our 1st
+                                        language. --}}
+                                        English is our first language. Clear communication is a priority for our
+                                        team.“Reliable, honesty, trust.
                                     </p>
                                 </div>
                             </div>
@@ -1152,7 +1155,9 @@
                                     </div>
                                     <h4 class="feature-title">Reliable, honesty, trust</h4>
                                     <p class="feature-text">
-                                        We prioritize honesty, trust and integrity making us reliable
+                                        {{-- We prioritize honesty, trust and integrity making us reliable --}}
+                                        We prioritise honesty, trust and integrity in every transaction.“Clear and Honest
+                                        Pricing.
                                     </p>
                                 </div>
                             </div>
@@ -1166,7 +1171,10 @@
                                     </div>
                                     <h4 class="feature-title">Clear and Honest Pricing</h4>
                                     <p class="feature-text">
-                                        Our commitment to honesty that you understand what you are make informed decisions.
+                                        {{-- Our commitment to honesty that you understand what you are make informed
+                                        decisions. --}}
+                                        We are committed to clear, honest pricing so you can make fully informed
+                                        decisions.“Professional Inspection.
                                     </p>
                                 </div>
                             </div>
@@ -1180,9 +1188,7 @@
                                     </div>
                                     <h4 class="feature-title">Professional Inspection</h4>
                                     <p class="feature-text">
-                                        Experianced staff some who are mechanics from previous lifes are dedicated who know
-                                        cars
-                                        inside and out.
+                                        Our experienced team includes qualified mechanics who know cars inside and out.
                                     </p>
                                 </div>
                             </div>

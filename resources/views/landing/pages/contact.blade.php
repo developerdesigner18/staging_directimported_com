@@ -99,7 +99,7 @@
                 <p>If you require any information whatsoever, please fill out the contact form below. Please do have a
                     look at our FAQs as most information is on there but we are happy to answer any questions you may
                     have. We aim to answer all inquiries within 24hours however this may take a little longer at busier
-                    times so please bear with us. For rental or tour quotes, please complete the booking request form
+                    times so please bear with us.Please complete the booking request form
                     and we will contact you as soon as possible.
                 </p>
             </div>
@@ -158,7 +158,8 @@
                                 <input type="email" class="form-control" placeholder="Email" name="email">
                             </div>
                             <div class="mb-4">
-                                <input type="tel" class="form-control" placeholder="Contact Number" name="contactNumber" id="contactNumber">
+                                <input type="tel" class="form-control" placeholder="Contact Number" name="contactNumber"
+                                    id="contactNumber">
                             </div>
                             <div class="mb-4">
                                 <textarea class="form-control" rows="4" placeholder="Write Your Message"
