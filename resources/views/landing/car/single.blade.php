@@ -1244,7 +1244,7 @@
 
         if (!empty($car->spec->odometer)) {
             $ogDescriptionParts[] =
-                number_format($car->spec->odometer) . ' km';
+                (is_numeric($car->spec->odometer) ? number_format((float) $car->spec->odometer) : $car->spec->odometer) . ' km';
         }
 
         if (!empty($car->spec->formatted_transmission)) {
@@ -1403,7 +1403,7 @@
                         <div class="specs-item">
                             <span class="specs-label">⏱️ Odometer</span>
                             <span
-                                class="specs-value">{{ !empty($car->spec->odometer) ? number_format($car->spec->odometer) . ' km' : '0 km' }}</span>
+                                class="specs-value">{{ !empty($car->spec->odometer) ? (is_numeric($car->spec->odometer) ? number_format((float) $car->spec->odometer) . ' km' : $car->spec->odometer) : '0 km' }}</span>
                         </div>
 
                         <div class="specs-item">

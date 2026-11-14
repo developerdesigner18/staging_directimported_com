@@ -60,7 +60,7 @@
 
     $typeName = $car->spec->type ?? '';
     $yearVal = $car->year ?? ($car->spec->model_year ?? '-');
-    $mileageVal = isset($car->spec->odometer) && $car->spec->odometer ? number_format($car->spec->odometer) . ' km' : '-';
+    $mileageVal = isset($car->spec->odometer) && $car->spec->odometer ? (is_numeric($car->spec->odometer) ? number_format((float) $car->spec->odometer) . ' km' : $car->spec->odometer) : '-';
     $engineVal = $car->spec->engine ?? '-';
     $transmissionVal = !empty($car->spec->transmission_custom)
         ? $car->spec->transmission_custom

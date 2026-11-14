@@ -900,7 +900,7 @@
                                         <!-- Mileage -->
                                         <div class="emblem-item">
                                             <i class='bx bx-tachometer'></i>
-                                            <span>{{ !empty($car->spec->odometer) ? number_format($car->spec->odometer) : (!empty($car->odometer) ? number_format($car->odometer) : '65,000') }}</span>
+                                            <span>{{ !empty($car->spec->odometer) ? (is_numeric($car->spec->odometer) ? number_format((float)$car->spec->odometer) : $car->spec->odometer) : (!empty($car->odometer) ? (is_numeric($car->odometer) ? number_format((float)$car->odometer) : $car->odometer) : '65,000') }}</span>
                                         </div>
 
                                         <!-- Fuel -->
