@@ -226,10 +226,10 @@
                                     data-allow-reorder="true">
                             </div>
 
-                            @if(isset($draft) && $draft->images && count(array_filter($draft->images)))
-                                <div class="mt-4 pt-3 border-top">
-                                    <label class="form-label text-muted fw-semibold mb-2">Existing Car Images (Drag to reorder):</label>
-                                    <div id="sortable-images" class="d-flex flex-wrap gap-2">
+                            <div id="existing-images-wrapper" class="mt-4 pt-3 border-top {{ (isset($draft) && $draft->images && count(array_filter($draft->images))) ? '' : 'd-none' }}">
+                                <label class="form-label text-muted fw-semibold mb-2">Existing Car Images (Drag to reorder):</label>
+                                <div id="sortable-images" class="d-flex flex-wrap gap-2">
+                                    @if(isset($draft) && $draft->images)
                                         @foreach($draft->images as $image)
                                             @if(!empty($image))
                                                 <div class="image-preview-container me-2 mb-2 position-relative" data-image="{{ $image }}"
@@ -242,10 +242,10 @@
                                                 </div>
                                             @endif
                                         @endforeach
-                                    </div>
-                                    <input type="hidden" name="image_order" id="image_order">
+                                    @endif
                                 </div>
-                            @endif
+                                <input type="hidden" name="image_order" id="image_order">
+                            </div>
 
                             <input type="hidden" id="removed_images" name="removed_images">
                             <label id="images-error" class="text-danger error" style="display: none"></label>
@@ -554,7 +554,8 @@
                             <div class="col-md-6 mb-3">
                                 <label for="odometer"
                                     class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
-                                <input type="number" id="odometer" name="odometer" class="form-control"
+                                <input type="text" id="odometer" name="odometer" class="form-control"
+                                    value="{{ old('odometer', optional($draft->spec ?? null)->odometer) }}"
                                     placeholder="e.g. 50000">
                             </div>
 
@@ -773,9 +774,17 @@
             }
         });
 
+        function updateImageOrderField() {
+            let order = [];
+            document.querySelectorAll('#sortable-images .image-preview-container').forEach(function (el) {
+                let img = el.getAttribute('data-image');
+                if (img) order.push(img);
+            });
+            $('#image_order').val(order.join(','));
+        }
+
         function initFilepond() {
             const plugins = [];
-            if (typeof FilePondPluginFileEncode !== 'undefined') plugins.push(FilePondPluginFileEncode);
             if (typeof FilePondPluginFileValidateSize !== 'undefined') plugins.push(FilePondPluginFileValidateSize);
             if (typeof FilePondPluginImageExifOrientation !== 'undefined') plugins.push(FilePondPluginImageExifOrientation);
             if (typeof FilePondPluginImagePreview !== 'undefined') plugins.push(FilePondPluginImagePreview);
@@ -789,7 +798,7 @@
 
             const inputElement = document.querySelector('input.filepond');
             if (inputElement && typeof FilePond !== 'undefined') {
-                FilePond.create(inputElement, {
+                const pond = FilePond.create(inputElement, {
                     allowMultiple: true,
                     maxFiles: 60,
                     imagePreviewHeight: 100,
@@ -800,7 +809,77 @@
                     imageResizeUpscale: false,
                     allowImageTransform: true,
                     imageTransformOutputQuality: 85,
-                    imageTransformOutputMimeType: 'image/jpeg'
+                    imageTransformOutputMimeType: 'image/jpeg',
+                    server: {
+                        process: function (fieldName, file, metadata, load, error, progress, abort, transfer, options) {
+                            var formData = new FormData();
+                            formData.append('image', file, file.name);
+                            formData.append('car_id', $('#draft_car_id').val() || '');
+                            formData.append('_token', $('meta[name="csrf-token"]').attr('content') || '{{ csrf_token() }}');
+
+                            var request = new XMLHttpRequest();
+                            request.open('POST', "{{ route('admin.car.upload-gallery-image') }}");
+                            request.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content') || '{{ csrf_token() }}');
+                            request.setRequestHeader('Accept', 'application/json');
+
+                            request.upload.onprogress = function (e) {
+                                progress(e.lengthComputable, e.loaded, e.total);
+                            };
+
+                            request.onload = function () {
+                                if (request.status >= 200 && request.status < 300) {
+                                    try {
+                                        var res = JSON.parse(request.responseText);
+                                        if (res.car_id && !$('#draft_car_id').val()) {
+                                            $('#draft_car_id').val(res.car_id);
+                                        }
+                                        if (res.filename && res.image_url) {
+                                            $('#existing-images-wrapper').removeClass('d-none');
+                                            if (!$('#sortable-images .image-preview-container[data-image="' + res.filename + '"]').length) {
+                                                var itemHtml = '<div class="image-preview-container me-2 mb-2 position-relative" data-image="' + res.filename + '" style="cursor: grab;">' +
+                                                    '<img src="' + res.image_url + '" class="img-thumbnail" style="height:100px;" draggable="false">' +
+                                                    '<button type="button" class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0" data-image="' + res.filename + '">×</button>' +
+                                                    '</div>';
+                                                $('#sortable-images').append(itemHtml);
+                                            }
+                                            updateImageOrderField();
+                                        }
+                                        load(res.filename || request.responseText);
+                                    } catch (e) {
+                                        load(request.responseText);
+                                    }
+                                } else {
+                                    var errorMsg = 'Upload failed';
+                                    try {
+                                        var errRes = JSON.parse(request.responseText);
+                                        if (errRes.message) errorMsg = errRes.message;
+                                    } catch (e) {}
+                                    error(errorMsg);
+                                }
+                            };
+
+                            request.onerror = function () {
+                                error('Network error occurred during upload');
+                            };
+
+                            request.send(formData);
+
+                            return {
+                                abort: function () {
+                                    request.abort();
+                                    abort();
+                                }
+                            };
+                        },
+                        revert: null
+                    },
+                    onprocessfile: function (error, file) {
+                        if (!error) {
+                            setTimeout(function () {
+                                pond.removeFile(file.id);
+                            }, 500);
+                        }
+                    }
                 });
             }
         }
@@ -844,16 +923,31 @@
 
             const sortableContainer = document.getElementById('sortable-images');
             if (sortableContainer && typeof Sortable !== 'undefined') {
+                // Initialize image_order with current DOM order on page load (draft restore)
+                (function () {
+                    let order = [];
+                    document.querySelectorAll('#sortable-images .image-preview-container')
+                        .forEach(function (el) { order.push(el.getAttribute('data-image')); });
+                    if (order.length) document.getElementById('image_order').value = order.join(',');
+                })();
+
                 new Sortable(sortableContainer, {
                     animation: 150,
                     ghostClass: 'sortable-ghost',
                     onEnd: function () {
-                        let order = [];
-                        document.querySelectorAll('#sortable-images .image-preview-container')
-                            .forEach(function (el) {
-                                order.push(el.getAttribute('data-image'));
+                        updateImageOrderField();
+                        const carId = $('#draft_car_id').val();
+                        if (carId) {
+                            $.ajax({
+                                url: "{{ route('admin.car.reorder-images') }}",
+                                type: "POST",
+                                data: {
+                                    car_id: carId,
+                                    image_order: $('#image_order').val(),
+                                    _token: $('meta[name="csrf-token"]').attr('content') || '{{ csrf_token() }}'
+                                }
                             });
-                        document.getElementById('image_order').value = order.join(',');
+                        }
                         triggerAutoSave();
                     }
                 });
@@ -861,18 +955,33 @@
 
             $(document).on('click', '.remove-image', function () {
                 const imagePath = $(this).data('image');
+                const carId = $('#draft_car_id').val();
                 $(this).closest('.image-preview-container').remove();
+
+                if ($('#sortable-images .image-preview-container').length === 0) {
+                    $('#existing-images-wrapper').addClass('d-none');
+                }
+
+                updateImageOrderField();
 
                 let removedImages = $('#removed_images').val();
                 removedImages = removedImages ? removedImages.split(',') : [];
-                removedImages.push(imagePath);
+                if (!removedImages.includes(imagePath)) {
+                    removedImages.push(imagePath);
+                }
                 $('#removed_images').val(removedImages.join(','));
 
-                let order = [];
-                $('#sortable-images .image-preview-container').each(function () {
-                    order.push($(this).data('image'));
-                });
-                $('#image_order').val(order.join(','));
+                if (carId && imagePath) {
+                    $.ajax({
+                        url: "{{ route('admin.car.delete-gallery-image') }}",
+                        type: "POST",
+                        data: {
+                            car_id: carId,
+                            image: imagePath,
+                            _token: $('meta[name="csrf-token"]').attr('content') || '{{ csrf_token() }}'
+                        }
+                    });
+                }
                 triggerAutoSave();
             });
 
@@ -925,6 +1034,12 @@
                 submitHandler: function (form, e) {
                     e.preventDefault();
                     isFinalSubmitting = true;
+
+                    if (typeof tinymce !== 'undefined' && tinymce.get('description_editor')) {
+                        tinymce.get('description_editor').save();
+                        $('#description').val(tinymce.get('description_editor').getContent());
+                    }
+                    updateImageOrderField();
 
                     $.ajax({
                         url: "{{ route('admin.car.store') }}",
@@ -1028,6 +1143,8 @@
                     tinymce.get('description_editor').save();
                 }
 
+                updateImageOrderField();
+
                 let formEl = document.getElementById('addForm');
                 let formData = new FormData(formEl);
 
@@ -1038,12 +1155,22 @@
                     contentType: false,
                     processData: false,
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') || '{{ csrf_token() }}'
                     },
                     success: function (response) {
                         isAutoSaving = false;
                         if (response.car_id) {
                             $('#draft_car_id').val(response.car_id);
+                        }
+                        if (response.uploaded_images && response.uploaded_images.length > 0) {
+                            const pondInput = document.querySelector('input.filepond');
+                            const pondInstance = pondInput ? FilePond.find(pondInput) : null;
+                            if (pondInstance) {
+                                pondInstance.removeFiles();
+                            }
+                            $('#existing-images-wrapper').removeClass('d-none');
+                            $('#sortable-images').html(response.sortable_html);
+                            $('#image_order').val(response.image_order || '');
                         }
                         let now = new Date();
                         let timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });

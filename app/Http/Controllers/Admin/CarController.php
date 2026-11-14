@@ -547,19 +547,27 @@ class CarController extends Controller
             }
 
             if ($request->images) {
-                $existingImages = $car->images;
+                $existingImages = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img))) : [];
                 $newImages = [];
-                foreach ($request->images as $image) {
-                    if (is_string($image) && (str_contains($image, 'data:image') || strlen($image) > 200)) {
+                $imagesInput = is_array($request->images) ? $request->images : [$request->images];
+                foreach ($imagesInput as $image) {
+                    if (empty($image)) continue;
+                    if ($image instanceof \Illuminate\Http\UploadedFile) {
+                        $thumbnail = uploadFile($image, CAR_PATH, 'car_');
+                        if ($thumbnail) {
+                            $newImages[] = $thumbnail;
+                        }
+                    } elseif (is_string($image) && Str::isJson($image)) {
                         $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
                         if ($thumbnail) {
                             $newImages[] = $thumbnail;
                         }
                     } elseif (is_string($image)) {
+                        // Existing image filename — keep it
                         $newImages[] = $image;
                     }
                 }
-                $car->images = !empty($newImages) ? array_values(array_unique(array_merge($existingImages, $newImages))) : $existingImages;
+                $car->images = array_values(array_unique(array_merge($existingImages, $newImages)));
             }
 
             if ($request->filled('image_order')) {
@@ -593,7 +601,7 @@ class CarController extends Controller
                     'fuel_type' => $request->fuel_type,
                     'fuel_type_custom' => $request->filled('fuel_type_custom') ? trim($request->fuel_type_custom) : null,
                     'engine' => $request->engine,
-                    'odometer' => $request->filled('odometer') ? preg_replace('/[^0-9]/', '', $request->odometer) : null,
+                    'odometer' => $request->filled('odometer') ? trim((string) $request->odometer) : null,
                     'model_year' => $request->year,
                     'interior_color' => $request->interior_color,
                     'transmission' => $request->transmission,
@@ -607,9 +615,24 @@ class CarController extends Controller
             );
 
             DB::commit();
+
+            $sortableHtml = '';
+            if (!empty($car->images)) {
+                foreach ($car->images as $img) {
+                    if (empty($img)) continue;
+                    $sortableHtml .= '<div class="image-preview-container me-2 mb-2 position-relative" data-image="' . e($img) . '" style="cursor: grab;">';
+                    $sortableHtml .= '<img src="' . asset(CAR_PATH . $img) . '" class="img-thumbnail" style="height:100px;" draggable="false">';
+                    $sortableHtml .= '<button type="button" class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0" data-image="' . e($img) . '">×</button>';
+                    $sortableHtml .= '</div>';
+                }
+            }
+
             return response()->json([
                 'status' => 'success',
                 'car_id' => $car->id,
+                'uploaded_images' => $car->images,
+                'sortable_html' => $sortableHtml,
+                'image_order' => implode(',', $car->images ?? []),
                 'message' => 'Draft saved successfully'
             ]);
         } catch (\Exception $e) {
@@ -711,9 +734,15 @@ class CarController extends Controller
             }
 
             if ($request->images) {
-                foreach ($request->images as $image) {
+                $imagesInput = is_array($request->images) ? $request->images : [$request->images];
+                foreach ($imagesInput as $image) {
                     if (empty($image)) continue;
-                    if (is_string($image) && (str_contains($image, 'data:image') || strlen($image) > 200)) {
+                    if ($image instanceof \Illuminate\Http\UploadedFile) {
+                        $thumbnail = uploadFile($image, CAR_PATH, 'car_');
+                        if ($thumbnail) {
+                            $currentImages[] = $thumbnail;
+                        }
+                    } elseif (is_string($image) && Str::isJson($image)) {
                         $thumbnail = uploadFilepondEncodedFile($image, CAR_PATH, 'car_');
                         if ($thumbnail) {
                             $currentImages[] = $thumbnail;
@@ -768,7 +797,7 @@ class CarController extends Controller
                     'fuel_type' => $request->fuel_type,
                     'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
                     'engine' => $request->engine,
-                    'odometer' => $request->odometer,
+                    'odometer' => $request->filled('odometer') ? trim((string) $request->odometer) : null,
                     'model_year' => $request->year,
                     'interior_color' => $request->interior_color,
                     'transmission' => $request->transmission,
@@ -914,13 +943,18 @@ class CarController extends Controller
                 $currentImages = array_values(array_filter($currentImages, fn($img) => !empty($img)));
             }
 
-            if ($request->has('images') && is_array($request->images)) {
-                foreach ($request->images as $image) {
+            if ($request->has('images')) {
+                $imagesInput = is_array($request->images) ? $request->images : [$request->images];
+                foreach ($imagesInput as $image) {
                     if (empty($image))
                         continue;
 
-                    // Existing image string (from FilePond)
-                    if (is_string($image) && !Str::isJson($image)) {
+                    if ($image instanceof \Illuminate\Http\UploadedFile) {
+                        $thumbnail = uploadFile($image, CAR_PATH, 'car_');
+                        if ($thumbnail) {
+                            $currentImages[] = $thumbnail;
+                        }
+                    } elseif (is_string($image) && !Str::isJson($image)) {
                         if (!in_array($image, $currentImages)) {
                             $currentImages[] = $image;
                         }
@@ -971,7 +1005,7 @@ class CarController extends Controller
                     'fuel_type' => $request->fuel_type,
                     'fuel_type_custom' => $request->fuel_type_custom ? trim($request->fuel_type_custom) : null,
                     'engine' => $request->engine,
-                    'odometer' => $request->odometer,
+                    'odometer' => $request->filled('odometer') ? trim((string) $request->odometer) : null,
                     'model_year' => $request->year,
                     'interior_color' => $request->interior_color,
                     'transmission' => $request->transmission,
@@ -1103,7 +1137,7 @@ class CarController extends Controller
             'type' => 'nullable|string',
             'fuel_type' => 'nullable|string',
             'engine' => 'nullable|string',
-            'odometer' => 'nullable|integer',
+            'odometer' => 'nullable|string|max:191',
             'model_year' => 'nullable|integer',
             'interior_color' => 'nullable|string',
             'transmission' => 'nullable|string',
@@ -1304,5 +1338,190 @@ class CarController extends Controller
         }
 
         return response()->download($tempZipPath, $zipFileName)->deleteFileAfterSend(true);
+    }
+
+    /**
+     * Directly upload a gallery image and immediately store it in the database for the car/draft.
+     */
+    public function uploadGalleryImage(Request $request)
+    {
+        try {
+            $car = null;
+            if ($request->filled('car_id')) {
+                $car = Car::find($request->car_id);
+            }
+
+            // If car doesn't exist yet, reuse recent untitled draft (within 60s) or create new draft
+            if (!$car) {
+                $car = Car::where('status', CarStatus::DRAFT)
+                    ->where('name', 'Untitled Draft')
+                    ->where('created_at', '>=', now()->subSeconds(60))
+                    ->latest('id')
+                    ->first();
+
+                if (!$car) {
+                    $car = new Car();
+                    $car->status = CarStatus::DRAFT;
+                    $car->name = 'Untitled Draft';
+                    $car->vehicle_id = $this->generateNextVehicleId();
+                    $car->slug = 'draft-' . time() . '-' . Str::random(5);
+                    $lastid = Car::select('sort_order')->orderBy('sort_order', 'desc')->first();
+                    $car->sort_order = ($lastid->sort_order ?? 0) + 1;
+                    $car->images = [];
+                    $car->save();
+                }
+            }
+
+            // Extract the uploaded file or encoded data from the request
+            $file = null;
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+            } elseif ($request->hasFile('images')) {
+                $f = $request->file('images');
+                $file = is_array($f) ? reset($f) : $f;
+            } elseif ($request->hasFile('filepond')) {
+                $f = $request->file('filepond');
+                $file = is_array($f) ? reset($f) : $f;
+            } else {
+                $allFiles = $request->allFiles();
+                if (!empty($allFiles)) {
+                    $first = reset($allFiles);
+                    $file = is_array($first) ? reset($first) : $first;
+                }
+            }
+
+            if (!$file) {
+                if ($request->has('image')) {
+                    $file = $request->image;
+                } elseif ($request->has('images')) {
+                    $file = is_array($request->images) ? reset($request->images) : $request->images;
+                } elseif ($request->has('filepond')) {
+                    $file = is_array($request->filepond) ? reset($request->filepond) : $request->filepond;
+                }
+            }
+
+            $fileName = null;
+            if ($file instanceof \Illuminate\Http\UploadedFile) {
+                $fileName = uploadFile($file, CAR_PATH, 'car_');
+            } elseif (is_string($file) && Str::isJson($file)) {
+                $fileName = uploadFilepondEncodedFile($file, CAR_PATH, 'car_');
+            } elseif (is_string($file) && (str_contains($file, 'data:image') || strlen($file) > 100)) {
+                $fileName = uploadFilepondEncodedFile(json_encode([
+                    'data' => preg_replace('#^data:image/\w+;base64,#i', '', $file),
+                    'type' => 'image/jpeg'
+                ]), CAR_PATH, 'car_');
+            }
+
+            if (!$fileName) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No valid image file received.'
+                ], 422);
+            }
+
+            // Directly store into database
+            $currentImages = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img))) : [];
+            if (!in_array($fileName, $currentImages)) {
+                $currentImages[] = $fileName;
+            }
+            $car->images = $currentImages;
+            $car->save();
+
+            $sortableHtml = '';
+            foreach ($car->images as $img) {
+                if (empty($img)) continue;
+                $sortableHtml .= '<div class="image-preview-container me-2 mb-2 position-relative" data-image="' . e($img) . '" style="cursor: grab;">';
+                $sortableHtml .= '<img src="' . asset(CAR_PATH . $img) . '" class="img-thumbnail" style="height:100px;" draggable="false">';
+                $sortableHtml .= '<button type="button" class="btn btn-danger btn-sm remove-image position-absolute top-0 end-0" data-image="' . e($img) . '">×</button>';
+                $sortableHtml .= '</div>';
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'car_id' => $car->id,
+                'filename' => $fileName,
+                'image_url' => asset(CAR_PATH . $fileName),
+                'images' => $car->images,
+                'sortable_html' => $sortableHtml,
+                'image_order' => implode(',', $car->images),
+                'message' => 'Image saved to database successfully.'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('uploadGalleryImage exception: ' . $e->getMessage(), [
+                'exception' => $e
+            ]);
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Directly delete a gallery image from the database and disk.
+     */
+    public function deleteGalleryImage(Request $request)
+    {
+        $carId = $request->car_id;
+        $image = $request->image;
+
+        if ($carId && $image) {
+            $car = Car::find($carId);
+            if ($car) {
+                $images = is_array($car->images) ? array_values(array_filter($car->images, fn($img) => !empty($img) && $img !== $image)) : [];
+                $car->images = $images;
+                $car->save();
+
+                deleteImage($image, CAR_PATH);
+
+                return response()->json([
+                    'status' => 'success',
+                    'images' => $car->images,
+                    'image_order' => implode(',', $car->images),
+                    'message' => 'Image removed from database successfully.'
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Image not found or invalid parameters.'
+        ], 404);
+    }
+
+    /**
+     * Directly reorder gallery images in the database.
+     */
+    public function reorderImages(Request $request)
+    {
+        $carId = $request->car_id;
+        $orderStr = $request->image_order;
+
+        if ($carId && $orderStr !== null) {
+            $car = Car::find($carId);
+            if ($car) {
+                $ordered = array_values(array_filter(explode(',', $orderStr)));
+                $current = is_array($car->images) ? array_values(array_filter($car->images)) : [];
+                $final = array_values(array_filter($ordered, fn($img) => in_array($img, $current)));
+                foreach ($current as $img) {
+                    if (!in_array($img, $final)) {
+                        $final[] = $img;
+                    }
+                }
+                $car->images = $final;
+                $car->save();
+
+                return response()->json([
+                    'status' => 'success',
+                    'images' => $car->images,
+                    'image_order' => implode(',', $car->images)
+                ]);
+            }
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid parameters.'
+        ], 400);
     }
 }

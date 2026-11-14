@@ -56,7 +56,6 @@ class CarSpec extends Model
         return $this->belongsTo(Car::class);
     }
     protected $casts = [
-        'odometer' => 'integer',
         'model_year' => 'integer',
     ];
 

@@ -191,6 +191,9 @@ Route::group(['middleware' => ['auth:admin,employee']], function () {
             Route::post('/save-draft', 'saveDraft')->name('save-draft');
             Route::get('/draft/{car}/edit', 'editDraft')->name('draft.edit');
             Route::get('/download-images/{id}', 'downloadImages')->name('download-images');
+            Route::post('/upload-gallery-image', 'uploadGalleryImage')->name('upload-gallery-image');
+            Route::post('/delete-gallery-image', 'deleteGalleryImage')->name('delete-gallery-image');
+            Route::post('/reorder-images', 'reorderImages')->name('reorder-images');
         });
 
         // CarSensor import (separate controller — never creates vehicle records)

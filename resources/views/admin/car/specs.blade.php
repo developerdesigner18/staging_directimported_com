@@ -93,7 +93,7 @@
                             <!-- Car Specific Specs -->
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">{{ admin_label('car_form', 'odometer', 'Odometer (km)') }}</label>
-                                <input type="number" name="odometer" class="form-control"
+                                <input type="text" name="odometer" class="form-control"
                                     value="{{ $car->spec->odometer ?? '' }}" placeholder="e.g. 50000">
                             </div>
 
