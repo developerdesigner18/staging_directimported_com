@@ -3,15 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="author" content="thecodude">
-    <meta name="description" content="">
+    <meta name="author" content="Direct Imported Japan">
 
-    <!-- responsive tag -->
+    <meta name="description"
+        content="@yield('meta_description', 'Source high-quality JDM vehicles directly from Japan. We provide full auction access, professional on-site inspections, and global export shipping. View stock!')">
+
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>@yield('title', 'Import Cars from Japan | JDM Vehicle Exporter | Direct Imported Japan')</title>
 
-    <title>@yield('title') | {{ config('app.name') }}</title>
     @yield('meta')
     @include('landing.layouts.header-links')
     @stack('style-src')

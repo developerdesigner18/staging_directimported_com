@@ -89,6 +89,146 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        /* Contact Section & Address Cards Layout */
+        .rid-contact.sec-space {
+            margin-bottom: 70px;
+        }
+
+        .rid-contact .contact-address>div {
+            border: 1px solid #dedede;
+            padding: 24px 25px;
+            margin-bottom: 24px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .rid-contact .contact-address>div:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .rid-contact .contact-address>div:last-child {
+            margin-bottom: 0;
+        }
+
+        .rid-contact .rid-info-box-icon {
+            height: 60px;
+            width: 60px;
+            min-width: 60px;
+            flex-shrink: 0;
+            background-color: var(--primary-color, #053C7C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .rid-contact .rid-info-box-icon i {
+            position: static;
+            transform: none;
+            font-size: 28px;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .rid-contact .rid-info-box-text {
+            margin-left: 20px;
+            flex-grow: 1;
+        }
+
+        .rid-contact .rid-info-box-text h4 {
+            margin-top: 0;
+            margin-bottom: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .rid-contact .rid-info-box-text span {
+            font-size: 15px;
+            line-height: 1.5;
+            color: #4b5563;
+            display: block;
+        }
+
+        .rid-contact .rid-info-box-text img {
+            max-height: 38px;
+            width: auto;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+
+        /* Map Card Layout */
+        .contact-map-card {
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #dedede;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+            background: #ffffff;
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .contact-map-card iframe {
+            width: 100%;
+            height: 100%;
+            flex-grow: 1;
+            min-height: 240px;
+            border: 0;
+            display: block;
+        }
+
+        @media (min-width: 992px) {
+            .rid-contact .contact-col-left {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .rid-contact .contact-col-right .contact-form {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .rid-contact .contact-col-right .contact-form form {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+
+            .rid-contact .contact-col-right .contact-form .contact-reply-note {
+                margin-top: auto;
+            }
+        }
+
+        @media (max-width: 991px) {
+            .contact-map-card {
+                margin-bottom: 30px;
+                min-height: 280px;
+            }
+
+            .contact-map-card iframe {
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rid-contact .contact-address>div {
+                padding: 20px;
+            }
+
+            .contact-map-card iframe {
+                height: 240px;
+            }
+        }
     </style>
 @endpush
 @section('main')
@@ -103,14 +243,13 @@
                     and we will contact you as soon as possible.
                 </p>
             </div>
-            <div class="row">
-                <div class="col-lg-5">
+            <div class="row align-items-stretch">
+                <div class="col-lg-5 contact-col-left">
                     <div class="contact-address">
+                        <!-- Our Phone -->
                         <div class="phone">
-                            <div class="rid-info-box-icon ">
-                                <div class="rid-info-box-icon position-relative">
-                                    <i class="bx bx-mobile"></i>
-                                </div>
+                            <div class="rid-info-box-icon">
+                                <i class="bx bx-mobile"></i>
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Our Phone</h4>
@@ -118,23 +257,10 @@
                             </div>
                         </div>
 
-                        <div class="address">
-                            <div class="rid-info-box-icon ">
-                                <div class="rid-info-box-icon position-relative">
-                                    <i class="bx bx-map"></i>
-                                </div>
-                            </div>
-                            <div class="rid-info-box-text">
-                                <h4>Address</h4>
-                                <span>1 Chome Minami-Nakaburi, Hirakata City, Osaka, 573-0094,Japan</span>
-                            </div>
-                        </div>
-
+                        <!-- Online Support -->
                         <div class="email">
-                            <div class="rid-info-box-icon ">
-                                <div class="rid-info-box-icon position-relative">
-                                    <i class="bx bx-globe"></i>
-                                </div>
+                            <div class="rid-info-box-icon">
+                                <i class="bx bx-globe"></i>
                             </div>
                             <div class="rid-info-box-text">
                                 <h4>Online Support</h4>
@@ -143,12 +269,33 @@
                                 <span><a href="mailto:Sales@Directimported.com">Sales@Directimported.com</a></span>
                             </div>
                         </div>
+
+                        <!-- Address -->
+                        <div class="address">
+                            <div class="rid-info-box-icon">
+                                <i class="bx bx-map"></i>
+                            </div>
+                            <div class="rid-info-box-text">
+                                <h4>Address</h4>
+                                <span>1 Chome Minami-Nakaburi, Hirakata City, Osaka, 573-0094, Japan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Map in Left Column -->
+                    <div class="contact-map-card">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3276.6132005054387!2d135.6251531!3d34.7905116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa616b42e67452c47%3A0xc19edf17ac7cae88!2sDirect%20Imported%20Japan!5e0!3m2!1sen!2sin!4v1794824142623!5m2!1sen!2sin"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 contact-col-right">
                     <div class="contact-form">
                         <h4>Write a Message</h4>
-                        {{-- <p>You have any questions or need additional information? <strong>Register.</strong></p> --}}
+                        {{-- <p>You have any questions or need additional information?
+                            <strong>Register.</strong>
+                        </p> --}}
                         <form id="contactUs">
                             @csrf
                             <div class="mb-4">
@@ -173,7 +320,8 @@
                                 <button class="btn" type="submit">Send Message</button>
                             </div>
                             <div class="contact-reply-note">
-                                <span><i class="bx bx-time-five"></i><strong>All queries are replied</strong> usually within
+                                <span><i class="bx bx-time-five"></i><strong>All queries are replied</strong>
+                                    usually within
                                     24hrs.</span>
                             </div>
                         </form>
