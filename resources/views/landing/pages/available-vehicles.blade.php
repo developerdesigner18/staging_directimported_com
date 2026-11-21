@@ -478,23 +478,23 @@
             box-shadow: 0 2px 8px rgba(15, 44, 89, 0.05);
             display: flex;
             flex-direction: row;
-            padding: 20px;
-            margin-bottom: 20px;
-            gap: 25px;
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            gap: 15px;
             border: 1px solid var(--border-color);
         }
 
         .gallery {
-            flex: 0 0 300px;
+            flex: 0 0 270px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .main-img-anchor {
             display: block;
             width: 100%;
-            height: 200px;
+            height: 170px;
             border-radius: 6px;
             overflow: hidden;
             background-color: #E6EAEF;
@@ -519,12 +519,12 @@
         .thumbnail-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
+            gap: 5px;
         }
 
         .thumb-img {
             width: 100%;
-            height: 55px;
+            height: 44px;
             object-fit: cover;
             border-radius: 4px;
             background-color: #E6EAEF;
@@ -550,17 +550,17 @@
         .header-row {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 15px;
             align-items: center;
+            margin-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 6px;
         }
 
         .vehicle-title {
             color: var(--text-heading);
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 700;
+            line-height: 1.25;
             margin: 0;
         }
 
@@ -577,16 +577,16 @@
         .vehicle-title span.make {
             font-weight: 400;
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             margin-right: 5px;
         }
 
         .status-badge {
             background-color: #2F855A;
             color: white;
-            padding: 6px 14px;
+            padding: 3px 10px;
             border-radius: 4px;
-            font-size: 0.85rem;
+            font-size: 0.78rem;
             font-weight: 700;
             text-transform: uppercase;
             transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -596,9 +596,9 @@
         .specs-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
+            gap: 4px 6px;
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 8px;
         }
 
         .spec-item {
@@ -608,19 +608,21 @@
         }
 
         .spec-label {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-muted);
-            height: 28px;
+            min-height: 26px;
+            line-height: 1.15;
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            margin-bottom: 6px;
+            margin-bottom: 2px;
         }
 
         .spec-value {
             color: var(--text-heading);
-            font-size: 0.9rem;
+            font-size: 0.82rem;
             font-weight: 600;
+            line-height: 1.2;
         }
 
         /* ACTION & PRICE AREA */
@@ -628,8 +630,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            min-height: 52px;
+            margin-bottom: 6px;
+            min-height: auto;
         }
 
         .price-section {
@@ -640,33 +642,33 @@
 
         .price-label {
             color: var(--primary-red);
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             font-weight: 600;
-            margin-bottom: 2px;
+            margin-bottom: 0;
             line-height: 1;
         }
 
         .price-value {
             color: var(--primary-red);
-            font-size: 2.2rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            line-height: 1.1;
+            line-height: 1.05;
             margin: 0;
         }
 
         .buttons-section {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
 
         .btn-fav {
             background: #F8FAFC;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            width: 45px;
-            height: 48px;
-            font-size: 1.2rem;
+            border-radius: 5px;
+            width: 36px;
+            height: 36px;
+            font-size: 1.1rem;
             color: #CBD5E0;
             cursor: pointer;
             display: flex;
@@ -685,10 +687,10 @@
             overflow: hidden;
             background-color: var(--primary-red);
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             color: white;
-            padding: 8px 25px;
-            height: 48px;
+            padding: 3px 16px;
+            height: 36px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -725,36 +727,30 @@
         }
 
         .btn-quote .btn-text-main {
-            font-size: 1rem;
+            font-size: 0.82rem;
             font-weight: 700;
             text-transform: uppercase;
-            line-height: 1.2;
+            line-height: 1.15;
         }
 
         .btn-quote .btn-text-sub {
-            font-size: 0.85rem;
+            font-size: 0.68rem;
             font-weight: 500;
-            line-height: 1.2;
-        }
-
-        .fine-print {
-            text-align: center;
-            color: var(--blue-link);
-            font-size: 0.85rem;
-            margin-bottom: 15px;
+            line-height: 1.15;
         }
 
         .evaluation-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             background-color: #FFFFFF;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.78rem;
             color: var(--text-muted);
             border: 1px solid var(--border-color);
+            margin-bottom: 4px;
         }
 
         .eval-grade {
@@ -764,6 +760,15 @@
 
         .stars {
             color: #ffb800;
+        }
+
+        .fine-print {
+            text-align: center;
+            color: var(--blue-link);
+            font-size: 0.75rem;
+            margin-bottom: 0;
+            margin-top: 2px;
+            line-height: 1.2;
         }
 
         .no-results {
@@ -813,8 +818,8 @@
             /* Listing card: stack vertically on tablet */
             .listing-card {
                 flex-direction: column;
-                padding: 16px;
-                gap: 16px;
+                padding: 10px;
+                gap: 10px;
             }
 
             .gallery {
@@ -823,32 +828,34 @@
             }
 
             .main-img-anchor {
-                height: 220px;
+                height: 200px;
             }
 
             .thumbnail-grid {
                 grid-template-columns: repeat(5, 1fr);
+                gap: 5px;
             }
 
             .thumb-img {
-                height: 52px;
+                height: 48px;
             }
 
             /* Specs: 4 columns on tablet — gives 4+3 rows (clean) */
             .specs-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 8px;
-                margin-bottom: 18px;
+                gap: 6px;
+                margin-bottom: 8px;
             }
 
             .spec-label {
                 font-size: 0.72rem;
                 height: auto;
-                margin-bottom: 4px;
+                min-height: auto;
+                margin-bottom: 2px;
             }
 
             .spec-value {
-                font-size: 0.85rem;
+                font-size: 0.82rem;
             }
 
             /* Action area: price on top, buttons fill row */
@@ -942,33 +949,34 @@
             }
 
             .listing-card {
-                padding: 12px;
-                gap: 12px;
+                padding: 8px;
+                gap: 8px;
             }
 
             .main-img-anchor {
-                height: 180px;
+                height: 165px;
             }
 
             .thumbnail-grid {
                 grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
             }
 
             .thumb-img {
-                height: 46px;
+                height: 40px;
             }
 
             .vehicle-title {
-                font-size: 1.05rem;
+                font-size: 1rem;
             }
 
             .status-badge {
-                font-size: 0.75rem;
-                padding: 4px 10px;
+                font-size: 0.72rem;
+                padding: 2px 8px;
             }
 
             .price-value {
-                font-size: 1.7rem;
+                font-size: 1.4rem;
             }
 
             /* Specs: keep 4 columns even on small phones (4+3) */

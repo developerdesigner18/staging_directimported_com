@@ -147,10 +147,6 @@
             </div>
         </div>
 
-        <div class="fine-print">
-            ** Plus FOB or CIF freight charges not inc transport
-        </div>
-
         <div class="evaluation-row">
             <span>Vehicle Quality Evaluation</span>
 
@@ -160,6 +156,10 @@
                     {{ $ratingCert ?? '' }}{{ $remarksStr ? ' ' . $remarksStr : '' }}
                 </span>
             </span>
+        </div>
+
+        <div class="fine-print">
+            ** Plus FOB or CIF freight charges not inc transport
         </div>
     </div>
 </div>

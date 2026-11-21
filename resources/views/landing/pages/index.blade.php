@@ -658,6 +658,31 @@
                 /* text-transform: uppercase; */
             }
 
+            @keyframes pulse-ring {
+                0% {
+                    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
+                    transform: scale(1);
+                }
+                70% {
+                    box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+                    transform: scale(1.03);
+                }
+                100% {
+                    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+                    transform: scale(1);
+                }
+            }
+
+            .auction-pulse-btn {
+                animation: pulse-ring 2s infinite ease-in-out !important;
+                transition: transform 0.2s ease;
+            }
+
+            .auction-pulse-btn:hover {
+                animation: none !important;
+                transform: scale(1.05) !important;
+            }
+
 
 
             .top-20vh {
@@ -847,7 +872,7 @@
         <div class="container">
             <div class="cta-box" id="reclaimed-cta-box">
                 <h1 class="cta-title">Direct Vehicle Imports & JDM Car Auctions from Japan</h1> <a
-                    href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer" class="cta-btn">
+                    href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer" class="cta-btn auction-pulse-btn">
                     Search auctions live here
                 </a>
             </div>
@@ -1270,6 +1295,40 @@
 @endsection
 @section('script')
     <script>
+        (() => {
+            const btn = [...document.querySelectorAll('a, button')].find(el =>
+                el.textContent.trim().toLowerCase().includes('search auctions live here')
+            );
+            if (!btn) return;
+            btn.classList.add('auction-pulse-btn');
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse-ring {
+                    0% {
+                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
+                        transform: scale(1);
+                    }
+                    70% {
+                        box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+                        transform: scale(1.03);
+                    }
+                    100% {
+                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+                        transform: scale(1);
+                    }
+                }
+                .auction-pulse-btn {
+                    animation: pulse-ring 2s infinite ease-in-out !important;
+                    transition: transform 0.2s ease;
+                }
+                .auction-pulse-btn:hover {
+                    animation: none !important;
+                    transform: scale(1.05) !important;
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+
         $(document).on('click', '.btncheckout', function () {
             let slug = $(this).data('slug');
             window.location.href = "/car/" + slug;
