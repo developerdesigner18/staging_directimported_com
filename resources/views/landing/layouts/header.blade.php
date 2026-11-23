@@ -43,6 +43,10 @@
                 <a href="{{ route('about.us') }}" class="navbar__link {{ request()->is('about-us') ? 'active' : '' }}">About Us</a>
                 <a href="https://auc.directimported.com/" target="_blank" class="navbar__link">Auction Access</a>
                 <a href="{{ route('available.vehicles') }}" class="navbar__link {{ request()->is('available-vehicles*') ? 'active' : '' }}">Available Vehicles</a>
+                <a href="{{ route('available.vehicles') }}" class="navbar__btn-oneprice">
+                    <span>ONE PRICE</span>
+                    <span>BUY NOW</span>
+                </a>
                 <a href="{{ route('services.view') }}" class="navbar__link {{ request()->is('services*') ? 'active' : '' }}">Services</a>
                 <a href="{{ route('blog') }}" class="navbar__link {{ request()->is('blog*') ? 'active' : '' }}">Blog</a>
                 <a href="{{ route('contact') }}" class="navbar__link {{ request()->is('contact*') ? 'active' : '' }}">Contact</a>
@@ -60,6 +64,7 @@
                 <li><a href="{{ route('about.us') }}" class="mobile-menu__link {{ request()->is('about-us') ? 'active' : '' }}">About Us</a></li>
                 <li><a href="https://auc.directimported.com/" target="_blank" class="mobile-menu__link">Auction Access</a></li>
                 <li><a href="{{ route('available.vehicles') }}" class="mobile-menu__link {{ request()->is('available-vehicles*') ? 'active' : '' }}">Available Vehicles</a></li>
+                <li><a href="{{ route('available.vehicles') }}" class="mobile-menu__btn-oneprice">ONE PRICE BUY NOW</a></li>
                 <li><a href="{{ route('services.view') }}" class="mobile-menu__link {{ request()->is('services*') ? 'active' : '' }}">Services</a></li>
                 <li><a href="{{ route('blog') }}" class="mobile-menu__link {{ request()->is('blog*') ? 'active' : '' }}">Blog</a></li>
                 <li><a href="{{ route('contact') }}" class="mobile-menu__link {{ request()->is('contact*') ? 'active' : '' }}">Contact</a></li>

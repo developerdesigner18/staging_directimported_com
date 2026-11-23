@@ -471,6 +471,94 @@
             vertical-align: middle;
         }
 
+        /* Promotional Action Cards */
+        .search-promo-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-promo-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(15, 44, 89, 0.05);
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .promo-card-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .promo-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin: 0 0 4px 0;
+            line-height: 1.35;
+        }
+
+        .promo-card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin: 0;
+            line-height: 1.35;
+        }
+
+        .promo-card-text {
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .btn-promo-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 22px;
+            border-radius: 4px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-decoration: none !important;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .btn-promo-black {
+            background-color: #111111;
+            color: #FFFFFF !important;
+        }
+
+        .btn-promo-black:hover {
+            background-color: #2d3748;
+            color: #FFFFFF !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-promo-red {
+            background-color: var(--primary-red);
+            color: #FFFFFF !important;
+        }
+
+        .btn-promo-red:hover {
+            background-color: #a91218;
+            color: #FFFFFF !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(204, 25, 33, 0.25);
+        }
+
         /* Listing Cards */
         .listing-card {
             background: var(--card-bg);
@@ -815,6 +903,16 @@
                 width: 100%;
             }
 
+            .search-promo-cards {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 16px;
+            }
+
+            .search-promo-card {
+                padding: 14px 18px;
+            }
+
             /* Listing card: stack vertically on tablet */
             .listing-card {
                 flex-direction: column;
@@ -946,6 +1044,17 @@
 
                 font-size: 12px;
 
+            }
+
+            .search-promo-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .btn-promo-action {
+                width: 100%;
+                text-align: center;
             }
 
             .listing-card {
@@ -1162,6 +1271,28 @@
                     <button type="button" class="btn-25yr" id="btn-25yr">Show Vehicles 25 Years or Older</button>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- Promotional Cards (Search Live Auctions & One Price Stock) -->
+        <div class="search-promo-cards">
+            <div class="search-promo-card">
+                <div class="promo-card-content">
+                    <p class="promo-card-title">Don't see the exact JDM spec you need?</p>
+                    <p class="promo-card-desc">Search thousands of live wholesale Japanese auctions.</p>
+                </div>
+                <a href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer" class="btn-promo-action btn-promo-black">
+                    SEARCH LIVE AUCTIONS
+                </a>
+            </div>
+
+            <div class="search-promo-card">
+                <div class="promo-card-content">
+                    <p class="promo-card-text">200,000+ Vehicles available across Japan with a fixed price buy now option.</p>
+                </div>
+                <a href="{{ route('available.vehicles') }}" class="btn-promo-action btn-promo-red">
+                    ONE PRICE STOCK
+                </a>
             </div>
         </div>
 

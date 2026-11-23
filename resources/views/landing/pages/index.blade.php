@@ -517,8 +517,8 @@
         }
 
         /* =========================
-                                                                                                                                                                                                           How It Works & Our Services Cards
-                                                                                                                                                                                                        ========================= */
+                                                                                                                                                                                                                           How It Works & Our Services Cards
+                                                                                                                                                                                                                        ========================= */
 
         .rid-how-it-work {
             padding: 80px 0;
@@ -633,213 +633,215 @@
         }
 
 
-            .cta-title,
-            #reclaimed-cta-box h1.cta-title,
-            .cta-box h1 {
-                font-weight: 800;
-                font-size: 24px !important;
-                line-height: 1.35 !important;
-                color: #000;
-                margin: 0 0 20px 0 !important;
-                letter-spacing: -0.3px;
-                text-transform: uppercase;
+        .cta-title,
+        #reclaimed-cta-box h1.cta-title,
+        .cta-box h1 {
+            font-weight: 800;
+            font-size: 24px !important;
+            line-height: 1.35 !important;
+            color: #000;
+            margin: 0 0 20px 0 !important;
+            letter-spacing: -0.3px;
+            text-transform: uppercase;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(180deg, #1e4c8f 0%, #163a6b 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            padding: 14px 35px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s ease;
+            /* text-transform: uppercase; */
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
+                transform: scale(1);
             }
 
-            .cta-btn {
-                display: inline-block;
-                background: linear-gradient(180deg, #1e4c8f 0%, #163a6b 100%);
-                color: #fff;
-                font-weight: 700;
-                font-size: 16px;
-                padding: 14px 35px;
-                border-radius: 6px;
-                text-decoration: none;
-                transition: 0.3s ease;
-                /* text-transform: uppercase; */
+            70% {
+                box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+                transform: scale(1.03);
             }
 
-            @keyframes pulse-ring {
-                0% {
-                    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
-                    transform: scale(1);
-                }
-                70% {
-                    box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
-                    transform: scale(1.03);
-                }
-                100% {
-                    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-                    transform: scale(1);
-                }
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+                transform: scale(1);
             }
+        }
 
-            .auction-pulse-btn {
-                animation: pulse-ring 2s infinite ease-in-out !important;
-                transition: transform 0.2s ease;
-            }
+        .auction-pulse-btn {
+            animation: pulse-ring 2s infinite ease-in-out !important;
+            transition: transform 0.2s ease;
+        }
 
-            .auction-pulse-btn:hover {
-                animation: none !important;
-                transform: scale(1.05) !important;
-            }
+        .auction-pulse-btn:hover {
+            animation: none !important;
+            transform: scale(1.05) !important;
+        }
 
 
 
-            .top-20vh {
-                top: 20vh;
-            }
+        .top-20vh {
+            top: 20vh;
+        }
 
-            /* Section Backgrounds (alternating for a clean look) */
-            .section-bg-light {
-                background-color: #f7f9fc;
-                padding: 80px 20px;
-            }
+        /* Section Backgrounds (alternating for a clean look) */
+        .section-bg-light {
+            background-color: #f7f9fc;
+            padding: 80px 20px;
+        }
 
-            .section-bg-white {
-                background-color: #ffffff;
-                padding: 80px 20px;
-            }
+        .section-bg-white {
+            background-color: #ffffff;
+            padding: 80px 20px;
+        }
 
-            .section-container {
-                max-width: 1200px;
-                margin: 0 auto;
-            }
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-            /* Shared Section Title */
-            .section-title {
-                font-size: 24px;
-                font-weight: 700;
-                color: #0b1a30;
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
+        /* Shared Section Title */
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0b1a30;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-            .section-title::before {
-                content: "";
-                display: inline-block;
-                width: 24px;
-                height: 2px;
-                background-color: #0b1a30;
-            }
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 24px;
+            height: 2px;
+            background-color: #0b1a30;
+        }
 
-            /* 4-Column Grid */
+        /* 4-Column Grid */
+        .tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        /* Individual Tile (Card) Styling */
+        .tile {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 40px 24px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+            /* Slight border for white background section */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tile:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Icon Styling */
+        .icon {
+            margin-bottom: 24px;
+        }
+
+        /* Blue icons for "How it works" */
+        .icon-blue {
+            color: #004a8f;
+        }
+
+        /* Dark slate icons for "Our Services" to match the screenshot */
+        .icon-dark {
+            color: #2a3547;
+        }
+
+        .icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            /* Slightly thinner stroke to match screenshot icons */
+        }
+
+        .icon i {
+            font-size: 48px;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Title inside the card */
+        .tile-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0b1a30;
+            margin: 0 0 16px 0;
+            line-height: 1.3;
+        }
+
+        /* Description text */
+        .tile-description {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #718096;
+            margin: 0;
+        }
+
+        /* Button Styling */
+        .button-wrapper {
+            text-align: center;
+            margin-top: 48px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #083b7c;
+            /* Dark blue from screenshot */
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            padding: 14px 36px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #062a5c;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 1024px) {
             .tiles-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 24px;
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
 
-            /* Individual Tile (Card) Styling */
-            .tile {
-                background-color: #ffffff;
-                border-radius: 16px;
-                padding: 40px 24px;
-                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
-                border: 1px solid rgba(0, 0, 0, 0.02);
-                /* Slight border for white background section */
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
+        @media (max-width: 640px) {
+            .tiles-grid {
+                grid-template-columns: 1fr;
             }
-
-            .tile:hover {
-                transform: translateY(-4px);
-                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-            }
-
-            /* Icon Styling */
-            .icon {
-                margin-bottom: 24px;
-            }
-
-            /* Blue icons for "How it works" */
-            .icon-blue {
-                color: #004a8f;
-            }
-
-            /* Dark slate icons for "Our Services" to match the screenshot */
-            .icon-dark {
-                color: #2a3547;
-            }
-
-            .icon img {
-                width: 48px;
-                height: 48px;
-                object-fit: contain;
-            }
-
-            .icon svg {
-                width: 48px;
-                height: 48px;
-                stroke: currentColor;
-                stroke-width: 1.5;
-                /* Slightly thinner stroke to match screenshot icons */
-            }
-
-            .icon i {
-                font-size: 48px;
-                line-height: 1;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            /* Title inside the card */
-            .tile-title {
-                font-size: 18px;
-                font-weight: 700;
-                color: #0b1a30;
-                margin: 0 0 16px 0;
-                line-height: 1.3;
-            }
-
-            /* Description text */
-            .tile-description {
-                font-size: 14px;
-                line-height: 1.6;
-                color: #718096;
-                margin: 0;
-            }
-
-            /* Button Styling */
-            .button-wrapper {
-                text-align: center;
-                margin-top: 48px;
-            }
-
-            .btn-primary {
-                display: inline-block;
-                background-color: #083b7c;
-                /* Dark blue from screenshot */
-                color: #ffffff;
-                font-weight: 700;
-                font-size: 14px;
-                text-transform: uppercase;
-                padding: 14px 36px;
-                border-radius: 6px;
-                text-decoration: none;
-                transition: background-color 0.3s ease;
-            }
-
-            .btn-primary:hover {
-                background-color: #062a5c;
-            }
-
-            /* Responsive styling */
-            @media (max-width: 1024px) {
-                .tiles-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
-
-            @media (max-width: 640px) {
-                .tiles-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
+        }
     </style>
 @endpush
 @section('main')
@@ -872,7 +874,8 @@
         <div class="container">
             <div class="cta-box" id="reclaimed-cta-box">
                 <h1 class="cta-title">Direct Vehicle Imports & JDM Car Auctions from Japan</h1> <a
-                    href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer" class="cta-btn auction-pulse-btn">
+                    href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer"
+                    class="cta-btn auction-pulse-btn">
                     Search auctions live here
                 </a>
             </div>
@@ -1153,7 +1156,7 @@
                             unique needs, and building relationships that last. It's a two-way commitment, ensuring
                             transparency and personalized support as we help your business grow with confidence.
                         </p>
-                        <a href="#" class="btn-read-more">
+                        <a href="{{ route('services.view') }}" class="btn-read-more">
                             READ MORE <i class='bx bx-right-arrow-alt'></i>
                         </a>
                     </div>
@@ -1303,29 +1306,29 @@
             btn.classList.add('auction-pulse-btn');
             const style = document.createElement('style');
             style.textContent = `
-                @keyframes pulse-ring {
-                    0% {
-                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
-                        transform: scale(1);
-                    }
-                    70% {
-                        box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
-                        transform: scale(1.03);
-                    }
-                    100% {
-                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-                        transform: scale(1);
-                    }
-                }
-                .auction-pulse-btn {
-                    animation: pulse-ring 2s infinite ease-in-out !important;
-                    transition: transform 0.2s ease;
-                }
-                .auction-pulse-btn:hover {
-                    animation: none !important;
-                    transform: scale(1.05) !important;
-                }
-            `;
+                                @keyframes pulse-ring {
+                                    0% {
+                                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.75);
+                                        transform: scale(1);
+                                    }
+                                    70% {
+                                        box-shadow: 0 0 0 14px rgba(37, 99, 235, 0);
+                                        transform: scale(1.03);
+                                    }
+                                    100% {
+                                        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+                                        transform: scale(1);
+                                    }
+                                }
+                                .auction-pulse-btn {
+                                    animation: pulse-ring 2s infinite ease-in-out !important;
+                                    transition: transform 0.2s ease;
+                                }
+                                .auction-pulse-btn:hover {
+                                    animation: none !important;
+                                    transform: scale(1.05) !important;
+                                }
+                            `;
             document.head.appendChild(style);
         })();
 

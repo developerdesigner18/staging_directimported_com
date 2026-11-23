@@ -155,6 +155,81 @@
                 background-size: calc(100%/3) 100%, calc(100%/3) 100%, calc(100%/3) 0%
             }
         }
+
+        /* ONE PRICE BUY NOW Navbar Button */
+        .navbar__btn-oneprice {
+            display: inline-flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background-color: #cc1921 !important;
+            color: #ffffff !important;
+            font-family: var(--font-heading, 'Poppins', sans-serif);
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            line-height: 1.15 !important;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 6px 14px !important;
+            border-radius: 4px;
+            text-decoration: none !important;
+            box-shadow: 0 2px 6px rgba(204, 25, 33, 0.25);
+            transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .navbar__btn-oneprice:hover {
+            background-color: #a91218 !important;
+            color: #ffffff !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(204, 25, 33, 0.35);
+        }
+
+        .navbar__btn-oneprice::after {
+            display: none !important;
+        }
+
+        .mobile-menu__btn-oneprice {
+            display: inline-block !important;
+            margin: 10px 0 !important;
+            background-color: #cc1921 !important;
+            color: #ffffff !important;
+            font-family: var(--font-heading, 'Poppins', sans-serif);
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 10px 18px !important;
+            border-radius: 4px;
+            text-decoration: none !important;
+            box-shadow: 0 2px 6px rgba(204, 25, 33, 0.25);
+            transition: background-color 0.2s ease;
+        }
+
+        .mobile-menu__btn-oneprice:hover {
+            background-color: #a91218 !important;
+            color: #ffffff !important;
+        }
+
+        @media (min-width: 1024px) {
+            .navbar__menu {
+                gap: 12px !important;
+            }
+            .navbar__spacer {
+                width: 60px !important;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .navbar__menu {
+                gap: 20px !important;
+            }
+            .navbar__spacer {
+                width: 90px !important;
+            }
+        }
     </style>
 </head>
 
