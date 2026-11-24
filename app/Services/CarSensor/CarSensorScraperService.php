@@ -178,6 +178,14 @@ class CarSensorScraperService
             return $body;
 
         } catch (\Illuminate\Http\Client\ConnectionException $e) {
+            if (str_contains($url, 'goo-net.com') && !str_contains($url, 'goo-net-exchange.com')) {
+                throw new \Exception(
+                    "Unable to connect to domestic Goo-net (www.goo-net.com). "
+                    . "Goo-net's domestic servers block incoming connections from outside Japan (Connection Timeout). "
+                    . "Please use the global export portal (www.goo-net-exchange.com) or route through a Japan VPN."
+                );
+            }
+
             throw new \Exception(
                 "Unable to access the listing page. Please verify the URL and try again. "
                 . "Details: " . $e->getMessage()

@@ -52,7 +52,15 @@ return [
     ],
     'auc' => [
         'one_price_stock_url' => env('ONE_PRICE_STOCK_URL'),
-    ]
+    ],
+
+    'brevo' => [
+        'api_key' => env('BREVO_API_KEY'),
+        'sender_email' => env('BREVO_ONEPRICE_SENDER_EMAIL', 'oneprice@directimported.com'),
+        'sender_name' => env('BREVO_ONEPRICE_SENDER_NAME', 'Direct Imported - One Price'),
+        'recipient_email' => env('BREVO_ONEPRICE_RECIPIENT_EMAIL', 'Oneprice@directimported.com'),
+        'recipient_name' => env('BREVO_ONEPRICE_RECIPIENT_NAME', 'Direct Imported One Price Team'),
+    ],
 
 ];
 

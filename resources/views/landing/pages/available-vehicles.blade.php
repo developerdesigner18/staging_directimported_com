@@ -1292,7 +1292,8 @@
                     <p class="promo-card-text">200,000+ Vehicles available across Japan with a fixed price buy now option.
                     </p>
                 </div>
-                <a href="{{ config('services.auc.one_price_stock_url') }}" class="btn-promo-action btn-promo-red">
+                <a href="{{ config('services.auc.one_price_stock_url', 'https://auc.directimported.com/oneprice_mix') }}"
+                    target="_blank" rel="noopener noreferrer" class="btn-promo-action btn-promo-red">
                     ONE PRICE STOCK
                 </a>
             </div>
