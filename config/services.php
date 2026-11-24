@@ -50,6 +50,9 @@ return [
         'key' => env('GEMINI_API_KEY'),
         'model' => env('GEMINI_MODEL', 'gemini-3.6-flash'),
     ],
+    'auc' => [
+        'one_price_stock_url' => env('ONE_PRICE_STOCK_URL'),
+    ]
 
 ];
 

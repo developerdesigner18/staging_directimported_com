@@ -870,8 +870,8 @@
         }
 
         /* ================================================
-                                   TABLET — max 768px
-                                   ================================================ */
+                                                                   TABLET — max 768px
+                                                                   ================================================ */
         @media (max-width: 768px) {
             .container {
                 padding-left: 12px !important;
@@ -1019,8 +1019,8 @@
         }
 
         /* ================================================
-                                   MOBILE — max 480px
-                                   ================================================ */
+                                                                   MOBILE — max 480px
+                                                                   ================================================ */
         @media (max-width: 480px) {
 
             .search-header {
@@ -1036,7 +1036,7 @@
                 gap: 14px;
             }
 
-            .search-grid > div:empty {
+            .search-grid>div:empty {
                 display: none;
             }
 
@@ -1281,16 +1281,18 @@
                     <p class="promo-card-title">Don't see the exact JDM spec you need?</p>
                     <p class="promo-card-desc">Search thousands of live wholesale Japanese auctions.</p>
                 </div>
-                <a href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer" class="btn-promo-action btn-promo-black">
+                <a href="https://auc.directimported.com/" target="_blank" rel="noopener noreferrer"
+                    class="btn-promo-action btn-promo-black">
                     SEARCH LIVE AUCTIONS
                 </a>
             </div>
 
             <div class="search-promo-card">
                 <div class="promo-card-content">
-                    <p class="promo-card-text">200,000+ Vehicles available across Japan with a fixed price buy now option.</p>
+                    <p class="promo-card-text">200,000+ Vehicles available across Japan with a fixed price buy now option.
+                    </p>
                 </div>
-                <a href="{{ route('available.vehicles') }}" class="btn-promo-action btn-promo-red">
+                <a href="{{ config('services.auc.one_price_stock_url') }}" class="btn-promo-action btn-promo-red">
                     ONE PRICE STOCK
                 </a>
             </div>
@@ -1559,12 +1561,12 @@
             const closeTabBtn = document.createElement('div');
             closeTabBtn.className = 'close-dropdown-tab';
             closeTabBtn.innerHTML = `
-                                                                    <span>Close Search</span>
-                                                                    <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
-                                                                        <polyline points="6 7 12 13 18 7"></polyline>
-                                                                        <polyline points="6 13 12 19 18 13"></polyline>
-                                                                    </svg>
-                                                                `;
+                                                                                                    <span>Close Search</span>
+                                                                                                    <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(180deg);">
+                                                                                                        <polyline points="6 7 12 13 18 7"></polyline>
+                                                                                                        <polyline points="6 13 12 19 18 13"></polyline>
+                                                                                                    </svg>
+                                                                                                `;
             closeTabBtn.onclick = closeDropdown;
             dropdownPanel.appendChild(closeTabBtn);
         }
