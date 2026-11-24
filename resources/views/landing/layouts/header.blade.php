@@ -53,7 +53,8 @@
                 <a href="{{ route('available.vehicles') }}"
                     class="navbar__link {{ request()->is('available-vehicles*') ? 'active' : '' }}">Available
                     Vehicles</a>
-                <a href="{{ config('services.auc.one_price_stock_url') }}" class="navbar__btn-oneprice">
+                <a href="{{ config('services.auc.one_price_stock_url', 'https://auc.directimported.com/oneprice_mix') }}"
+                    target="_blank" rel="noopener noreferrer" class="navbar__btn-oneprice">
                     <span>ONE PRICE</span>
                     <span>BUY NOW</span>
                 </a>
@@ -81,7 +82,8 @@
                 <li><a href="{{ route('available.vehicles') }}"
                         class="mobile-menu__link {{ request()->is('available-vehicles*') ? 'active' : '' }}">Available
                         Vehicles</a></li>
-                <li><a href="https://auc.directimported.com/oneprice_mix" class="mobile-menu__btn-oneprice">ONE PRICE
+                <li><a href="{{ config('services.auc.one_price_stock_url', 'https://auc.directimported.com/oneprice_mix') }}"
+                        target="_blank" rel="noopener noreferrer" class="mobile-menu__btn-oneprice">ONE PRICE
                         BUY NOW</a>
                 </li>
                 <li><a href="{{ route('services.view') }}"

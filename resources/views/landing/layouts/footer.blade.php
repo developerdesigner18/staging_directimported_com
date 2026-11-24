@@ -52,6 +52,10 @@
                         <li><a href="{{ route('available.vehicles') }}" class="footer-link"><i
                                     class="fas fa-chevron-right footer-link-icon"></i> <span>Available
                                     Vehicles</span></a></li>
+                        <li><a href="{{ config('services.auc.one_price_stock_url', 'https://auc.directimported.com/oneprice_mix') }}"
+                                target="_blank" rel="noopener noreferrer" class="footer-link"><i
+                                    class="fas fa-chevron-right footer-link-icon"></i> <span>One Price Buy
+                                    Now</span></a></li>
                         <li><a href="{{ route('blog') }}" class="footer-link"><i
                                     class="fas fa-chevron-right footer-link-icon"></i> <span>How to Import</span></a>
                         </li>
@@ -125,7 +129,7 @@
             </div>
 
             <p class="footer-copy">
-                Copyright &copy; Direct Imported Japan {{ date('Y') }}. All rights reserved.
+                &copy; 1997–2026 Direct Imported Japan.
             </p>
 
             <div class="hours">
