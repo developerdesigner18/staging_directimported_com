@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\Brevo\BrevoMailService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Throwable;
@@ -60,6 +61,56 @@ class OnePriceEnquiryController extends Controller
                 'message' => 'Validation error. Please verify your inputs.',
                 'errors' => $validator->errors(),
             ], 422);
+        }
+
+        // Verify Google reCAPTCHA v2 if configured
+        $recaptchaSecret = config('services.recaptcha.secret_key');
+        if (!empty($recaptchaSecret)) {
+            $recaptchaToken = $request->input('recaptcha_token')
+                ?? $request->input('g-recaptcha-response')
+                ?? $request->input('recaptcha');
+
+            if (empty($recaptchaToken)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Please verify that you are not a robot.',
+                    'errors' => [
+                        'recaptcha' => ['reCAPTCHA verification is required.'],
+                    ],
+                ], 422);
+            }
+
+            try {
+                $verifyResponse = Http::asForm()->timeout(10)->post('https://www.google.com/recaptcha/api/siteverify', [
+                    'secret' => $recaptchaSecret,
+                    'response' => $recaptchaToken,
+                    'remoteip' => $request->ip(),
+                ]);
+
+                if (!$verifyResponse->successful() || !$verifyResponse->json('success')) {
+                    Log::warning('OnePriceEnquiryController: reCAPTCHA verification failed', [
+                        'ip' => $request->ip(),
+                        'response_body' => $verifyResponse->json(),
+                    ]);
+
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'reCAPTCHA verification failed. Please try again.',
+                        'errors' => [
+                            'recaptcha' => ['reCAPTCHA verification failed. Please try again.'],
+                        ],
+                    ], 422);
+                }
+            } catch (Throwable $e) {
+                Log::error('OnePriceEnquiryController: Error connecting to reCAPTCHA service', [
+                    'error' => $e->getMessage(),
+                ]);
+
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Could not verify reCAPTCHA. Please try again later.',
+                ], 500);
+            }
         }
 
         try {

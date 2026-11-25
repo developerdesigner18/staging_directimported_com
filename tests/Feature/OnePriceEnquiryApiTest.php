@@ -8,6 +8,13 @@ use Tests\TestCase;
 
 class OnePriceEnquiryApiTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        // Default to null recaptcha secret in existing tests to avoid external call
+        Config::set('services.recaptcha.secret_key', null);
+    }
+
     public function test_validation_fails_when_required_fields_are_missing()
     {
         $response = $this->postJson('/api/one-price/enquiry', []);
@@ -113,6 +120,77 @@ class OnePriceEnquiryApiTest extends TestCase
         $response->assertStatus(502)
             ->assertJson([
                 'status' => false,
+            ]);
+    }
+
+    public function test_fails_when_recaptcha_is_missing_and_configured()
+    {
+        Config::set('services.recaptcha.secret_key', 'test-recaptcha-secret');
+
+        $response = $this->postJson('/api/one-price/enquiry', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'message' => 'Testing missing recaptcha.',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJson([
+                'status' => false,
+                'message' => 'Please verify that you are not a robot.',
+            ])
+            ->assertJsonValidationErrors(['recaptcha']);
+    }
+
+    public function test_fails_when_recaptcha_verification_fails()
+    {
+        Config::set('services.recaptcha.secret_key', 'test-recaptcha-secret');
+
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => false,
+                'error-codes' => ['invalid-input-response'],
+            ], 200),
+        ]);
+
+        $response = $this->postJson('/api/one-price/enquiry', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'message' => 'Testing failed recaptcha.',
+            'recaptcha_token' => 'invalid-token',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJson([
+                'status' => false,
+                'message' => 'reCAPTCHA verification failed. Please try again.',
+            ])
+            ->assertJsonValidationErrors(['recaptcha']);
+    }
+
+    public function test_passes_when_recaptcha_is_valid()
+    {
+        Config::set('services.recaptcha.secret_key', 'test-recaptcha-secret');
+        Config::set('services.brevo.api_key', 'xkeysib-test-api-key');
+
+        Http::fake([
+            'https://www.google.com/recaptcha/api/siteverify' => Http::response([
+                'success' => true,
+            ], 200),
+            'https://api.brevo.com/v3/smtp/email' => Http::response([
+                'messageId' => '<2026112512345.test@smtp-relay.brevo.com>',
+            ], 201),
+        ]);
+
+        $response = $this->postJson('/api/one-price/enquiry', [
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'message' => 'Testing valid recaptcha.',
+            'recaptcha_token' => 'valid-token',
+        ]);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'status' => true,
             ]);
     }
 }
